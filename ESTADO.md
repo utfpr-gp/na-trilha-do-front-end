@@ -8,6 +8,8 @@
 - Projeto do livro aprovado nas decisões principais: [docs/projeto.md](docs/projeto.md) (seção 13).
 - Repositório criado, com README, licenças e o projeto.
 
+- `trilheiro/docs/prd.md` escrito (04/11), aguardando revisão do professor.
+
 ## Próximos passos
 
 1. ~~Escrever~~ Executar `docs/plano-1-estrutura.md` (escrito em 04/11, aguardando revisão do professor): o site em **HTML, Bootstrap 5.3, Sass e JavaScript puro, com Vite** (projeto, seção 10). Do *Volta ao Mundo* vêm o formato e as regras, e não o código.
