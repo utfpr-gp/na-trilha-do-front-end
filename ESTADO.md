@@ -10,7 +10,7 @@
 
 ## Próximos passos
 
-1. Escrever `docs/plano-1-estrutura.md`: o site em **HTML, Bootstrap 5.3, Sass e JavaScript puro, com Vite** (projeto, seção 10). Do *Volta ao Mundo* vêm o formato e as regras, e não o código.
+1. ~~Escrever~~ Executar `docs/plano-1-estrutura.md` (escrito em 04/11, aguardando revisão do professor): o site em **HTML, Bootstrap 5.3, Sass e JavaScript puro, com Vite** (projeto, seção 10). Do *Volta ao Mundo* vêm o formato e as regras, e não o código.
 2. Estrutura: página inicial, "Minha caderneta", o catálogo dos 25 capítulos como "em breve", a identidade visual (verde-mata, terra, amarelo de marcação) e o `AGENTS.md` adaptado.
 3. Documentos do Trilheiro (`prd.md`, `architecture.md`, `design-system.md`) e o **protótipo como Artifact**, linkado no README do modelo (projeto, seção 6.1). Vêm junto com os capítulos 4 a 6.
 4. Capítulos na ordem do livro, do 1 em diante.
