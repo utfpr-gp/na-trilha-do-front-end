@@ -152,16 +152,18 @@ trilheiro/
 ├── checklist.md       os itens praticados, cada um com link para as linhas do código
 └── docs/
     ├── prd.md         visão geral, atores, histórias de usuário e regras de negócio
-    ├── spec.md        modelo de dados (diagrama ER), dicionário de dados, rotas do json-server, db.json, API pública
+    ├── architecture.md  modelo de dados (diagrama ER), dicionário de dados, rotas do json-server, db.json, API pública
     └── design-system.md  framework, cores, tipografia, diretrizes de componentes,
                           componentes do framework no protótipo, e dos tokens ao código
 ```
 
 - **O README é a vitrine.** Nome, autoria, descrição em poucas linhas, links para a documentação, o protótipo, o `checklist.md` e o site em produção, as tecnologias, como rodar em poucos passos e as telas. O detalhe mora nos arquivos linkados.
+- **O documento técnico se chama `architecture.md`**, o nome usado na disciplina (o roubank usava `spec.md`).
+- **O protótipo do Trilheiro é uma página navegável publicada como Artifact do Claude** (mobile e desktop, as 4 telas), feita a partir do `design-system.md` e linkada no README. Ele não sai do Stitch porque o modelo precisa mostrar só os componentes que o app usa, com os tokens já decididos. O capítulo 5 continua ensinando o Stitch, que é o que quem lê vai usar no próprio projeto.
 - **O `checklist.md` fica separado** porque é a parte que muda: a lista de itens pode mudar de uma edição para outra, e trocá-la é editar um arquivo só, sem mexer no README. Cada item marcado tem o link do GitHub para as linhas que o provam.
 - **O `design-system.md` traz duas seções além das do roubank:** os componentes do framework apontados no protótipo (o que vira navbar, card, modal) e a tabela "dos tokens ao código" (cada token virando variável Sass ou CSS).
 - **Nenhum desses arquivos fala de entregas, prazos ou datas.** Eles descrevem o app, e servem igual em qualquer semestre e para quem estuda sozinho.
-- **Os documentos vêm antes do app:** o `prd.md`, o `spec.md` e o `design-system.md` são escritos junto com os capítulos 4 a 6, então o modelo de documentação fica pronto cedo, antes de o app estar completo.
+- **Os documentos vêm antes do app:** o `prd.md`, o `architecture.md` e o `design-system.md` são escritos junto com os capítulos 4 a 6, então o modelo de documentação fica pronto cedo, antes de o app estar completo.
 - **O site do livro não cita o `checklist.md`.** Ele é um arquivo do modelo, e não um conteúdo dos capítulos.
 
 **Etapas:** cada capítulo tem a sua etapa em `etapas/NN-slug/`, um projeto estático completo (HTML, CSS ou SCSS, JS). O capítulo aponta para a pasta no GitHub e para abri-la no StackBlitz, no navegador, sem instalar nada. Sem build: o que se vê na pasta é o que o navegador lê, como no projeto de quem estuda.
