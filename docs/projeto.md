@@ -1,0 +1,213 @@
+# Na Trilha do Front-End — documento de projeto
+
+**Autor do material:** Prof. Roni Fabio Banaszewski · Tecnologia em Sistemas para Internet (TSI) · UTFPR Guarapuava
+**Data:** 04/11/2026 · **Situação:** aprovado nas decisões principais (seção 13)
+
+## 1. A intenção
+
+Um site aberto, em português, que ensina a construir uma aplicação web responsiva **com um framework CSS e JavaScript puro**, do protótipo ao site publicado. Ele funciona como um **livro**: pode ser lido do começo ao fim, para aprender, e consultado depois, para relembrar. É o irmão do *Volta ao Mundo em Angular*, com a mesma anatomia de capítulo e a mesma infraestrutura.
+
+**O critério principal é a qualidade do material**, e não a velocidade de produção.
+
+O livro ensina construindo um único app de exemplo, o **Trilheiro**: um guia de trilhas da região de Guarapuava, com a lista de trilhas, o detalhe de cada uma, a previsão do tempo no ponto de partida e um cadastro de trilhas novas. O app cresce um pouco a cada capítulo. O progresso de quem estuda também é uma trilha: cada capítulo concluído ganha um **marco**, como as marcações pintadas que mostram o caminho numa trilha de verdade.
+
+### 1.1. O problema que o livro resolve
+
+Quem começa um projeto próprio costuma partir de um protótipo gerado por IA, com telas demais e componentes que nunca viu. O código vem depois, e a pessoa não sabe explicar boa parte dele.
+
+O livro inverte essa ordem:
+- **o tamanho certo vem do exemplo:** o Trilheiro tem 4 telas (início, lista, detalhe e cadastro), e cada componente dele existe porque um capítulo o ensinou;
+- **cada capítulo termina com 🧭 "Na sua trilha":** o mesmo conceito aplicado ao projeto de quem lê, com o mesmo tamanho do Trilheiro;
+- **o capítulo de prototipação ensina a usar a IA com rédea:** um prompt modelo que limita as telas e os componentes ao que o livro ensina, e a regra "nenhum componente que você não saiba explicar".
+
+## 2. Objetivos, não objetivos e antiobjetivos
+
+**Objetivos**
+- Ensinar layout responsivo com o Bootstrap, CSS moderno (Flexbox, Grid, unidades relativas, `clamp()`), Sass, imagens responsivas, JavaScript para a página (DOM, eventos, formulários, Web Storage), jQuery e requisições assíncronas, com linguagem fácil e motivadora, sem perder o rigor.
+- Dar a cada conceito uma forma de ser **visto funcionando** (simuladores) e **praticado** (passos guiados e desafios).
+- Mostrar o **porquê** de cada técnica: que problema ela resolve e o que quebra sem ela.
+- Ser mantido por um agente de IA, como o *Volta ao Mundo*.
+
+**Não objetivos**
+- Não é a referência completa do Bootstrap nem do CSS; a documentação oficial e o MDN cumprem esse papel, e cada capítulo aponta para eles.
+- Sem login, certificados, fórum ou comentários. Sem versão em inglês. Sem vídeos.
+- Não menciona a disciplina, a avaliação, notas, checklist nem datas. O site serve a qualquer pessoa.
+- Não ensina lógica de programação do zero: supõe que quem lê sabe o que são variável, condição, laço e função. O livro ensina o JavaScript **da página**.
+
+**Antiobjetivos** (o projeto fracassa se isto acontecer, mesmo funcionando)
+- Capítulos que viram listas de classes do Bootstrap para decorar.
+- Código pronto para copiar sem entender, ou exemplos que só funcionam com o código inteiro gerado por IA.
+- Gamificação que premia clicar em vez de aprender.
+- Dependência de serviço pago, chave de API ou cadastro para estudar.
+
+## 3. Público e tom
+
+- **Público:** estudantes de graduação em computação no começo do curso, e qualquer pessoa que já escreveu HTML e CSS básicos e conhece lógica de programação. Já usaram terminal: comandos básicos são revisão rápida.
+- **Tom:** o mesmo do *Volta ao Mundo*. Fala com "você", em frases curtas, de forma motivadora e técnica ao mesmo tempo. Toda ideia nova ganha uma analogia do cotidiano, de preferência ligada a trilhas e ao ar livre quando ela couber sem forçar. Os termos técnicos aparecem com o nome oficial (`col-md-4`, `clamp()`, `addEventListener`), explicados na primeira vez.
+- **Idioma:** português do Brasil no texto; nomes de classes, variáveis e funções próprias **em inglês** no código do Trilheiro.
+
+## 4. Anatomia de um capítulo
+
+A mesma do *Volta ao Mundo*, com uma visão a mais no fim:
+
+| Visão | Papel |
+|---|---|
+| Cabeçalho | Parte, tempo estimado, pré-requisito, a pergunta do capítulo, e o espaço do marco |
+| 🎯 **A missão** | O que o Trilheiro ganha neste capítulo, mostrado funcionando antes de qualquer explicação |
+| 💡 **A ideia** | A analogia do cotidiano |
+| 🔬 **Por dentro** | O conceito técnico, com um simulador interativo |
+| 🛠️ **Mão no código** | A prática guiada em passos curtos, com a linha nova destacada e "o que muda na tela" |
+| ⚠️ **Armadilhas** | Os erros reais, com a mensagem exata (do console, do compilador Sass, do DevTools) e como resolver |
+| 🏁 **Desafio** | De 3 a 5 perguntas; acertar todas dá o marco |
+| 🧭 **Na sua trilha** | O mesmo conceito no projeto de quem lê: o que fazer, do tamanho do Trilheiro, e as perguntas para saber se entendeu (o conceito, por que ali, o que cada linha faz, o que quebra sem ela) |
+| 📚 **Para ir além** | Os links da documentação oficial (Bootstrap, MDN, Sass) |
+
+**O teste do "E se eu tirar?" atravessa o livro.** Em toda prática, o livro mostra o que quebra quando a classe, a regra ou a linha sai: desligada no DevTools, comentada no código ou apagada no terminal. É o hábito que a pessoa leva para o próprio projeto.
+
+## 5. O conteúdo: partes e capítulos
+
+As partes são os trechos de uma trilha. Cada capítulo responde a uma pergunta, e cada um usa só o que veio antes.
+
+| Parte | Capítulos |
+|---|---|
+| **Ponto de partida** | 1. O que é um framework CSS, e por que usar um? · 2. Como preparar o ambiente: VS Code, Live Server, Node.js, npm e Git? · 3. Que HTML e CSS preciso relembrar: semântica, caixa, cascata e especificidade? |
+| **O mapa da trilha** | 4. Como transformar uma ideia em requisitos, com um PRD curto? · 5. Como prototipar com IA sem perder o controle? · 6. Como definir a identidade visual com design tokens? |
+| **Primeiros quilômetros** | 7. Como montar um layout responsivo com o grid do Bootstrap? · 8. Como acertar espaços, alinhamentos e visibilidade com os utilitários? · 9. Como usar componentes prontos: navbar, card, botão, badge? · 10. Como usar componentes com JavaScript: modal, carrossel, offcanvas? |
+| **A subida** | 11. Como fazer layout com Flexbox e Grid no CSS puro? · 12. Por que usar unidades relativas (`rem`, `%`, `vw`, `vh`) no lugar de pixels? · 13. Como personalizar o Bootstrap com Sass? · 14. Como organizar o meu CSS com Sass: parciais, variáveis, mixins e funções? · 15. Como fazer tipografia responsiva e fluida com `clamp()`? · 16. Como deixar as imagens responsivas e leves: `object-fit`, `srcset`, `<picture>` e WebP? |
+| **A travessia** | 17. Que JavaScript preciso para dar vida à página: DOM e eventos? · 18. Como organizar os dados com objetos, arrays e classes? · 19. Como validar formulários com HTML e expressões regulares? · 20. Como guardar dados no navegador com Web Storage e JSON? · 21. Como usar o jQuery e um plugin de máscara? |
+| **O cume** | 22. Como salvar e buscar dados com `fetch` e o json-server? · 23. Como consumir uma API pública e tratar os erros? · 24. Como manter o código padronizado com Prettier e ESLint? · 25. Como publicar o site no GitHub Pages? |
+| **Para ir além** (sem marco) | Materialize e outros frameworks CSS, lado a lado · O que é o Tailwind, e por que ele pensa diferente · Medir e melhorar com o Lighthouse · Acessibilidade na prática |
+
+**Alguns capítulos em detalhe:**
+
+**O capítulo 1** compara o mesmo cartão de trilha feito em CSS puro e com o Bootstrap: quantas linhas cada um tem, o que cada um resolve sozinho (responsividade, consistência, acessibilidade dos componentes) e o que se perde (identidade própria, peso). Fecha com a pergunta "quando **não** usar um framework".
+
+**O capítulo 5** ensina a prototipar com IA sem perder o controle:
+- partir do PRD do capítulo 4, e não de uma ideia solta;
+- um prompt modelo para o Stitch, que fixa as 4 telas, os componentes do Bootstrap e os tokens;
+- o que fazer quando a IA inventa telas e componentes: cortar, e não implementar tudo;
+- a regra do livro: nenhum componente entra no código sem que você saiba dizer o que ele é e por que está ali.
+
+**O capítulo 13** separa as duas ideias que mais confundem quem começa com Sass:
+- `!default`: as variáveis do tema vêm **antes** do Bootstrap;
+- a cascata: as regras próprias vêm **depois**;
+- "mas no CSS o último não vence sempre?", e "e o `!important`?", com a ordem importância → especificidade → ordem;
+- o que dá para mudar por variável e o que só muda por regra.
+
+O conteúdo vem da Atividade 10 da disciplina, já testada com compilação real.
+
+**O capítulo 19** valida o cadastro de trilha:
+- `required`, `type`, `min`, `max` e `pattern` no HTML, e as mensagens nativas;
+- uma regex montada passo a passo para o CEP do ponto de partida (`^\d{5}-?\d{3}$`) e para o telefone do guia;
+- checkbox (o que levar), radio (o tipo de percurso) e select (a dificuldade);
+- a mensagem clara para cada erro, mostrada só depois que o campo foi tocado.
+
+**O capítulo 25** publica no GitHub Pages com as bibliotecas por **CDN**: o CSS compilado do Sass vai para o repositório, e o JavaScript do Bootstrap e o jQuery vêm do CDN. Explica por que um `<script>` que aponta para a `node_modules/` funciona no seu computador e quebra no site publicado, sem nenhuma mensagem de erro.
+
+### 5.1. Recursos de livro de consulta
+
+Os mesmos do *Volta ao Mundo*: busca no próprio navegador, glossário, resumo de 1 minuto por capítulo, referência rápida por parte, ligações entre capítulos e links estáveis para cada seção.
+
+### 5.2. Critério de pronto de um capítulo
+
+1. Todas as visões da seção 4 estão presentes, incluindo uma analogia e um simulador ou recurso visual.
+2. Todo código foi conferido contra a documentação oficial (Bootstrap 5.3, MDN, Sass), e a etapa do Trilheiro correspondente abre e funciona.
+3. As armadilhas mostram mensagens reais, reproduzidas de verdade.
+4. O desafio tem de 3 a 5 perguntas, cada uma com explicação para a resposta errada.
+5. "Na sua trilha" pede o conceito num tamanho parecido com o do Trilheiro, sem trabalho a mais.
+6. O texto passou por revisão de português e de tom.
+7. O simulador funciona com teclado, tem texto alternativo e respeita a preferência por menos movimento.
+8. O professor aprovou o capítulo no Pull Request antes da publicação.
+
+## 6. O app de exemplo: Trilheiro
+
+**Domínio:** trilhas da região de Guarapuava. Os dados das trilhas são de exemplo, inspirados em lugares reais, sem prometer exatidão de distância ou de percurso.
+
+**As 4 telas** (o tamanho que o livro recomenda para o projeto de quem lê):
+
+| Tela | O que tem | Conceitos que ela carrega |
+|---|---|---|
+| Início | Banner, trilhas em destaque, navbar | Grid, componentes, unidades relativas, tipografia fluida |
+| Trilhas | Lista em cards, com filtro por dificuldade | Grid, Flexbox, `object-fit`, jQuery, Web Storage (o último filtro) |
+| Detalhe | Fotos (carrossel), dados da trilha, previsão do tempo | Componentes com JavaScript, `srcset` e `<picture>`, API pública |
+| Cadastrar trilha | Formulário com validação | HTML5, regex, checkbox/radio/select, máscara, json-server |
+
+**Regras de negócio mínimas, que servem para ensinar validação:** a distância vai de 0,5 a 50 km; a dificuldade é fácil, moderada ou difícil; o CEP e o telefone do guia têm formato; a data da última visita não pode ser no futuro.
+
+**Dados**
+- **json-server:** as trilhas cadastradas e os relatos de quem foi (duas entidades, ligadas pelo id da trilha).
+- **Open-Meteo:** a previsão do tempo no ponto de partida, pela latitude e longitude. Gratuita, sem chave.
+- **ViaCEP:** preenche cidade e bairro a partir do CEP do ponto de partida. Gratuito, sem chave.
+- **Web Storage:** as trilhas favoritas e o último filtro usado.
+
+**Como o app cresce** (exemplos): uma página só com o cartão de uma trilha → a lista em grid → navbar e cards do Bootstrap → o detalhe com carrossel e modal → o rodapé em Flexbox próprio → o tema da trilha (verde-mata e terra) com Sass → títulos fluidos → fotos leves e responsivas → o filtro funcionando com eventos → o cadastro validado → as favoritas guardadas no navegador → o filtro animado com jQuery e a máscara do CEP → as trilhas vindo do json-server → o clima no detalhe → o código padronizado → no ar, no GitHub Pages.
+
+**Etapas:** cada capítulo tem a sua etapa em `trilheiro/etapas/NN-slug/`, um projeto estático completo (HTML, CSS ou SCSS, JS). O capítulo aponta para a pasta no GitHub e para abri-la no StackBlitz, no navegador, sem instalar nada. Sem build: o que se vê na pasta é o que o navegador lê, como no projeto de quem estuda.
+
+## 7. Simuladores
+
+Componentes do próprio site, **feitos para este livro**: cada um é pontual, mostra um conceito só e usa sempre as peças do Trilheiro (o cartão de trilha, o banner, a foto, o formulário), para que o simulador e a prática falem da mesma coisa. Os simuladores do `lab-framework-css` não são reaproveitados.
+- **O cartão de trilha em CSS puro × Bootstrap:** as mesmas linhas, lado a lado, e o que cada uma faz (capítulo 1)
+- **Caixa e cascata:** a cor do título do cartão perdendo e ganhando conforme a especificidade e a ordem (capítulo 3)
+- **Editor de tokens:** a cor primária, a fonte e o arredondamento mudando o Trilheiro inteiro (capítulos 6 e 13)
+- **A lista de trilhas no grid:** um controle de largura de tela e as classes `col-*` de cada cartão; os cartões se rearrumam conforme o breakpoint (capítulo 7)
+- **Utilitários do cartão:** liga e desliga `p-*`, `m-*`, `d-flex`, `gap-*` e `d-none d-md-block` no cartão de trilha (capítulo 8)
+- **O modal de "Detalhes da trilha":** o que o `data-bs-toggle` e o `data-bs-target` ligam, e o que acontece sem o JavaScript do Bootstrap (capítulo 10)
+- **O rodapé em Flexbox e a galeria em Grid:** as propriedades num painel, os itens se rearrumando (capítulo 11)
+- **A régua das unidades:** `px`, `rem`, `%`, `vw` lado a lado no banner, enquanto se muda a largura da tela e o tamanho da fonte do navegador (capítulo 12)
+- **`!default` × cascata:** a ordem das linhas do `main.scss` e o CSS gerado ao lado (capítulo 13)
+- **A curva do `clamp()`:** o tamanho do título do banner conforme a largura, com o mínimo, o ideal e o máximo (capítulo 15)
+- **Qual foto da trilha o navegador escolhe:** o `srcset` e o `sizes`, com a largura e a densidade da tela (capítulo 16)
+- **O caminho de um evento:** o clique no botão de favoritar subindo pela árvore do DOM do cartão (capítulo 17)
+- **Testador de regex** no campo do CEP, com o estado do campo e as mensagens (capítulo 19)
+- **As favoritas no Web Storage:** a chave e o valor mudando enquanto se favorita trilhas (capítulo 20)
+- **A linha do tempo do `fetch`:** a previsão do tempo da trilha pedida, esperada, recebida ou falhando (capítulos 22 e 23)
+
+Todo simulador funciona com teclado, tem texto alternativo e respeita a preferência por menos movimento.
+
+## 8. Gamificação: a caderneta de trilha
+
+- Cada capítulo com marco tem um desafio de 3 a 5 perguntas; o marco só vem com todas as respostas certas, e pode tentar de novo quantas vezes quiser.
+- Uma página **"Minha caderneta"** mostra o mapa da trilha inteira, com os marcos conquistados. Ao fechar uma parte, a pessoa chega a um **mirante**; ao fechar o livro, ao **cume**.
+- O progresso fica salvo no navegador, sem login, com exportação e importação em arquivo.
+- Sem ranking e sem pontuação competitiva.
+
+## 9. Identidade visual
+
+- **Cores** (a validar no esboço): verde-mata (dominante), papel claro (fundo), terra (destaque), amarelo de marcação de trilha (o marco conquistado), azul-céu, e uma cor por visão do capítulo. Contraste mínimo AA.
+- **Fontes:** as mesmas do *Volta ao Mundo* (Nunito Sans e JetBrains Mono), para os dois livros parecerem da mesma coleção.
+- **Modo claro e escuro**, com os tokens trocando de valor.
+- **Rodapé:** "Na Trilha do Front-End · Prof. Roni Fabio Banaszewski · Tecnologia em Sistemas para Internet · UTFPR Guarapuava", mais a licença.
+
+## 10. Como é construído
+
+- **Repositório:** `utfpr-gp/<nome-do-livro>`, público, publicado no GitHub Pages.
+- **Infraestrutura reaproveitada do *Volta ao Mundo*:** o site Angular estático, os componentes das visões (`vm-chapter-page`, `vm-view`, `vm-analogy`, `vm-code`, `vm-steps`, `vm-pitfall`, `vm-deep-dive`, o desafio), o catálogo de capítulos, a busca, o glossário, a caderneta de progresso, o verificador (`npm run check`, inclusive a lista de palavras proibidas) e o `AGENTS.md`, adaptado.
+- **Estilo do site:** **Bootstrap 5.3 e Sass**, no lugar do Tailwind do *Volta ao Mundo*. Os componentes das visões continuam os mesmos; troca só a camada de estilo, e o código do site serve de exemplo nos capítulos 6, 13 e 14.
+- **As etapas do Trilheiro** são HTML, CSS e JavaScript puros, com o Bootstrap 5.3: o CSS sai do Sass (o Bootstrap instalado pelo npm, só para compilar), e o JavaScript do Bootstrap e o jQuery vêm do CDN, como no capítulo 25.
+- **Verificação a cada push:** build do site, testes, links quebrados e uma verificação das etapas (cada `index.html` abre sem erro no console, num navegador sem interface).
+- **Publicação:** GitHub Actions, a cada push na `main`.
+- **Licença:** CC BY 4.0 para o texto, MIT para o código. Sem rastreamento.
+
+## 11. Decisões tomadas pelo agente (para o professor conferir)
+
+1. **Partes com nomes de trilha** (Ponto de partida, O mapa da trilha, Primeiros quilômetros, A subida, A travessia, O cume), no lugar dos continentes do *Volta ao Mundo*.
+2. **Dados de exemplo inspirados em trilhas reais**, para ninguém tomar o app como guia de segurança.
+3. **As duas APIs públicas são gratuitas e sem chave** (Open-Meteo e ViaCEP), para não exigir cadastro.
+4. **O capítulo 24 (Prettier e ESLint) entra no livro**, mesmo sem build: os dois rodam pelo npm e pela extensão do VS Code.
+5. **O Materialize vira capítulo de "Para ir além"**, com o mesmo cartão feito nos dois frameworks, e não acompanha o livro inteiro.
+6. **"Na sua trilha" não menciona disciplina nem entrega.** Ela fala do "seu projeto", e serve tanto a estudantes quanto a quem estuda sozinho.
+
+## 12. Ordem de construção
+
+1. A estrutura: o repositório a partir do *Volta ao Mundo*, a página inicial, "Minha caderneta", o catálogo dos 25 capítulos ("em breve") e a identidade visual.
+2. Os capítulos, **na ordem do livro**, do capítulo 1 em diante (decisão do professor, 04/11).
+
+## 13. Decisões do professor (04/11/2026)
+
+- **Livro:** *Na Trilha do Front-End*. **App:** *Trilheiro*. **Progresso:** **marcos de trilha** numa caderneta, com mirantes e cume.
+- **Modelo de uso com projetos próprios:** o tema é de quem lê, do tamanho do Trilheiro, com a visão "🧭 Na sua trilha" em cada capítulo.
+- **Framework:** Bootstrap 5.3. **Estilo do site:** Bootstrap e Sass.
+- **Infraestrutura:** reaproveitada do *Volta ao Mundo*. **Simuladores:** novos e pontuais, no contexto das trilhas; os do `lab-framework-css` não são reaproveitados.
+- **Ordem de construção:** a do livro.
+- **Em aberto:** se falta ou sobra algum capítulo (seção 5).
