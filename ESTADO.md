@@ -9,6 +9,7 @@
 - Repositório criado, com README, licenças e o projeto.
 
 - `trilheiro/docs/prd.md`, `architecture.md` e `design-system.md` escritos (04/11), aguardando revisão do professor. Rotas e APIs conferidas de verdade (json-server 1.0.0-beta.15, Open-Meteo, ViaCEP, jQuery 4 + Mask Plugin 1.14.16; tema Sass compilado com Bootstrap 5.3.8 e Sass 1.107).
+- Protótipo do Trilheiro publicado como Artifact (canvas de design, 4 telas × computador e celular, navegável, com os componentes do Bootstrap apontados): <https://claude.ai/artifact/Q3NTpoz8Jtq87mgzywVVYP>. **Privado até o professor compartilhar** pelo menu Share.
 
 ## Próximos passos
 

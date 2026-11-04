@@ -60,6 +60,8 @@ As duas fontes vêm do Google Fonts.
 
 ## 5. Componentes do framework no protótipo
 
+**Protótipo navegável** (computador e celular): <https://claude.ai/artifact/Q3NTpoz8Jtq87mgzywVVYP>
+
 Os componentes desenhados no protótipo e o componente do Bootstrap que cada um vira:
 
 | No protótipo | Componente do Bootstrap | Onde aparece |
