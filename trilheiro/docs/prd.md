@@ -48,7 +48,7 @@ O **Trilheiro** é um site responsivo para descobrir e compartilhar trilhas da r
 ### ✍️ Épico 3: Colaborar
 
 - **US08: Cadastrar uma trilha.** Como colaborador, quero cadastrar uma trilha que ainda não está no site.
-  - _Critérios de aceitação:_ os campos seguem as regras RN01 a RN05; cada erro aparece junto do campo, com uma mensagem clara, só depois que o campo foi tocado ou ao tentar salvar; ao digitar um CEP válido, a cidade e o bairro são preenchidos pelo ViaCEP, e continuam editáveis se o CEP não for encontrado; ao salvar, a trilha passa a aparecer na lista, e o site leva ao detalhe dela.
+  - _Critérios de aceitação:_ os campos seguem as regras RN01 a RN05; cada erro aparece junto do campo, com uma mensagem clara, só depois que o campo foi tocado ou ao tentar salvar; ao digitar um CEP válido, a cidade e o bairro são preenchidos pelo ViaCEP, e continuam editáveis se o CEP não for encontrado; a previsão do tempo de uma trilha cadastrada usa o centro da cidade, já que o formulário não pede coordenadas; ao salvar, a trilha passa a aparecer na lista, e o site leva ao detalhe dela.
 - **US09: Deixar um relato.** Como colaborador, quero contar como foi a minha visita a uma trilha.
   - _Critérios de aceitação:_ um botão no detalhe abre o formulário numa janela (modal); os campos são nome, data da visita (RN05), nota de 1 a 5 e texto (de 10 a 500 caracteres); ao salvar, a janela fecha e o relato aparece no topo da lista.
 
@@ -69,7 +69,7 @@ O **Trilheiro** é um site responsivo para descobrir e compartilhar trilhas da r
 - **Responsivo, pensado primeiro para o celular**, com uso confortável de 360 px até telas largas.
 - **Acessível:** navegação completa pelo teclado, texto alternativo em toda foto e contraste mínimo AA entre o texto e o fundo.
 - **Leve:** fotos em formato moderno (WebP), no tamanho certo para cada tela.
-- **Publicado como site estático**, sem login e sem chave de API no código.
+- **Publicado como site estático**, sem login e sem chave de API no código. No site publicado não há servidor: as trilhas e os relatos aparecem, mas cadastrar e deixar relato só funcionam com o projeto rodando no computador.
 
 ## 7. Fora do escopo
 
