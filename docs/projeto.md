@@ -142,7 +142,29 @@ Os mesmos do *Volta ao Mundo*: busca no próprio navegador, glossário, resumo d
 
 **Como o app cresce** (exemplos): uma página só com o cartão de uma trilha → a lista em grid → navbar e cards do Bootstrap → o detalhe com carrossel e modal → o rodapé em Flexbox próprio → o tema da trilha (verde-mata e terra) com Sass → títulos fluidos → fotos leves e responsivas → o filtro funcionando com eventos → o cadastro validado → as favoritas guardadas no navegador → o filtro animado com jQuery e a máscara do CEP → as trilhas vindo do json-server → o clima no detalhe → o código padronizado → no ar, no GitHub Pages.
 
-**Etapas:** cada capítulo tem a sua etapa em `trilheiro/etapas/NN-slug/`, um projeto estático completo (HTML, CSS ou SCSS, JS). O capítulo aponta para a pasta no GitHub e para abri-la no StackBlitz, no navegador, sem instalar nada. Sem build: o que se vê na pasta é o que o navegador lê, como no projeto de quem estuda.
+### 6.1. O Trilheiro como modelo de projeto
+
+O Trilheiro também é o **modelo** que quem lê copia para o próprio projeto: a mesma estrutura de README e de documentação, já preenchida. A estrutura segue o modelo do `roubank-css` (`utfpr-gp/roubank-css`), que ele passa a substituir.
+
+```
+trilheiro/
+├── README.md          a vitrine: só o essencial, e links para o resto
+├── checklist.md       os itens praticados, cada um com link para as linhas do código
+└── docs/
+    ├── prd.md         visão geral, atores, histórias de usuário e regras de negócio
+    ├── spec.md        modelo de dados (diagrama ER), dicionário de dados, rotas do json-server, db.json, API pública
+    └── design-system.md  framework, cores, tipografia, diretrizes de componentes,
+                          componentes do framework no protótipo, e dos tokens ao código
+```
+
+- **O README é a vitrine.** Nome, autoria, descrição em poucas linhas, links para a documentação, o protótipo, o `checklist.md` e o site em produção, as tecnologias, como rodar em poucos passos e as telas. O detalhe mora nos arquivos linkados.
+- **O `checklist.md` fica separado** porque é a parte que muda: a lista de itens pode mudar de uma edição para outra, e trocá-la é editar um arquivo só, sem mexer no README. Cada item marcado tem o link do GitHub para as linhas que o provam.
+- **O `design-system.md` traz duas seções além das do roubank:** os componentes do framework apontados no protótipo (o que vira navbar, card, modal) e a tabela "dos tokens ao código" (cada token virando variável Sass ou CSS).
+- **Nenhum desses arquivos fala de entregas, prazos ou datas.** Eles descrevem o app, e servem igual em qualquer semestre e para quem estuda sozinho.
+- **Os documentos vêm antes do app:** o `prd.md`, o `spec.md` e o `design-system.md` são escritos junto com os capítulos 4 a 6, então o modelo de documentação fica pronto cedo, antes de o app estar completo.
+- **O site do livro não cita o `checklist.md`.** Ele é um arquivo do modelo, e não um conteúdo dos capítulos.
+
+**Etapas:** cada capítulo tem a sua etapa em `etapas/NN-slug/`, um projeto estático completo (HTML, CSS ou SCSS, JS). O capítulo aponta para a pasta no GitHub e para abri-la no StackBlitz, no navegador, sem instalar nada. Sem build: o que se vê na pasta é o que o navegador lê, como no projeto de quem estuda.
 
 ## 7. Simuladores
 
@@ -190,7 +212,7 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 - **Interatividade:** o JavaScript do Bootstrap (abas, recolhíveis, modal) e módulos ES próprios para o desafio, a caderneta (Web Storage, com exportar e importar em JSON), o tema e os simuladores.
 - **Código destacado:** os trechos são destacados no build (Shiki), sem JavaScript no navegador.
 - **Busca:** Pagefind, gerado no build, funcionando no próprio navegador.
-- **Etapas do Trilheiro:** `trilheiro/etapas/NN-slug/`, projetos estáticos completos (HTML, Sass compilado, JS), com o JavaScript do Bootstrap e o jQuery pelo CDN, como no capítulo 25.
+- **Etapas do Trilheiro:** `etapas/NN-slug/`; a versão final, que é o modelo, fica em `trilheiro/` (seção 6.1), projetos estáticos completos (HTML, Sass compilado, JS), com o JavaScript do Bootstrap e o jQuery pelo CDN, como no capítulo 25.
 - **Verificação a cada push:** build; testes dos módulos JS e dos scripts (Vitest ou `node:test`); contraste das cores; palavras proibidas na saída; links quebrados; e cada etapa do Trilheiro abrindo sem erro no console.
 - **Publicação:** GitHub Actions, a cada push na `main`, para o GitHub Pages.
 - **Licença:** CC BY 4.0 para o texto, MIT para o código. Sem rastreamento.
@@ -216,4 +238,5 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 - **Framework:** Bootstrap 5.3. **O site:** HTML, Bootstrap, Sass e JavaScript puro, com Vite (seção 10), e não Angular.
 - **Do *Volta ao Mundo*:** o formato, as regras e as ideias da infraestrutura, e não o código. **Simuladores:** novos e pontuais, no contexto das trilhas; os do `lab-framework-css` não são reaproveitados.
 - **Ordem de construção:** a do livro.
+- **O Trilheiro é o modelo de projeto** (seção 6.1), no lugar do `roubank-css`: README como vitrine, `checklist.md` à parte e os três documentos de `docs/`, sem entregas nem datas.
 - **Em aberto:** se falta ou sobra algum capítulo (seção 5).
