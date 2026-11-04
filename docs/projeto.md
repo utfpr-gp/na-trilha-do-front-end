@@ -5,7 +5,7 @@
 
 ## 1. A intenção
 
-Um site aberto, em português, que ensina a construir uma aplicação web responsiva **com um framework CSS e JavaScript puro**, do protótipo ao site publicado. Ele funciona como um **livro**: pode ser lido do começo ao fim, para aprender, e consultado depois, para relembrar. É o irmão do *Volta ao Mundo em Angular*, com a mesma anatomia de capítulo e a mesma infraestrutura.
+Um site aberto, em português, que ensina a construir uma aplicação web responsiva **com um framework CSS e JavaScript puro**, do protótipo ao site publicado. Ele funciona como um **livro**: pode ser lido do começo ao fim, para aprender, e consultado depois, para relembrar. É o irmão do *Volta ao Mundo em Angular*, com a mesma anatomia de capítulo.
 
 **O critério principal é a qualidade do material**, e não a velocidade de produção.
 
@@ -181,12 +181,18 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 
 ## 10. Como é construído
 
-- **Repositório:** `utfpr-gp/<nome-do-livro>`, público, publicado no GitHub Pages.
-- **Infraestrutura reaproveitada do *Volta ao Mundo*:** o site Angular estático, os componentes das visões (`vm-chapter-page`, `vm-view`, `vm-analogy`, `vm-code`, `vm-steps`, `vm-pitfall`, `vm-deep-dive`, o desafio), o catálogo de capítulos, a busca, o glossário, a caderneta de progresso, o verificador (`npm run check`, inclusive a lista de palavras proibidas) e o `AGENTS.md`, adaptado.
-- **Estilo do site:** **Bootstrap 5.3 e Sass**, no lugar do Tailwind do *Volta ao Mundo*. Os componentes das visões continuam os mesmos; troca só a camada de estilo, e o código do site serve de exemplo nos capítulos 6, 13 e 14.
-- **As etapas do Trilheiro** são HTML, CSS e JavaScript puros, com o Bootstrap 5.3: o CSS sai do Sass (o Bootstrap instalado pelo npm, só para compilar), e o JavaScript do Bootstrap e o jQuery vêm do CDN, como no capítulo 25.
-- **Verificação a cada push:** build do site, testes, links quebrados e uma verificação das etapas (cada `index.html` abre sem erro no console, num navegador sem interface).
-- **Publicação:** GitHub Actions, a cada push na `main`.
+**O site é feito com o que o livro ensina:** HTML, Bootstrap 5.3, Sass e JavaScript puro, sem framework de JavaScript. Um leitor que abrir o código do site encontra o mesmo tipo de código que está aprendendo. Do *Volta ao Mundo em Angular* vêm **o formato e as regras**, e não o código: a anatomia do capítulo, o `AGENTS.md`, o catálogo, a caderneta, a busca, o glossário e os verificadores.
+
+- **Repositório:** `utfpr-gp/na-trilha-do-front-end`, público, publicado em `utfpr-gp.github.io/na-trilha-do-front-end`.
+- **Build:** **Vite**, com uma página HTML por capítulo (vários pontos de entrada, como no `lab-framework-css`). Cada página sai pronta do build, com todo o texto no HTML, para a busca e o Google.
+- **Partes repetidas sem framework:** o cabeçalho, a lateral e o rodapé são parciais HTML incluídos no build. As visões do capítulo são **Web Components** (custom elements em JavaScript puro, prefixo `tf-`): `<tf-view>`, `<tf-analogy>`, `<tf-code>`, `<tf-steps>`, `<tf-pitfall>`, `<tf-challenge>`. O conteúdo deles fica no HTML (sem depender de JavaScript para aparecer), e o JavaScript só acrescenta o comportamento.
+- **Estilo:** Bootstrap 5.3 personalizado por Sass (`@use` com os tokens do livro antes do Bootstrap), mais os parciais do próprio site. Nenhuma cor solta: só tokens com nome de papel. Modo claro e escuro com o `data-bs-theme` do Bootstrap.
+- **Interatividade:** o JavaScript do Bootstrap (abas, recolhíveis, modal) e módulos ES próprios para o desafio, a caderneta (Web Storage, com exportar e importar em JSON), o tema e os simuladores.
+- **Código destacado:** os trechos são destacados no build (Shiki), sem JavaScript no navegador.
+- **Busca:** Pagefind, gerado no build, funcionando no próprio navegador.
+- **Etapas do Trilheiro:** `trilheiro/etapas/NN-slug/`, projetos estáticos completos (HTML, Sass compilado, JS), com o JavaScript do Bootstrap e o jQuery pelo CDN, como no capítulo 25.
+- **Verificação a cada push:** build; testes dos módulos JS e dos scripts (Vitest ou `node:test`); contraste das cores; palavras proibidas na saída; links quebrados; e cada etapa do Trilheiro abrindo sem erro no console.
+- **Publicação:** GitHub Actions, a cada push na `main`, para o GitHub Pages.
 - **Licença:** CC BY 4.0 para o texto, MIT para o código. Sem rastreamento.
 
 ## 11. Decisões tomadas pelo agente (para o professor conferir)
@@ -200,14 +206,14 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 
 ## 12. Ordem de construção
 
-1. A estrutura: o repositório a partir do *Volta ao Mundo*, a página inicial, "Minha caderneta", o catálogo dos 25 capítulos ("em breve") e a identidade visual.
+1. A estrutura: o site em Vite, a página inicial, "Minha caderneta", o catálogo dos 25 capítulos ("em breve") e a identidade visual.
 2. Os capítulos, **na ordem do livro**, do capítulo 1 em diante (decisão do professor, 04/11).
 
 ## 13. Decisões do professor (04/11/2026)
 
 - **Livro:** *Na Trilha do Front-End*. **App:** *Trilheiro*. **Progresso:** **marcos de trilha** numa caderneta, com mirantes e cume.
 - **Modelo de uso com projetos próprios:** o tema é de quem lê, do tamanho do Trilheiro, com a visão "🧭 Na sua trilha" em cada capítulo.
-- **Framework:** Bootstrap 5.3. **Estilo do site:** Bootstrap e Sass.
-- **Infraestrutura:** reaproveitada do *Volta ao Mundo*. **Simuladores:** novos e pontuais, no contexto das trilhas; os do `lab-framework-css` não são reaproveitados.
+- **Framework:** Bootstrap 5.3. **O site:** HTML, Bootstrap, Sass e JavaScript puro, com Vite (seção 10), e não Angular.
+- **Do *Volta ao Mundo*:** o formato, as regras e as ideias da infraestrutura, e não o código. **Simuladores:** novos e pontuais, no contexto das trilhas; os do `lab-framework-css` não são reaproveitados.
 - **Ordem de construção:** a do livro.
 - **Em aberto:** se falta ou sobra algum capítulo (seção 5).
