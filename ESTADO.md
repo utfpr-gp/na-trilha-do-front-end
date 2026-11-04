@@ -8,7 +8,7 @@
 - Projeto do livro aprovado nas decisões principais: [docs/projeto.md](docs/projeto.md) (seção 13).
 - Repositório criado, com README, licenças e o projeto.
 
-- `trilheiro/docs/prd.md` e `trilheiro/docs/architecture.md` escritos (04/11), aguardando revisão do professor. Rotas e APIs conferidas de verdade (json-server 1.0.0-beta.15, Open-Meteo, ViaCEP, jQuery 4 + Mask Plugin 1.14.16).
+- `trilheiro/docs/prd.md`, `architecture.md` e `design-system.md` escritos (04/11), aguardando revisão do professor. Rotas e APIs conferidas de verdade (json-server 1.0.0-beta.15, Open-Meteo, ViaCEP, jQuery 4 + Mask Plugin 1.14.16; tema Sass compilado com Bootstrap 5.3.8 e Sass 1.107).
 
 ## Próximos passos
 
