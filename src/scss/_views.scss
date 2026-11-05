@@ -703,3 +703,56 @@ tf-token-lab {
     color: var(--tf-view-armadilhas);
   }
 }
+
+// <tf-grid-sim>: o simulador do grid
+tf-grid-sim {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+}
+
+.tf-grid-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  label {
+    font-weight: 700;
+  }
+
+  input {
+    flex: 1 1 14rem;
+    min-height: 44px;
+    accent-color: var(--tf-brand);
+  }
+}
+
+.tf-grid-status {
+  margin: 0;
+  font-family: var(--bs-font-monospace);
+  font-weight: 700;
+}
+
+.tf-grid-stage {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+
+  > div {
+    padding: 1.25rem 0.5rem;
+    border-radius: var(--bs-border-radius);
+    border: 2px solid var(--tf-brand);
+    background: var(--tf-surface);
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+}

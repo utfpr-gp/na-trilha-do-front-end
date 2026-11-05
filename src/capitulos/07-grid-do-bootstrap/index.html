@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="07-grid-do-bootstrap">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 07-grid-do-bootstrap -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>A seção "Trilhas em destaque" ganha três cartões: a Trilha do Salto, o Caminho das Araucárias e o Mirante da Serra. No celular, eles ficam um embaixo do outro; num tablet, dois por linha; no computador, três lado a lado. E ninguém escreve uma linha de CSS para isso: quem organiza é o <a class="tf-term" href="{{base}}glossario/#grid">grid</a> do Bootstrap.</p>
+        <p>É exatamente o que pede a história US02 do PRD: "1 cartão por linha no celular, 2 no tablet e 3 ou mais no computador". O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/07-grid-do-bootstrap">etapas/07-grid-do-bootstrap</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="⛺" title="O grid é a área de camping demarcada">
+          <p>Num camping organizado, o terreno é dividido em 12 lotes iguais em cada fileira. Uma barraca grande ocupa 6 lotes; uma pequena, 4. Quando a fileira enche, a próxima barraca vai para a fileira de baixo.</p>
+          <p>Num terreno estreito, cada barraca ocupa a fileira inteira; num terreno largo, cabem várias lado a lado. O grid do Bootstrap é esse camping: cada linha tem 12 colunas, e você diz quantas cada elemento ocupa em cada tamanho de terreno.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>O grid do Bootstrap tem três peças, sempre nesta ordem:</p>
+        <ol>
+          <li><strong><code>.container</code>:</strong> centraliza o conteúdo e limita a largura (540 px a partir do sm, 720 px no md, 960 px no lg, 1140 px no xl e 1320 px no xxl), com um respiro nas laterais.</li>
+          <li><strong><code>.row</code>:</strong> a fileira. Ela organiza as colunas lado a lado (com Flexbox, por baixo) e controla o espaço entre elas.</li>
+          <li><strong><code>.col-*</code>:</strong> as colunas, sempre filhas diretas de uma <code>.row</code>. O número diz quantas das 12 colunas ela ocupa.</li>
+        </ol>
+
+        <h3>Os pontos de quebra</h3>
+        <p>Um <a class="tf-term" href="{{base}}glossario/#breakpoint">breakpoint</a> é a largura a partir da qual uma regra passa a valer. O Bootstrap 5.3 tem seis, e o nome vai no meio da classe:</p>
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col">Nome</th><th scope="col">A partir de</th><th scope="col">Exemplo de classe</th></tr></thead>
+            <tbody>
+              <tr><td>xs</td><td>0 (sem prefixo)</td><td><code>col-12</code></td></tr>
+              <tr><td>sm</td><td>576 px</td><td><code>col-sm-6</code></td></tr>
+              <tr><td>md</td><td>768 px</td><td><code>col-md-4</code></td></tr>
+              <tr><td>lg</td><td>992 px</td><td><code>col-lg-4</code></td></tr>
+              <tr><td>xl</td><td>1200 px</td><td><code>col-xl-3</code></td></tr>
+              <tr><td>xxl</td><td>1400 px</td><td><code>col-xxl-2</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Repare no "a partir de": as classes valem daquele tamanho <strong>para cima</strong>, até outra classe maior tomar o lugar. É o "celular primeiro" do capítulo 5 virando código. <code>col-12 col-sm-6 col-lg-4</code> se lê: "12 colunas no começo; a partir do sm, 6; a partir do lg, 4".</p>
+
+        <h3>Experimente</h3>
+        <p>Arraste a largura e veja quantos cartões cabem por linha:</p>
+        <tf-grid-sim>
+          <div class="tf-grid-stage">
+            <div data-cols="col-12 col-sm-6 col-lg-4" data-label="Trilha do Salto"></div>
+            <div data-cols="col-12 col-sm-6 col-lg-4" data-label="Caminho das Araucárias"></div>
+            <div data-cols="col-12 col-sm-6 col-lg-4" data-label="Mirante da Serra"></div>
+          </div>
+        </tf-grid-sim>
+
+        <h3>Espaço entre as colunas e outras ferramentas</h3>
+        <ul>
+          <li><strong><code>g-*</code> (gutter):</strong> o espaço entre as colunas, na horizontal e na vertical. <code>g-4</code> vale 1,5rem.</li>
+          <li><strong><code>col</code> sem número:</strong> as colunas dividem o espaço em partes iguais, quantas houver.</li>
+          <li><strong><code>offset-md-2</code>:</strong> deixa 2 colunas vazias antes desta, a partir do md.</li>
+          <li><strong><code>order-md-first</code>:</strong> muda a ordem visual, sem mudar o HTML.</li>
+        </ul>
+        <tf-code src="07-grid-do-bootstrap/offset-order.html" caption="Exemplo"></tf-code>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O container">
+            <p>No <code>index.html</code> da etapa 6, acrescente a classe <code>container</code> ao <code>&lt;main&gt;</code>. O conteúdo passa a ficar centralizado e com largura limitada nas telas grandes.</p>
+          </section>
+          <section data-step="A linha e as colunas">
+            <p>Envolva os cartões numa <code>.row</code> e ponha cada um dentro de uma coluna. Tire o <code>style="max-width: 22rem;"</code> do cartão: agora quem decide a largura é a coluna. Acrescente <code>h-100</code> ao cartão, para os cartões de uma mesma linha terem a mesma altura:</p>
+            <tf-code src="07-grid-do-bootstrap/grid.html" caption="index.html"></tf-code>
+            <p>As ilustrações das outras duas trilhas (<code>araucarias.svg</code> e <code>mirante.svg</code>) e o HTML completo dos três cartões estão na etapa.</p>
+          </section>
+          <section data-step="Teste os tamanhos">
+            <p>Abra o DevTools (<kbd>F12</kbd>) e ligue o modo de dispositivos (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>). Escolha "Responsive" e arraste a borda da tela devagar. Pare logo antes e logo depois de cada ponto de quebra: 575 e 576 px, 991 e 992 px. É nessas linhas de corte que o layout muda.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire a <code>.row</code> e deixe as colunas soltas: os cartões ficam um embaixo do outro em qualquer tamanho, cada um com a largura da sua coluna, porque é a fileira que põe as colunas lado a lado. Desfaça. Agora tire o <code>col-sm-6</code>: no tablet, os cartões voltam a ocupar a linha inteira, até o lg. Cada classe cuida de um tamanho.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="No celular, a página aparece minúscula, como no computador">
+          <p>Falta a tag de viewport no <code>&lt;head&gt;</code>. Sem ela, o navegador do celular finge ter uns 980 px de largura e encolhe a página, e o grid nunca chega ao xs. Não há mensagem de erro:</p>
+          <tf-code src="07-grid-do-bootstrap/viewport.html" caption="index.html"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="As colunas não ficam lado a lado">
+          <p>A coluna precisa ser <strong>filha direta</strong> de uma <code>.row</code>. Uma <code>&lt;div&gt;</code> a mais no meio, ou a <code>.row</code> esquecida, deixa as colunas uma embaixo da outra, mesmo com largura de sobra. Inspecione o elemento e confira a hierarquia: <code>.row</code> → <code>.col-*</code> → conteúdo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A soma passou de 12 e a última coluna caiu para baixo">
+          <p>Três colunas <code>col-md-5</code> somam 15: a terceira não cabe e vai para a linha seguinte. Às vezes é isso que você quer (é o que acontece com os cartões no tablet); quando não for, ajuste os números para somar 12.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="07-grid-do-bootstrap" award>
+          <fieldset data-correct="b">
+            <legend>Com <code>col-12 col-sm-6 col-lg-4</code>, quantos cartões cabem por linha numa tela de 800 px?</legend>
+            <label><input type="radio" name="q1" value="a"> 1</label>
+            <label><input type="radio" name="q1" value="b"> 2</label>
+            <label><input type="radio" name="q1" value="c"> 3</label>
+            <p data-explain="a" hidden>800 px já passou do sm (576 px), então vale o <code>col-sm-6</code>: cada cartão ocupa 6 das 12 colunas.</p>
+            <p data-explain="c" hidden>Três por linha só a partir do lg (992 px). Em 800 px, vale o <code>col-sm-6</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Qual é a hierarquia certa do grid?</legend>
+            <label><input type="radio" name="q2" value="a"> <code>.col</code> → <code>.row</code> → <code>.container</code></label>
+            <label><input type="radio" name="q2" value="b"> <code>.row</code> → <code>.container</code> → <code>.col</code></label>
+            <label><input type="radio" name="q2" value="c"> <code>.container</code> → <code>.row</code> → <code>.col</code></label>
+            <p data-explain="a" hidden>Está de trás para a frente: a coluna fica dentro da fileira, que fica dentro do container.</p>
+            <p data-explain="b" hidden>A coluna precisa ser filha direta da <code>.row</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>O que quer dizer o "sm" em <code>col-sm-6</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Que a regra vale a partir de 576 px de largura, para cima</label>
+            <label><input type="radio" name="q3" value="b"> Que a regra vale só em celulares pequenos</label>
+            <label><input type="radio" name="q3" value="c"> Que a coluna é pequena</label>
+            <p data-explain="b" hidden>As classes do Bootstrap valem do ponto de quebra para cima. O sm começa em 576 px.</p>
+            <p data-explain="c" hidden>O tamanho da coluna é o número (6). O "sm" é a largura a partir da qual a regra vale.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Num celular de verdade, a página aparece encolhida, com o layout de computador. A causa mais provável é:</legend>
+            <label><input type="radio" name="q4" value="a"> O Bootstrap não funciona em celulares</label>
+            <label><input type="radio" name="q4" value="b"> Falta a tag <code>&lt;meta name="viewport"&gt;</code> no <code>&lt;head&gt;</code></label>
+            <label><input type="radio" name="q4" value="c"> Faltou o <code>g-4</code> na <code>.row</code></label>
+            <p data-explain="a" hidden>O Bootstrap foi feito para o celular primeiro. O problema é o navegador não saber a largura real da tela.</p>
+            <p data-explain="c" hidden>O <code>g-4</code> só muda o espaço entre as colunas.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Monte a listagem principal do <strong>seu projeto</strong> com o grid: um <code>.container</code>, uma <code>.row</code> com gutter e os itens em colunas que mudam de quantidade por linha entre o celular e o computador. Teste nos pontos de quebra pelo DevTools.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que são o container, a linha e a coluna?</li>
+          <li><strong>A motivação:</strong> por que usar o grid do framework em vez de larguras fixas em pixels?</li>
+          <li><strong>A anatomia:</strong> leia em voz alta as classes de uma coluna sua, como "12 no começo, 6 a partir do sm…".</li>
+          <li><strong>"E se eu tirar?":</strong> tire uma das classes de coluna e explique o que muda, e em qual tamanho de tela.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/layout/grid/">Bootstrap 5.3: Grid system</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/">Bootstrap 5.3: Breakpoints</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/layout/gutters/">Bootstrap 5.3: Gutters</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/layout/containers/">Bootstrap 5.3: Containers</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 07-grid-do-bootstrap -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
