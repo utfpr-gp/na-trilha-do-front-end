@@ -1,0 +1,19 @@
+@use "sass:math";
+
+// Espaçamentos de meio em meio rem: espaco(3) = 1.5rem.
+@function espaco($n) {
+  @return $n * 0.5rem;
+}
+
+// Converte pixels em rem (com a raiz de 16px): rem(24px) = 1.5rem.
+@function rem($px) {
+  @return math.div($px, 16px) * 1rem;
+}
+
+// Tamanho fluido: $min até a tela de $de, $max a partir de $ate, e uma reta no meio.
+// fluid(28px, 44px) = clamp(1.75rem, 1.3214…rem + 1.9047…vw, 2.75rem)
+@function fluid($min, $max, $de: 360px, $ate: 1200px) {
+  $inclinacao: math.div($max - $min, $ate - $de);
+  $base: $min - $inclinacao * $de;
+  @return clamp(#{rem($min)}, #{rem($base)} + #{$inclinacao * 100vw}, #{rem($max)});
+}
