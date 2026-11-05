@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 19 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 20 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -39,11 +39,12 @@
 - **Nomes no código (05/11):** a etapa 17 passou para nomes em inglês (`formatDuration`, `pace`, `greeting`, `trailSummary`), como pede o `architecture.md`; o capítulo 17 explica a convenção. As classes e variáveis Sass próprias das etapas 13 a 18 continuam em português (`.secao-titulo`, `$verde-mata`); o app final em `trilheiro/` segue o architecture (inglês). Decisão em aberto para o professor: padronizar ou não as etapas antigas.
 - **Capítulo 18 publicado:** DOM (árvore, querySelector/All, textContent, classList, dataset, hidden, setAttribute, createElement), eventos (click, input, change, submit, keydown), target/closest/delegação, innerHTML × textContent (XSS, conferido no Chrome) em Aprofundando; etapa com `trilhas.html` (filtro Todas/Fácil/Moderada/Difícil/Favoritas com `.btn-check`, total com aria-live) e `js/trails.js` (favorito com aria-pressed e amarelo de marcação), testada no Chrome; erros reais de `null`; simulador `<tf-event-log>`; termos "DOM" e "delegação de eventos". O Início ainda tem o coração parado: os cartões passam a vir de um array no 19.
 - **Capítulo 19 publicado:** objetos, arrays (filter/map/find, forEach, includes, push), classe `Trail`, módulos ES (`type="module"`, Live Server), `toLocaleString('pt-BR')`, spread em Aprofundando; etapa com `js/{data,format,trail,favorites,trail-card,home,trails}.js` (cartões montados do array, dados por textContent, 4ª trilha sem foto com `img/trilha-sem-foto.svg`, coração do Início funcionando), testada no Chrome; erros reais de módulo/CORS/export/new; simulador `<tf-array-lab>`; termos array, classe, módulo (ES). O link "Ver trilha" já leva `trilha.html?id=N` (o detalhe continua estático até o 23).
+- **Capítulo 20 publicado:** atributos HTML5, expressões regulares (pattern e `test`/`replace`), `validity`, `setCustomValidity` (balões, Atividade 16), `novalidate` + `.is-invalid`/`.invalid-feedback`, validação no servidor em Aprofundando; etapa com `cadastrar.html` (todos os campos do dicionário, RN01–RN05) e `js/trail-form.js` (mensagens por problema, regra do nome por regex, erro após `focusout`, foco no primeiro erro, objeto montado com FormData), testada no Chrome com teclas reais; `$danger` = vermelho de Difícil; armadilhas reais (pattern com hífen e flag v, minlength só com digitação); simulador `<tf-regex-lab>`; termo expressão regular.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 20 (validar formulários: `cadastrar.html`, HTML5 + regex, `setCustomValidity`, mensagens do Bootstrap; base Atividade 16) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 21 (Web Storage e JSON: favoritas e último filtro no localStorage, `storage.js` com try/catch; base Atividade 17) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

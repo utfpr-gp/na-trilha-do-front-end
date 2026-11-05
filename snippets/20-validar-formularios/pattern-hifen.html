@@ -1,0 +1,2 @@
+<input pattern="[0-9-]{9}">   <!-- inválido: o hífen solto dentro dos colchetes -->
+<input pattern="[0-9\-]{9}">  <!-- certo: o hífen escapado com a barra -->
