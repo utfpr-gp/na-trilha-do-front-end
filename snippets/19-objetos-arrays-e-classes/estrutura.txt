@@ -1,0 +1,8 @@
+js/
+├── data.js         as trilhas (um array de objetos)
+├── format.js       formatDuration e formatDistance
+├── trail.js        a classe Trail
+├── favorites.js    a lista de favoritas
+├── trail-card.js   monta o cartão de uma trilha
+├── home.js         Início: as trilhas em destaque
+└── trails.js       Trilhas: todas, com o filtro
