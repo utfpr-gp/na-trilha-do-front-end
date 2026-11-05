@@ -76,7 +76,7 @@ As partes são os trechos de uma trilha. Cada capítulo responde a uma pergunta,
 | **A subida** | 11. Como fazer layout com Flexbox e Grid no CSS puro? · 12. Por que usar unidades relativas (`rem`, `%`, `vw`, `vh`) no lugar de pixels? · 13. Como personalizar o Bootstrap com Sass? · 14. Como organizar o meu CSS com Sass: parciais, variáveis, mixins e funções? · 15. Como fazer tipografia responsiva e fluida com `clamp()`? · 16. Como deixar as imagens responsivas e leves: `object-fit`, `srcset`, `<picture>` e WebP? |
 | **A travessia** | 17. Que JavaScript preciso para dar vida à página: DOM e eventos? · 18. Como organizar os dados com objetos, arrays e classes? · 19. Como validar formulários com HTML e expressões regulares? · 20. Como guardar dados no navegador com Web Storage e JSON? · 21. Como usar o jQuery e um plugin de máscara? |
 | **O cume** | 22. Como salvar e buscar dados com `fetch` e o json-server? · 23. Como consumir uma API pública e tratar os erros? · 24. Como manter o código padronizado com Prettier e ESLint? · 25. Como publicar o site no GitHub Pages? |
-| **Para ir além** (sem marco) | Materialize e outros frameworks CSS, lado a lado · O que é o Tailwind, e por que ele pensa diferente · Medir e melhorar com o Lighthouse · Acessibilidade na prática |
+| **Para ir além** (sem marco) | Materialize e outros frameworks CSS, lado a lado · O que é o Tailwind, e por que ele pensa diferente · Medir e melhorar com o Lighthouse · Acessibilidade na prática · E quando o projeto cresce: o que faz um bundler como o Vite? |
 
 **Alguns capítulos em detalhe:**
 
@@ -218,6 +218,8 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 - **Verificação a cada push:** build; testes dos módulos JS e dos scripts (Vitest ou `node:test`); contraste das cores; palavras proibidas na saída; links quebrados; e cada etapa do Trilheiro abrindo sem erro no console.
 - **Publicação:** GitHub Actions, a cada push na `main`, para o GitHub Pages.
 - **Licença:** CC BY 4.0 para o texto, MIT para o código. Sem rastreamento.
+
+**Vite em "Para ir além"** (decisão do professor, 05/11): o livro não usa build no Trilheiro; o capítulo extra mostra o que um bundler acrescenta (servidor de desenvolvimento, `import` de CSS e Sass, build com arquivos com hash) quando o projeto cresce. O próprio site do livro é feito com Vite e serve de exemplo.
 
 ## 11. Decisões tomadas pelo agente (para o professor conferir)
 

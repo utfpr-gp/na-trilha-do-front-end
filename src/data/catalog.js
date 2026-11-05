@@ -44,11 +44,12 @@ const raw = [
     [null, 'o-que-e-o-tailwind', 'O que é o Tailwind, e por que ele pensa diferente?', 25],
     [null, 'lighthouse', 'Como medir e melhorar o site com o Lighthouse?', 30],
     [null, 'acessibilidade-na-pratica', 'Como deixar o site acessível na prática?', 40],
+    [null, 'vite-e-bundlers', 'E quando o projeto cresce: o que faz um bundler como o Vite?', 35],
   ]],
 ];
 
 // Capítulos já publicados.
-const PUBLISHED = new Set(['01-por-que-um-framework', '02-preparar-o-ambiente']);
+const PUBLISHED = new Set(['01-por-que-um-framework', '02-preparar-o-ambiente', '03-html-e-css-para-relembrar']);
 
 export const PARTS = raw.map(([id, title, hasMarks, chapters]) => ({
   id,
