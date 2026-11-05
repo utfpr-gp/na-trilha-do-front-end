@@ -16,7 +16,7 @@
 
 1. ~~Escrever~~ Executar `docs/plano-1-estrutura.md` (escrito em 04/11, aguardando revisão do professor): o site em **HTML, Bootstrap 5.3, Sass e JavaScript puro, com Vite** (projeto, seção 10). Do *Volta ao Mundo* vêm o formato e as regras, e não o código.
 2. Estrutura: página inicial, "Minha caderneta", o catálogo dos 25 capítulos como "em breve", a identidade visual (verde-mata, terra, amarelo de marcação) e o `AGENTS.md` adaptado.
-4. Capítulos na ordem do livro, do 1 em diante.
+3. Capítulos na ordem do livro, do 1 em diante.
 
 ## Em aberto
 
