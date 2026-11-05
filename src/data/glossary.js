@@ -29,5 +29,6 @@ export const GLOSSARY = [
   { id: 'array', term: 'array', definition: 'Uma lista de valores em ordem, entre colchetes: [trilha1, trilha2]. Métodos como filter, map e find criam listas novas ou acham um item, sem mudar a original.', chapter: 19 },
   { id: 'classe', term: 'classe', definition: 'Em JavaScript, o molde de um tipo de objeto: o constructor guarda os dados e os métodos dizem o que fazer com eles. new Trail(dados) cria um objeto a partir do molde.', chapter: 19 },
   { id: 'modulo', term: 'módulo (ES)', definition: 'Um arquivo JavaScript que escolhe o que mostra para os outros com export e usa o que precisa com import. Na página, entra com <script type="module">, servido por http:// (o Live Server).', chapter: 19 },
+  { id: 'expressao-regular', term: 'expressão regular', definition: 'Um padrão para conferir ou procurar texto: /^\\d{5}-?\\d{3}$/ aceita um CEP com ou sem hífen. Vai no atributo pattern do HTML ou no JavaScript, com regex.test(valor).', chapter: 20 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

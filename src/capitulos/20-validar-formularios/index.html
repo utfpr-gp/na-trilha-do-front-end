@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="20-validar-formularios">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 20-validar-formularios -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O link "Cadastrar trilha" do menu, parado desde o capítulo 9, ganha a sua página: <code>cadastrar.html</code>, com um formulário para uma trilha nova. E um formulário só presta se recusa dados errados. Por isso, cada regra do PRD vira uma conferência no navegador: o nome com 3 a 80 caracteres (RN01), a distância de 0,5 a 50 km com uma casa decimal (RN02), a dificuldade e o percurso escolhidos entre as opções (RN03), o CEP e o telefone no formato certo (RN04), a data da última visita nunca no futuro (RN05).</p>
+        <p>Cada erro aparece logo abaixo do campo, em português claro e no vermelho de "Difícil", só depois que a pessoa passou pelo campo ou tentou salvar. Quando está tudo certo, o formulário monta o objeto da trilha, pronto para ser gravado quando o servidor chegar. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/20-validar-formularios">etapas/20-validar-formularios</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🧭" title="O guarda na entrada do parque">
+          <p>Na portaria do parque, o guarda confere o básico de quem entra: tem água? Tem calçado fechado? Para quem vai à trilha difícil, pergunta mais. E ele não espera a pessoa chegar no meio do caminho para avisar que falta lanterna: avisa ali, na hora, com uma frase clara.</p>
+          <p>A validação é esse guarda. Os atributos do HTML (<code>required</code>, <code>min</code>, <code>pattern</code>) conferem o básico de graça; o JavaScript entra para as regras especiais e para falar como gente. Uma ressalva: o guarda da portaria não substitui a segurança do parque. Quem tem um servidor confere de novo lá, porque o navegador está nas mãos de quem visita.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>O HTML já valida</h3>
+        <p>Só com atributos, sem uma linha de JavaScript, o navegador recusa o envio e mostra um <strong>balão</strong> junto do primeiro campo com problema:</p>
+        <tf-code src="20-validar-formularios/atributos.html" caption="Os atributos de validação"></tf-code>
+        <ul>
+          <li><code>required</code>: não pode ficar vazio. Num grupo de rádios, basta no primeiro;</li>
+          <li><code>minlength</code> e <code>maxlength</code>: o tamanho do texto;</li>
+          <li><code>min</code>, <code>max</code> e <code>step</code>: os limites de um número ou de uma data. O <code>step="0.1"</code> aceita uma casa decimal;</li>
+          <li><code>type="email"</code>, <code>type="number"</code>, <code>type="date"</code>: o tipo do valor, com o teclado certo no celular;</li>
+          <li><code>pattern</code>: uma <a class="tf-term" href="{{base}}glossario/#expressao-regular">expressão regular</a> que o valor inteiro precisa seguir.</li>
+        </ul>
+
+        <h3>Expressões regulares</h3>
+        <p>Uma expressão regular é um padrão de texto. Parece um código secreto, mas se lê por partes:</p>
+        <tf-code src="20-validar-formularios/regex.js" caption="Exemplo"></tf-code>
+        <p>Teste as regras do cadastro. Digite e veja, a cada letra, se o valor combina:</p>
+        <tf-regex-lab></tf-regex-lab>
+        <p>No <code>pattern</code> do HTML, você escreve sem as barras e sem o <code>^</code> e o <code>$</code>: o navegador já exige que o valor inteiro combine.</p>
+
+        <h3>O que o navegador sabe: validity</h3>
+        <p>Todo campo tem um objeto <code>validity</code>, que diz se ele é válido e, se não for, qual é o problema:</p>
+        <tf-code src="20-validar-formularios/validity.js" caption="Exemplo"></tf-code>
+        <p>Os problemas têm nomes fixos: <code>valueMissing</code> (vazio), <code>tooShort</code> e <code>tooLong</code> (tamanho), <code>rangeUnderflow</code> e <code>rangeOverflow</code> (abaixo do mínimo, acima do máximo), <code>stepMismatch</code> (fora do passo), <code>patternMismatch</code> (não segue o pattern), <code>typeMismatch</code> (não é um e-mail, por exemplo) e <code>badInput</code> (o navegador não conseguiu ler o valor).</p>
+
+        <h3>A sua frase no balão: setCustomValidity</h3>
+        <p>A mensagem padrão do navegador é genérica (algo como "corresponda ao formato solicitado"), muda de navegador para navegador e não diz qual é o formato. O <code>setCustomValidity</code> troca a mensagem por uma sua, que passa a aparecer no balão:</p>
+        <tf-code src="20-validar-formularios/balao.js" caption="Exemplo"></tf-code>
+        <p>Ele também serve para as regras que o HTML não sabe conferir: qualquer texto passado a ele deixa o campo inválido, e o texto vazio, <code>''</code>, deixa válido de novo.</p>
+
+        <h3>Do balão para a mensagem abaixo do campo</h3>
+        <p>O balão some depois de alguns segundos e mostra um erro por vez. O design system do Trilheiro pede outra coisa: cada erro <strong>abaixo do campo</strong>, visível enquanto não for corrigido. Para isso, o <code>novalidate</code> desliga os balões, e o JavaScript usa a mesma validação do navegador para preencher as mensagens do Bootstrap (<code>.is-invalid</code> e <code>.invalid-feedback</code>):</p>
+        <tf-code src="20-validar-formularios/novalidate.html" caption="cadastrar.html"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: por que validar de novo no servidor?</summary>
+          <p>Qualquer pessoa pode abrir o DevTools, apagar o <code>required</code> e enviar o formulário vazio, ou mandar os dados direto para o servidor, sem passar pela página. A validação no navegador existe para ajudar quem preenche, com a resposta na hora. A que <strong>protege os dados</strong> é a do servidor. O json-server do capítulo 23 não confere nada: num projeto de verdade, o back-end repete as regras.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A página e os atributos">
+            <p>Crie <code>cadastrar.html</code>, com o cabeçalho e o rodapé das outras páginas, e aponte para ela o "Cadastrar trilha" do menu. Monte o formulário com os campos do dicionário de dados do <code>architecture.md</code>, em quatro grupos (<code>&lt;fieldset&gt;</code> com <code>&lt;legend&gt;</code>): a trilha, onde começa, o que levar, e o guia e a última visita.</p>
+            <p>Cada campo tem um rótulo visível, os atributos da sua regra, e um lugar para a mensagem de erro, ligado ao campo pelo <code>aria-describedby</code> (assim o leitor de tela lê o erro junto com o campo):</p>
+            <tf-code src="20-validar-formularios/campo.html" caption="cadastrar.html"></tf-code>
+            <p>Antes de pôr o <code>novalidate</code>, teste: clique em "Salvar trilha" com tudo vazio, e o balão aparece no primeiro campo. Digite "8501" no CEP e tente de novo. Esses são os balões que você vai trocar pelas mensagens abaixo dos campos.</p>
+          </section>
+          <section data-step="A data de hoje">
+            <p>Crie <code>js/trail-form.js</code> (com <code>type="module"</code>, como os outros). Primeiro, o máximo da data, que precisa ser o dia de hoje:</p>
+            <tf-code src="20-validar-formularios/hoje.js" caption="js/trail-form.js"></tf-code>
+            <p>Por que não <code>new Date().toISOString().slice(0, 10)</code>? Porque o <code>toISOString</code> usa o horário de Greenwich: depois das 21h no Brasil, ele já dá o dia seguinte.</p>
+          </section>
+          <section data-step="As mensagens e a validação">
+            <p>Um objeto com as mensagens de cada campo, uma para cada problema do <code>validity</code>:</p>
+            <tf-code src="20-validar-formularios/mensagens.js" caption="js/trail-form.js"></tf-code>
+            <p>E as funções que conferem um campo, trocam a mensagem do navegador pela sua e mostram o erro. A regra do nome com letras usa uma expressão regular no JavaScript, porque o HTML não tem atributo para isso:</p>
+            <tf-code src="20-validar-formularios/validar.js" caption="js/trail-form.js"></tf-code>
+          </section>
+          <section data-step="Quando conferir">
+            <p>O erro só aparece depois que a pessoa sai do campo (<code>focusout</code>, que sobe até o formulário, ao contrário do <code>blur</code>). Daí em diante, o campo é conferido a cada letra, e a mensagem some assim que o erro é corrigido:</p>
+            <tf-code src="20-validar-formularios/eventos.js" caption="js/trail-form.js"></tf-code>
+          </section>
+          <section data-step="O envio">
+            <p>No <code>submit</code>, todos os campos são conferidos. Se algum tem erro, o foco vai para o primeiro. Se não, o formulário monta o objeto da trilha. O CEP é guardado sempre com o hífen, digitado ou não:</p>
+            <tf-code src="20-validar-formularios/cep.js" caption="js/trail-form.js"></tf-code>
+            <tf-code src="20-validar-formularios/envio.js" caption="js/trail-form.js"></tf-code>
+            <p>Por fim, o vermelho de "Difícil" nas mensagens, no tema:</p>
+            <tf-code src="20-validar-formularios/tema.scss" caption="scss/_theme.scss"></tf-code>
+            <p>Teste: salve vazio (10 mensagens, e o foco no nome); digite "123" no nome; "4.55" na distância; "8501026" no CEP; uma data do ano que vem. Corrija um por um e veja as mensagens sumindo. Com tudo certo, aparece "Tudo certo com a trilha…", e o objeto vai para o console. Gravar de verdade fica para o capítulo 23.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire a primeira linha do <code>validateField</code>, o <code>field.setCustomValidity('')</code>. Digite "123" no nome, saia do campo, e depois corrija para "Trilha 123": o erro "O nome precisa ter letras." não sai mais, e o formulário nunca é aceito. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O campo ficou inválido para sempre">
+          <p>Depois de um <code>setCustomValidity('mensagem')</code>, o campo continua inválido até alguém chamar <code>setCustomValidity('')</code>. Sempre comece a conferência apagando o erro anterior.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O hífen no pattern" message="Pattern attribute value [0-9-]{9} is not a valid regular expression: … Invalid regular expression: /[0-9-]{9}/v: Invalid character class">
+          <p>O Chrome lê o <code>pattern</code> com uma regra mais rígida (a flag <code>v</code>), em que um hífen solto entre colchetes não vale. O pior: com o pattern inválido, o navegador simplesmente <strong>ignora</strong> a regra, e qualquer valor passa. Escape o hífen, <code>[0-9\-]</code>, e confira o console sempre que mexer num pattern.</p>
+          <tf-code src="20-validar-formularios/pattern-hifen.html" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="Preenchi pelo console e o minlength não reclamou">
+          <p>O <code>minlength</code> e o <code>maxlength</code> só são conferidos depois que <strong>a pessoa</strong> digita. Um valor posto pelo JavaScript (<code>campo.value = 'Ab'</code>) passa sem <code>tooShort</code>. Para testar, digite no campo, como quem usa o site.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O formulário envia mesmo com erro">
+          <p>Com o <code>novalidate</code>, o navegador não barra mais nada: o <code>submit</code> acontece sempre, e quem decide é o seu código. Esqueceu o <code>event.preventDefault()</code>, ou o <code>return</code> depois de achar um erro, e o formulário segue adiante.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O erro aparece antes de a pessoa digitar">
+          <p>Conferir no <code>input</code> desde o começo pinta o campo de vermelho na primeira letra ("Use pelo menos 3 caracteres" quando a pessoa digitou só o "T"). Espere o campo ser tocado (<code>focusout</code>) ou a tentativa de salvar, como pede o design system.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="20-validar-formularios" award>
+          <fieldset data-correct="b">
+            <legend>Quais valores a expressão <code>/^\d{5}-?\d{3}$/</code> aceita?</legend>
+            <label><input type="radio" name="q1" value="a"> Só <code>85010-260</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>85010-260</code> e <code>85010260</code></label>
+            <label><input type="radio" name="q1" value="c"> Qualquer texto com 8 dígitos, como <code>CEP 85010260</code></label>
+            <p data-explain="a" hidden>O <code>?</code> deixa o hífen opcional: sem ele também combina.</p>
+            <p data-explain="c" hidden>O <code>^</code> e o <code>$</code> exigem que o texto inteiro seja o CEP, sem nada antes nem depois.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Um campo com <code>min="0.5"</code> recebeu <code>0.2</code>. Que problema o <code>validity</code> aponta?</legend>
+            <label><input type="radio" name="q2" value="a"> <code>valueMissing</code></label>
+            <label><input type="radio" name="q2" value="b"> <code>rangeOverflow</code></label>
+            <label><input type="radio" name="q2" value="c"> <code>rangeUnderflow</code></label>
+            <p data-explain="a" hidden>O campo não está vazio. O valor existe, mas está abaixo do mínimo.</p>
+            <p data-explain="b" hidden>O <em>overflow</em> é passar do máximo. Abaixo do mínimo é <em>underflow</em>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para que serve o <code>setCustomValidity('')</code>, com o texto vazio?</legend>
+            <label><input type="radio" name="q3" value="a"> Apaga o erro personalizado, e o campo volta a depender só das regras do HTML</label>
+            <label><input type="radio" name="q3" value="b"> Deixa o campo sempre válido, mesmo vazio</label>
+            <label><input type="radio" name="q3" value="c"> Mostra um balão sem texto</label>
+            <p data-explain="b" hidden>As regras do HTML continuam valendo: um campo <code>required</code> vazio segue inválido.</p>
+            <p data-explain="c" hidden>Ele não mostra nada: só tira o erro que você tinha posto.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que o Trilheiro usa <code>novalidate</code> no formulário?</legend>
+            <label><input type="radio" name="q4" value="a"> Para não validar nada</label>
+            <label><input type="radio" name="q4" value="b"> Para trocar os balões do navegador por mensagens abaixo de cada campo, usando a mesma validação</label>
+            <label><input type="radio" name="q4" value="c"> Porque o Bootstrap não funciona com <code>required</code></label>
+            <p data-explain="a" hidden>A validação continua: o <code>novalidate</code> só tira os balões e o bloqueio automático do envio.</p>
+            <p data-explain="c" hidden>Funciona, sim: as classes <code>.is-invalid</code> e <code>.invalid-feedback</code> usam justamente a validação do HTML.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, crie o formulário de cadastro da coisa principal do seu tema, com as regras do seu PRD: campos obrigatórios, limites de tamanho e de valor, pelo menos um <code>pattern</code> com expressão regular e uma regra conferida só no JavaScript. Troque as mensagens do navegador pelas suas com <code>setCustomValidity</code>, nos balões ou abaixo dos campos.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que o HTML valida sozinho, e o que precisou de JavaScript?</li>
+          <li><strong>A motivação:</strong> por que validar no navegador, se o servidor precisa validar de novo?</li>
+          <li><strong>A anatomia:</strong> leia a sua expressão regular parte por parte.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>setCustomValidity('')</code> e mostre o campo preso no erro.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Extensions/Forms/Form_validation">MDN: validação de formulários</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setCustomValidity">MDN: setCustomValidity (em inglês)</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Regular_expressions">MDN: expressões regulares</a></li>
+          <li><a href="https://regex101.com/">regex101: teste e explicação de expressões regulares</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/forms/validation/">Bootstrap: validação de formulários</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 20-validar-formularios -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

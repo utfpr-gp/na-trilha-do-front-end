@@ -1,0 +1,4 @@
+@use "sass:map";
+@use "tokens" as t;
+
+$danger: map.get(t.$dificuldades, dificil); // os erros dos formulários no vermelho de "Difícil"

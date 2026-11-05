@@ -1,0 +1,12 @@
+<form id="trail-form">
+  <label class="form-label" for="nome">Nome *</label>
+  <input class="form-control" id="nome" name="nome" required minlength="3" maxlength="80">
+
+  <label class="form-label" for="distanciaKm">Distância (km) *</label>
+  <input class="form-control" type="number" id="distanciaKm" name="distanciaKm" required min="0.5" max="50" step="0.1">
+
+  <label class="form-label" for="cep">CEP *</label>
+  <input class="form-control" id="cep" name="cep" required pattern="\d{5}-?\d{3}" placeholder="00000-000">
+
+  <button type="submit" class="btn btn-primary">Salvar trilha</button>
+</form>
