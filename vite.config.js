@@ -9,6 +9,7 @@ if (existsSync(resolve(root, '404.html'))) pages.push(resolve(root, '404.html'))
 
 export default defineConfig(({ command, isPreview }) => ({
   root,
+  appType: 'mpa',
   // O preview serve o dist/, que foi gerado com a base do GitHub Pages.
   base: command === 'build' || isPreview ? '/na-trilha-do-front-end/' : '/',
   publicDir: resolve(root, 'public'),

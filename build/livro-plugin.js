@@ -2,9 +2,11 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { PARTS, allChapters } from '../src/data/catalog.js';
 import { GLOSSARY } from '../src/data/glossary.js';
+import { SITE_URL } from '../scripts/post-build.mjs';
 import { highlightSnippets } from './highlight.js';
 import { expandIncludes, renderMarkers, replaceBase } from './html.js';
 import { renderCatalog, renderChapterHeader, renderGlossary, renderPager, renderTrailMap } from './render.js';
+import { applySeo } from './seo.js';
 import { expandViews } from './views.js';
 
 const PARTIALS_DIR = resolve(import.meta.dirname, '../src/partials');
@@ -29,7 +31,7 @@ export function defaultRenderers() {
   };
 }
 
-/** Monta cada página no build: parciais → marcadores → visões → trechos destacados → base. */
+/** Monta cada página no build: parciais → marcadores → visões → trechos destacados → base → SEO. */
 export function livroPlugin({ renderers = defaultRenderers() } = {}) {
   let base = '/';
   return {
@@ -39,7 +41,7 @@ export function livroPlugin({ renderers = defaultRenderers() } = {}) {
     },
     transformIndexHtml: {
       order: 'pre',
-      async handler(html) {
+      async handler(html, ctx) {
         let out = expandIncludes(html, readPartial);
         const bound = Object.fromEntries(
           Object.entries(renderers).map(([name, render]) => [name, (arg) => render(arg, { base })]),
@@ -47,7 +49,9 @@ export function livroPlugin({ renderers = defaultRenderers() } = {}) {
         out = renderMarkers(out, bound);
         out = expandViews(out);
         out = await highlightSnippets(out, { snippetsDir: SNIPPETS_DIR });
-        return replaceBase(out, base);
+        out = replaceBase(out, base);
+        const path = ctx.path.endsWith('/') ? `${ctx.path}index.html` : ctx.path;
+        return applySeo(out, { path, siteUrl: SITE_URL });
       },
     },
   };
