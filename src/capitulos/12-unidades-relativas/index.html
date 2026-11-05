@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="12-unidades-relativas">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 12-unidades-relativas -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O início do Trilheiro ganha uma <strong>faixa de destaque</strong>, com a ilustração de um mirante ao fundo, o título e uma frase. A altura dela é uma fração da tela (<code>40vh</code>), o título não passa de 18 letras de largura (<code>18ch</code>) e o texto, de 45. Nenhum tamanho é escrito em pixels.</p>
+        <p>Por quê? Porque o site precisa se adaptar a duas coisas que você não controla: o tamanho da tela e o tamanho de letra que a pessoa escolheu no navegador. As unidades relativas resolvem as duas. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/12-unidades-relativas">etapas/12-unidades-relativas</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🎒" title="Ajustar a mochila ao corpo, e não ao manequim">
+          <p>Uma mochila com alças de comprimento fixo serve perfeitamente no manequim da loja, e machuca metade das pessoas que a compram. Uma mochila boa tem alças que se ajustam ao corpo de quem a usa.</p>
+          <p>O pixel é a alça fixa: fica perfeito no seu monitor. As unidades relativas são as alças ajustáveis: <code>rem</code> se ajusta à letra que a pessoa escolheu, <code>%</code> e <code>vw</code> à largura disponível, <code>vh</code> à altura da tela.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col">Unidade</th><th scope="col">Relativa a</th><th scope="col">Use para</th></tr></thead>
+            <tbody>
+              <tr><td><code>px</code></td><td>nada (fixa)</td><td>bordas finas, sombras</td></tr>
+              <tr><td><code>rem</code></td><td>a fonte da raiz (<code>&lt;html&gt;</code>), em geral 16px</td><td>tamanhos de fonte, espaços, larguras máximas</td></tr>
+              <tr><td><code>em</code></td><td>a fonte do próprio elemento</td><td>respiros que acompanham o texto (padding de botões e etiquetas)</td></tr>
+              <tr><td><code>%</code></td><td>o elemento pai</td><td>larguras dentro de um contêiner</td></tr>
+              <tr><td><code>vw</code> / <code>vh</code></td><td>1% da largura / altura da tela</td><td>faixas de destaque, tamanhos fluidos (capítulo 15)</td></tr>
+              <tr><td><code>ch</code></td><td>a largura do caractere "0" da fonte</td><td>largura de leitura de um parágrafo</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Por que <a class="tf-term" href="{{base}}glossario/#rem">rem</a> nas fontes</h3>
+        <p>Nas configurações do navegador, qualquer pessoa pode aumentar o tamanho padrão da letra, e muita gente faz isso para ler melhor. Um <code>font-size: 18px</code> ignora essa escolha; <code>1.125rem</code> a respeita, porque é 1,125 vezes a letra da raiz:</p>
+        <tf-code src="12-unidades-relativas/px-rem.css" caption="Exemplo"></tf-code>
+        <p>Experimente: aumente a fonte do navegador e compare uma barra de 200px com uma de 12.5rem (que, com a fonte padrão de 16px, também mede 200px):</p>
+        <tf-unit-lab>
+          <div class="tf-unit-bars" data-unit-bars>
+            <div data-unit="200px"></div>
+            <div data-unit="12.5rem"></div>
+          </div>
+        </tf-unit-lab>
+
+        <h3>em: relativo ao próprio texto</h3>
+        <p>O <code>em</code> se mede pelo tamanho de letra do próprio elemento. No padding de uma etiqueta, isso é ótimo: se a etiqueta ficar maior, o respiro cresce junto. Mas cuidado com <code>em</code> em tamanho de fonte de elementos aninhados: cada nível multiplica o anterior (veja as armadilhas).</p>
+
+        <h3>vh, e a barra do navegador no celular</h3>
+        <p><code>40vh</code> é 40% da altura da tela. No celular, a barra de endereço aparece e some ao rolar, e o <code>vh</code> considera a altura sem ela, o que pode cortar o fim de uma seção. As unidades novas <code>dvh</code> (dinâmica), <code>svh</code> (menor) e <code>lvh</code> (maior) resolvem isso; com uma linha de reserva em <code>vh</code>, os navegadores antigos continuam funcionando:</p>
+        <tf-code src="12-unidades-relativas/dvh.css" caption="Exemplo"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: converter px em rem sem conta de cabeça</summary>
+          <p>Com a raiz em 16px, divida por 16: 24px = 1.5rem, 12px = 0.75rem. A extensão <strong>cssrem</strong>, do VS Code, sugere a conversão enquanto você digita. E o Bootstrap já trabalha em <code>rem</code>: toda a escala de espaçamentos do capítulo 8 (0,25rem, 0,5rem, 1rem…) segue a letra do navegador.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A faixa de destaque">
+            <p>No <code>index.html</code>, tire o título e a frase de dentro do <code>&lt;main&gt;</code> e ponha-os numa seção própria, antes dele: <code>&lt;section class="hero"&gt;</code>, com um <code>.container</code> dentro. No <code>style.css</code>:</p>
+            <tf-code src="12-unidades-relativas/hero.css" caption="css/style.css"></tf-code>
+            <p>O <code>background</code> tem duas camadas: a ilustração, cobrindo toda a área (<code>center / cover</code>), e a cor de marcação por trás, que aparece enquanto a imagem carrega.</p>
+          </section>
+          <section data-step="Larguras de leitura">
+            <p>Repare no <code>max-width: 45ch</code> do texto. Linhas muito longas cansam a leitura: o olho se perde ao voltar para o começo da linha seguinte. Algo entre 45 e 75 caracteres por linha é confortável, e o <code>ch</code> mede exatamente isso.</p>
+          </section>
+          <section data-step="Respiros em em">
+            <p>Nas etiquetas do "O que levar", troque o padding para <code>em</code>:</p>
+            <tf-code src="12-unidades-relativas/em.css" caption="css/style.css"></tf-code>
+          </section>
+          <section data-step="Teste com a letra grande">
+            <p>Nas configurações do navegador, aumente o tamanho da fonte para "Muito grande" e recarregue o Trilheiro. Os textos e os espaços crescem juntos, e nada se sobrepõe. Volte ao tamanho médio no fim.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Troque o <code>max-width: 45ch</code> do texto por nada: numa tela larga, a frase vira uma linha só, comprida demais para ler. Troque o <code>min-height: 40vh</code> por <code>400px</code> e veja no celular deitado: a faixa ocupa a tela toda, e o resto da página some para baixo.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O texto foi crescendo a cada nível de lista">
+          <p>Com <code>li { font-size: 1.2em; }</code>, uma lista dentro de outra lista fica com 1,2 × 1,2 = 1,44 vezes o tamanho, e a próxima, com 1,73. O <code>em</code> multiplica a fonte do pai. Para tamanhos de fonte, use <code>rem</code>, que sempre se mede pela raiz.</p>
+        </tf-pitfall>
+        <tf-pitfall title="No celular, o fim da seção ficou escondido atrás da barra do navegador">
+          <p>Seções com <code>100vh</code> são calculadas sem a barra de endereço, que no celular ocupa parte da tela. Use <code>100dvh</code> (com uma linha de <code>100vh</code> antes, como reserva) ou prefira <code>min-height</code> a <code>height</code>, para o conteúdo poder passar da altura quando precisar.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Uma largura em vw criou rolagem lateral">
+          <p><code>width: 100vw</code> inclui a largura da barra de rolagem vertical, e fica alguns pixels mais largo que a área visível. Para ocupar toda a largura do pai, use <code>width: 100%</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="12-unidades-relativas" award>
+          <fieldset data-correct="b">
+            <legend>Por que usar <code>rem</code> em vez de <code>px</code> no tamanho da fonte?</legend>
+            <label><input type="radio" name="q1" value="a"> Porque <code>rem</code> carrega mais rápido</label>
+            <label><input type="radio" name="q1" value="b"> Porque <code>rem</code> acompanha o tamanho de letra que a pessoa escolheu no navegador</label>
+            <label><input type="radio" name="q1" value="c"> Porque <code>px</code> não funciona em celulares</label>
+            <p data-explain="a" hidden>A unidade não muda a velocidade. Muda se o tamanho respeita ou não a escolha de quem lê.</p>
+            <p data-explain="c" hidden><code>px</code> funciona em qualquer tela; o problema é ignorar a fonte escolhida no navegador.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Com a fonte da raiz em 16px, quanto vale <code>1.5rem</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> 24px</label>
+            <label><input type="radio" name="q2" value="b"> 15px</label>
+            <label><input type="radio" name="q2" value="c"> 1,5px</label>
+            <p data-explain="b" hidden>O <code>rem</code> multiplica a fonte da raiz: 1,5 × 16 = 24.</p>
+            <p data-explain="c" hidden>1,5 é o multiplicador, e não o tamanho: 1,5 × 16px = 24px.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Para que serve <code>max-width: 45ch</code> num parágrafo?</legend>
+            <label><input type="radio" name="q3" value="a"> Para o parágrafo ter 45 linhas</label>
+            <label><input type="radio" name="q3" value="b"> Para a fonte ficar com 45 pixels</label>
+            <label><input type="radio" name="q3" value="c"> Para limitar a linha a cerca de 45 caracteres, uma largura confortável de leitura</label>
+            <p data-explain="a" hidden>O <code>ch</code> mede largura (o tamanho de um caractere), e não linhas.</p>
+            <p data-explain="b" hidden>O <code>max-width</code> é a largura do bloco, e não o tamanho da fonte.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que listas aninhadas com <code>font-size: 1.2em</code> ficam cada vez maiores?</legend>
+            <label><input type="radio" name="q4" value="a"> Por um defeito do navegador</label>
+            <label><input type="radio" name="q4" value="b"> Porque o <code>em</code> multiplica a fonte do pai, e cada nível multiplica o anterior</label>
+            <label><input type="radio" name="q4" value="c"> Porque o Bootstrap aumenta as listas</label>
+            <p data-explain="a" hidden>É o comportamento esperado do <code>em</code>. Para tamanhos de fonte, use <code>rem</code>.</p>
+            <p data-explain="c" hidden>O efeito vem do <code>em</code>, que se mede pelo pai, e não do Bootstrap.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, procure os <code>px</code> do seu CSS e troque os de fonte, espaçamento e largura máxima por unidades relativas, deixando o <code>px</code> só nas bordas. Crie uma faixa de destaque ou uma seção com altura em <code>vh</code> (ou <code>dvh</code>) e um texto com largura em <code>ch</code>. Teste com a fonte do navegador em "Muito grande".</p>
+        <ul>
+          <li><strong>O conceito:</strong> a que cada unidade é relativa: <code>rem</code>, <code>em</code>, <code>%</code>, <code>vw</code>, <code>vh</code>?</li>
+          <li><strong>A motivação:</strong> por que trocar os <code>px</code> de fonte por <code>rem</code>?</li>
+          <li><strong>A anatomia:</strong> explique cada valor da sua regra com <code>vh</code> e <code>ch</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> troque um <code>rem</code> por <code>px</code>, aumente a fonte do navegador e mostre a diferença.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units">MDN: valores e unidades do CSS (em inglês)</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length">MDN: o tipo length, com todas as unidades (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/content/reboot/">Bootstrap 5.3: Reboot (as fontes em rem)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 12-unidades-relativas -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
