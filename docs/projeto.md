@@ -74,8 +74,8 @@ As partes são os trechos de uma trilha. Cada capítulo responde a uma pergunta,
 | **O mapa da trilha** | 4. Como transformar uma ideia em requisitos, com um PRD curto? · 5. Como prototipar com IA sem perder o controle? · 6. Como definir a identidade visual com design tokens? |
 | **Primeiros quilômetros** | 7. Como montar um layout responsivo com o grid do Bootstrap? · 8. Como acertar espaços, alinhamentos e visibilidade com os utilitários? · 9. Como usar componentes prontos: navbar, card, botão, badge? · 10. Como usar componentes com JavaScript: modal, carrossel, offcanvas? |
 | **A subida** | 11. Como fazer layout com Flexbox e Grid no CSS puro? · 12. Por que usar unidades relativas (`rem`, `%`, `vw`, `vh`) no lugar de pixels? · 13. Como personalizar o Bootstrap com Sass? · 14. Como organizar o meu CSS com Sass: parciais, variáveis, mixins e funções? · 15. Como fazer tipografia responsiva e fluida com `clamp()`? · 16. Como deixar as imagens responsivas e leves: `object-fit`, `srcset`, `<picture>` e WebP? |
-| **A travessia** | 17. Que JavaScript preciso para dar vida à página: DOM e eventos? · 18. Como organizar os dados com objetos, arrays e classes? · 19. Como validar formulários com HTML e expressões regulares? · 20. Como guardar dados no navegador com Web Storage e JSON? · 21. Como usar o jQuery e um plugin de máscara? |
-| **O cume** | 22. Como salvar e buscar dados com `fetch` e o json-server? · 23. Como consumir uma API pública e tratar os erros? · 24. Como manter o código padronizado com Prettier e ESLint? · 25. Como publicar o site no GitHub Pages? |
+| **A travessia** | 17. Que JavaScript preciso saber antes do DOM: variáveis, funções e template strings? · 18. Que JavaScript preciso para dar vida à página: DOM e eventos? · 19. Como organizar os dados com objetos, arrays e classes? · 20. Como validar formulários com HTML e expressões regulares? · 21. Como guardar dados no navegador com Web Storage e JSON? · 22. Como usar o jQuery e um plugin de máscara? |
+| **O cume** | 23. Como salvar e buscar dados com `fetch` e o json-server? · 24. Como consumir uma API pública e tratar os erros? · 25. Como manter o código padronizado com Prettier e ESLint? · 26. Como publicar o site no GitHub Pages? |
 | **Para ir além** (sem marco) | Materialize e outros frameworks CSS, lado a lado · O que é o Tailwind, e por que ele pensa diferente · Medir e melhorar com o Lighthouse · Acessibilidade na prática · E quando o projeto cresce: o que faz um bundler como o Vite? |
 
 **Alguns capítulos em detalhe:**
@@ -96,13 +96,13 @@ As partes são os trechos de uma trilha. Cada capítulo responde a uma pergunta,
 
 O conteúdo vem da Atividade 10 da disciplina, já testada com compilação real.
 
-**O capítulo 19** valida o cadastro de trilha:
+**O capítulo 20** valida o cadastro de trilha:
 - `required`, `type`, `min`, `max` e `pattern` no HTML, e as mensagens nativas;
 - uma regex montada passo a passo para o CEP do ponto de partida (`^\d{5}-?\d{3}$`) e para o telefone do guia;
 - checkbox (o que levar), radio (o tipo de percurso) e select (a dificuldade);
 - a mensagem clara para cada erro, mostrada só depois que o campo foi tocado.
 
-**O capítulo 25** publica no GitHub Pages com as bibliotecas por **CDN**: o CSS compilado do Sass vai para o repositório, e o JavaScript do Bootstrap e o jQuery vêm do CDN. Explica por que um `<script>` que aponta para a `node_modules/` funciona no seu computador e quebra no site publicado, sem nenhuma mensagem de erro.
+**O capítulo 26** publica no GitHub Pages com as bibliotecas por **CDN**: o CSS compilado do Sass vai para o repositório, e o JavaScript do Bootstrap e o jQuery vêm do CDN. Explica por que um `<script>` que aponta para a `node_modules/` funciona no seu computador e quebra no site publicado, sem nenhuma mensagem de erro.
 
 ### 5.1. Recursos de livro de consulta
 
@@ -182,10 +182,10 @@ Componentes do próprio site, **feitos para este livro**: cada um é pontual, mo
 - **`!default` × cascata:** a ordem das linhas do `main.scss` e o CSS gerado ao lado (capítulo 13)
 - **A curva do `clamp()`:** o tamanho do título do banner conforme a largura, com o mínimo, o ideal e o máximo (capítulo 15)
 - **Qual foto da trilha o navegador escolhe:** o `srcset` e o `sizes`, com a largura e a densidade da tela (capítulo 16)
-- **O caminho de um evento:** o clique no botão de favoritar subindo pela árvore do DOM do cartão (capítulo 17)
-- **Testador de regex** no campo do CEP, com o estado do campo e as mensagens (capítulo 19)
-- **As favoritas no Web Storage:** a chave e o valor mudando enquanto se favorita trilhas (capítulo 20)
-- **A linha do tempo do `fetch`:** a previsão do tempo da trilha pedida, esperada, recebida ou falhando (capítulos 22 e 23)
+- **O caminho de um evento:** o clique no botão de favoritar subindo pela árvore do DOM do cartão (capítulo 18)
+- **Testador de regex** no campo do CEP, com o estado do campo e as mensagens (capítulo 20)
+- **As favoritas no Web Storage:** a chave e o valor mudando enquanto se favorita trilhas (capítulo 21)
+- **A linha do tempo do `fetch`:** a previsão do tempo da trilha pedida, esperada, recebida ou falhando (capítulos 23 e 24)
 
 Todo simulador funciona com teclado, tem texto alternativo e respeita a preferência por menos movimento.
 
@@ -214,10 +214,15 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 - **Interatividade:** o JavaScript do Bootstrap (abas, recolhíveis, modal) e módulos ES próprios para o desafio, a caderneta (Web Storage, com exportar e importar em JSON), o tema e os simuladores.
 - **Código destacado:** os trechos são destacados no build (Shiki), sem JavaScript no navegador.
 - **Busca:** Pagefind, gerado no build, funcionando no próprio navegador.
-- **Etapas do Trilheiro:** `etapas/NN-slug/`; a versão final, que é o modelo, fica em `trilheiro/` (seção 6.1), projetos estáticos completos (HTML, Sass compilado, JS), com o JavaScript do Bootstrap e o jQuery pelo CDN, como no capítulo 25.
+- **Etapas do Trilheiro:** `etapas/NN-slug/`; a versão final, que é o modelo, fica em `trilheiro/` (seção 6.1), projetos estáticos completos (HTML, Sass compilado, JS), com o JavaScript do Bootstrap e o jQuery pelo CDN, como no capítulo 26.
 - **Verificação a cada push:** build; testes dos módulos JS e dos scripts (Vitest ou `node:test`); contraste das cores; palavras proibidas na saída; links quebrados; e cada etapa do Trilheiro abrindo sem erro no console.
 - **Publicação:** GitHub Actions, a cada push na `main`, para o GitHub Pages.
 - **Licença:** CC BY 4.0 para o texto, MIT para o código. Sem rastreamento.
+
+**Decisões do professor de 05/11, depois do levantamento da disciplina** (`docs/mapa-disciplina.md`):
+- **Capítulo 2 alinhado com a disciplina:** o repositório nasce no GitHub, com README, e é clonado; `.gitignore` antes do `npm install`; commits semânticos; envio com token de acesso pessoal (PAT) fine-grained.
+- **Capítulo novo de JavaScript básico** (17), antes do DOM: variáveis, funções, template strings, `prompt`/`alert`, temporizadores. Os capítulos seguintes passam a ser 18 a 26.
+- **MCP no capítulo 5:** quem lê usa o MCP com o Stitch (ou outra ferramenta) para trazer as telas, guiado para manter o escopo pequeno.
 
 **Vite em "Para ir além"** (decisão do professor, 05/11): o livro não usa build no Trilheiro; o capítulo extra mostra o que um bundler acrescenta (servidor de desenvolvimento, `import` de CSS e Sass, build com arquivos com hash) quando o projeto cresce. O próprio site do livro é feito com Vite e serve de exemplo.
 
@@ -226,13 +231,13 @@ Todo simulador funciona com teclado, tem texto alternativo e respeita a preferê
 1. **Partes com nomes de trilha** (Ponto de partida, O mapa da trilha, Primeiros quilômetros, A subida, A travessia, O cume), no lugar dos continentes do *Volta ao Mundo*.
 2. **Dados de exemplo inspirados em trilhas reais**, para ninguém tomar o app como guia de segurança.
 3. **As duas APIs públicas são gratuitas e sem chave** (Open-Meteo e ViaCEP), para não exigir cadastro.
-4. **O capítulo 24 (Prettier e ESLint) entra no livro**, mesmo sem build: os dois rodam pelo npm e pela extensão do VS Code.
+4. **O capítulo 25 (Prettier e ESLint) entra no livro**, mesmo sem build: os dois rodam pelo npm e pela extensão do VS Code.
 5. **O Materialize vira capítulo de "Para ir além"**, com o mesmo cartão feito nos dois frameworks, e não acompanha o livro inteiro.
 6. **"Na sua trilha" não menciona disciplina nem entrega.** Ela fala do "seu projeto", e serve tanto a estudantes quanto a quem estuda sozinho.
 
 ## 12. Ordem de construção
 
-1. A estrutura: o site em Vite, a página inicial, "Minha caderneta", o catálogo dos 25 capítulos ("em breve") e a identidade visual.
+1. A estrutura: o site em Vite, a página inicial, "Minha caderneta", o catálogo dos capítulos ("em breve") e a identidade visual.
 2. Os capítulos, **na ordem do livro**, do capítulo 1 em diante (decisão do professor, 04/11).
 
 ## 13. Decisões do professor (04/11/2026)

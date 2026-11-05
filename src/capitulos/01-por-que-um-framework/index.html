@@ -92,6 +92,7 @@
             <p>Agora abra <code>bootstrap/index.html</code>. Não há nenhum arquivo CSS na pasta. O Bootstrap chega por uma linha no <code>&lt;head&gt;</code>, que busca o arquivo num <a class="tf-term" href="{{base}}glossario/#cdn">CDN</a>:</p>
             <tf-code src="01-por-que-um-framework/link-cdn.html" caption="bootstrap/index.html"></tf-code>
             <p>O atributo <code>integrity</code> é a impressão digital do arquivo: o navegador calcula a do arquivo que chegou e só o usa se as duas forem iguais. Se alguém alterar o arquivo no caminho, ele é bloqueado. O <code>crossorigin="anonymous"</code> deixa o navegador fazer essa conferência num arquivo que vem de outro site.</p>
+            <p>O CDN é o jeito mais rápido de começar. No capítulo 2, o Bootstrap passa a ser instalado pelo npm e a vir da pasta <code>node_modules/</code> do projeto, que é como se trabalha durante o desenvolvimento.</p>
           </section>
           <section data-step="Aplicar as classes">
             <p>O cartão é o mesmo HTML, agora com as classes do Bootstrap. As linhas destacadas são as que trocaram:</p>

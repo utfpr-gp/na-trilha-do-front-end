@@ -2,13 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { PARTS, allChapters, chapterBySlug, chapterUrl, neighbors } from '../../src/data/catalog.js';
 
 describe('catálogo', () => {
-  it('tem 25 capítulos numerados de 1 a 25, sem buraco', () => {
-    expect(allChapters().map((c) => c.number)).toEqual(Array.from({ length: 25 }, (_, i) => i + 1));
+  it('tem 26 capítulos numerados de 1 a 26, sem buraco', () => {
+    expect(allChapters().map((c) => c.number)).toEqual(Array.from({ length: 26 }, (_, i) => i + 1));
   });
 
   it('tem slugs únicos que começam com o número de dois dígitos', () => {
     const slugs = allChapters().map((c) => c.slug);
-    expect(new Set(slugs).size).toBe(25);
+    expect(new Set(slugs).size).toBe(26);
     allChapters().forEach((c) => expect(c.slug.startsWith(String(c.number).padStart(2, '0') + '-')).toBe(true));
   });
 
@@ -25,6 +25,12 @@ describe('catálogo', () => {
         expect(c.question.endsWith('?')).toBe(true);
       }
     }
+  });
+
+  it('o JavaScript básico vem antes do DOM', () => {
+    expect(chapterBySlug('17-javascript-basico').partId).toBe('a-travessia');
+    expect(chapterBySlug('18-dom-e-eventos').number).toBe(18);
+    expect(chapterBySlug('26-publicar-no-github-pages').number).toBe(26);
   });
 
   it('chapterBySlug acha e devolve undefined quando não existe', () => {

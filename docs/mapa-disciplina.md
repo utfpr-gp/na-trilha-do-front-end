@@ -24,15 +24,16 @@ Este arquivo é de quem mantém o livro. O site não cita disciplina, atividades
 | 14. Organizar o CSS com Sass | Atividade 10, opções 1 a 3 | |
 | 15. Tipografia fluida | Mód. 08 (Atividade 11); ferramentas Gridlover, TypeScale, Fluid Type Scale Calculator | |
 | 16. Imagens responsivas | Mód. 09 (Atividade 12); Cloudinary, Squoosh, TinyPNG | **O ID 10 do checklist cita o Cloudinary**: o capítulo deve mostrá-lo como alternativa |
-| 17. DOM e eventos | Mód. 10 (Atividades 13 e 14); Mód. 11 (Atividade 15) | **Ver "Lacunas"**: o livro não tem um capítulo de JavaScript básico |
-| 18. Objetos, arrays e classes | Mód. 11 (Atividade 15; projeto João Lenão) | |
-| 19. Validar formulários | Mód. 12 (Atividade 16; `setCustomValidity` e mensagens em balões) | |
-| 20. Web Storage e JSON | Mód. 13 (Atividade 17) | |
-| 21. jQuery e plugin de máscara | Mód. 14 (Atividade 18); IMask.js e Cleave.js como alternativas sem jQuery | Citar as alternativas, como o ID 21 permite ("ou outra biblioteca") |
-| 22. fetch e json-server | Mód. 15 (Atividade 19) | |
-| 23. API pública | Mód. 15 (Atividade 20); Mód. 03 (catálogos: Rapid API, Public APIs, API Ninjas, Postman) | |
-| 24. Prettier e ESLint | Atividade 01 (extensões e `settings.json` com Format on Save); seção oculta "Linters, Build e Deploy" | A configuração da Atividade 01 |
-| 25. GitHub Pages | Seção oculta "Linters, Build e Deploy": o professor recomenda o CDN no lugar da `node_modules/` | Bate com o capítulo 25 previsto; a Atividade 06 instala o `gh-pages` |
+| 17. JavaScript básico (novo) | Mód. 10 (Atividades 13 e 14: jogo de adivinhação, calculadora) | Variáveis, funções, template strings, `prompt`/`alert`, temporizadores |
+| 18. DOM e eventos | Mód. 10 (Atividades 13 e 14); Mód. 11 (Atividade 15) | |
+| 19. Objetos, arrays e classes | Mód. 11 (Atividade 15; projeto João Lenão) | |
+| 20. Validar formulários | Mód. 12 (Atividade 16; `setCustomValidity` e mensagens em balões) | |
+| 21. Web Storage e JSON | Mód. 13 (Atividade 17) | |
+| 22. jQuery e plugin de máscara | Mód. 14 (Atividade 18); IMask.js e Cleave.js como alternativas sem jQuery | Citar as alternativas, como o ID 21 permite ("ou outra biblioteca") |
+| 23. fetch e json-server | Mód. 15 (Atividade 19) | |
+| 24. API pública | Mód. 15 (Atividade 20); Mód. 03 (catálogos: Rapid API, Public APIs, API Ninjas, Postman) | |
+| 25. Prettier e ESLint | Atividade 01 (extensões e `settings.json` com Format on Save); seção oculta "Linters, Build e Deploy" | A configuração da Atividade 01 |
+| 26. GitHub Pages | Seção oculta "Linters, Build e Deploy": o professor recomenda o CDN no lugar da `node_modules/` | Bate com o capítulo 26 previsto; a Atividade 06 instala o `gh-pages` |
 | Para ir além: Materialize | Mód. 06 (Atividade 09, Guaratur em Materialize ou Bootstrap) | |
 | Para ir além: Vite | Atividade 08 cita empacotadores (Vite, Webpack) como o "futuro" do curso | |
 
@@ -65,7 +66,13 @@ Os exemplos das atividades usam dois projetos próprios: o **Guaratur** (Ativida
 2. **Escolha da API pública e dos critérios do framework** (Atividade 05): pode entrar no capítulo 4 (PRD) ou no 23.
 3. **Ferramentas de apoio** que a disciplina recomenda: extensões Bootstrap Grid Overlay, NOV Grid e Responsive Viewer; View Image Info; o Portal de Simuladores da disciplina (Biblioteca).
 
-## Pontos para o professor decidir
+## Decisões do professor (05/11)
+
+- **Capítulo 2:** alinhar com a disciplina (clonar primeiro, PAT, `.gitignore` antes do `npm install`, commits semânticos). Feito.
+- **JavaScript básico:** capítulo novo, o 17; os seguintes viram 18 a 26.
+- **MCP:** usar no capítulo 5, com o Stitch ou outra ferramenta, guiando para o escopo ficar pequeno.
+
+## Pontos que estavam em aberto
 
 - No capítulo 2: alinhar com a disciplina (clonar primeiro, PAT) ou manter o `git init` local, mostrando o clone como alternativa.
 - A lacuna do JavaScript básico: capítulo novo ou revisão no capítulo 17.
