@@ -21,5 +21,6 @@ export const GLOSSARY = [
   { id: 'rem', term: 'rem', definition: 'Unidade relativa à fonte da raiz da página (em geral 16px): 1.5rem = 24px. Acompanha o tamanho de letra que a pessoa escolheu no navegador.', chapter: 12 },
   { id: 'sass', term: 'Sass', definition: 'Uma extensão do CSS com variáveis ($primary), parciais, mixins e funções. Um compilador transforma o .scss em .css, que é o que o navegador lê.', chapter: 13 },
   { id: 'mixin', term: 'mixin', definition: 'No Sass, um bloco de declarações com nome e parâmetros, criado com @mixin e colado onde for preciso com @include, para não repetir código.', chapter: 14 },
+  { id: 'clamp', term: 'clamp()', definition: 'Função do CSS que usa um valor preferido travado entre um mínimo e um máximo: clamp(1.75rem, 1.3rem + 1.9vw, 2.75rem). É a base da tipografia fluida.', chapter: 15 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];
