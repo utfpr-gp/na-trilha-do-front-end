@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 14 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 15 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -33,11 +33,12 @@
 - **Capítulo 12 publicado:** unidades relativas (rem, em, %, vw/vh, dvh, ch), simulador `<tf-unit-lab>`, faixa de destaque `.hero` (40vh, 18ch/45ch) na etapa 12. Link do MDN sobre Grid (capítulo 11) corrigido; `publicar-capitulo.sh` passou a conferir os links externos do capítulo.
 - **Capítulo 13 publicado** (base: Atividade 10, opção 2): `scss/main.scss` com o tema antes do `@import`, `!default` × `!important`, scripts `npm run sass`/`sass:watch` com `--load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map`; `css/main.css` gerado vai para o repositório; mensagens reais do Sass 1.107 (`Can't find stylesheet to import.`, `DEPRECATION WARNING [import]`, "311 repetitive deprecation warnings omitted"). Botões verde-mata a partir da etapa 13.
 - **Capítulo 14 publicado** (base: Atividade 10, opção 3, e o exemplo `espaco()` da Entrega 2): `style.css` vira parciais Sass (`_tokens`, `_theme`, `_functions` com `espaco()`, `_mixins` com `cover-image($largura, $altura)`, `_navbar`, `_hero`, `_cards`, `_trilha`, `_footer`); `@use` nos parciais e `@import` no `main.scss` (exigência do Bootstrap 5.3); selos `.badge-facil/moderada/dificil` gerados por `@each` sobre o mapa `$dificuldades`; erros reais (`Undefined variable.`, `There is no module with namespace "t".`, `slash-div`).
+- **Capítulo 15 publicado:** tipografia fluida com `clamp()`; função Sass `fluid($min, $max, $de: 360px, $ate: 1200px)` e `rem()` (etapa 15: título do destaque 28→44 px, `.secao-titulo` 24→32 px; conferido no Chrome: 36 px em 780 px); RFS do Bootstrap explicado; simulador `<tf-clamp-lab>`; erro real `28px and 1.75rem have incompatible units.`.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 15 (tipografia fluida) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 16 (imagens responsivas) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

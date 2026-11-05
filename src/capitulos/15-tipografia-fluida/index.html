@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="15-tipografia-fluida">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 15-tipografia-fluida -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O título "Escolha a trilha do seu fim de semana" tinha 2,5rem em qualquer tela: grande demais no celular, onde ocupava quatro linhas, e tímido num monitor largo. Hoje ele passa a <strong>crescer junto com a tela</strong>: 1,75rem num celular pequeno, 2,75rem a partir de 1200 px, e um tamanho proporcional em cada largura do meio, sem saltos. O título "Trilhas em destaque" ganha o mesmo comportamento.</p>
+        <p>A ferramenta é a função <code>clamp()</code> do CSS, escrita por uma função Sass que faz a conta por você. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/15-tipografia-fluida">etapas/15-tipografia-fluida</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="⛰️" title="A rampa e a escada">
+          <p>Para subir um morro, dá para fazer uma escada, com degraus: você está num nível, sobe de uma vez para o próximo, e de novo. Ou dá para fazer uma rampa, que sobe um pouco a cada passo, sem nenhum degrau.</p>
+          <p>A tipografia <strong>responsiva</strong> é a escada: um tamanho até 768 px, outro a partir dali, outro a partir de 1200 px. A tipografia <strong>fluida</strong> é a rampa: o tamanho acompanha a largura da tela, com um piso e um teto.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <tf-code src="15-tipografia-fluida/responsiva-fluida.css" caption="As duas abordagens"></tf-code>
+
+        <h3><a class="tf-term" href="{{base}}glossario/#clamp">clamp()</a>: piso, rampa e teto</h3>
+        <p><code>clamp(mínimo, preferido, máximo)</code> usa o valor preferido, mas nunca abaixo do mínimo nem acima do máximo. O preferido mistura <code>rem</code> e <code>vw</code> (por exemplo, <code>1.3214rem + 1.9048vw</code>): a parte em <code>vw</code> cresce com a tela, e a parte em <code>rem</code> mantém a ligação com a fonte que a pessoa escolheu no navegador (capítulo 12). Um <code>font-size</code> só em <code>vw</code> ignoraria essa escolha, e o zoom da página não aumentaria o texto.</p>
+        <p>Arraste a largura e veja o título crescer em rampa, travado entre 28 e 44 px:</p>
+        <tf-clamp-lab data-min="1.75" data-max="2.75" data-from="360" data-to="1200">
+          <p class="tf-clamp-sample" data-clamp-sample>Escolha a trilha do seu fim de semana</p>
+        </tf-clamp-lab>
+
+        <h3>Fazer a conta, uma vez só</h3>
+        <p>Os números do meio saem de uma conta: a inclinação da rampa é (máximo − mínimo) ÷ (largura final − largura inicial). Em vez de fazê-la à mão para cada título, o Trilheiro tem uma função Sass:</p>
+        <tf-code src="15-tipografia-fluida/functions.scss" caption="scss/_functions.scss"></tf-code>
+        <p>Calculadoras on-line, como a <strong>Fluid Type Scale Calculator</strong>, fazem a mesma conta e geram uma escala inteira de tamanhos. Ferramentas como a <strong>TypeScale</strong> ajudam a escolher tamanhos que combinam entre si.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: o Bootstrap já faz algo parecido</summary>
+          <p>O Bootstrap tem o RFS (<em>Responsive Font Sizes</em>), ligado por padrão (<code>$enable-rfs: true</code>). Ele deixa os títulos <code>h1</code> a <code>h4</code> fluidos abaixo de 1200 px:</p>
+          <tf-code src="15-tipografia-fluida/rfs.css" caption="css/main.css (trecho gerado pelo Bootstrap)"></tf-code>
+          <p>É uma rampa até 1200 px e um tamanho fixo depois. A sua função <code>fluid()</code> dá o controle do piso, do teto e das larguras, para os títulos que pedem um tamanho próprio, como o do destaque.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="As funções">
+            <p>No <code>_functions.scss</code>, acrescente as funções <code>rem()</code> e <code>fluid()</code>, como no Por dentro. O <code>@use "sass:math"</code> no topo traz o <code>math.div()</code>, a divisão do Sass (lembra do aviso da barra no capítulo 14?).</p>
+          </section>
+          <section data-step="O título do destaque">
+            <p>No <code>_hero.scss</code>, troque o tamanho fixo pela função:</p>
+            <tf-code src="15-tipografia-fluida/uso.scss" caption="scss/_hero.scss (trecho)"></tf-code>
+            <p>Compile e abra o <code>css/main.css</code>: a função sumiu, e no lugar dela está o <code>clamp()</code> calculado:</p>
+            <tf-code src="15-tipografia-fluida/compilado.css" caption="css/main.css (trecho)"></tf-code>
+          </section>
+          <section data-step="Os títulos de seção">
+            <p>No <code>_cards.scss</code>, crie a classe <code>.secao-titulo</code> com <code>font-size: f.fluid(24px, 32px)</code> e aplique-a ao "Trilhas em destaque" no <code>index.html</code>.</p>
+          </section>
+          <section data-step="Confira no DevTools">
+            <p>Inspecione o título e abra a aba <strong>Computed</strong>. Com o modo de dispositivos, mude a largura: o <code>font-size</code> calculado muda aos poucos. Numa tela de 780 px, ele mede 36 px; em 360 px ou menos, 28 px; a partir de 1200 px, 44 px.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Troque a função por <code>font-size: 5vw</code>: numa tela de 360 px, o título fica com 18 px, menor que o texto comum, e num monitor de 1920 px, com 96 px. Sem o piso e o teto do <code>clamp()</code>, o <code>vw</code> sozinho não tem limite. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O texto não aumenta com o zoom">
+          <p>Um <code>font-size</code> só em <code>vw</code> depende apenas da largura da tela: o zoom do navegador e a fonte escolhida pela pessoa não mudam nada. Isso é uma barreira de acessibilidade. Mantenha sempre uma parte em <code>rem</code> no valor preferido, como a função <code>fluid()</code> faz.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O mínimo ficou maior que o máximo">
+          <p>Com <code>clamp(3rem, 4vw, 2rem)</code>, o máximo (2rem) é menor que o mínimo (3rem), e o mínimo vence sempre: o tamanho fica parado em 3rem. Confira a ordem: mínimo, preferido, máximo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O Sass deu erro ao misturar unidades" message="Error: 28px and 1.75rem have incompatible units.">
+          <p>Somar <code>px</code> com <code>rem</code> dentro do Sass não dá certo: ele não sabe quanto vale um <code>rem</code>, que só é decidido no navegador. A função <code>fluid()</code> faz as contas em <code>px</code> e só converte para <code>rem</code> no fim, com a função <code>rem()</code>. A soma com <code>vw</code> fica para o navegador, dentro do <code>clamp()</code>, por isso aparece com <code>#{}</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="15-tipografia-fluida" award>
+          <fieldset data-correct="b">
+            <legend>O que faz <code>clamp(1.75rem, 1.3214rem + 1.9048vw, 2.75rem)</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Escolhe aleatoriamente um dos três valores</label>
+            <label><input type="radio" name="q1" value="b"> Usa o valor do meio, que cresce com a tela, mas nunca menos de 1,75rem nem mais de 2,75rem</label>
+            <label><input type="radio" name="q1" value="c"> Usa sempre o maior valor</label>
+            <p data-explain="a" hidden>Não há sorteio: o valor preferido vale, travado entre o mínimo e o máximo.</p>
+            <p data-explain="c" hidden>O máximo é só o teto. Nas telas menores, vale o valor do meio ou o mínimo.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que não usar só <code>font-size: 5vw</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque não tem limite (fica minúsculo no celular e enorme no monitor) e ignora o zoom e a fonte do navegador</label>
+            <label><input type="radio" name="q2" value="b"> Porque <code>vw</code> não funciona em títulos</label>
+            <label><input type="radio" name="q2" value="c"> Porque o Bootstrap proíbe <code>vw</code></label>
+            <p data-explain="b" hidden><code>vw</code> funciona em qualquer elemento. O problema é ficar sem piso, sem teto e sem ligação com o <code>rem</code>.</p>
+            <p data-explain="c" hidden>O próprio Bootstrap usa <code>vw</code> no RFS, combinado com <code>rem</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Qual a diferença entre tipografia responsiva e fluida?</legend>
+            <label><input type="radio" name="q3" value="a"> Nenhuma</label>
+            <label><input type="radio" name="q3" value="b"> A responsiva usa <code>rem</code>; a fluida, <code>px</code></label>
+            <label><input type="radio" name="q3" value="c"> A responsiva muda de tamanho aos saltos, nos pontos de quebra; a fluida muda aos poucos, junto com a largura</label>
+            <p data-explain="a" hidden>São a escada e a rampa da analogia: uma por degraus, a outra contínua.</p>
+            <p data-explain="b" hidden>As duas podem usar <code>rem</code>. A diferença é a forma de crescer.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Com <code>fluid(28px, 44px)</code> entre 360 e 1200 px, quanto mede o título numa tela de 1440 px?</legend>
+            <label><input type="radio" name="q4" value="a"> Mais de 44 px, porque a tela passou de 1200 px</label>
+            <label><input type="radio" name="q4" value="b"> 44 px, o teto</label>
+            <label><input type="radio" name="q4" value="c"> 28 px</label>
+            <p data-explain="a" hidden>O teto do <code>clamp()</code> segura o tamanho em 44 px a partir de 1200 px.</p>
+            <p data-explain="c" hidden>28 px é o piso, para as telas pequenas.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, deixe o título principal e os títulos de seção fluidos com <code>clamp()</code>, com uma parte em <code>rem</code> no valor preferido. Se usa Sass, crie a sua função <code>fluid()</code> ou use uma calculadora. Confira o tamanho calculado no DevTools em três larguras.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que fazem os três valores do <code>clamp()</code>?</li>
+          <li><strong>A motivação:</strong> por que fluida, e não um tamanho por ponto de quebra?</li>
+          <li><strong>A anatomia:</strong> de onde vêm os números do valor do meio?</li>
+          <li><strong>"E se eu tirar?":</strong> troque o <code>clamp()</code> por um valor só em <code>vw</code> e mostre o problema nos extremos.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">MDN: clamp() (em inglês)</a></li>
+          <li><a href="https://www.fluid-type-scale.com/">Fluid Type Scale Calculator (em inglês)</a></li>
+          <li><a href="https://typescale.com/">TypeScale (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/getting-started/rfs/">Bootstrap 5.3: RFS</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 15-tipografia-fluida -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
