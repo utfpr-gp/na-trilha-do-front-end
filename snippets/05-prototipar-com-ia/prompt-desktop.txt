@@ -1,0 +1,1 @@
+Gere a versão de computador destas 4 telas. Na tela Trilhas, mostre 3 cartões por linha. No Detalhe, ponha os dados e a previsão numa coluna à direita das fotos.

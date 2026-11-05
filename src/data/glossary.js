@@ -10,6 +10,8 @@ export const GLOSSARY = [
   { id: 'token', term: 'token de acesso pessoal', definition: 'Uma senha longa, gerada pelo GitHub, que substitui a senha da conta no terminal. Vale só para os repositórios e as permissões escolhidos, e por um tempo limitado.', chapter: 2 },
   { id: 'prd', term: 'PRD', definition: 'Product Requirements Document: o documento curto que diz o que o produto faz, para quem e por quê, com as histórias de usuário, as regras de negócio e o que fica fora do escopo.', chapter: 4 },
   { id: 'historia-de-usuario', term: 'história de usuário', definition: 'Uma necessidade escrita do ponto de vista de quem usa: "Como [ator], quero [ação], para [motivo]", seguida de critérios de aceitação que dá para conferir com sim ou não.', chapter: 4 },
+  { id: 'prototipo', term: 'protótipo', definition: 'O desenho das telas antes do código, responsivo e navegável: dá para clicar de uma tela para outra e sentir o site antes de programar.', chapter: 5 },
+  { id: 'mcp', term: 'MCP', definition: 'Model Context Protocol: a forma de a IA do editor conversar com outras ferramentas, como ler as telas de um protótipo no Stitch.', chapter: 5 },
   { id: 'design-token', term: 'design token', definition: 'Uma decisão de design com nome, como a cor principal ou o tamanho dos títulos, guardada num só lugar e usada no site inteiro.', chapter: 6 },
   { id: 'breakpoint', term: 'breakpoint', definition: 'A largura de tela a partir da qual o layout muda. No Bootstrap, sm, md, lg, xl e xxl são os breakpoints.', chapter: 7 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },

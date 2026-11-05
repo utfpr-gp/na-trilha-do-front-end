@@ -1,0 +1,8 @@
+Crie um site responsivo chamado Trilheiro, para descobrir trilhas da região de Guarapuava (PR).
+Comece pela versão de celular. São exatamente 4 telas:
+1. Início: cabeçalho com o nome, três trilhas em destaque em cartões, botão "Ver todas as trilhas".
+2. Trilhas: lista de cartões (foto, nome, cidade, distância, dificuldade), filtro Todas / Fácil / Moderada / Difícil / Favoritas.
+3. Detalhe da trilha: fotos que passam para o lado, dados da trilha, previsão do tempo de 3 dias, relatos de quem foi e um botão "Conte como foi".
+4. Cadastrar trilha: formulário com nome, distância, duração, dificuldade, tipo de percurso, o que levar, descrição, CEP, cidade e data da última visita.
+Cores: verde-mata #2F5D3A, terra #8B5A2B, amarelo #F2C230, fundo #FAF7F0. Títulos em Bitter, texto em Source Sans 3.
+Não crie login, conta de usuário, mapa, chat nem outras telas.
