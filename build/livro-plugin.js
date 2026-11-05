@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { PARTS } from '../src/data/catalog.js';
 import { expandIncludes, renderMarkers, replaceBase } from './html.js';
+import { renderCatalog } from './render.js';
 
 const PARTIALS_DIR = resolve(import.meta.dirname, '../src/partials');
 
@@ -12,8 +14,15 @@ function readPartial(name) {
   }
 }
 
+/** Os blocos gerados que as páginas pedem com `<!-- @render NOME ARG -->`. */
+export function defaultRenderers() {
+  return {
+    catalog: (_arg, { base }) => renderCatalog(PARTS, base),
+  };
+}
+
 /** Monta cada página no build: parciais → marcadores → base. */
-export function livroPlugin({ renderers = {} } = {}) {
+export function livroPlugin({ renderers = defaultRenderers() } = {}) {
   let base = '/';
   return {
     name: 'livro',
@@ -24,7 +33,10 @@ export function livroPlugin({ renderers = {} } = {}) {
       order: 'pre',
       handler(html) {
         let out = expandIncludes(html, readPartial);
-        out = renderMarkers(out, renderers);
+        const bound = Object.fromEntries(
+          Object.entries(renderers).map(([name, render]) => [name, (arg) => render(arg, { base })]),
+        );
+        out = renderMarkers(out, bound);
         return replaceBase(out, base);
       },
     },

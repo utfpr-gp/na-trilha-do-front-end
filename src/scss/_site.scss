@@ -47,3 +47,80 @@ a {
     margin: 0.25rem 0;
   }
 }
+
+// Página inicial e catálogo
+.tf-hero {
+  background: var(--tf-surface);
+  border-bottom: 1px solid var(--tf-ink-muted);
+
+  h1 {
+    font-weight: 800;
+    color: var(--tf-brand);
+  }
+}
+
+.tf-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--tf-accent);
+  margin-bottom: 0.25rem;
+}
+
+.tf-part {
+  margin-bottom: 2.5rem;
+
+  h2 {
+    font-weight: 800;
+    color: var(--tf-brand);
+  }
+}
+
+.tf-chapter-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.tf-chapter-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-ink-muted);
+  color: var(--tf-ink);
+  text-decoration: none;
+
+  &.is-soon {
+    border-style: dashed;
+    color: var(--tf-ink-muted);
+  }
+}
+
+a.tf-chapter-card:hover,
+a.tf-chapter-card:focus-visible {
+  border-color: var(--tf-brand);
+}
+
+.tf-chapter-number {
+  font-weight: 800;
+  color: var(--tf-accent);
+}
+
+.tf-chapter-meta {
+  margin-top: auto;
+  font-size: 0.875rem;
+  color: var(--tf-ink-muted);
+}
+
+.tf-soon {
+  align-self: flex-start;
+  margin-top: auto;
+  background: var(--tf-mark);
+  color: var(--tf-on-mark);
+}
