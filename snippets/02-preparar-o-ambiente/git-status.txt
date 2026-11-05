@@ -1,4 +1,6 @@
 $ git status --short
-?? node_modules/
+?? .gitignore
+?? index.html
 ?? package-lock.json
 ?? package.json
+?? salto.svg

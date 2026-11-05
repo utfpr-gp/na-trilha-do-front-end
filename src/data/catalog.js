@@ -27,17 +27,18 @@ const raw = [
     [16, '16-imagens-responsivas', 'Como deixar as imagens responsivas e leves: object-fit, srcset, <picture> e WebP?', 40],
   ]],
   ['a-travessia', 'A travessia', true, [
-    [17, '17-dom-e-eventos', 'Que JavaScript preciso para dar vida à página: DOM e eventos?', 50],
-    [18, '18-objetos-arrays-e-classes', 'Como organizar os dados com objetos, arrays e classes?', 45],
-    [19, '19-validar-formularios', 'Como validar formulários com HTML e expressões regulares?', 50],
-    [20, '20-web-storage-e-json', 'Como guardar dados no navegador com Web Storage e JSON?', 35],
-    [21, '21-jquery-e-plugin-de-mascara', 'Como usar o jQuery e um plugin de máscara?', 35],
+    [17, '17-javascript-basico', 'Que JavaScript preciso saber antes do DOM: variáveis, funções e template strings?', 50],
+    [18, '18-dom-e-eventos', 'Que JavaScript preciso para dar vida à página: DOM e eventos?', 50],
+    [19, '19-objetos-arrays-e-classes', 'Como organizar os dados com objetos, arrays e classes?', 45],
+    [20, '20-validar-formularios', 'Como validar formulários com HTML e expressões regulares?', 50],
+    [21, '21-web-storage-e-json', 'Como guardar dados no navegador com Web Storage e JSON?', 35],
+    [22, '22-jquery-e-plugin-de-mascara', 'Como usar o jQuery e um plugin de máscara?', 35],
   ]],
   ['o-cume', 'O cume', true, [
-    [22, '22-fetch-e-json-server', 'Como salvar e buscar dados com fetch e o json-server?', 50],
-    [23, '23-api-publica-e-erros', 'Como consumir uma API pública e tratar os erros?', 45],
-    [24, '24-prettier-e-eslint', 'Como manter o código padronizado com Prettier e ESLint?', 30],
-    [25, '25-publicar-no-github-pages', 'Como publicar o site no GitHub Pages?', 35],
+    [23, '23-fetch-e-json-server', 'Como salvar e buscar dados com fetch e o json-server?', 50],
+    [24, '24-api-publica-e-erros', 'Como consumir uma API pública e tratar os erros?', 45],
+    [25, '25-prettier-e-eslint', 'Como manter o código padronizado com Prettier e ESLint?', 30],
+    [26, '26-publicar-no-github-pages', 'Como publicar o site no GitHub Pages?', 35],
   ]],
   ['para-ir-alem', 'Para ir além', false, [
     [null, 'materialize-e-outros-frameworks', 'Como são o Materialize e outros frameworks CSS, lado a lado?', 30],
@@ -60,7 +61,7 @@ export const PARTS = raw.map(([id, title, hasMarks, chapters]) => ({
   })),
 }));
 
-/** Os 25 capítulos numerados, em ordem. */
+/** Os 26 capítulos numerados, em ordem. */
 export function allChapters() {
   return PARTS.flatMap((p) => p.chapters).filter((c) => c.number !== null);
 }

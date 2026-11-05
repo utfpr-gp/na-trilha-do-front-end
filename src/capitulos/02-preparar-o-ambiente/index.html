@@ -11,7 +11,7 @@
       <!-- @render chapter-header 02-preparar-o-ambiente -->
 
       <tf-view kind="missao" title="A missão">
-        <p>No capítulo 1, o cartão da trilha era um arquivo solto, com o Bootstrap vindo de um CDN. Hoje ele vira um <strong>projeto</strong>: uma pasta com carteira de identidade (o <a class="tf-term" href="{{base}}glossario/#package-json">package.json</a>), o Bootstrap instalado pelo <strong>npm</strong>, aberta no <strong>VS Code</strong>, servida pelo <strong>Live Server</strong> e guardada no <strong>Git</strong>, com uma cópia no GitHub.</p>
+        <p>No capítulo 1, o cartão da trilha era um arquivo solto, com o Bootstrap vindo de um CDN. Hoje ele vira um <strong>projeto</strong>: uma pasta com carteira de identidade (o <a class="tf-term" href="{{base}}glossario/#package-json">package.json</a>), o Bootstrap instalado pelo <strong>npm</strong>, aberta no <strong>VS Code</strong>, servida pelo <strong>Live Server</strong> e guardada no <strong>Git</strong>, com uma cópia no <strong>GitHub</strong>. O projeto nasce no GitHub e desce para o seu computador, nesta ordem.</p>
         <p>Na tela, nada muda: o cartão é o mesmo. O que muda é tudo o que está em volta dele, e é isso que vai acompanhar você até o último capítulo. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/02-preparar-o-ambiente">etapas/02-preparar-o-ambiente</a>.</p>
       </tf-view>
 
@@ -50,6 +50,17 @@
         </ol>
         <p>A <code>node_modules/</code> não vai para o GitHub porque não precisa: qualquer pessoa que baixar o projeto roda <code>npm install</code>, e o npm lê o <code>package.json</code> e o <code>package-lock.json</code> e baixa exatamente as mesmas versões. Guardar a lista é suficiente para refazer a mochila.</p>
 
+        <h3>Qual versão do Node.js?</h3>
+        <p>O site do Node.js oferece duas: a <strong>LTS</strong> (<em>Long Term Support</em>, suporte por muitos anos) e a <strong>Current</strong>, a mais nova. Escolha sempre a LTS: ela é estável e recebe correções de segurança por anos. As versões LTS são as de número par.</p>
+
+        <h3>Como o seu computador prova ao GitHub que é você?</h3>
+        <p>O GitHub não aceita a senha da sua conta no terminal. Para enviar código por HTTPS, você usa um <a class="tf-term" href="{{base}}glossario/#token">token de acesso pessoal</a>: uma senha longa, gerada pelo próprio GitHub, que vale só para os repositórios e as permissões que você escolher, e só por um tempo. Quando o terminal pedir a senha, você cola o token. No seu computador pessoal, uma alternativa é a chave SSH, que dispensa digitar qualquer coisa a cada envio.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e se eu precisar de duas versões do Node.js?</summary>
+          <p>Um projeto antigo pode exigir o Node 20, e outro, o 24. O <strong>NVM</strong> (<em>Node Version Manager</em>) instala várias versões lado a lado e troca entre elas com um comando, como <code>nvm use 24</code>. No Windows, o equivalente é o nvm-windows, instalado à parte.</p>
+        </details>
+
         <details class="tf-deep-dive">
           <summary>Aprofundando: por que o npm instalou 2 pacotes, se pedi só 1?</summary>
           <p>Ao instalar o Bootstrap, o npm também baixa o <code>@popperjs/core</code>, uma biblioteca que o JavaScript do Bootstrap usa para posicionar menus e dicas. O Bootstrap declara essa necessidade no próprio <code>package.json</code> dele, e o npm resolve sozinho. O <code>package-lock.json</code> registra a versão exata de cada um.</p>
@@ -61,44 +72,67 @@
           <section data-step="Confira as ferramentas">
             <p>Instale o <a href="https://code.visualstudio.com/">VS Code</a>, a versão LTS do <a href="https://nodejs.org/">Node.js</a> (o npm vem junto) e o <a href="https://git-scm.com/">Git</a>. No VS Code, abra as extensões (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>) e instale o <strong>Live Server</strong>, de Ritwick Dey. Depois, num terminal, confira as versões:</p>
             <tf-code src="02-preparar-o-ambiente/versoes.sh" caption="Terminal"></tf-code>
-            <p>Cada comando deve responder com um número de versão. Se algum responder "command not found" (ou "não é reconhecido", no Windows), veja as armadilhas.</p>
+            <p>Cada comando deve responder com um número de versão, e o do Node.js deve ser par. Se algum responder "command not found" (ou "não é reconhecido", no Windows), a instalação não terminou: reinstale e abra um terminal novo.</p>
+            <details class="tf-deep-dive">
+              <summary>Aprofundando: outras extensões que ajudam</summary>
+              <p>Além do Live Server, valem a pena: <strong>Prettier</strong> (formata o código ao salvar), <strong>ESLint</strong> (aponta erros no JavaScript), <strong>Error Lens</strong> (mostra o erro na própria linha), <strong>Auto Rename Tag</strong> (renomeia a tag de fechamento junto com a de abertura) e <strong>Path Intellisense</strong> (completa caminhos de arquivos). O Prettier e o ESLint ganham um capítulo próprio, o 25.</p>
+            </details>
           </section>
-          <section data-step="Crie o projeto">
-            <p>Crie a pasta, entre nela e gere o <code>package.json</code>. O <code>-y</code> aceita as respostas padrão:</p>
+          <section data-step="Crie o repositório e clone">
+            <p>No GitHub, clique em <strong>New repository</strong>, dê o nome <code>trilheiro</code> e marque <strong>Add a README file</strong>. Depois, no botão verde <strong>&lt;&gt; Code</strong>, copie o endereço HTTPS e traga o repositório para o seu computador:</p>
+            <tf-code src="02-preparar-o-ambiente/git-clone.sh" caption="Terminal"></tf-code>
+            <p>Troque <code>seu-usuario</code> pelo seu usuário. Por que clonar primeiro? Porque o repositório no GitHub já tem um commit (o do README). Clonando, o seu computador começa com o mesmo histórico, e os envios seguintes encaixam sem conflito.</p>
+            <p>Abra a pasta <code>trilheiro</code> no VS Code (<em>File → Open Folder</em>). Todo comando daqui em diante roda <strong>dentro</strong> dela.</p>
+          </section>
+          <section data-step="Crie o package.json e o .gitignore">
+            <p>Gere o package.json, a identidade do projeto. O <code>-y</code> aceita as respostas padrão:</p>
             <tf-code src="02-preparar-o-ambiente/npm-init.sh" caption="Terminal"></tf-code>
-            <p>Abra a pasta no VS Code (<em>File → Open Folder</em>). Todo comando daqui em diante roda <strong>dentro</strong> dela.</p>
+            <p>Agora, <strong>antes de instalar qualquer pacote</strong>, crie na raiz do projeto um arquivo chamado exatamente <code>.gitignore</code> (pelo VS Code, no ícone <em>New File</em>), com duas linhas:</p>
+            <tf-code src="02-preparar-o-ambiente/gitignore.txt" caption=".gitignore"></tf-code>
+            <p>A <code>node_modules/</code> vai guardar as bibliotecas baixadas; os arquivos <code>.env</code> costumam guardar senhas e chaves. Nenhum dos dois vai para o GitHub.</p>
           </section>
           <section data-step="Instale o Bootstrap">
             <tf-code src="02-preparar-o-ambiente/npm-install.txt" caption="Terminal"></tf-code>
             <p>Três coisas aparecem na pasta: a <code>node_modules/</code>, o <code>package-lock.json</code> e uma linha nova no <code>package.json</code>:</p>
             <tf-code src="02-preparar-o-ambiente/package.json" caption="package.json"></tf-code>
-            <p>O <code>^</code> em <code>^5.3.8</code> quer dizer "a 5.3.8 ou uma versão mais nova que não quebre nada": aceita a 5.3.9 ou a 5.4.0, mas não a 6.0.0.</p>
+            <p>O <code>^</code> em <code>^5.3.8</code> quer dizer "a 5.3.8 ou uma versão mais nova que não quebre nada": aceita a 5.3.9 ou a 5.4.0, mas não a 6.0.0. O <code>package-lock.json</code> registra a versão exata instalada, e ele vai para o GitHub.</p>
           </section>
           <section data-step="Ligue o CSS">
             <p>Copie o <code>index.html</code> e o <code>salto.svg</code> do capítulo 1. No <code>&lt;head&gt;</code>, troque o link do CDN pelo arquivo que o npm baixou:</p>
             <tf-code src="02-preparar-o-ambiente/link-node-modules.html" caption="index.html"></tf-code>
             <p>Clique com o botão direito no <code>index.html</code> e escolha <strong>Open with Live Server</strong> (ou clique em <strong>Go Live</strong>, na barra de baixo). O cartão aparece no navegador, igual ao do capítulo 1. Mude o nome da trilha, salve, e veja a página recarregar sozinha.</p>
+            <p>Durante o desenvolvimento, o CSS vem da <code>node_modules/</code>: o site funciona até sem internet, e o capítulo 13 vai personalizar o Bootstrap a partir dela. Na hora de publicar, no capítulo 26, as bibliotecas voltam a vir do CDN.</p>
           </section>
-          <section data-step="Guarde no Git">
-            <p>Antes do primeiro commit, veja o que o Git enxerga:</p>
-            <tf-code src="02-preparar-o-ambiente/git-status-antes.txt" caption="Terminal"></tf-code>
-            <p>A <code>node_modules/</code> está na lista, e ela não deve ir. Crie um arquivo chamado <code>.gitignore</code> na raiz do projeto com uma linha:</p>
-            <tf-code src="02-preparar-o-ambiente/gitignore.txt" caption=".gitignore"></tf-code>
-            <tf-code src="02-preparar-o-ambiente/git-status-depois.txt" caption="Terminal"></tf-code>
-            <p>Agora sim. Crie o repositório já com a branch <code>main</code> e faça o primeiro commit:</p>
-            <tf-code src="02-preparar-o-ambiente/git-primeiro-commit.sh" caption="Terminal"></tf-code>
+          <section data-step="Guarde no Git e envie">
+            <p>Antes do commit, confira o que o Git enxerga:</p>
+            <tf-code src="02-preparar-o-ambiente/git-status.txt" caption="Terminal"></tf-code>
+            <p>Os cinco arquivos do projeto estão lá, e a <code>node_modules/</code> não, graças ao <code>.gitignore</code>. Agora, adicione, faça o commit e envie:</p>
+            <tf-code src="02-preparar-o-ambiente/git-commit.sh" caption="Terminal"></tf-code>
             <tf-code src="02-preparar-o-ambiente/git-commit-saida.txt" caption="Saída do commit"></tf-code>
-            <p>Repare: 5 arquivos, nenhum da <code>node_modules/</code>.</p>
-          </section>
-          <section data-step="Envie para o GitHub">
-            <p>No GitHub, crie um repositório vazio chamado <code>trilheiro</code>, sem README. Depois, ligue o seu projeto a ele e envie:</p>
-            <tf-code src="02-preparar-o-ambiente/git-push.sh" caption="Terminal"></tf-code>
-            <p>Troque <code>seu-usuario</code> pelo seu usuário do GitHub. Na primeira vez, o Git pede para você entrar na sua conta. Depois, recarregue a página do repositório: os 5 arquivos estão lá.</p>
+            <p>A mensagem começa com <code>feat:</code>, o tipo da mudança (uma funcionalidade nova). Outros tipos comuns são <code>fix:</code> (correção), <code>docs:</code> (documentação), <code>style:</code> (formatação) e <code>chore:</code> (manutenção, como instalar pacotes). Esse padrão se chama <em>commits semânticos</em>, e deixa o histórico fácil de ler.</p>
+            <p>No <code>git push</code>, o terminal pede usuário e senha. No usuário, digite o seu usuário do GitHub; na senha, cole o <strong>token</strong>, nunca a senha da conta. No Linux, nada aparece enquanto você cola, e é normal. No Windows, pode abrir uma janela do <em>Git Credential Manager</em>: escolha a opção de token, ou entre pelo navegador.</p>
+            <details class="tf-deep-dive">
+              <summary>Aprofundando: como gerar o token</summary>
+              <p>No GitHub, clique na sua foto, depois em <strong>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</strong>. Dê um nome, escolha a validade, em <strong>Repository access</strong> marque <strong>Only select repositories</strong> e selecione o <code>trilheiro</code>, e em <strong>Permissions</strong> dê à permissão <strong>Contents</strong> o acesso <strong>Read and write</strong> (sem ela, o push é recusado). Clique em <strong>Generate token</strong> e copie na hora: o GitHub só mostra o token uma vez. Guarde num gerenciador de senhas, nunca num arquivo de texto no computador.</p>
+            </details>
           </section>
           <section data-step="E se eu tirar?">
             <p>Apague a pasta <code>node_modules/</code> inteira e recarregue o Live Server: o cartão perde o estilo, porque o <code>&lt;link&gt;</code> aponta para um arquivo que não existe mais. Agora rode <code>npm install</code>, sem nome de pacote: o npm lê a lista e refaz a mochila. Recarregue, e o cartão volta.</p>
           </section>
         </tf-steps>
+
+        <h3>Os hábitos que evitam dor de cabeça</h3>
+        <ul>
+          <li><strong>Comece com um <code>git pull origin main</code>.</strong> Se você mexeu no projeto em outro computador, ou alguém mexeu por você, o pull traz essas mudanças antes de você escrever qualquer linha.</li>
+          <li><strong>Faça commits pequenos.</strong> Terminou uma página? Commit. Corrigiu um erro? Commit. Um commit por mudança deixa fácil voltar atrás no ponto certo.</li>
+          <li><strong>Nunca faça commit da <code>node_modules/</code> nem de arquivos <code>.env</code>.</strong></li>
+        </ul>
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: num computador compartilhado, como num laboratório</summary>
+          <p>Se o computador usa um login igual para todo mundo, o que você salva nele fica para o próximo. Configure o nome e o e-mail sem o <code>--global</code> (veja a armadilha do primeiro commit), gere um token com validade curta, e nunca peça ao Git para guardá-lo num arquivo. Para não colar o token a cada push enquanto trabalha, dá para guardá-lo só na memória, por duas horas:</p>
+          <tf-code src="02-preparar-o-ambiente/credencial-cache.sh" caption="Terminal (dentro da pasta do projeto)"></tf-code>
+          <p>Entre no GitHub só em janela anônima e, ao terminar, confira com <code>git status</code> que tudo foi enviado e apague a pasta do projeto. Na próxima vez, basta clonar de novo.</p>
+        </details>
       </tf-view>
 
       <tf-view kind="armadilhas" title="Armadilhas">
@@ -121,14 +155,17 @@ Run
 
 to set your account's default identity.
 Omit --global to set the identity only in this repository.">
-          <p>Todo commit leva o nome e o e-mail de quem o fez, e o Git ainda não sabe quem é você. Configure uma vez por computador, de preferência com o mesmo e-mail da sua conta do GitHub, e repita o commit:</p>
+          <p>Todo commit leva o nome e o e-mail de quem o fez, e o Git ainda não sabe quem é você. Use o mesmo e-mail da sua conta do GitHub, para os commits aparecerem no seu perfil, e repita o commit. No seu computador, configure uma vez para todos os projetos; num computador compartilhado, só para o projeto:</p>
           <tf-code src="02-preparar-o-ambiente/git-identidade.sh" caption="Terminal"></tf-code>
         </tf-pitfall>
         <tf-pitfall title="O Git diz que a pasta não é um repositório" message="fatal: not a git repository (or any of the parent directories): .git">
-          <p>Você rodou um comando do Git numa pasta em que ainda não houve <code>git init</code>, ou o terminal está na pasta errada. Confira com <code>pwd</code> e entre na pasta do projeto. Se o projeto ainda não tem repositório, rode <code>git init -b main</code> nele (e só nele: nunca na sua pasta pessoal inteira).</p>
+          <p>O terminal está fora da pasta do repositório: o <code>git clone</code> cria uma pasta nova, e é preciso entrar nela com <code>cd trilheiro</code>. Confira com <code>pwd</code> (ou olhe o caminho antes do cursor).</p>
+        </tf-pitfall>
+        <tf-pitfall title="Digitei a senha da minha conta e o push foi recusado">
+          <p>O GitHub não aceita mais a senha da conta para enviar código pelo terminal. Na pergunta da senha, cole o <strong>token de acesso pessoal</strong> (veja "Como gerar o token", no passo do envio). Se o token foi aceito mas o push ainda é recusado, falta a permissão <strong>Contents</strong> com <strong>Read and write</strong>, ou o token não inclui este repositório.</p>
         </tf-pitfall>
         <tf-pitfall title="A node_modules apareceu no GitHub">
-          <p>O <code>.gitignore</code> foi criado depois do primeiro <code>git add</code>, ou com o nome errado (<code>gitignore</code>, sem o ponto, ou <code>.gitignore.txt</code>). Não há mensagem de erro: o <code>git status</code> simplesmente lista a <code>node_modules/</code>. Acerte o nome do arquivo e tire a pasta do Git sem apagá-la do computador com <code>git rm -r --cached node_modules</code>, depois faça um commit.</p>
+          <p>O <code>.gitignore</code> foi criado depois do <code>npm install</code> e do <code>git add</code>, ou com o nome errado (<code>gitignore</code>, sem o ponto, ou <code>.gitignore.txt</code>). Não há mensagem de erro: o <code>git status</code> simplesmente lista a <code>node_modules/</code>. Acerte o nome do arquivo e tire a pasta do Git sem apagá-la do computador com <code>git rm -r --cached node_modules</code>, depois faça um commit.</p>
         </tf-pitfall>
       </tf-view>
 
@@ -148,7 +185,7 @@ Omit --global to set the identity only in this repository.">
             <label><input type="radio" name="q2" value="b"> Instala o Bootstrap</label>
             <label><input type="radio" name="q2" value="c"> Publica o site na internet</label>
             <p data-explain="b" hidden>Quem instala o Bootstrap é o npm. O Live Server só serve os arquivos que já estão na pasta.</p>
-            <p data-explain="c" hidden>O endereço do Live Server (<code>127.0.0.1</code>) só existe no seu computador. A publicação é assunto do capítulo 25.</p>
+            <p data-explain="c" hidden>O endereço do Live Server (<code>127.0.0.1</code>) só existe no seu computador. A publicação é assunto do capítulo 26.</p>
           </fieldset>
           <fieldset data-correct="b">
             <legend>No <code>package.json</code>, o que quer dizer <code>"bootstrap": "^5.3.8"</code>?</legend>
@@ -166,13 +203,21 @@ Omit --global to set the identity only in this repository.">
             <p data-explain="b" hidden>O erro fala de um arquivo local, o <code>package.json</code>, e não de um pacote na internet.</p>
             <p data-explain="c" hidden>O npm não depende do Live Server. Ele procura o <code>package.json</code> na pasta em que o terminal está.</p>
           </fieldset>
+          <fieldset data-correct="c">
+            <legend>No <code>git push</code>, o terminal pede a senha. O que você digita?</legend>
+            <label><input type="radio" name="q5" value="a"> A senha da sua conta do GitHub</label>
+            <label><input type="radio" name="q5" value="b"> Nada: basta apertar Enter</label>
+            <label><input type="radio" name="q5" value="c"> O token de acesso pessoal gerado no GitHub</label>
+            <p data-explain="a" hidden>O GitHub não aceita mais a senha da conta no terminal. No lugar dela vai o token, que vale só para os repositórios e as permissões que você escolheu.</p>
+            <p data-explain="b" hidden>Sem credencial, o GitHub recusa o envio. Cole o token de acesso pessoal.</p>
+          </fieldset>
           <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
           <p class="tf-challenge-status" data-status aria-live="polite"></p>
         </tf-challenge>
       </tf-view>
 
       <tf-view kind="na-sua-trilha" title="Na sua trilha">
-        <p>Faça o mesmo com o <strong>seu projeto</strong>: uma pasta com <code>package.json</code>, o framework instalado pelo npm, o <code>.gitignore</code> com a <code>node_modules/</code>, o primeiro commit e o envio para um repositório seu no GitHub. Pode ser só a página com o componente que você montou no capítulo 1.</p>
+        <p>Faça o mesmo com o <strong>seu projeto</strong>: o repositório criado no GitHub e clonado, o <code>package.json</code>, o <code>.gitignore</code> antes de instalar o framework pelo npm, um commit semântico e o envio com o seu token. Pode ser só a página com o componente que você montou no capítulo 1.</p>
         <ul>
           <li><strong>O conceito:</strong> o que cada um destes arquivos guarda: <code>package.json</code>, <code>package-lock.json</code> e <code>.gitignore</code>?</li>
           <li><strong>A motivação:</strong> por que instalar o framework pelo npm, e não baixar o arquivo CSS à mão?</li>

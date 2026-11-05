@@ -1,4 +1,0 @@
-$ git status --short
-?? .gitignore
-?? package-lock.json
-?? package.json

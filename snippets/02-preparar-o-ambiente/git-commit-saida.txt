@@ -1,5 +1,5 @@
-[main (root-commit) 10a5148] primeiro cartão de trilha
- 5 files changed, 88 insertions(+)
+[main cec0861] feat: primeiro cartão de trilha com Bootstrap pelo npm
+ 5 files changed, 99 insertions(+)
  create mode 100644 .gitignore
  create mode 100644 index.html
  create mode 100644 package-lock.json
