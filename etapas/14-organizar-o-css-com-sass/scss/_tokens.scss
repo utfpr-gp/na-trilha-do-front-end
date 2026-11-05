@@ -1,0 +1,19 @@
+// As decisões do design system (capítulo 6), agora como variáveis do Sass.
+$verde-mata: #2f5d3a;
+$terra: #8b5a2b;
+$marcacao: #f2c230;
+$papel: #faf7f0;
+$superficie: #ffffff;
+$tinta: #1f2a24;
+$tinta-suave: #55625a;
+
+$fonte-titulos: "Bitter", Georgia, serif;
+$fonte-texto: "Source Sans 3", system-ui, sans-serif;
+$raio: 0.5rem;
+
+// Um mapa: o nome de cada dificuldade e a cor do selo dela.
+$dificuldades: (
+  facil: #2e7d32,
+  moderada: #a35f00,
+  dificil: #b3261e,
+);

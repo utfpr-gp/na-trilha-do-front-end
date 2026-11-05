@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="14-organizar-o-css-com-sass">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 14-organizar-o-css-com-sass -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O <code>style.css</code> do Trilheiro cresceu capítulo a capítulo, e hoje mistura navbar, faixa de destaque, cartões, etiquetas e rodapé num arquivo só. Ele deixa de existir: cada parte da página vira um arquivo Sass próprio, as cores viram variáveis, os espaços seguem uma função, a regra das fotos vira um mixin, e os três selos de dificuldade passam a ser gerados por um laço a partir de um mapa.</p>
+        <p>Na tela, nada muda. No código, cada coisa passa a ter um endereço. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/14-organizar-o-css-com-sass">etapas/14-organizar-o-css-com-sass</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🎒" title="A mochila com compartimentos">
+          <p>Numa mochila sem divisões, a lanterna some embaixo do casaco, e você esvazia tudo para achá-la. Numa mochila com compartimentos, o kit de primeiros socorros fica sempre no mesmo bolso, e qualquer pessoa do grupo sabe onde procurar.</p>
+          <p>Os parciais do Sass são os compartimentos: o rodapé no <code>_footer.scss</code>, os cartões no <code>_cards.scss</code>. E as variáveis, as funções e os mixins são os itens que você leva uma vez só e usa em vários lugares, em vez de carregar duas lanternas.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Parciais e @use</h3>
+        <p>Um <strong>parcial</strong> é um arquivo Sass com nome começando por <code>_</code> (<code>_footer.scss</code>): o compilador não gera um CSS para ele sozinho; ele só existe para ser chamado por outro arquivo. Para usar o que está num parcial, o arquivo chama <code>@use</code>, e o que vem de lá é usado com o nome do arquivo (ou um apelido) na frente:</p>
+        <tf-code src="14-organizar-o-css-com-sass/theme.scss" caption="scss/_theme.scss"></tf-code>
+        <p>A regra que evita a maioria dos erros: <strong>cada arquivo só enxerga o que ele mesmo chamou</strong>. Se o <code>_footer.scss</code> usa uma cor dos tokens, é ele que precisa do <code>@use "tokens"</code>.</p>
+        <p>E o <code>main.scss</code>? Ele junta tudo com <code>@import</code>, porque o Bootstrap 5.3 ainda é escrito assim e precisa enxergar as variáveis do tema de forma global. Nos seus parciais, use <code>@use</code>:</p>
+        <tf-code src="14-organizar-o-css-com-sass/main.scss" caption="scss/main.scss"></tf-code>
+
+        <h3>Variáveis e mapas</h3>
+        <p>As decisões do design system viram variáveis num arquivo só. Um <strong>mapa</strong> guarda pares de nome e valor, como as cores de cada dificuldade:</p>
+        <tf-code src="14-organizar-o-css-com-sass/tokens.scss" caption="scss/_tokens.scss"></tf-code>
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: variável do Sass ou variável CSS?</summary>
+          <p>A variável do Sass (<code>$verde-mata</code>) é resolvida na compilação: no CSS final só sobra o valor. A variável CSS (<code>--cor-marca</code>, do capítulo 6) chega até o navegador e pode mudar com a página aberta, por exemplo num modo escuro. Para alimentar o Bootstrap, só as do Sass servem; para trocar valores ao vivo, as do CSS.</p>
+        </details>
+
+        <h3>Funções e mixins</h3>
+        <p>Uma <strong>função</strong> recebe valores e devolve um valor. Um <a class="tf-term" href="{{base}}glossario/#mixin">mixin</a> recebe valores e devolve um bloco de declarações, colado com <code>@include</code>:</p>
+        <tf-code src="14-organizar-o-css-com-sass/functions.scss" caption="scss/_functions.scss"></tf-code>
+        <tf-code src="14-organizar-o-css-com-sass/mixins.scss" caption="scss/_mixins.scss"></tf-code>
+
+        <h3>Aninhamento e laços</h3>
+        <p>O aninhamento agrupa as regras de um componente, e o <code>&amp;</code> repete o seletor de fora: <code>&amp;__marca</code> dentro de <code>.site-footer</code> vira <code>.site-footer__marca</code>. E o <code>@each</code> percorre um mapa e escreve uma regra para cada par:</p>
+        <tf-code src="14-organizar-o-css-com-sass/cards.scss" caption="scss/_cards.scss"></tf-code>
+        <p>No CSS compilado, aparecem as três classes, cada uma com a sua cor:</p>
+        <tf-code src="14-organizar-o-css-com-sass/compilado.css" caption="css/main.css (trecho)"></tf-code>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Os compartimentos">
+            <p>Crie os parciais na pasta <code>scss/</code>:</p>
+            <tf-code src="14-organizar-o-css-com-sass/arvore.txt" caption="Estrutura"></tf-code>
+            <p>Leve cada bloco do <code>style.css</code> para o parcial da sua parte da página, troque as variáveis CSS (<code>var(--cor-marca)</code>) pelas do Sass (<code>t.$verde-mata</code>) e ponha o <code>@use</code> necessário no topo de cada arquivo.</p>
+          </section>
+          <section data-step="O rodapé com aninhamento">
+            <tf-code src="14-organizar-o-css-com-sass/footer.scss" caption="scss/_footer.scss"></tf-code>
+            <p>Os espaçamentos usam a função: <code>f.espaco(3)</code> vira <code>1.5rem</code>, e o site inteiro anda de meio em meio rem.</p>
+          </section>
+          <section data-step="Os selos de dificuldade">
+            <p>Nas duas páginas, troque as classes de cor do Bootstrap pelos selos gerados: <code>badge text-bg-warning</code> vira <code>badge badge-moderada</code>, e assim por diante. As cores passam a ser as do design system, e não as do Bootstrap.</p>
+          </section>
+          <section data-step="Adeus, style.css">
+            <p>Tire o <code>&lt;link&gt;</code> do <code>style.css</code> das duas páginas e apague o arquivo. Compile com <code>npm run sass</code>: tudo agora está no <code>css/main.css</code>, num arquivo só, com o Bootstrap.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>@use "tokens" as t;</code> do topo do <code>_footer.scss</code> e compile: o Sass para com um erro, porque o rodapé deixou de enxergar as cores. Devolva. Agora acrescente <code>facil-com-guia: #1f5f99</code> ao mapa <code>$dificuldades</code> e compile: aparece a classe <code>.badge-facil-com-guia</code> no CSS, sem você escrever nenhuma regra. Apague a linha.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Usei uma variável de outro arquivo e o Sass não a encontrou" message="Error: Undefined variable.
+  ╷
+1 │ .x { color: $verde-mata; }
+  │             ^^^^^^^^^^^
+  ╵
+  scss/_semuse.scss 1:13  @import">
+          <p>O arquivo usa <code>$verde-mata</code>, mas não chamou o parcial onde ela está. Ponha <code>@use "tokens" as t;</code> no topo e escreva <code>t.$verde-mata</code>. Chamar os tokens no <code>main.scss</code> não os torna visíveis nos outros arquivos.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O apelido do @use não bate" message="Error: There is no module with namespace &quot;t&quot;.
+  ╷
+2 │ .x { color: t.$verde-mata; }
+  │             ^^^^^^^^^^^^^
+  ╵
+  scss/e2.scss 2:13  root stylesheet">
+          <p>O arquivo chamou <code>@use "tokens";</code> (sem apelido) e escreveu <code>t.$verde-mata</code>. Sem o <code>as t</code>, o nome a usar é o do arquivo: <code>tokens.$verde-mata</code>. Ou acrescente o apelido: <code>@use "tokens" as t;</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O Sass avisou sobre a barra da proporção" message="DEPRECATION WARNING [slash-div]: Using / for division is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div(4, 3)">
+          <p>Com <code>@include m.cover-image(4 / 3)</code>, o Sass entende uma divisão, e não a barra do <code>aspect-ratio</code>. O mixin do Trilheiro recebe a largura e a altura separadas e escreve a barra com interpolação: <code>aspect-ratio: #{$largura} / #{$altura};</code>. Assim, no CSS final, sai <code>4/3</code>, como deve.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="14-organizar-o-css-com-sass" award>
+          <fieldset data-correct="b">
+            <legend>Para que serve o <code>_</code> no começo de <code>_footer.scss</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Para o arquivo ser ignorado pelo Git</label>
+            <label><input type="radio" name="q1" value="b"> Para marcar um parcial: o compilador não gera um CSS só para ele, ele existe para ser chamado por outro arquivo</label>
+            <label><input type="radio" name="q1" value="c"> Para o arquivo carregar primeiro</label>
+            <p data-explain="a" hidden>O Git não liga para o sublinhado. Quem liga é o compilador do Sass.</p>
+            <p data-explain="c" hidden>A ordem é decidida pelo <code>main.scss</code>. O sublinhado só marca o arquivo como parcial.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Qual a diferença entre uma função e um mixin?</legend>
+            <label><input type="radio" name="q2" value="a"> Nenhuma: são dois nomes para a mesma coisa</label>
+            <label><input type="radio" name="q2" value="b"> A função gera classes; a mixin gera variáveis</label>
+            <label><input type="radio" name="q2" value="c"> A função devolve um valor (como <code>1.5rem</code>); o mixin devolve um bloco de declarações, colado com <code>@include</code></label>
+            <p data-explain="a" hidden>São diferentes: uma devolve um valor, a outra um bloco de propriedades.</p>
+            <p data-explain="b" hidden>Nenhuma das duas gera classes sozinha. Quem gerou as classes dos selos foi o <code>@each</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Dentro de <code>.site-footer { … }</code>, o que vira <code>&amp;__aviso</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> <code>.site-footer__aviso</code></label>
+            <label><input type="radio" name="q3" value="b"> <code>.site-footer .__aviso</code></label>
+            <label><input type="radio" name="q3" value="c"> <code>&amp;__aviso</code>, igual no CSS</label>
+            <p data-explain="b" hidden>O <code>&amp;</code> cola o texto no seletor de fora, sem espaço.</p>
+            <p data-explain="c" hidden>O <code>&amp;</code> é do Sass e some na compilação, trocado pelo seletor de fora.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>O Sass diz <code>Undefined variable</code> no <code>_footer.scss</code>, mas a variável existe no <code>_tokens.scss</code>. Por quê?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque o <code>_tokens.scss</code> precisa vir primeiro no <code>main.scss</code></label>
+            <label><input type="radio" name="q4" value="b"> Porque o <code>_footer.scss</code> não chamou <code>@use "tokens"</code>: cada arquivo só enxerga o que ele mesmo chamou</label>
+            <label><input type="radio" name="q4" value="c"> Porque variáveis não funcionam em parciais</label>
+            <p data-explain="a" hidden>Com <code>@use</code>, a ordem no <code>main.scss</code> não resolve: o arquivo que usa a variável precisa chamá-la.</p>
+            <p data-explain="c" hidden>Funcionam, desde que o arquivo chame o parcial onde a variável está.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, divida o seu CSS próprio em parciais Sass, uma parte da página por arquivo, com os tokens num parcial de variáveis. Use pelo menos uma função, um mixin e um aninhamento de verdade (onde eles evitam repetição), e compile tudo junto com o framework.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que são parcial, variável, função e mixin?</li>
+          <li><strong>A motivação:</strong> que repetição o seu mixin e a sua função evitam?</li>
+          <li><strong>A anatomia:</strong> explique o <code>@use</code>, o apelido e o uso de uma variável de outro arquivo.</li>
+          <li><strong>"E se eu tirar?":</strong> tire um <code>@use</code> e mostre o erro do compilador.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://sass-lang.com/documentation/at-rules/use/">Sass: @use (em inglês)</a></li>
+          <li><a href="https://sass-lang.com/documentation/at-rules/mixin/">Sass: mixins (em inglês)</a></li>
+          <li><a href="https://sass-lang.com/documentation/at-rules/function/">Sass: funções (em inglês)</a></li>
+          <li><a href="https://sass-lang.com/documentation/values/maps/">Sass: mapas (em inglês)</a></li>
+          <li><a href="https://sass-lang.com/documentation/style-rules/parent-selector/">Sass: o seletor &amp; (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 14-organizar-o-css-com-sass -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

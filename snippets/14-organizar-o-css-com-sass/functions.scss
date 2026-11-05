@@ -1,0 +1,4 @@
+// Espaçamentos de meio em meio rem: espaco(3) = 1.5rem.
+@function espaco($n) {
+  @return $n * 0.5rem;
+}

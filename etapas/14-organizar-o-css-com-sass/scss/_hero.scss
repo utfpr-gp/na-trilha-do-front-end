@@ -1,0 +1,25 @@
+@use "tokens" as t;
+@use "functions" as f;
+
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: 40vh;
+  padding: f.espaco(6) 0;
+  background: url("../mirante.svg") center / cover no-repeat, t.$marcacao;
+
+  h1 {
+    max-width: 18ch;
+    margin: 0 0 f.espaco(2);
+    font-size: 2.5rem;
+  }
+
+  &__texto {
+    max-width: 45ch;
+    margin: 0;
+    padding: 0.75em 1em;
+    font-size: 1.125rem;
+    border-radius: t.$raio;
+    background-color: rgba(t.$papel, 0.9);
+  }
+}

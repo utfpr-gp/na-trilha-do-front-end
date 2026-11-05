@@ -1,0 +1,18 @@
+@use "tokens" as t;
+@use "mixins" as m;
+
+.card-title {
+  color: t.$verde-mata;
+}
+
+.card-img-top {
+  @include m.cover-image(4, 3);
+}
+
+// Um selo por dificuldade, gerado a partir do mapa: .badge-facil, .badge-moderada, .badge-dificil.
+@each $nome, $cor in t.$dificuldades {
+  .badge-#{$nome} {
+    color: t.$superficie;
+    background-color: $cor;
+  }
+}
