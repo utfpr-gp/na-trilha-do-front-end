@@ -1,0 +1,8 @@
+// 1. O tema: as variáveis do Bootstrap, antes dele.
+@import "theme";
+
+// 2. O Bootstrap, gerado com o tema. (O Bootstrap 5.3 ainda usa @import.)
+@import "bootstrap/scss/bootstrap";
+
+// 3. As regras do Trilheiro, depois do Bootstrap, uma parte da página por arquivo.
+@import "navbar", "hero", "cards", "trilha", "footer";

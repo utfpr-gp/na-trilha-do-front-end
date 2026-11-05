@@ -1,0 +1,11 @@
+scss/
+├── main.scss        junta tudo, na ordem certa
+├── _tokens.scss     as decisões do design system
+├── _theme.scss      as variáveis do Bootstrap, alimentadas pelos tokens
+├── _functions.scss  espaco()
+├── _mixins.scss     cover-image()
+├── _navbar.scss
+├── _hero.scss
+├── _cards.scss
+├── _trilha.scss     etiquetas e dados da página da trilha
+└── _footer.scss
