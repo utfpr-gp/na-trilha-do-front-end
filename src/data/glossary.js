@@ -19,5 +19,6 @@ export const GLOSSARY = [
   { id: 'utilitario', term: 'classe utilitária', definition: 'Uma classe que faz uma coisa só, como py-4 (padding vertical) ou d-flex (contêiner flexível). No Bootstrap, os utilitários usam !important.', chapter: 8 },
   { id: 'flexbox', term: 'Flexbox', definition: 'O modo de layout do CSS para itens em fila (uma dimensão): display: flex no contêiner, e justify-content, align-items, flex-wrap e gap para distribuir os filhos.', chapter: 11 },
   { id: 'rem', term: 'rem', definition: 'Unidade relativa à fonte da raiz da página (em geral 16px): 1.5rem = 24px. Acompanha o tamanho de letra que a pessoa escolheu no navegador.', chapter: 12 },
+  { id: 'sass', term: 'Sass', definition: 'Uma extensão do CSS com variáveis ($primary), parciais, mixins e funções. Um compilador transforma o .scss em .css, que é o que o navegador lê.', chapter: 13 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

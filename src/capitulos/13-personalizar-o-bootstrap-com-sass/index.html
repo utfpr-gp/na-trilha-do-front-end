@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="13-personalizar-o-bootstrap-com-sass">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 13-personalizar-o-bootstrap-com-sass -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Desde o capítulo 1, o botão "Ver trilha" é azul, o azul do Bootstrap. No capítulo 6, os tokens mudaram o cabeçalho e os títulos, mas não alcançaram os componentes. Hoje isso acaba: o Bootstrap passa a ser <strong>compilado com o tema do Trilheiro</strong>, e todos os botões, links e componentes saem verde-mata e terra, inclusive os tons de quando o mouse passa por cima, que o Bootstrap calcula sozinho.</p>
+        <p>A ferramenta é o <a class="tf-term" href="{{base}}glossario/#sass">Sass</a>, e a mudança cabe em poucas linhas. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/13-personalizar-o-bootstrap-com-sass">etapas/13-personalizar-o-bootstrap-com-sass</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🏕️" title="Pedir a barraca na cor que você quer">
+          <p>Lembra da barraca pronta do capítulo 1, igual à de metade do acampamento? Dá para pintá-la depois, peça por peça, e sempre sobra um canto da cor antiga. Ou dá para encomendá-la já na cor certa: a fábrica usa a mesma forma e as mesmas peças, só troca o tecido antes de costurar.</p>
+          <p>Pintar depois é escrever CSS com <code>!important</code> por cima do Bootstrap. Encomendar na cor certa é mudar as variáveis do Bootstrap <strong>antes</strong> de ele ser gerado, com Sass.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>O Sass é uma versão ampliada do CSS, com variáveis (que começam com <code>$</code>), arquivos parciais, funções e mixins. O navegador não entende Sass: um <strong>compilador</strong> transforma o seu <code>.scss</code> num <code>.css</code> comum. Há dois momentos, e não convém misturá-los:</p>
+        <ol class="tf-flow" aria-label="Os dois momentos">
+          <li class="tf-flow-step"><strong>No seu computador</strong><span>O compilador lê o <code>.scss</code>, decide as variáveis e gera o <code>.css</code>.</span></li>
+          <li class="tf-flow-arrow" aria-hidden="true">npm run sass →</li>
+          <li class="tf-flow-step"><strong>No navegador</strong><span>Chega só o <code>.css</code>, com os valores já decididos. A cascata do capítulo 3 age aqui.</span></li>
+        </ol>
+
+        <h3>O segredo: o !default</h3>
+        <p>Dentro dos arquivos do Bootstrap, as variáveis são escritas assim: <code>$primary: $blue !default;</code>. O <code>!default</code> quer dizer "use o azul <strong>só se</strong> ninguém escolheu uma cor antes". No Sass, sem nada de especial, o último valor vence, como no CSS. O <code>!default</code> é o Bootstrap abrindo mão de propósito:</p>
+        <tf-code src="13-personalizar-o-bootstrap-com-sass/default.scss" caption="Exemplo"></tf-code>
+        <p>Daí a regra que este capítulo inteiro ensina, e que você vai repetir muitas vezes:</p>
+        <ul>
+          <li><strong>Variáveis do tema: antes do Bootstrap.</strong> O <code>!default</code> respeita quem chegou primeiro.</li>
+          <li><strong>Regras de CSS próprias: depois do Bootstrap.</strong> A cascata dá razão a quem chega por último.</li>
+        </ul>
+
+        <h3>E o !important?</h3>
+        <p>Ele parece parente do <code>!default</code>, mas é de outro mundo. O <code>!default</code> é do Sass, age sobre uma variável, na compilação, e some do CSS final: ele <strong>cede</strong>. O <code>!important</code> é do CSS, age sobre uma propriedade, no navegador, e vai junto no CSS final: ele <strong>força</strong>. Para trocar a cor primária, um <code>.btn-primary { background: … !important; }</code> troca um lugar; a variável <code>$primary</code> troca todos os lugares de uma vez: botões, links, fundos, bordas, o contorno do campo selecionado, os tons de hover.</p>
+
+        <h3>O que dá para mudar por variável</h3>
+        <p>Cores do tema (<code>$primary</code>, <code>$secondary</code>, <code>$success</code>…), o fundo e o texto da página (<code>$body-bg</code>, <code>$body-color</code>), as fontes (<code>$font-family-sans-serif</code>, <code>$headings-font-family</code>), os cantos (<code>$border-radius</code>) e centenas de outras. A lista completa fica no arquivo <code>node_modules/bootstrap/scss/_variables.scss</code>. O que não tem variável, como o layout de uma seção sua, continua no seu CSS, depois do Bootstrap.</p>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Instale o Sass">
+            <tf-code src="13-personalizar-o-bootstrap-com-sass/instalar.sh" caption="Terminal"></tf-code>
+            <p>O <code>--save-dev</code> anota o Sass em <code>devDependencies</code>: ele é uma ferramenta de quem desenvolve, e quem visita o site nunca baixa. Se preferir uma extensão, a <strong>Live Sass Compiler</strong> (de Glenn Marks), do VS Code, faz o mesmo trabalho.</p>
+          </section>
+          <section data-step="O arquivo do tema">
+            <p>Crie a pasta <code>scss/</code> com o arquivo <code>main.scss</code>. Primeiro as escolhas do Trilheiro, depois o Bootstrap:</p>
+            <tf-code src="13-personalizar-o-bootstrap-com-sass/main.scss" caption="scss/main.scss"></tf-code>
+            <p>As cores e as fontes são as do <code>design-system.md</code> do capítulo 6, agora como variáveis do Sass.</p>
+          </section>
+          <section data-step="O comando de compilar">
+            <p>No <code>package.json</code>, crie dois scripts:</p>
+            <tf-code src="13-personalizar-o-bootstrap-com-sass/scripts.json" caption="package.json (trecho)"></tf-code>
+            <p>Cada opção tem um motivo: <code>--load-path=node_modules</code> deixa escrever <code>@import "bootstrap/…"</code> sem o caminho <code>../../node_modules/</code>; <code>--quiet-deps</code> esconde os avisos que vêm do próprio Bootstrap; <code>--silence-deprecation=import</code> cala o aviso do <code>@import</code> no seu arquivo (veja as armadilhas); e <code>--no-source-map</code> não gera o arquivo de depuração <code>.map</code>. Agora compile:</p>
+            <tf-code src="13-personalizar-o-bootstrap-com-sass/compilar.txt" caption="Terminal"></tf-code>
+            <p>Nenhuma outra linha, nenhum erro: apareceu o <code>css/main.css</code>, com o Bootstrap inteiro e as suas cores. Enquanto trabalha, deixe <code>npm run sass:watch</code> rodando num terminal: ele recompila a cada vez que você salva.</p>
+          </section>
+          <section data-step="Troque o CSS do Bootstrap pelo seu">
+            <p>Nas duas páginas, troque o <code>&lt;link&gt;</code> do <code>bootstrap.min.css</code> pelo <code>css/main.css</code>. Os dois juntos brigariam:</p>
+            <tf-code src="13-personalizar-o-bootstrap-com-sass/link.html" caption="index.html e trilha.html"></tf-code>
+            <p>No <code>style.css</code>, apague as regras de <code>body</code> e dos títulos: as fontes e as cores da página agora vêm das variáveis do Bootstrap. O <code>css/main.css</code> vai para o repositório: é ele que o navegador lê, inclusive no site publicado (capítulo 26).</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Mova a linha do <code>$primary</code> para <strong>depois</strong> do <code>@import</code> e recompile: os botões voltam a ser azuis, sem erro nenhum. O Bootstrap já tinha sido gerado com o azul quando a sua variável chegou. Desfaça e recompile.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Mudei o $primary e nada mudou">
+          <p>Três causas comuns. A variável está <strong>depois</strong> do <code>@import</code>:</p>
+          <tf-code src="13-personalizar-o-bootstrap-com-sass/errado.scss" caption="scss/main.scss (errado)"></tf-code>
+          <p>Ou você esqueceu de recompilar (rode <code>npm run sass</code>, ou deixe o <code>sass:watch</code> ligado). Ou a página ainda carrega o <code>bootstrap.min.css</code> original, ao lado ou no lugar do seu <code>main.css</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O compilador não acha o Bootstrap" message="Error: Can't find stylesheet to import.
+  ╷
+2 │ @import &quot;bootstrap/scss/bootstap&quot;;
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  scss/erro.scss 2:9  root stylesheet">
+          <p>O caminho do <code>@import</code> está errado (aqui, "bootstap", sem o "r"), ou faltou o <code>--load-path=node_modules</code> no comando, ou o <code>npm install</code> não foi feito. O Sass aponta a linha e a coluna: <code>2:9</code>. Erros de verdade começam com <code>Error:</code> e não geram o CSS.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Apareceram dezenas de avisos amarelos" message="DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.">
+          <p>Avisos não são erros: o CSS foi gerado. O Sass avisa que o <code>@import</code> vai deixar de existir numa versão futura, mas o Bootstrap 5.3 ainda é escrito com ele. Sem as opções do script, aparecem 20 avisos e a linha "WARNING: 311 repetitive deprecation warnings omitted.". O <code>--quiet-deps</code> e o <code>--silence-deprecation=import</code> deixam a saída limpa, para que um erro de verdade não se perca no meio deles.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Copiei a tag do CDN e só troquei o endereço">
+          <p>A tag da documentação do Bootstrap traz <code>integrity</code> e <code>crossorigin</code>, o lacre do arquivo do CDN (capítulo 1). No seu <code>main.css</code>, o lacre não confere, e o navegador se recusa a carregar o CSS. Use a tag limpa: <code>&lt;link rel="stylesheet" href="css/main.css"&gt;</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="13-personalizar-o-bootstrap-com-sass" award>
+          <fieldset data-correct="a">
+            <legend>Onde vão as variáveis do tema no <code>main.scss</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Antes do <code>@import</code> do Bootstrap</label>
+            <label><input type="radio" name="q1" value="b"> Depois do <code>@import</code> do Bootstrap</label>
+            <label><input type="radio" name="q1" value="c"> Num arquivo CSS separado</label>
+            <p data-explain="b" hidden>Depois é tarde: o Bootstrap já foi gerado com os valores dele. O <code>!default</code> só respeita quem chegou antes.</p>
+            <p data-explain="c" hidden>As variáveis do Sass só existem na compilação. Elas precisam estar no <code>.scss</code>, antes do Bootstrap.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que o <code>!default</code> significa em <code>$primary: $blue !default;</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Que o azul é obrigatório</label>
+            <label><input type="radio" name="q2" value="b"> O mesmo que <code>!important</code></label>
+            <label><input type="radio" name="q2" value="c"> Use o azul só se ninguém tiver escolhido outra cor antes</label>
+            <p data-explain="a" hidden>Ao contrário: o <code>!default</code> cede. Ele só vale se a variável ainda não tem valor.</p>
+            <p data-explain="b" hidden>O <code>!important</code> força, no navegador. O <code>!default</code> cede, na compilação, e nem aparece no CSS final.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que mudar <code>$primary</code> é melhor que <code>.btn-primary { background: … !important; }</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Porque o Sass deixa o site mais rápido</label>
+            <label><input type="radio" name="q3" value="b"> Porque a variável muda a cor em todos os lugares que a usam, inclusive os tons de hover e foco</label>
+            <label><input type="radio" name="q3" value="c"> Porque o <code>!important</code> não funciona com o Bootstrap</label>
+            <p data-explain="a" hidden>A vantagem não é velocidade: é trocar todos os lugares de uma vez, sem caçar regra por regra.</p>
+            <p data-explain="c" hidden>O <code>!important</code> funciona, mas troca um lugar só, e obriga a escrever outro <code>!important</code> para cada mudança futura.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Apareceu <code>DEPRECATION WARNING [import]</code> ao compilar. O que fazer?</legend>
+            <label><input type="radio" name="q4" value="a"> Nada urgente: é um aviso, o CSS foi gerado. Dá para silenciar com as opções do script</label>
+            <label><input type="radio" name="q4" value="b"> Desinstalar o Sass</label>
+            <label><input type="radio" name="q4" value="c"> Trocar todo <code>@import</code> por <code>&lt;link&gt;</code></label>
+            <p data-explain="b" hidden>O aviso só diz que o <code>@import</code> vai mudar no futuro. O Bootstrap 5.3 ainda usa <code>@import</code>.</p>
+            <p data-explain="c" hidden>O <code>&lt;link&gt;</code> é do HTML. O <code>@import</code> do Sass junta os arquivos na compilação.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, instale o Sass, crie o <code>scss/main.scss</code> com as cores e as fontes do seu design system antes do <code>@import</code> do framework, crie os scripts de compilar e troque o CSS original do framework pelo seu <code>css/main.css</code>.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é compilar Sass, e o que o navegador recebe?</li>
+          <li><strong>A motivação:</strong> por que personalizar por variável, e não por CSS com <code>!important</code>?</li>
+          <li><strong>A anatomia:</strong> explique cada linha do seu <code>main.scss</code> e cada opção do script.</li>
+          <li><strong>"E se eu tirar?":</strong> mova uma variável para depois do <code>@import</code>, recompile e explique o resultado.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/customize/sass/">Bootstrap 5.3: Sass</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/customize/color/">Bootstrap 5.3: Color</a></li>
+          <li><a href="https://sass-lang.com/documentation/variables/">Sass: variáveis e o !default (em inglês)</a></li>
+          <li><a href="https://sass-lang.com/documentation/cli/dart-sass/">Sass: opções da linha de comando (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 13-personalizar-o-bootstrap-com-sass -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -1,0 +1,18 @@
+// ==========================================================================
+// 1. O tema do Trilheiro: as variáveis do Bootstrap, SEMPRE antes dele.
+//    Como as do Bootstrap têm !default, valem estas.
+// ==========================================================================
+$primary: #2f5d3a;   // verde-mata
+$secondary: #8b5a2b; // terra
+$body-bg: #faf7f0;   // papel
+$body-color: #1f2a24; // tinta
+$body-secondary-color: #55625a; // tinta suave
+$font-family-sans-serif: "Source Sans 3", system-ui, sans-serif;
+$headings-font-family: "Bitter", Georgia, serif;
+$headings-font-weight: 700;
+$border-radius: 0.5rem;
+
+// ==========================================================================
+// 2. O Bootstrap, gerado com as escolhas acima.
+// ==========================================================================
+@import "bootstrap/scss/bootstrap";

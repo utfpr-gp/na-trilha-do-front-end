@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 12 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 13 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -31,11 +31,12 @@
 - **Capítulo 10 publicado:** página de detalhe `trilha.html` (etapa 10) com carousel, offcanvas (dicas de segurança) e modal (Conte como foi), breadcrumb; demonstrações ao vivo no próprio capítulo (o site do livro importa só `carousel`, `modal` e `offcanvas` do Bootstrap, 14,6 KB comprimido); mensagens reais `Uncaught ReferenceError: bootstrap is not defined` e a do Popper (fonte do Bootstrap). Ferramenta nova: `scripts/avaliar-no-chrome.mjs` (abre a página num Chrome com depuração remota, roda JS e mostra o console).
 - **Capítulo 11 publicado:** Flexbox e Grid em CSS puro; simulador `<tf-flex-lab>`; etapa 11 com o rodapé em três blocos (Flexbox, nomes BEM), as etiquetas do "O que levar" e a grade de dados (`max-content 1fr`); termo Flexbox.
 - **Capítulo 12 publicado:** unidades relativas (rem, em, %, vw/vh, dvh, ch), simulador `<tf-unit-lab>`, faixa de destaque `.hero` (40vh, 18ch/45ch) na etapa 12. Link do MDN sobre Grid (capítulo 11) corrigido; `publicar-capitulo.sh` passou a conferir os links externos do capítulo.
+- **Capítulo 13 publicado** (base: Atividade 10, opção 2): `scss/main.scss` com o tema antes do `@import`, `!default` × `!important`, scripts `npm run sass`/`sass:watch` com `--load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map`; `css/main.css` gerado vai para o repositório; mensagens reais do Sass 1.107 (`Can't find stylesheet to import.`, `DEPRECATION WARNING [import]`, "311 repetitive deprecation warnings omitted"). Botões verde-mata a partir da etapa 13.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 13 (personalizar o Bootstrap com Sass) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 14 (organizar o CSS com Sass) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

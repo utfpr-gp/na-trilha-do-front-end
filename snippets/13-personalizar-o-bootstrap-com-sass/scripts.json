@@ -1,0 +1,4 @@
+"scripts": {
+  "sass": "sass --load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map scss/main.scss css/main.css",
+  "sass:watch": "sass --watch --load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map scss/main.scss css/main.css"
+}
