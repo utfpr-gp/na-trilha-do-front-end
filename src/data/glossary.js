@@ -32,5 +32,7 @@ export const GLOSSARY = [
   { id: 'expressao-regular', term: 'expressão regular', definition: 'Um padrão para conferir ou procurar texto: /^\\d{5}-?\\d{3}$/ aceita um CEP com ou sem hífen. Vai no atributo pattern do HTML ou no JavaScript, com regex.test(valor).', chapter: 20 },
   { id: 'json', term: 'JSON', definition: 'Um formato de texto para guardar e trocar dados, com a cara dos objetos e arrays do JavaScript: {"nome": "Trilha do Salto"}. JSON.stringify transforma um valor em texto; JSON.parse faz o caminho de volta.', chapter: 21 },
   { id: 'localstorage', term: 'localStorage', definition: 'Um armazenamento do navegador, separado por site, que guarda pares de chave e texto e continua lá depois de fechar o navegador. setItem grava, getItem lê, removeItem apaga.', chapter: 21 },
+  { id: 'jquery', term: 'jQuery', definition: 'Uma biblioteca de JavaScript que simplifica o DOM e os eventos com a função $: $(\'#cep\').val(). Muito usada antes de os navegadores terem querySelector e fetch, segue viva em projetos antigos e em plugins.', chapter: 22 },
+  { id: 'plugin', term: 'plugin', definition: 'Um pedaço de código que acrescenta um recurso a uma biblioteca. O jQuery Mask Plugin dá ao jQuery o método .mask(), que formata um campo enquanto a pessoa digita.', chapter: 22 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

@@ -988,3 +988,20 @@ tf-storage-lab {
     }
   }
 }
+
+// <tf-mask-lab>: um campo com máscara e os dígitos limpos
+tf-mask-lab {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+
+  .tf-mask-code,
+  output {
+    font-family: var(--bs-font-monospace);
+    overflow-wrap: anywhere;
+  }
+}

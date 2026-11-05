@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 21 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 22 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -41,11 +41,12 @@
 - **Capítulo 19 publicado:** objetos, arrays (filter/map/find, forEach, includes, push), classe `Trail`, módulos ES (`type="module"`, Live Server), `toLocaleString('pt-BR')`, spread em Aprofundando; etapa com `js/{data,format,trail,favorites,trail-card,home,trails}.js` (cartões montados do array, dados por textContent, 4ª trilha sem foto com `img/trilha-sem-foto.svg`, coração do Início funcionando), testada no Chrome; erros reais de módulo/CORS/export/new; simulador `<tf-array-lab>`; termos array, classe, módulo (ES). O link "Ver trilha" já leva `trilha.html?id=N` (o detalhe continua estático até o 23).
 - **Capítulo 20 publicado:** atributos HTML5, expressões regulares (pattern e `test`/`replace`), `validity`, `setCustomValidity` (balões, Atividade 16), `novalidate` + `.is-invalid`/`.invalid-feedback`, validação no servidor em Aprofundando; etapa com `cadastrar.html` (todos os campos do dicionário, RN01–RN05) e `js/trail-form.js` (mensagens por problema, regra do nome por regex, erro após `focusout`, foco no primeiro erro, objeto montado com FormData), testada no Chrome com teclas reais; `$danger` = vermelho de Difícil; armadilhas reais (pattern com hífen e flag v, minlength só com digitação); simulador `<tf-regex-lab>`; termo expressão regular.
 - **Capítulo 21 publicado:** localStorage (setItem/getItem/removeItem, prefixo `trilheiro:`, aba Application), JSON.stringify/parse, falhas (null, JSON estragado, bloqueio) com try/catch; sessionStorage, cookies e evento storage em Aprofundando; etapa com `js/storage.js` (seção 9 do architecture), favoritas e último filtro persistidos, testada no Chrome inclusive com valores estragados; erros reais (`1,3`, `[object Object]`, null.includes, SecurityError em iframe sandbox); simulador `<tf-storage-lab>` (grava de verdade em `tf-lab:favoritas`); termos JSON e localStorage.
+- **Capítulo 22 publicado:** função $, métodos e encadeamento, jQuery × JavaScript de hoje, plugin de máscara pelo CDN (ordem dos scripts), `.load()`/fetch para cabeçalho e rodapé em Aprofundando (com os custos; Trilheiro mantém o cabeçalho copiado e aponta o Vite), IMask como alternativa (Cleave.js descontinuado → cleave-zen); etapa com jQuery 4.0.0 + Mask 1.14.16 só no `cadastrar.html`, testada no Chrome com digitação real (com eventos rápidos demais o plugin embaralha o cursor; com ritmo humano, certo); erros reais (maskWatchers, .mask is not a function, $.trim removido no 4); simulador `<tf-mask-lab>`; termos jQuery e plugin.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 22 (jQuery 4 e jQuery Mask Plugin pelo CDN: máscaras de CEP e telefone no cadastro; cabeçalho/rodapé reaproveitados com `.load()`/fetch; IMask/Cleave como alternativas; base Atividade 18) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 23 (fetch e json-server: `db.json`, `api.js` com modo local e publicado, `GET /trilhas`, `GET /trilhas/:id?_embed=relatos` no detalhe, `POST` no cadastro e no relato; AJAX do jQuery e XMLHttpRequest em Aprofundando; base Atividade 19) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto
