@@ -225,11 +225,18 @@ tf-challenge {
     font-weight: 700;
   }
 
+  // Em bloco, e não flex: um <code> no meio da alternativa vira um item flex e quebra o texto.
   label {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    display: block;
+    position: relative;
     min-height: 44px;
+    padding: 0.6rem 0 0.6rem 1.75rem;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
   }
 
   [data-explain] {
@@ -446,4 +453,39 @@ tf-class-toggle {
   border-radius: var(--bs-border-radius);
   background: var(--tf-bg);
   font-size: 0.8rem;
+}
+
+// Diagrama de fluxo: passos lado a lado, empilhados no celular
+.tf-flow {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tf-flow-step {
+  flex: 1 1 9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+
+  span {
+    font-size: 0.9rem;
+    color: var(--tf-ink-muted);
+  }
+}
+
+.tf-flow-arrow {
+  flex: 0 0 auto;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tf-view-por-dentro);
 }

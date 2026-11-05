@@ -29,3 +29,11 @@ describe('expandViews', () => {
     expect(out).toContain('<section data-step="Abra o arquivo"><h3 class="tf-step-title">Abra o arquivo</h3><p>a</p></section>');
   });
 });
+
+describe('mensagem da armadilha com entidades', () => {
+  it('mostra as aspas e o & uma vez só, sem escapar de novo', () => {
+    const out = expandViews('<tf-pitfall title="T" message="git config user.email &quot;you@example.com&quot; &amp; mais"></tf-pitfall>');
+    expect(out).toContain('<code>git config user.email &quot;you@example.com&quot; &amp; mais</code>');
+    expect(out).not.toContain('&amp;quot;');
+  });
+});

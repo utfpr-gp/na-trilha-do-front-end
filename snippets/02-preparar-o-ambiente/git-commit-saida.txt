@@ -1,0 +1,7 @@
+[main (root-commit) 10a5148] primeiro cartão de trilha
+ 5 files changed, 88 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 index.html
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 salto.svg

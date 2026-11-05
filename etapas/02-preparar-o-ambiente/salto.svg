@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Ilustração de uma queda-d'água entre morros">
+  <rect width="640" height="400" fill="#cfe3ee"/>
+  <circle cx="520" cy="80" r="40" fill="#f2c230"/>
+  <path d="M0 260 L140 120 L250 230 L330 150 L470 280 L640 170 L640 400 L0 400 Z" fill="#2f5d3a"/>
+  <path d="M0 320 L160 230 L300 310 L460 240 L640 300 L640 400 L0 400 Z" fill="#3f7a4c"/>
+  <path d="M300 150 L340 150 L360 400 L285 400 Z" fill="#e8f2f7"/>
+  <path d="M312 160 L322 160 L330 400 L305 400 Z" fill="#ffffff"/>
+  <path d="M0 370 Q160 340 320 372 T640 360 L640 400 L0 400 Z" fill="#8b5a2b"/>
+</svg>

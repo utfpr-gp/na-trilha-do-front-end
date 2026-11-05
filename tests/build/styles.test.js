@@ -19,3 +19,9 @@ describe('estilos compilados', () => {
     expect(css).toMatch(/\.tf-transfer label:focus-within\{[^}]*outline/);
   });
 });
+
+describe('desafio', () => {
+  it('o rótulo de cada alternativa é um bloco, para o <code> no meio do texto não quebrar em colunas', () => {
+    expect(css).toMatch(/tf-challenge label\{display:block/);
+  });
+});

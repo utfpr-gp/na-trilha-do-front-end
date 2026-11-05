@@ -15,6 +15,8 @@ export const VIEWS = {
 // Atributos entre aspas podem conter `>` (por exemplo, a mensagem de uma armadilha).
 const ATTRS = '((?:\\s+[\\w-]+="[^"]*")*)\\s*';
 const open = (tag) => new RegExp(`<${tag}\\b${ATTRS}>`, 'g');
+// O valor de um atributo já vem escrito em HTML: desfaz as entidades antes de escapar de novo.
+const decode = (text) => text.replace(/&(quot|amp|lt|gt|#39);/g, (_, e) => ({ quot: '"', amp: '&', lt: '<', gt: '>', '#39': "'" })[e]);
 const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`)) ?? [])[1];
 
 export function expandViews(html) {
@@ -31,7 +33,7 @@ export function expandViews(html) {
       `<tf-analogy${attrs}><p class="tf-box-title"><span aria-hidden="true">${attr(attrs, 'emoji') ?? '💡'}</span> ${attr(attrs, 'title') ?? ''}</p>`)
     .replace(open('tf-pitfall'), (_, attrs) => {
       const message = attr(attrs, 'message');
-      const pre = message ? `<pre class="tf-pitfall-message"><code>${escapeHtml(message)}</code></pre>` : '';
+      const pre = message ? `<pre class="tf-pitfall-message"><code>${escapeHtml(decode(message))}</code></pre>` : '';
       return `<tf-pitfall${attrs}><p class="tf-box-title">${attr(attrs, 'title') ?? ''}</p>${pre}`;
     })
     .replace(/<section data-step="([^"]*)">/g, (_, title) =>
