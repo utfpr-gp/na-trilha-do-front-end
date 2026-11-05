@@ -1,10 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { PARTS } from '../src/data/catalog.js';
+import { highlightSnippets } from './highlight.js';
 import { expandIncludes, renderMarkers, replaceBase } from './html.js';
 import { renderCatalog } from './render.js';
 
 const PARTIALS_DIR = resolve(import.meta.dirname, '../src/partials');
+const SNIPPETS_DIR = resolve(import.meta.dirname, '../snippets');
 
 function readPartial(name) {
   try {
@@ -21,7 +23,7 @@ export function defaultRenderers() {
   };
 }
 
-/** Monta cada página no build: parciais → marcadores → base. */
+/** Monta cada página no build: parciais → marcadores → trechos destacados → base. */
 export function livroPlugin({ renderers = defaultRenderers() } = {}) {
   let base = '/';
   return {
@@ -31,12 +33,13 @@ export function livroPlugin({ renderers = defaultRenderers() } = {}) {
     },
     transformIndexHtml: {
       order: 'pre',
-      handler(html) {
+      async handler(html) {
         let out = expandIncludes(html, readPartial);
         const bound = Object.fromEntries(
           Object.entries(renderers).map(([name, render]) => [name, (arg) => render(arg, { base })]),
         );
         out = renderMarkers(out, bound);
+        out = await highlightSnippets(out, { snippetsDir: SNIPPETS_DIR });
         return replaceBase(out, base);
       },
     },
