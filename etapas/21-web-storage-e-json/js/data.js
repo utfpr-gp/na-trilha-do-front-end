@@ -1,0 +1,48 @@
+// As trilhas, como objetos num array. Os nomes dos campos são os mesmos do db.json do capítulo 23:
+// quando o json-server chegar, só muda de onde o array vem.
+export const TRAILS = [
+  {
+    id: '1',
+    nome: 'Trilha do Salto',
+    cidade: 'Prudentópolis',
+    uf: 'PR',
+    distanciaKm: 4.5,
+    dificuldade: 'moderada',
+    duracaoMin: 150,
+    destaque: true,
+    fotos: [{ arquivo: 'salto', alt: "Queda-d'água entre morros" }],
+  },
+  {
+    id: '2',
+    nome: 'Caminho das Araucárias',
+    cidade: 'Guarapuava',
+    uf: 'PR',
+    distanciaKm: 2,
+    dificuldade: 'facil',
+    duracaoMin: 45,
+    destaque: true,
+    fotos: [{ arquivo: 'araucarias', alt: 'Trilha de terra entre araucárias' }],
+  },
+  {
+    id: '3',
+    nome: 'Mirante da Serra',
+    cidade: 'Guarapuava',
+    uf: 'PR',
+    distanciaKm: 8,
+    dificuldade: 'dificil',
+    duracaoMin: 240,
+    destaque: true,
+    fotos: [{ arquivo: 'mirante', alt: 'Vale visto do alto de um mirante' }],
+  },
+  {
+    id: '4',
+    nome: 'Escadaria do Salto',
+    cidade: 'Prudentópolis',
+    uf: 'PR',
+    distanciaKm: 1.2,
+    dificuldade: 'facil',
+    duracaoMin: 40,
+    destaque: false,
+    fotos: [],
+  },
+];

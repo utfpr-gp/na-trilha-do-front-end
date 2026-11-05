@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="21-web-storage-e-json">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 21-web-storage-e-json -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Desde o capítulo 18, o Trilheiro tem um defeito chato: você marca as trilhas favoritas, recarrega a página, e elas somem. Hoje ele passa a ter <strong>memória</strong>. As favoritas e o último filtro escolhido ficam guardados no próprio navegador de quem visita: fechou e abriu de novo amanhã, a tela Trilhas volta no filtro "Favoritas", com o Mirante marcado, e o coração dele aparece preenchido também no Início.</p>
+        <p>É a regra RN06 do PRD: esses dados ficam <strong>no navegador</strong>, sem ir para servidor nenhum, e não aparecem para outras pessoas. Para isso, você vai usar o <code>localStorage</code> e o formato JSON. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/21-web-storage-e-json">etapas/21-web-storage-e-json</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🎒" title="O bolso da mochila e o bilhete dobrado">
+          <p>Cada mochila tem um bolsinho para as suas coisas: o mapa marcado, o bilhete com as trilhas que você quer fazer. Fica com você, de um passeio para o outro, e ninguém mais vê. Mas o bolso só aceita papel: para guardar uma lista, você escreve tudo num bilhete e, na volta, lê e transforma em lista de novo.</p>
+          <p>O <strong>localStorage</strong> é o bolso: um espaço do navegador, só deste site, que dura entre as visitas. Ele só guarda texto. O <strong>JSON</strong> é o jeito de escrever o bilhete: <code>JSON.stringify</code> transforma a lista em texto, e <code>JSON.parse</code> lê o texto de volta como lista.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>O localStorage: chave e valor</h3>
+        <p>O <a class="tf-term" href="{{base}}glossario/#localstorage">localStorage</a> guarda pares de <strong>chave</strong> e <strong>valor</strong>, ambos texto, e não apaga nada sozinho:</p>
+        <tf-code src="21-web-storage-e-json/basico.js" caption="Exemplo"></tf-code>
+        <p>Cada site tem o seu: o que o Trilheiro grava em <code>127.0.0.1:5500</code> não é visto por outro endereço. Por isso as chaves têm um prefixo, <code>trilheiro:</code>, para não se misturar com outros projetos que você rodar no mesmo Live Server. Você vê e apaga tudo no DevTools, na aba <strong>Application</strong> → <strong>Local storage</strong>.</p>
+
+        <h3>JSON: dados viram texto e voltam</h3>
+        <p>Como o localStorage só guarda texto, uma lista precisa ser escrita como texto antes de gravar. O <a class="tf-term" href="{{base}}glossario/#json">JSON</a> é o formato para isso, e se parece com os objetos e arrays do JavaScript, com aspas duplas em tudo:</p>
+        <tf-code src="21-web-storage-e-json/json.js" caption="Exemplo"></tf-code>
+        <p>Marque algumas trilhas abaixo. Elas ficam gravadas de verdade no localStorage deste navegador: recarregue a página e confira.</p>
+        <tf-storage-lab></tf-storage-lab>
+        <p>O JSON vai muito além do localStorage: é o formato em que os servidores mandam dados. O <code>db.json</code> do capítulo 23 e as respostas das APIs do capítulo 24 são JSON.</p>
+
+        <h3>Quando o armazenamento falha</h3>
+        <p>Ler o localStorage pode dar errado de três jeitos: não há nada guardado (o <code>getItem</code> devolve <code>null</code>), o texto guardado não é um JSON válido (alguém mexeu pelo DevTools), ou o navegador bloqueia o armazenamento (em algumas configurações de privacidade e em páginas dentro de certos iframes). O <code>try/catch</code> segura o erro, e o Trilheiro volta ao padrão: lista vazia e filtro "Todas". A página continua funcionando.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: sessionStorage, cookies e o evento storage</summary>
+          <p>O <strong>sessionStorage</strong> tem os mesmos métodos, mas os dados somem ao fechar a aba. Serve para um rascunho que não precisa sobreviver:</p>
+          <tf-code src="21-web-storage-e-json/sessao.js" caption="Exemplo"></tf-code>
+          <p>Os <strong>cookies</strong> são mais antigos e vão junto com cada pedido ao servidor; servem para o login, por exemplo, e não para preferências da tela. E o evento <code>storage</code> avisa as <strong>outras abas</strong> do mesmo site quando o localStorage muda, para elas se atualizarem.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O módulo storage.js">
+            <p>Crie <code>js/storage.js</code>, o único arquivo que mexe no localStorage. As chaves e os valores seguem a seção 9 do <code>architecture.md</code>:</p>
+            <tf-code src="21-web-storage-e-json/storage.js" caption="js/storage.js"></tf-code>
+            <p>Repare nas conferências depois de ler: <code>Array.isArray</code> garante que veio uma lista, e o <code>FILTERS.includes</code>, que o filtro é um dos cinco. Um valor estranho vira o padrão.</p>
+          </section>
+          <section data-step="As favoritas guardadas">
+            <p>O <code>favorites.js</code> do capítulo 19 muda pouco: começa com o que estava guardado e grava a cada troca.</p>
+            <tf-code src="21-web-storage-e-json/favoritas.js" caption="js/favorites.js"></tf-code>
+            <p>Nada muda no <code>home.js</code> nem no <code>trail-card.js</code>: eles já perguntavam ao <code>isFavorite</code>. Essa é a vantagem de cada arquivo ter uma tarefa.</p>
+          </section>
+          <section data-step="O último filtro">
+            <p>No <code>trails.js</code>, importe as duas funções do filtro:</p>
+            <tf-code src="21-web-storage-e-json/import.js" caption="js/trails.js"></tf-code>
+            <p>E troque o ouvinte do filtro: antes de desenhar a lista, marque o rádio do filtro guardado; a cada mudança, grave.</p>
+            <tf-code src="21-web-storage-e-json/filtro.js" caption="js/trails.js"></tf-code>
+          </section>
+          <section data-step="Confira">
+            <p>Na tela Trilhas, favorite o Mirante e escolha "Favoritas". Recarregue: o filtro e o Mirante continuam lá. Vá ao Início: o coração do Mirante está preenchido. Abra o DevTools em <strong>Application</strong> → <strong>Local storage</strong> e veja as duas chaves, <code>trilheiro:favoritas</code> com <code>["3"]</code> e <code>trilheiro:filtro</code> com <code>favoritas</code>.</p>
+            <p>Agora estrague de propósito: edite o valor das favoritas para <code>[1,</code> e o do filtro para <code>xyz</code>, e recarregue. A página abre em "Todas", com as 4 trilhas, sem erro no console.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>JSON.stringify</code> do <code>saveFavorites</code> e favorite duas trilhas. No DevTools, o valor aparece como <code>1,3</code>, sem colchetes. Recarregue: as favoritas somem, porque o <code>JSON.parse</code> não consegue ler esse texto, e o <code>catch</code> volta ao padrão. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Gravei um array sem JSON" message="Uncaught SyntaxError: Unexpected non-whitespace character after JSON at position 1 (line 1 column 2)">
+          <p>O <code>setItem</code> transforma qualquer valor em texto do jeito dele: o array <code>['1', '3']</code> vira <code>1,3</code>, e um objeto vira <code>[object Object]</code>. Na hora de ler, o <code>JSON.parse</code> não entende. Grave sempre com <code>JSON.stringify</code>.</p>
+          <tf-code src="21-web-storage-e-json/sem-json.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="O objeto virou [object Object]" message="Uncaught SyntaxError: &quot;[object Object]&quot; is not valid JSON">
+          <p>A mesma causa, com um objeto. Os dados já se perderam na gravação: apague a chave no DevTools e grave de novo, com <code>JSON.stringify</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Funcionou para mim, quebrou para quem nunca visitou" message="Uncaught TypeError: Cannot read properties of null (reading 'includes')">
+          <p>Na primeira visita não há nada guardado: o <code>getItem</code> devolve <code>null</code>, e o <code>JSON.parse(null)</code> também. Você não vê o erro porque o seu navegador já tem a chave. Sempre trate o "nada guardado", e teste com o localStorage limpo (no DevTools, <strong>Clear site data</strong>, ou numa janela anônima).</p>
+          <tf-code src="21-web-storage-e-json/primeira-visita.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="O navegador bloqueou o armazenamento" message="SecurityError: Failed to read the 'localStorage' property from 'Window': The document is sandboxed and lacks the 'allow-same-origin' flag.">
+          <p>Em alguns contextos, só <strong>tocar</strong> no <code>localStorage</code> já lança um erro, e sem o <code>try/catch</code> o resto do script não roda: nada de cartões na tela. Por isso o acesso fica num lugar só, o <code>storage.js</code>, protegido.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Guardei uma senha no localStorage">
+          <p>Qualquer script da página lê o localStorage, e qualquer pessoa com o computador nas mãos também, pelo DevTools. Ele serve para preferências e dados sem segredo, como favoritas e filtros. Senhas, nunca.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="21-web-storage-e-json" award>
+          <fieldset data-correct="c">
+            <legend>O que <code>localStorage.getItem('trilheiro:favoritas')</code> devolve na primeira visita?</legend>
+            <label><input type="radio" name="q1" value="a"> <code>[]</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>''</code></label>
+            <label><input type="radio" name="q1" value="c"> <code>null</code></label>
+            <p data-explain="a" hidden>O localStorage não sabe que você queria uma lista: para uma chave que não existe, ele devolve <code>null</code>.</p>
+            <p data-explain="b" hidden>Texto vazio seria se alguém tivesse gravado <code>''</code>. Chave que não existe dá <code>null</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Qual é o resultado de <code>JSON.stringify(['1', '3'])</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> O texto <code>'["1","3"]'</code></label>
+            <label><input type="radio" name="q2" value="b"> O texto <code>'1,3'</code></label>
+            <label><input type="radio" name="q2" value="c"> O array <code>['1', '3']</code>, sem mudança</label>
+            <p data-explain="b" hidden>Esse é o <code>String(['1', '3'])</code>, que perde os colchetes e as aspas. O JSON guarda a estrutura.</p>
+            <p data-explain="c" hidden>O <code>stringify</code> sempre devolve texto: é justamente o que o localStorage aceita.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que a leitura das favoritas fica dentro de um <code>try/catch</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Para a leitura ficar mais rápida</label>
+            <label><input type="radio" name="q3" value="b"> Porque o JSON pode estar estragado ou o armazenamento bloqueado, e a página precisa continuar funcionando</label>
+            <label><input type="radio" name="q3" value="c"> Porque o <code>getItem</code> sempre lança um erro</label>
+            <p data-explain="a" hidden>O <code>try/catch</code> não muda a velocidade: ele segura um erro, se houver.</p>
+            <p data-explain="c" hidden>Quase sempre funciona. O <code>try/catch</code> é para os casos raros, que não podem derrubar a página.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Uma pessoa favoritou trilhas no notebook. O que ela vê no celular?</legend>
+            <label><input type="radio" name="q4" value="a"> As mesmas favoritas, sincronizadas</label>
+            <label><input type="radio" name="q4" value="b"> As favoritas de todas as pessoas</label>
+            <label><input type="radio" name="q4" value="c"> Nenhuma: o localStorage é de cada navegador, em cada aparelho</label>
+            <p data-explain="a" hidden>Para sincronizar, os dados precisariam ir para um servidor. O localStorage fica no navegador.</p>
+            <p data-explain="b" hidden>Cada navegador tem o seu localStorage: ninguém vê o das outras pessoas (RN06).</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, guarde no localStorage pelo menos duas coisas da pessoa que visita: uma lista (favoritos, carrinho, itens vistos), gravada com JSON, e uma preferência simples (um filtro, uma ordenação, o tema). Concentre o acesso num módulo, com <code>try/catch</code> e um valor padrão para cada leitura.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é o localStorage, e por que ele precisa do JSON?</li>
+          <li><strong>A motivação:</strong> o que a pessoa ganha com isso, e por que esses dados não precisam de servidor?</li>
+          <li><strong>A anatomia:</strong> explique a sua função de leitura, com o <code>try/catch</code> e o valor padrão.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>JSON.stringify</code> e mostre no DevTools o que fica gravado.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Web_Storage_API">MDN: Web Storage</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting/JSON">MDN: trabalhando com JSON</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Window/storage_event">MDN: o evento storage</a></li>
+          <li><a href="https://developer.chrome.com/docs/devtools/storage/localstorage">Chrome DevTools: ver e editar o localStorage (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 21-web-storage-e-json -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
