@@ -1,0 +1,35 @@
+@use "tokens" as t;
+@use "functions" as f;
+
+// "O que levar": etiquetas que quebram linha.
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: f.espaco(1);
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.25em 0.75em;
+    border: 1px solid t.$tinta-suave;
+    border-radius: 999px;
+    background-color: t.$superficie;
+  }
+}
+
+// Dados da trilha: rótulo e valor em duas colunas.
+.dados {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: f.espaco(1) f.espaco(3);
+  margin: 0;
+
+  dt {
+    font-weight: 400;
+    color: t.$tinta-suave;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
