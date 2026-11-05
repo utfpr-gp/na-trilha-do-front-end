@@ -1,0 +1,6 @@
+/* Os links da navbar escura vêm com 55% de opacidade: sobre o verde-mata, 3,55:1, abaixo do AA.
+   Com 85%, o contraste vai a 6,07:1. */
+.site-header .navbar {
+  --bs-navbar-color: rgba(255, 255, 255, 0.85);
+  --bs-navbar-hover-color: #ffffff;
+}

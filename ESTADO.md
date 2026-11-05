@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 8 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 9 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -27,11 +27,12 @@
 - **Capítulo 6 publicado:** design tokens como variáveis CSS com nome de papel, `docs/design-system.md`, Google Fonts, simulador `<tf-token-lab>` (troca de cor com contraste ao vivo; `src/js/contrast.js` compartilhado com o verificador); termo variável CSS. Lista de assuntos do Moodle a incluir nos capítulos registrada no `docs/mapa-disciplina.md`.
 - **Capítulo 7 publicado:** grid do Bootstrap (container, row, col, breakpoints conferidos no CSS, gutters, offset, order), simulador `<tf-grid-sim>`; etapa 07 com os três cartões (Salto, Araucárias, Mirante; SVGs novos) em `.col-12 .col-sm-6 .col-lg-4`; termo grid.
 - **Capítulo 8 publicado:** utilitários (escala de espaçamento e `!important` conferidos no CSS, flex, display, texto), rodapé no fim da tela (`d-flex flex-column min-vh-100` + `flex-grow-1`, da Atividade 08), simulador reaproveitando `<tf-class-toggle>`; etapa 08; termo classe utilitária.
+- **Capítulo 9 publicado:** navbar com menu recolhível (`bootstrap.bundle.min.js` entra aqui), card, botões, badges, Bootstrap Icons 1.13.2 pelo npm, botão de favorito com `aria-label`, `<h1>` no conteúdo; contraste dos links da navbar escura medido (3,55:1) e corrigido com `--bs-navbar-color` a 85% (6,07:1); auditoria de 10 componentes como Na sua trilha.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 9 (componentes prontos) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 10 (componentes com JavaScript) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

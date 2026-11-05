@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="09-componentes-prontos">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 09-componentes-prontos -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O protótipo do capítulo 5 apontou os componentes que viriam prontos do Bootstrap. Hoje eles chegam: o cabeçalho vira uma <strong>navbar</strong>, com a marca, os links das três telas e um menu "hambúrguer" no celular; os cartões ganham <strong>ícones</strong> (local, distância, duração) e um <strong>botão de favorito</strong> com um coração.</p>
+        <p>Você não escreve o CSS de nenhum deles. Você monta o HTML com as classes certas, na estrutura que a documentação do Bootstrap mostra, e entende o papel de cada peça. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/09-componentes-prontos">etapas/09-componentes-prontos</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🧰" title="Os componentes são equipamentos de fábrica">
+          <p>Você não costura a sua mochila: compra uma pronta, testada, com alças, fivelas e bolsos que funcionam. Mas precisa saber montá-la: qual alça vai no ombro, qual fivela fecha a barrigueira. Montada errado, ela machuca.</p>
+          <p>Um <a class="tf-term" href="{{base}}glossario/#componente">componente</a> do Bootstrap é esse equipamento de fábrica. A documentação é o manual: diz quais peças (elementos e classes) existem e onde cada uma encaixa.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Um componente é um conjunto de classes que trabalham juntas, numa estrutura de HTML esperada. Fora dessa estrutura, ele não funciona direito. Os quatro deste capítulo:</p>
+
+        <h3>Card</h3>
+        <p><code>.card</code> é a moldura; <code>.card-img-top</code>, a imagem no topo com os cantos arredondados; <code>.card-body</code>, o miolo com respiro; <code>.card-title</code> e <code>.card-text</code>, o título e o texto. Você já usa desde o capítulo 1.</p>
+
+        <h3>Botões e badges</h3>
+        <p>O botão sempre leva <code>.btn</code> mais uma variante: <code>.btn-primary</code> (cheio, com a cor principal), <code>.btn-outline-secondary</code> (só o contorno). Tamanhos: <code>.btn-sm</code> e <code>.btn-lg</code>. O badge (<code>.badge</code>) é uma etiqueta pequena; a cor vem de <code>.text-bg-warning</code>, <code>.text-bg-success</code> e outras, que já escolhem um texto legível para cada fundo.</p>
+        <p>Experimente as variantes:</p>
+        <tf-class-toggle>
+          <div class="tf-sim-stage">
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+              <a href="#missao" class="btn btn-primary btn-lg" data-sim-classes="btn btn-primary btn-lg">Ver trilha</a>
+              <button type="button" class="btn btn-outline-secondary" data-sim-classes="btn-outline-secondary">Favoritar</button>
+              <span class="badge text-bg-warning" data-sim-classes="badge text-bg-warning">Moderada</span>
+            </div>
+          </div>
+        </tf-class-toggle>
+
+        <h3>Navbar</h3>
+        <p>A navbar tem mais peças, e cada uma tem um papel:</p>
+        <ul>
+          <li><code>.navbar</code> com <code>.navbar-expand-md</code>: a barra, que fica aberta a partir do md e recolhida abaixo dele;</li>
+          <li><code>data-bs-theme="dark"</code>: avisa que o fundo é escuro, para os links e o ícone ficarem claros;</li>
+          <li><code>.navbar-brand</code>: a marca, à esquerda;</li>
+          <li><code>.navbar-toggler</code>: o botão "hambúrguer", que só aparece no celular. Os atributos <code>data-bs-toggle="collapse"</code> e <code>data-bs-target="#menu"</code> dizem o que ele abre;</li>
+          <li><code>.collapse.navbar-collapse</code> com <code>id="menu"</code>: a parte que recolhe;</li>
+          <li><code>.navbar-nav</code>, <code>.nav-item</code> e <code>.nav-link</code>: a lista de links; <code>.active</code> com <code>aria-current="page"</code> marca a página atual, para a vista e para o leitor de tela.</li>
+        </ul>
+        <p>O botão "hambúrguer" precisa de JavaScript para abrir e fechar o menu. Por isso, neste capítulo, o JavaScript do Bootstrap entra na página. Os componentes que dependem dele são o assunto do capítulo 10.</p>
+
+        <h3>Ícones</h3>
+        <p>Os Bootstrap Icons são uma fonte de ícones: cada ícone é uma classe, como <code>bi bi-geo-alt</code>, num <code>&lt;i&gt;</code>. Ícones que só enfeitam levam <code>aria-hidden="true"</code>, para o leitor de tela não anunciar nada. Um botão só com ícone precisa de um <code>aria-label</code>, como o "Favoritar" do coração, senão ele vira um botão sem nome.</p>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A navbar">
+            <p>Troque o conteúdo do <code>&lt;header&gt;</code> pela navbar, seguindo a estrutura da documentação:</p>
+            <tf-code src="09-componentes-prontos/navbar.html" caption="index.html"></tf-code>
+            <p>O <code>&lt;h1&gt;</code> que estava no cabeçalho vai para o começo do conteúdo, com a frase "Escolha a trilha do seu fim de semana": toda página precisa de um título principal, e a marca na navbar é um link, e não um título.</p>
+          </section>
+          <section data-step="O JavaScript do Bootstrap">
+            <p>No fim do <code>&lt;body&gt;</code>, depois de todo o conteúdo, inclua o arquivo do JavaScript (o <em>bundle</em> já traz o Popper, usado por outros componentes):</p>
+            <tf-code src="09-componentes-prontos/script.html" caption="index.html"></tf-code>
+            <p>Diminua a janela: abaixo de 768 px aparece o botão "hambúrguer", e ele abre o menu.</p>
+          </section>
+          <section data-step="Os ícones">
+            <p>Instale os ícones e ligue o CSS deles, entre o Bootstrap e o seu:</p>
+            <tf-code src="09-componentes-prontos/icones.sh" caption="Terminal"></tf-code>
+            <tf-code src="09-componentes-prontos/icones-link.html" caption="index.html"></tf-code>
+          </section>
+          <section data-step="O cartão completo">
+            <p>Acrescente os ícones aos dados da trilha e, ao lado do "Ver trilha", o botão de favorito, alinhados com os utilitários do capítulo 8:</p>
+            <tf-code src="09-componentes-prontos/card.html" caption="index.html"></tf-code>
+            <p>Por enquanto, o coração não faz nada. Ele ganha vida com JavaScript no capítulo 18, e guarda as favoritas no capítulo 21.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>&lt;script&gt;</code> do bundle e teste no tamanho de celular: o botão "hambúrguer" aparece, mas não abre o menu, e nenhuma mensagem de erro aparece. O HTML e o CSS do componente estão lá; falta o comportamento. Agora tire o <code>data-bs-theme="dark"</code> da navbar: os links ficam escuros sobre o verde.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O botão do menu aparece, mas não abre">
+          <p>As causas mais comuns: o <code>bootstrap.bundle.min.js</code> não foi incluído (ou o caminho está errado, o que aparece como um 404 na aba Network); ou o <code>data-bs-target="#menu"</code> não bate com o <code>id="menu"</code> do bloco <code>.collapse</code>. Confira o caminho do script e se o alvo começa com <code>#</code> e tem exatamente o mesmo nome do id.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Os links da navbar quase não aparecem sobre o verde">
+          <p>Na navbar escura, o Bootstrap pinta os links com branco a 55% de opacidade. Sobre o verde-mata do Trilheiro, isso dá 3,55:1, abaixo do mínimo do AA. A solução é mudar as variáveis da própria navbar no seu CSS, sem tocar no Bootstrap:</p>
+          <tf-code src="09-componentes-prontos/navbar-contraste.css" caption="css/style.css (trecho)"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="O ícone aparece como um quadrado vazio">
+          <p>O CSS dos ícones foi ligado, mas a fonte não carregou: geralmente o caminho do <code>&lt;link&gt;</code> está errado, ou a pasta <code>node_modules/bootstrap-icons/</code> não existe porque faltou o <code>npm install</code>. Confira na aba Network se o <code>bootstrap-icons.min.css</code> e o arquivo de fonte (<code>.woff2</code>) responderam 200.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="09-componentes-prontos" award>
+          <fieldset data-correct="a">
+            <legend>Por que o botão "hambúrguer" da navbar precisa do <code>bootstrap.bundle.min.js</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Porque abrir e fechar o menu é comportamento, e comportamento é JavaScript</label>
+            <label><input type="radio" name="q1" value="b"> Porque o CSS da navbar está dentro do arquivo de JavaScript</label>
+            <label><input type="radio" name="q1" value="c"> Porque sem ele a navbar não aparece</label>
+            <p data-explain="b" hidden>O CSS está no <code>bootstrap.min.css</code>. O JavaScript cuida só do que muda com a interação.</p>
+            <p data-explain="c" hidden>A navbar aparece sem o JavaScript; só o menu recolhido não abre.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que o <code>data-bs-target="#menu"</code> do botão precisa encontrar?</legend>
+            <label><input type="radio" name="q2" value="a"> Uma classe <code>.menu</code></label>
+            <label><input type="radio" name="q2" value="b"> Um arquivo chamado <code>menu.html</code></label>
+            <label><input type="radio" name="q2" value="c"> O elemento com <code>id="menu"</code>, que é o bloco <code>.collapse</code></label>
+            <p data-explain="a" hidden>O <code>#</code> indica um id, e não uma classe.</p>
+            <p data-explain="b" hidden>O alvo é um elemento da própria página, identificado pelo id.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Um botão só com o ícone de coração precisa de quê para ser acessível?</legend>
+            <label><input type="radio" name="q3" value="a"> De um ícone maior</label>
+            <label><input type="radio" name="q3" value="b"> De um <code>aria-label</code>, como "Favoritar", e do <code>aria-hidden="true"</code> no ícone</label>
+            <label><input type="radio" name="q3" value="c"> De nada: o leitor de tela descreve o desenho</label>
+            <p data-explain="a" hidden>O tamanho não dá nome ao botão. Quem usa leitor de tela precisa ouvir o que ele faz.</p>
+            <p data-explain="c" hidden>O leitor de tela não descreve o desenho de um ícone de fonte. Sem o <code>aria-label</code>, o botão fica sem nome.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Na navbar, para que serve o <code>data-bs-theme="dark"</code>?</legend>
+            <label><input type="radio" name="q4" value="a"> Para avisar que o fundo é escuro, e os links e o ícone ficarem claros</label>
+            <label><input type="radio" name="q4" value="b"> Para deixar a navbar preta</label>
+            <label><input type="radio" name="q4" value="c"> Para ativar o modo escuro do site inteiro</label>
+            <p data-explain="b" hidden>A cor de fundo vem do seu CSS (o verde-mata). O atributo muda as cores do conteúdo para combinar com um fundo escuro.</p>
+            <p data-explain="c" hidden>No elemento da navbar, ele vale só para ela e o que está dentro dela.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, monte a navbar com o menu recolhível e use os componentes que o seu protótipo apontou. Depois, faça uma auditoria: liste 10 componentes ou classes do Bootstrap que aparecem nas suas telas, com a função de cada um na sua interface e as classes principais.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é um componente, e por que ele depende de uma estrutura de HTML?</li>
+          <li><strong>A motivação:</strong> por que usar a navbar pronta em vez de montar um menu do zero?</li>
+          <li><strong>A anatomia:</strong> explique cada peça da sua navbar, do <code>.navbar-brand</code> ao <code>.nav-link</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o script do Bootstrap e mostre o que deixa de funcionar.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/navbar/">Bootstrap 5.3: Navbar</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/card/">Bootstrap 5.3: Card</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/buttons/">Bootstrap 5.3: Buttons</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/badge/">Bootstrap 5.3: Badge</a></li>
+          <li><a href="https://icons.getbootstrap.com/">Bootstrap Icons</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 09-componentes-prontos -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
