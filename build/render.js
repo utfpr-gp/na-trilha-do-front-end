@@ -37,8 +37,8 @@ export function renderChapterHeader(slug, base) {
 </header>`;
 }
 
-export function renderPager(slug, base) {
-  const { prev, next } = neighbors(slug);
+export function renderPager(slug, base, list = undefined) {
+  const { prev, next } = neighbors(slug, list);
   const link = (c, rel, label) =>
     c ? `<a class="tf-pager-${rel}" rel="${rel}" href="${chapterUrl(c, base)}"><span>${label}</span> ${escapeHtml(c.question)}</a>` : '';
   return `<nav class="tf-pager" aria-label="Capítulos">${link(prev, 'prev', 'Anterior')}${link(next, 'next', 'Próximo')}</nav>`;

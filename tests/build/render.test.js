@@ -45,7 +45,17 @@ describe('renderChapterHeader', () => {
 });
 
 describe('renderPager', () => {
+  const list = [
+    { number: 1, slug: '01-a', question: 'A?', published: true },
+    { number: 2, slug: '02-b', question: 'B?', published: false },
+    { number: 3, slug: '03-c', question: 'C?', published: true },
+  ];
   it('sem vizinhos publicados, não gera links', () => {
-    expect(renderPager('01-por-que-um-framework', '/')).not.toContain('href=');
+    expect(renderPager('01-a', '/', [list[0], list[1]])).not.toContain('href=');
+  });
+  it('liga ao próximo publicado, pulando o que não foi publicado', () => {
+    const html = renderPager('01-a', '/x/', list);
+    expect(html).toContain('href="/x/capitulos/03-c/"');
+    expect(html).not.toContain('02-b');
   });
 });

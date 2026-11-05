@@ -1,0 +1,8 @@
+$ npm install bootstrap
+
+added 2 packages, and audited 3 packages in 891ms
+
+2 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities

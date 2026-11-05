@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-04 (capítulo 1 no PR; estrutura publicada).
+> Última atualização: 2026-11-05 (capítulo 1 publicado; capítulo 2 no PR).
 
 ## Feito
 
@@ -15,12 +15,13 @@
 - **Estrutura do site construída** (plano 1, branch `feat/estrutura`, 04/11): Vite com várias páginas, paleta aprovada pelo professor, catálogo dos 25 capítulos, visões do capítulo, página "Como ler este livro", desafio, caderneta com marcos, mirantes e cume, glossário, busca (Pagefind), SEO, 404, verificações (`npm run check`), publicação por GitHub Actions e `AGENTS.md`.
 
 - **Estrutura publicada** em <https://utfpr-gp.github.io/na-trilha-do-front-end/> (PR #1, 05/11).
-- **Capítulo 1** escrito no branch `feat/capitulo-01`: as oito visões, simulador `<tf-class-toggle>` (tirar classes do card), etapa `etapas/01-por-que-um-framework/` (CSS puro × Bootstrap, 85 linhas × 0), armadilhas reproduzidas (integrity bloqueado; 404 do CDN sem mensagem no console; classe com erro de digitação), desafio de 4 perguntas, termo CDN no glossário.
+- **Capítulo 1 publicado** (PR #2, 05/11): as oito visões, simulador `<tf-class-toggle>` (tirar classes do card), etapa `etapas/01-por-que-um-framework/` (CSS puro × Bootstrap, 85 linhas × 0), armadilhas reproduzidas (integrity bloqueado; 404 do CDN sem mensagem no console; classe com erro de digitação), desafio de 4 perguntas, termo CDN no glossário.
+- **Capítulo 2** escrito no branch `feat/capitulo-02`: VS Code, Live Server, Node.js (LTS 26) e npm, Git e GitHub; diagrama do caminho dos arquivos; etapa `etapas/02-preparar-o-ambiente/` (projeto npm, `.gitignore`, CSS da `node_modules`); armadilhas reproduzidas (npm fora da pasta, commit sem identidade, fora de um repositório, `node_modules` no Git); termos npm, package.json e commit.
 
 ## Próximos passos
 
-1. Revisão e merge do PR do capítulo 1 pelo professor.
-2. Capítulo 2 (ambiente: VS Code, Live Server, Node.js, npm e Git).
+1. Revisão e merge do PR do capítulo 2 pelo professor.
+2. Capítulo 3 (HTML e CSS para relembrar: semântica, caixa, cascata e especificidade).
 
 ## Em aberto
 

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="02-preparar-o-ambiente">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 02-preparar-o-ambiente -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>No capítulo 1, o cartão da trilha era um arquivo solto, com o Bootstrap vindo de um CDN. Hoje ele vira um <strong>projeto</strong>: uma pasta com carteira de identidade (o <a class="tf-term" href="{{base}}glossario/#package-json">package.json</a>), o Bootstrap instalado pelo <strong>npm</strong>, aberta no <strong>VS Code</strong>, servida pelo <strong>Live Server</strong> e guardada no <strong>Git</strong>, com uma cópia no GitHub.</p>
+        <p>Na tela, nada muda: o cartão é o mesmo. O que muda é tudo o que está em volta dele, e é isso que vai acompanhar você até o último capítulo. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/02-preparar-o-ambiente">etapas/02-preparar-o-ambiente</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🎒" title="Preparar o ambiente é arrumar a mochila antes da trilha">
+          <p>Ninguém descobre no meio do caminho que esqueceu a água. Antes de sair, você confere a mochila: o que leva, o que fica em casa, e uma lista para não depender da memória.</p>
+          <p>O <code>package.json</code> é essa lista: diz o que o projeto precisa levar. A pasta <code>node_modules/</code> é a mochila cheia, que você arruma de novo a partir da lista sempre que precisar. E o Git é o caderno de campo, que anota cada trecho percorrido para você poder voltar a qualquer ponto.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>São quatro ferramentas, cada uma com um papel:</p>
+        <ul>
+          <li><strong>VS Code:</strong> o editor onde você escreve o código. Tem um terminal embutido (menu <em>Terminal → New Terminal</em>), e é nele que você roda os comandos deste livro.</li>
+          <li><strong>Live Server:</strong> uma extensão do VS Code que serve a pasta do projeto num endereço como <code>http://127.0.0.1:5500</code> e recarrega a página sozinho a cada vez que você salva.</li>
+          <li><strong>Node.js e npm:</strong> o Node.js roda JavaScript fora do navegador; o <a class="tf-term" href="{{base}}glossario/#npm">npm</a>, que vem junto com ele, baixa bibliotecas como o Bootstrap e anota no <code>package.json</code> o que o projeto usa.</li>
+          <li><strong>Git e GitHub:</strong> o Git guarda o histórico do projeto no seu computador, em fotografias chamadas <a class="tf-term" href="{{base}}glossario/#commit">commits</a>; o GitHub guarda uma cópia desse histórico na internet.</li>
+        </ul>
+
+        <p>O mais importante é entender o caminho que cada arquivo faz:</p>
+        <ol class="tf-flow" aria-label="O caminho dos arquivos do projeto">
+          <li class="tf-flow-step">
+            <strong>Registro do npm</strong>
+            <span>Onde ficam o Bootstrap e milhares de outras bibliotecas.</span>
+          </li>
+          <li class="tf-flow-arrow" aria-hidden="true">npm install →</li>
+          <li class="tf-flow-step">
+            <strong>Seu computador</strong>
+            <span><code>package.json</code> e <code>package-lock.json</code> (a lista) e <code>node_modules/</code> (os arquivos baixados).</span>
+          </li>
+          <li class="tf-flow-arrow" aria-hidden="true">git push →</li>
+          <li class="tf-flow-step">
+            <strong>GitHub</strong>
+            <span>O seu código e a lista. A <code>node_modules/</code> fica de fora, por causa do <code>.gitignore</code>.</span>
+          </li>
+        </ol>
+        <p>A <code>node_modules/</code> não vai para o GitHub porque não precisa: qualquer pessoa que baixar o projeto roda <code>npm install</code>, e o npm lê o <code>package.json</code> e o <code>package-lock.json</code> e baixa exatamente as mesmas versões. Guardar a lista é suficiente para refazer a mochila.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: por que o npm instalou 2 pacotes, se pedi só 1?</summary>
+          <p>Ao instalar o Bootstrap, o npm também baixa o <code>@popperjs/core</code>, uma biblioteca que o JavaScript do Bootstrap usa para posicionar menus e dicas. O Bootstrap declara essa necessidade no próprio <code>package.json</code> dele, e o npm resolve sozinho. O <code>package-lock.json</code> registra a versão exata de cada um.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Confira as ferramentas">
+            <p>Instale o <a href="https://code.visualstudio.com/">VS Code</a>, a versão LTS do <a href="https://nodejs.org/">Node.js</a> (o npm vem junto) e o <a href="https://git-scm.com/">Git</a>. No VS Code, abra as extensões (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>) e instale o <strong>Live Server</strong>, de Ritwick Dey. Depois, num terminal, confira as versões:</p>
+            <tf-code src="02-preparar-o-ambiente/versoes.sh" caption="Terminal"></tf-code>
+            <p>Cada comando deve responder com um número de versão. Se algum responder "command not found" (ou "não é reconhecido", no Windows), veja as armadilhas.</p>
+          </section>
+          <section data-step="Crie o projeto">
+            <p>Crie a pasta, entre nela e gere o <code>package.json</code>. O <code>-y</code> aceita as respostas padrão:</p>
+            <tf-code src="02-preparar-o-ambiente/npm-init.sh" caption="Terminal"></tf-code>
+            <p>Abra a pasta no VS Code (<em>File → Open Folder</em>). Todo comando daqui em diante roda <strong>dentro</strong> dela.</p>
+          </section>
+          <section data-step="Instale o Bootstrap">
+            <tf-code src="02-preparar-o-ambiente/npm-install.txt" caption="Terminal"></tf-code>
+            <p>Três coisas aparecem na pasta: a <code>node_modules/</code>, o <code>package-lock.json</code> e uma linha nova no <code>package.json</code>:</p>
+            <tf-code src="02-preparar-o-ambiente/package.json" caption="package.json"></tf-code>
+            <p>O <code>^</code> em <code>^5.3.8</code> quer dizer "a 5.3.8 ou uma versão mais nova que não quebre nada": aceita a 5.3.9 ou a 5.4.0, mas não a 6.0.0.</p>
+          </section>
+          <section data-step="Ligue o CSS">
+            <p>Copie o <code>index.html</code> e o <code>salto.svg</code> do capítulo 1. No <code>&lt;head&gt;</code>, troque o link do CDN pelo arquivo que o npm baixou:</p>
+            <tf-code src="02-preparar-o-ambiente/link-node-modules.html" caption="index.html"></tf-code>
+            <p>Clique com o botão direito no <code>index.html</code> e escolha <strong>Open with Live Server</strong> (ou clique em <strong>Go Live</strong>, na barra de baixo). O cartão aparece no navegador, igual ao do capítulo 1. Mude o nome da trilha, salve, e veja a página recarregar sozinha.</p>
+          </section>
+          <section data-step="Guarde no Git">
+            <p>Antes do primeiro commit, veja o que o Git enxerga:</p>
+            <tf-code src="02-preparar-o-ambiente/git-status-antes.txt" caption="Terminal"></tf-code>
+            <p>A <code>node_modules/</code> está na lista, e ela não deve ir. Crie um arquivo chamado <code>.gitignore</code> na raiz do projeto com uma linha:</p>
+            <tf-code src="02-preparar-o-ambiente/gitignore.txt" caption=".gitignore"></tf-code>
+            <tf-code src="02-preparar-o-ambiente/git-status-depois.txt" caption="Terminal"></tf-code>
+            <p>Agora sim. Crie o repositório já com a branch <code>main</code> e faça o primeiro commit:</p>
+            <tf-code src="02-preparar-o-ambiente/git-primeiro-commit.sh" caption="Terminal"></tf-code>
+            <tf-code src="02-preparar-o-ambiente/git-commit-saida.txt" caption="Saída do commit"></tf-code>
+            <p>Repare: 5 arquivos, nenhum da <code>node_modules/</code>.</p>
+          </section>
+          <section data-step="Envie para o GitHub">
+            <p>No GitHub, crie um repositório vazio chamado <code>trilheiro</code>, sem README. Depois, ligue o seu projeto a ele e envie:</p>
+            <tf-code src="02-preparar-o-ambiente/git-push.sh" caption="Terminal"></tf-code>
+            <p>Troque <code>seu-usuario</code> pelo seu usuário do GitHub. Na primeira vez, o Git pede para você entrar na sua conta. Depois, recarregue a página do repositório: os 5 arquivos estão lá.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Apague a pasta <code>node_modules/</code> inteira e recarregue o Live Server: o cartão perde o estilo, porque o <code>&lt;link&gt;</code> aponta para um arquivo que não existe mais. Agora rode <code>npm install</code>, sem nome de pacote: o npm lê a lista e refaz a mochila. Recarregue, e o cartão volta.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Rodei o npm fora da pasta do projeto" message="npm error code ENOENT
+npm error syscall open
+npm error path /home/voce/package.json
+npm error errno -2
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/home/voce/package.json'
+npm error enoent This is related to npm not being able to find a file.">
+          <p>O npm procura o <code>package.json</code> na pasta em que o terminal está. Se você abriu o terminal na pasta de cima (ou na sua pasta pessoal), ele não encontra nada. Confira a pasta com <code>pwd</code> (ou olhe o caminho antes do cursor) e entre no projeto com <code>cd trilheiro</code>. No VS Code, abrir a pasta do projeto com <em>File → Open Folder</em> já abre o terminal no lugar certo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O primeiro commit pediu meu nome e e-mail" message="Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email &quot;you@example.com&quot;
+  git config --global user.name &quot;Your Name&quot;
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.">
+          <p>Todo commit leva o nome e o e-mail de quem o fez, e o Git ainda não sabe quem é você. Configure uma vez por computador, de preferência com o mesmo e-mail da sua conta do GitHub, e repita o commit:</p>
+          <tf-code src="02-preparar-o-ambiente/git-identidade.sh" caption="Terminal"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="O Git diz que a pasta não é um repositório" message="fatal: not a git repository (or any of the parent directories): .git">
+          <p>Você rodou um comando do Git numa pasta em que ainda não houve <code>git init</code>, ou o terminal está na pasta errada. Confira com <code>pwd</code> e entre na pasta do projeto. Se o projeto ainda não tem repositório, rode <code>git init -b main</code> nele (e só nele: nunca na sua pasta pessoal inteira).</p>
+        </tf-pitfall>
+        <tf-pitfall title="A node_modules apareceu no GitHub">
+          <p>O <code>.gitignore</code> foi criado depois do primeiro <code>git add</code>, ou com o nome errado (<code>gitignore</code>, sem o ponto, ou <code>.gitignore.txt</code>). Não há mensagem de erro: o <code>git status</code> simplesmente lista a <code>node_modules/</code>. Acerte o nome do arquivo e tire a pasta do Git sem apagá-la do computador com <code>git rm -r --cached node_modules</code>, depois faça um commit.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="02-preparar-o-ambiente" award>
+          <fieldset data-correct="c">
+            <legend>Por que a pasta <code>node_modules/</code> fica fora do Git?</legend>
+            <label><input type="radio" name="q1" value="a"> Porque o GitHub não aceita pastas com esse nome</label>
+            <label><input type="radio" name="q1" value="b"> Porque ela contém senhas</label>
+            <label><input type="radio" name="q1" value="c"> Porque dá para refazê-la a qualquer momento com <code>npm install</code>, a partir do <code>package.json</code> e do <code>package-lock.json</code></label>
+            <p data-explain="a" hidden>O GitHub aceitaria. Ela fica de fora porque é pesada e pode ser refeita a partir da lista.</p>
+            <p data-explain="b" hidden>A <code>node_modules/</code> só tem as bibliotecas baixadas. O motivo é outro: ela pode ser refeita com <code>npm install</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>O que o Live Server faz que abrir o <code>index.html</code> com dois cliques não faz?</legend>
+            <label><input type="radio" name="q2" value="a"> Serve a pasta num endereço <code>http://</code> e recarrega a página sozinho quando você salva</label>
+            <label><input type="radio" name="q2" value="b"> Instala o Bootstrap</label>
+            <label><input type="radio" name="q2" value="c"> Publica o site na internet</label>
+            <p data-explain="b" hidden>Quem instala o Bootstrap é o npm. O Live Server só serve os arquivos que já estão na pasta.</p>
+            <p data-explain="c" hidden>O endereço do Live Server (<code>127.0.0.1</code>) só existe no seu computador. A publicação é assunto do capítulo 25.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>No <code>package.json</code>, o que quer dizer <code>"bootstrap": "^5.3.8"</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Exatamente a versão 5.3.8, nunca outra</label>
+            <label><input type="radio" name="q3" value="b"> A 5.3.8 ou uma mais nova que não quebre a compatibilidade, como a 5.4.0, mas não a 6.0.0</label>
+            <label><input type="radio" name="q3" value="c"> Qualquer versão a partir da 5.3.8, inclusive a 6.0.0</label>
+            <p data-explain="a" hidden>Sem o <code>^</code> seria exatamente a 5.3.8. O <code>^</code> aceita atualizações que mantêm o primeiro número.</p>
+            <p data-explain="c" hidden>A 6.0.0 muda o primeiro número, o que indica mudanças que podem quebrar o código. O <code>^</code> não aceita.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Você rodou <code>npm install</code> e apareceu <code>Could not read package.json</code>. Qual é a causa mais provável?</legend>
+            <label><input type="radio" name="q4" value="a"> O terminal não está na pasta do projeto</label>
+            <label><input type="radio" name="q4" value="b"> O Bootstrap saiu do ar</label>
+            <label><input type="radio" name="q4" value="c"> O Live Server está desligado</label>
+            <p data-explain="b" hidden>O erro fala de um arquivo local, o <code>package.json</code>, e não de um pacote na internet.</p>
+            <p data-explain="c" hidden>O npm não depende do Live Server. Ele procura o <code>package.json</code> na pasta em que o terminal está.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Faça o mesmo com o <strong>seu projeto</strong>: uma pasta com <code>package.json</code>, o framework instalado pelo npm, o <code>.gitignore</code> com a <code>node_modules/</code>, o primeiro commit e o envio para um repositório seu no GitHub. Pode ser só a página com o componente que você montou no capítulo 1.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que cada um destes arquivos guarda: <code>package.json</code>, <code>package-lock.json</code> e <code>.gitignore</code>?</li>
+          <li><strong>A motivação:</strong> por que instalar o framework pelo npm, e não baixar o arquivo CSS à mão?</li>
+          <li><strong>A anatomia:</strong> o que faz cada comando que você rodou, de <code>npm init -y</code> a <code>git push</code>?</li>
+          <li><strong>"E se eu tirar?":</strong> apague a <code>node_modules/</code> e explique como o projeto volta a funcionar.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/getting-started/download/">Bootstrap 5.3: instalação pelo npm</a></li>
+          <li><a href="https://docs.npmjs.com/cli/commands/npm-install">npm: o comando npm install</a></li>
+          <li><a href="https://docs.npmjs.com/about-semantic-versioning">npm: versionamento semântico (o <code>^</code> das versões)</a></li>
+          <li><a href="https://git-scm.com/book/pt-br/v2">Pro Git, em português</a></li>
+          <li><a href="https://code.visualstudio.com/docs/terminal/basics">VS Code: o terminal integrado</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 02-preparar-o-ambiente -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
