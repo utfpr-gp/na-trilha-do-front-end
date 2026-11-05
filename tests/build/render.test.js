@@ -26,3 +26,26 @@ describe('renderCatalog', () => {
     expect(html).toContain('A &amp; B?');
   });
 });
+
+import { renderChapterHeader, renderPager } from '../../build/render.js';
+
+describe('renderChapterHeader', () => {
+  it('tem um único <h1> com a pergunta, a parte, o tempo e o espaço do marco', () => {
+    const html = renderChapterHeader('13-personalizar-o-bootstrap-com-sass', '/');
+    expect(html.match(/<h1/g)).toHaveLength(1);
+    expect(html).toContain('Como personalizar o Bootstrap com Sass?</h1>');
+    expect(html).toContain('A subida');
+    expect(html).toContain('45 min');
+    expect(html).toContain('<tf-mark slug="13-personalizar-o-bootstrap-com-sass">');
+  });
+
+  it('lança erro com slug desconhecido', () => {
+    expect(() => renderChapterHeader('99-nada', '/')).toThrow('99-nada');
+  });
+});
+
+describe('renderPager', () => {
+  it('sem vizinhos publicados, não gera links', () => {
+    expect(renderPager('01-por-que-um-framework', '/')).not.toContain('href=');
+  });
+});

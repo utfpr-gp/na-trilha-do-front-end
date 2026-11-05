@@ -66,3 +66,141 @@ tf-code {
   background: var(--tf-surface);
   border: 1px solid var(--tf-ink-muted);
 }
+
+// Coluna de leitura
+.tf-reading {
+  max-width: 48rem;
+}
+
+.tf-chapter-header {
+  padding: 2rem 0 1rem;
+
+  h1 {
+    font-weight: 800;
+    color: var(--tf-ink);
+  }
+}
+
+// <tf-view>: cada visão com a sua cor na borda e no título
+tf-view {
+  display: block;
+}
+
+.tf-view {
+  margin: 2.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 4px solid var(--tf-view-color);
+  scroll-margin-top: 1rem;
+}
+
+@each $view in $tf-views {
+  .tf-view-#{$view} {
+    --tf-view-color: var(--tf-view-#{$view});
+  }
+}
+
+.tf-view-title {
+  font-weight: 800;
+  color: var(--tf-view-color);
+}
+
+.tf-anchor {
+  margin-left: 0.5rem;
+  padding: 0 0.4rem;
+  border: 0;
+  background: transparent;
+  color: var(--tf-ink-muted);
+  opacity: 0;
+}
+
+.tf-view-title:hover .tf-anchor,
+.tf-anchor:focus-visible {
+  opacity: 1;
+}
+
+// <tf-analogy> e <tf-pitfall>: caixas sem JavaScript
+tf-analogy,
+tf-pitfall {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-ink-muted);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+tf-pitfall {
+  border-color: var(--tf-view-armadilhas);
+}
+
+.tf-box-title {
+  font-weight: 800;
+}
+
+.tf-pitfall-message {
+  padding: 0.75rem 1rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+  color: var(--tf-view-armadilhas);
+  white-space: pre-wrap;
+}
+
+.tf-deep-dive {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px dashed var(--tf-ink-muted);
+
+  summary {
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+// <tf-steps>
+tf-steps {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+.tf-steps-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  border-bottom: 2px solid var(--tf-ink-muted);
+  margin-bottom: 1rem;
+
+  [role="tab"] {
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--tf-ink-muted);
+    font-weight: 700;
+  }
+
+  [aria-selected="true"] {
+    color: var(--tf-ink);
+    border-bottom-color: var(--tf-brand);
+  }
+}
+
+// Navegação entre capítulos
+.tf-pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 3rem 0 1rem;
+
+  span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--tf-ink-muted);
+  }
+}

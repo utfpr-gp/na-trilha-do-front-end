@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <title>Como ler este livro · Na Trilha do Front-End</title>
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <header class="tf-chapter-header">
+        <p class="tf-kicker">Antes de começar</p>
+        <h1>Como ler este livro?</h1>
+        <p class="tf-chapter-meta">5 min de leitura</p>
+      </header>
+
+      <p>Todo capítulo responde a <strong>uma pergunta</strong> e segue sempre o mesmo caminho, dividido em oito partes que o livro chama de <strong>visões</strong>. Esta página usa as próprias visões para mostrar o que cada uma faz. Assim, quando abrir o primeiro capítulo, você já sabe onde está cada coisa.</p>
+
+      <tf-view kind="missao" title="A missão">
+        <p>O capítulo começa mostrando o que o <strong>Trilheiro</strong>, o site de trilhas que você constrói ao longo do livro, ganha naquele trecho: um cartão novo, um filtro funcionando, um formulário que avisa o erro. Você vê o resultado <em>antes</em> de qualquer explicação, para saber aonde está indo.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <p>Toda ideia nova chega primeiro como uma comparação com o dia a dia, de preferência com trilhas e o ar livre. Ela aparece numa caixa como esta:</p>
+        <tf-analogy emoji="🥾" title="Um framework CSS é como uma bota pronta">
+          <p>Você pode costurar a sua própria bota, ou comprar uma que já vem com sola, cadarço e o tamanho certo. A bota pronta leva você mais longe, mais rápido. O preço é que ela se parece com a de muita gente, e é isso que o Sass resolve mais adiante.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Aqui entra o conceito técnico, com o nome oficial, como <code>col-md-4</code>, <code>clamp()</code> ou <code>addEventListener</code>, explicado na primeira vez em que aparece. Sempre que der, um simulador deixa você mexer no conceito antes de escrever código.</p>
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e quem quiser saber mais?</summary>
+          <p>Detalhes que não são necessários para seguir em frente ficam em caixas como esta, que começam fechadas. Abra quando tiver curiosidade.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <p>A prática vem em passos curtos. Cada trecho de código mostra o nome do arquivo e destaca a linha nova. O botão <strong>Copiar</strong> copia o trecho sem a marcação do destaque.</p>
+        <tf-code src="00-exemplo/card.html" caption="index.html"></tf-code>
+        <p>Os passos aparecem em abas. Sem JavaScript, eles aparecem um embaixo do outro:</p>
+        <tf-steps>
+          <section data-step="Abra o projeto">
+            <p>Abra a pasta da etapa no VS Code e inicie o Live Server.</p>
+          </section>
+          <section data-step="Mude o código">
+            <p>Copie o trecho do passo e cole no arquivo indicado na legenda.</p>
+          </section>
+          <section data-step="Confira na tela">
+            <p>Salve e veja o que mudou no navegador. Depois, faça o teste do <strong>"E se eu tirar?"</strong>: apague a linha nova e observe o que quebra.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <p>Os erros que mais acontecem, com a mensagem exata que aparece no console, no terminal ou no compilador do Sass, e como sair deles:</p>
+        <tf-pitfall title="Usei uma variável do Sass que não existe" message="Error: Undefined variable.">
+          <p>O Sass só conhece as variáveis declaradas antes de serem usadas. Confira o nome (um hífen a mais já basta para o erro) e se o arquivo com a variável foi importado antes deste.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <p>No fim, de 3 a 5 perguntas sobre o capítulo. Acertando todas, você ganha um <strong>marco</strong> na sua caderneta de trilha. Pode tentar de novo quantas vezes quiser, e cada resposta errada explica por que não é aquela.</p>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>O mesmo conceito, agora no <strong>seu projeto</strong>: o que fazer, num tamanho parecido com o do Trilheiro, e quatro perguntas para conferir se entendeu:</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é isso que você usou?</li>
+          <li><strong>A motivação:</strong> por que ele está ali, e não outra coisa?</li>
+          <li><strong>A anatomia:</strong> o que cada linha faz?</li>
+          <li><strong>"E se eu tirar?":</strong> o que quebra quando ele sai?</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <p>Os links da documentação oficial do assunto, para consultar quando precisar:</p>
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/">Documentação do Bootstrap 5.3</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web">MDN Web Docs</a></li>
+          <li><a href="https://sass-lang.com/documentation/">Documentação do Sass</a></li>
+        </ul>
+      </tf-view>
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

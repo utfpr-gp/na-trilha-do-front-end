@@ -1,5 +1,5 @@
 // Blocos de HTML gerados a partir dos dados, no build.
-import { chapterUrl } from '../src/data/catalog.js';
+import { PARTS, chapterBySlug, chapterUrl, neighbors } from '../src/data/catalog.js';
 
 export function escapeHtml(text) {
   return String(text).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
@@ -21,4 +21,25 @@ export function renderCatalog(parts, base) {
   <ol class="tf-chapter-list">${p.chapters.map((c) => chapterCard(c, base)).join('')}</ol>
 </section>`)
     .join('\n');
+}
+
+
+export function renderChapterHeader(slug, base) {
+  const c = chapterBySlug(slug);
+  if (!c) throw new Error(`Capítulo não encontrado: ${slug}`);
+  const part = PARTS.find((p) => p.id === c.partId);
+  const number = c.number === null ? '' : `Capítulo ${c.number} · `;
+  return `<header class="tf-chapter-header">
+  <p class="tf-kicker"><a href="${base}#${part.id}">${escapeHtml(part.title)}</a></p>
+  <h1>${escapeHtml(c.question)}</h1>
+  <p class="tf-chapter-meta">${number}${c.minutes} min de leitura e prática</p>
+  <tf-mark slug="${c.slug}"></tf-mark>
+</header>`;
+}
+
+export function renderPager(slug, base) {
+  const { prev, next } = neighbors(slug);
+  const link = (c, rel, label) =>
+    c ? `<a class="tf-pager-${rel}" rel="${rel}" href="${chapterUrl(c, base)}"><span>${label}</span> ${escapeHtml(c.question)}</a>` : '';
+  return `<nav class="tf-pager" aria-label="Capítulos">${link(prev, 'prev', 'Anterior')}${link(next, 'next', 'Próximo')}</nav>`;
 }
