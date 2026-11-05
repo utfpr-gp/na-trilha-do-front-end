@@ -912,3 +912,28 @@ tf-event-log {
     overflow-wrap: anywhere;
   }
 }
+
+// <tf-array-lab>: um método de array e o resultado, como no console
+tf-array-lab {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+
+  select {
+    max-width: 100%;
+    font-family: var(--bs-font-monospace);
+    font-size: 0.875rem;
+  }
+
+  .tf-array-result {
+    margin: 0;
+    min-height: 6rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 0.875rem;
+  }
+}

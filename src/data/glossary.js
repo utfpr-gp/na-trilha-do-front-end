@@ -26,5 +26,8 @@ export const GLOSSARY = [
   { id: 'funcao', term: 'função', definition: 'Em JavaScript, um bloco de código com nome que recebe valores (parâmetros), faz um trabalho e devolve um resultado com return: formatDuration(150) devolve \'2h30\'.', chapter: 17 },
   { id: 'dom', term: 'DOM', definition: 'A página como o JavaScript a enxerga: uma árvore de objetos, um para cada elemento do HTML. Com document.querySelector você pega um elemento e muda o texto, as classes e os atributos dele.', chapter: 18 },
   { id: 'delegacao-de-eventos', term: 'delegação de eventos', definition: 'Pôr um ouvinte só no elemento que contém vários outros (a lista, em vez de cada botão). Os eventos sobem até ele, e event.target.closest() descobre de qual filho veio a ação.', chapter: 18 },
+  { id: 'array', term: 'array', definition: 'Uma lista de valores em ordem, entre colchetes: [trilha1, trilha2]. Métodos como filter, map e find criam listas novas ou acham um item, sem mudar a original.', chapter: 19 },
+  { id: 'classe', term: 'classe', definition: 'Em JavaScript, o molde de um tipo de objeto: o constructor guarda os dados e os métodos dizem o que fazer com eles. new Trail(dados) cria um objeto a partir do molde.', chapter: 19 },
+  { id: 'modulo', term: 'módulo (ES)', definition: 'Um arquivo JavaScript que escolhe o que mostra para os outros com export e usa o que precisa com import. Na página, entra com <script type="module">, servido por http:// (o Live Server).', chapter: 19 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

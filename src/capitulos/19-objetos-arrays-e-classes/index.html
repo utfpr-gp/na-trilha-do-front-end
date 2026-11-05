@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="19-objetos-arrays-e-classes">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 19-objetos-arrays-e-classes -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Até aqui, cada cartão de trilha estava escrito à mão no HTML, e a mesma trilha aparecia copiada no Início e na tela Trilhas. Hoje os <strong>dados</strong> saem do HTML: as trilhas viram uma lista de objetos num arquivo JavaScript, e os cartões passam a ser <strong>montados pelo código</strong>, todos do mesmo molde. O Início mostra só as trilhas em destaque; a tela Trilhas, todas, inclusive uma quarta, a Escadaria do Salto, que ainda não tem foto e ganha a imagem padrão.</p>
+        <p>De quebra, a distância passa a aparecer com vírgula ("4,5 km"), o coração do Início começa a funcionar, e o código se organiza em arquivos pequenos, cada um com uma tarefa, ligados por <strong>módulos</strong>. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/19-objetos-arrays-e-classes">etapas/19-objetos-arrays-e-classes</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🗂️" title="O caderno de registros e o carimbo do cartaz">
+          <p>Um centro de visitantes guarda um registro de cada trilha, sempre com os mesmos campos: nome, cidade, distância, dificuldade. Os registros ficam num caderno, em ordem. Para montar o mural, ninguém desenha cada cartaz do zero: um carimbo faz o cartaz e só os dados mudam.</p>
+          <p>O <strong>objeto</strong> é o registro; o <strong>array</strong>, o caderno; a <strong>classe</strong> é o modelo do registro, que diz que campos ele tem e o que se sabe fazer com eles. E a função que monta o cartão é o carimbo. Para mudar uma trilha, você mexe no registro, e o mural se ajeita sozinho.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Objetos: os dados de uma coisa</h3>
+        <tf-code src="19-objetos-arrays-e-classes/objeto.js" caption="Exemplo"></tf-code>
+        <p>Os nomes dos campos do Trilheiro estão em português (<code>nome</code>, <code>distanciaKm</code>) porque são os mesmos do banco de dados que chega no capítulo 23, como o <code>architecture.md</code> define. As variáveis e as funções seguem em inglês.</p>
+
+        <h3>Arrays: a lista</h3>
+        <tf-code src="19-objetos-arrays-e-classes/array.js" caption="Exemplo"></tf-code>
+        <p>O poder dos <a class="tf-term" href="{{base}}glossario/#array">arrays</a> está em três métodos que recebem uma função de seta e devolvem algo novo, sem mexer no array original:</p>
+        <tf-code src="19-objetos-arrays-e-classes/metodos.js" caption="Exemplo"></tf-code>
+        <p>Escolha um exemplo e veja o resultado, do jeito que o console mostraria:</p>
+        <tf-array-lab></tf-array-lab>
+
+        <h3>Classes: o molde dos objetos</h3>
+        <p>Uma <a class="tf-term" href="{{base}}glossario/#classe">classe</a> junta os dados e as funções que trabalham com eles. O <code>constructor</code> roda quando você cria um objeto com <code>new</code>, e guarda os dados em <code>this</code>; os <strong>métodos</strong> são as funções do objeto:</p>
+        <tf-code src="19-objetos-arrays-e-classes/classe.js" caption="js/trail.js"></tf-code>
+        <tf-code src="19-objetos-arrays-e-classes/novo.js" caption="Exemplo"></tf-code>
+        <p>A vantagem: quem monta o cartão pede <code>trail.distanceText()</code> e não precisa saber como a distância é formatada. Se a regra mudar, muda num lugar só.</p>
+
+        <h3>Módulos: um arquivo, uma tarefa</h3>
+        <p>Com o código crescendo, um arquivo só vira uma gaveta bagunçada. Com <a class="tf-term" href="{{base}}glossario/#modulo">módulos</a>, cada arquivo mostra o que quer com <code>export</code> e pede o que precisa com <code>import</code>:</p>
+        <tf-code src="19-objetos-arrays-e-classes/import.js" caption="Exemplo"></tf-code>
+        <p>Na página, só o arquivo de entrada vai no HTML, com <code>type="module"</code>; ele puxa os outros. Módulos só funcionam servidos por <code>http://</code>, como faz o Live Server, e não abrindo o arquivo com dois cliques. Outra diferença: o que está num módulo não fica solto no console, como as funções do capítulo 17.</p>
+
+        <h3>Números com vírgula</h3>
+        <p>O <code>toLocaleString('pt-BR')</code> escreve o número do jeito brasileiro. Com as opções, ele sempre mostra uma casa decimal:</p>
+        <tf-code src="19-objetos-arrays-e-classes/distancia.js" caption="js/format.js"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: os três pontinhos (spread)</summary>
+          <p>O <code>replaceChildren</code> recebe os elementos soltos, um por argumento, e não um array. Os <code>...</code> espalham o array:</p>
+          <tf-code src="19-objetos-arrays-e-classes/spread.js" caption="js/home.js"></tf-code>
+          <p>O mesmo truque copia arrays (<code>[...favorites]</code>) e objetos (<code>{ ...trail, destaque: false }</code>).</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Os arquivos">
+            <p>Apague o <code>js/app.js</code> do capítulo 17 (as funções dele vão para o <code>format.js</code>) e o <code>trails.js</code> do capítulo 18. A pasta <code>js/</code> fica assim:</p>
+            <tf-code src="19-objetos-arrays-e-classes/estrutura.txt" caption="js/"></tf-code>
+          </section>
+          <section data-step="Os dados e a classe">
+            <p>Em <code>data.js</code>, as quatro trilhas, com os campos do <code>architecture.md</code>. A quarta tem <code>destaque: false</code> e <code>fotos: []</code>:</p>
+            <tf-code src="19-objetos-arrays-e-classes/dados.js" caption="js/data.js"></tf-code>
+            <p>Em <code>format.js</code>, o <code>formatDuration</code> do capítulo 17, agora com <code>export</code>, e o <code>formatDistance</code>. Em <code>trail.js</code>, a classe <code>Trail</code> que você viu em "Por dentro". Em <code>favorites.js</code>, a lista de favoritas:</p>
+            <tf-code src="19-objetos-arrays-e-classes/favoritas.js" caption="js/favorites.js"></tf-code>
+          </section>
+          <section data-step="O cartão">
+            <p>A função que monta um cartão a partir de um <code>Trail</code>. O HTML fixo vem do template string; cada dado entra por <code>textContent</code> ou pelas propriedades (<code>src</code>, <code>alt</code>, <code>href</code>), nunca colado no meio do HTML, pelo motivo que você viu no capítulo 18. O botão de favorito leva o id da trilha em <code>data-id</code>:</p>
+            <tf-code src="19-objetos-arrays-e-classes/cartao.js" caption="js/trail-card.js"></tf-code>
+            <p>Trilha sem foto ganha a imagem padrão, <code>img/trilha-sem-foto.svg</code>.</p>
+          </section>
+          <section data-step="As páginas">
+            <p>No <code>index.html</code> e no <code>trilhas.html</code>, os cartões escritos à mão saem. No lugar, fica só o contêiner vazio, que o JavaScript preenche:</p>
+            <tf-code src="19-objetos-arrays-e-classes/lista-vazia.html" caption="index.html"></tf-code>
+            <tf-code src="19-objetos-arrays-e-classes/modulos.html" caption="index.html (no trilhas.html, js/trails.js)"></tf-code>
+            <p>O Início filtra os destaques e monta os cartões:</p>
+            <tf-code src="19-objetos-arrays-e-classes/home.js" caption="js/home.js"></tf-code>
+            <p>A tela Trilhas agora filtra o <strong>array</strong> e desenha a lista de novo, em vez de esconder cartões:</p>
+            <tf-code src="19-objetos-arrays-e-classes/trails.js" caption="js/trails.js"></tf-code>
+            <p>Confira no navegador, pelo Live Server: 3 cartões no Início, 4 na tela Trilhas, "Fácil" com 2 trilhas, as distâncias com vírgula ("2,0 km") e a Escadaria do Salto com a imagem padrão.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>.filter((data) =&gt; data.destaque)</code> do <code>home.js</code>: o Início passa a mostrar as quatro trilhas. Agora mude o <code>destaque</code> da Escadaria para <code>true</code> e devolva o filtro: ela entra no Início sem você tocar no HTML. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Esqueci o type=&quot;module&quot;" message="Uncaught SyntaxError: Cannot use import statement outside a module">
+          <p>O arquivo usa <code>import</code>, mas entrou na página com um <code>&lt;script src="…"&gt;</code> comum. Acrescente <code>type="module"</code>. Só o arquivo de entrada vai no HTML; os importados, não.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Abri a página com dois cliques" message="Access to script at 'file:///…/js/home.js' from origin 'null' has been blocked by CORS policy">
+          <p>Com o endereço começando em <code>file://</code>, o navegador não carrega módulos, e a página fica sem nenhum cartão. Abra pelo Live Server (<code>http://127.0.0.1:5500</code>).</p>
+        </tf-pitfall>
+        <tf-pitfall title="O nome do import não bate" message="Uncaught SyntaxError: The requested module './trail.js' does not provide an export named 'Trial'">
+          <p>O nome entre chaves precisa ser igual ao do <code>export</code>, com as mesmas maiúsculas. Confira também se a função tem o <code>export</code> na frente, e se o caminho do <code>import</code> tem o <code>./</code> e o <code>.js</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Esqueci o new" message="Uncaught TypeError: Class constructor Trail cannot be invoked without 'new'">
+          <p>Uma classe não é chamada como função: <code>new Trail(data)</code>, e não <code>Trail(data)</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O filter não mudou nada">
+          <p>O <code>filter</code> (e o <code>map</code>) <strong>devolve um array novo</strong> e deixa o original como estava. <code>trails.filter(…)</code> sozinho numa linha não faz nada: guarde o resultado numa variável, ou use-o direto, como em <code>render</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="19-objetos-arrays-e-classes" award>
+          <fieldset data-correct="b">
+            <legend>O que <code>trails.map((trail) =&gt; trail.nome)</code> devolve, para quatro trilhas?</legend>
+            <label><input type="radio" name="q1" value="a"> O nome da primeira trilha</label>
+            <label><input type="radio" name="q1" value="b"> Um array com os quatro nomes</label>
+            <label><input type="radio" name="q1" value="c"> As trilhas que têm nome</label>
+            <p data-explain="a" hidden>O <code>map</code> transforma <strong>cada</strong> item, e devolve um array do mesmo tamanho.</p>
+            <p data-explain="c" hidden>Escolher itens é com o <code>filter</code>. O <code>map</code> transforma cada um.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>E <code>trails.find((trail) =&gt; trail.id === '9')</code>, se não há trilha com o id 9?</legend>
+            <label><input type="radio" name="q2" value="a"> <code>[]</code></label>
+            <label><input type="radio" name="q2" value="b"> Um erro</label>
+            <label><input type="radio" name="q2" value="c"> <code>undefined</code></label>
+            <p data-explain="a" hidden>O array vazio é o que o <code>filter</code> devolve. O <code>find</code> devolve um item, ou <code>undefined</code>.</p>
+            <p data-explain="b" hidden>Não achar não é erro: o <code>find</code> devolve <code>undefined</code>, e o seu código decide o que fazer.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para que serve o <code>constructor</code> da classe <code>Trail</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Ele roda no <code>new Trail(data)</code> e guarda os dados no objeto novo, em <code>this</code></label>
+            <label><input type="radio" name="q3" value="b"> Ele monta o cartão na página</label>
+            <label><input type="radio" name="q3" value="c"> Ele exporta a classe para os outros arquivos</label>
+            <p data-explain="b" hidden>Quem monta o cartão é o <code>createTrailCard</code>. A classe só cuida dos dados da trilha.</p>
+            <p data-explain="c" hidden>Quem exporta é a palavra <code>export</code> antes de <code>class</code>.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que os dados entram no cartão por <code>textContent</code>, e não dentro do template string?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque template strings não aceitam variáveis</label>
+            <label><input type="radio" name="q4" value="b"> Para um dado com HTML dentro (de alguém mal-intencionado) aparecer como texto, e não rodar na página</label>
+            <label><input type="radio" name="q4" value="c"> Porque o <code>textContent</code> é mais rápido</label>
+            <p data-explain="a" hidden>Aceitam, sim. O problema é que, com <code>innerHTML</code>, o que vem nos dados vira HTML.</p>
+            <p data-explain="c" hidden>A razão é a segurança (XSS, capítulo 18), que importa quando as trilhas vierem de um cadastro.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, escolha a coisa principal do seu tema (um produto, um evento, um prato) e crie uma classe para ela, com pelo menos dois métodos. Guarde os itens num array de objetos, monte a lista na página com uma função que cria o elemento de cada item, e use <code>filter</code> ou <code>find</code> em alguma tela. Separe o código em módulos.</p>
+        <ul>
+          <li><strong>O conceito:</strong> qual a diferença entre um objeto, um array e uma classe?</li>
+          <li><strong>A motivação:</strong> o que ficou mais fácil depois que os dados saíram do HTML?</li>
+          <li><strong>A anatomia:</strong> explique a sua classe e a função que monta o elemento, linha por linha.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>type="module"</code> e mostre o erro no console.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting/Object_basics">MDN: o básico de objetos</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting/Arrays">MDN: arrays</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Classes">MDN: classes</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules">MDN: módulos</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString">MDN: toLocaleString</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 19-objetos-arrays-e-classes -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -1,0 +1,12 @@
+// As variáveis do Bootstrap, alimentadas pelos tokens. Este arquivo vem ANTES do Bootstrap.
+@use "tokens" as t;
+
+$primary: t.$verde-mata;
+$secondary: t.$terra;
+$body-bg: t.$papel;
+$body-color: t.$tinta;
+$body-secondary-color: t.$tinta-suave;
+$font-family-sans-serif: t.$fonte-texto;
+$headings-font-family: t.$fonte-titulos;
+$headings-font-weight: 700;
+$border-radius: t.$raio;
