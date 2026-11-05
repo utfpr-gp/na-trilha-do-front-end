@@ -1,3 +1,3 @@
-function resumoDaTrilha(nome, distanciaKm, minutos) {
-  return `${nome}: ${distanciaKm} km, ${formatarDuracao(minutos)}, ritmo de ${ritmo(distanciaKm, minutos)} min/km`;
+function trailSummary(name, distanceKm, minutes) {
+  return `${name}: ${distanceKm} km, ${formatDuration(minutes)}, ritmo de ${pace(distanceKm, minutes)} min/km`;
 }

@@ -18,7 +18,7 @@
       <tf-view kind="ideia" title="A ideia">
         <tf-analogy emoji="📓" title="O caderno de campo com fórmulas prontas">
           <p>Um guia experiente anota no caderno umas fórmulas que usa toda hora: "para saber a duração, divido a distância pelo ritmo do grupo". Ele não refaz o raciocínio a cada trilha; consulta a fórmula, troca os números e pronto.</p>
-          <p>Uma <strong>função</strong> é uma fórmula do caderno: tem um nome (<code>formatarDuracao</code>), recebe os números da vez (<code>150</code>) e devolve o resultado (<code>"2h30"</code>). As <strong>variáveis</strong> são os campos onde você anota os números.</p>
+          <p>Uma <strong>função</strong> é uma fórmula do caderno: tem um nome (<code>formatDuration</code>), recebe os números da vez (<code>150</code>) e devolve o resultado (<code>"2h30"</code>). As <strong>variáveis</strong> são os campos onde você anota os números.</p>
         </tf-analogy>
       </tf-view>
 
@@ -29,12 +29,13 @@
         <h3>Variáveis e tipos</h3>
         <tf-code src="17-javascript-basico/variaveis.js" caption="Exemplo"></tf-code>
         <p>Use <code>const</code> por padrão, e <code>let</code> só para o que vai mudar. O antigo <code>var</code> ainda funciona, mas tem regras confusas: deixe-o de lado.</p>
+        <p>Repare nos nomes: no código, eles ficam em <strong>inglês</strong> (<code>distanceKm</code>, <code>featured</code>), como pede o <code>architecture.md</code> do Trilheiro e como você vai encontrar em quase todo projeto e biblioteca. O que a pessoa lê na tela continua em português, dentro das aspas.</p>
 
         <h3>Funções</h3>
         <p>Uma <a class="tf-term" href="{{base}}glossario/#funcao">função</a> recebe valores (os parâmetros), faz o trabalho e devolve um resultado com <code>return</code>:</p>
         <tf-code src="17-javascript-basico/funcao.js" caption="js/app.js"></tf-code>
         <p>Experimente: digite uma quantidade de minutos e veja o que a função do Trilheiro devolve.</p>
-        <tf-function-lab data-fn="formatarDuracao" data-arg="150" data-label="Minutos"></tf-function-lab>
+        <tf-function-lab data-fn="formatDuration" data-arg="150" data-label="Minutos"></tf-function-lab>
         <p>A <strong>função de seta</strong> é outra forma de escrever a mesma coisa, muito usada em JavaScript moderno:</p>
         <tf-code src="17-javascript-basico/seta.js" caption="js/app.js"></tf-code>
 
@@ -65,30 +66,30 @@
             <p>Escreva <code>console.log('Olá, Trilheiro!');</code> no arquivo, abra o console e recarregue: a mensagem aparece.</p>
           </section>
           <section data-step="As funções">
-            <p>Escreva as funções <code>formatarDuracao</code>, <code>ritmo</code>, <code>saudacao</code> e <code>resumoDaTrilha</code>, e chame o resumo para as três trilhas. O arquivo completo está na etapa.</p>
+            <p>Escreva as funções <code>formatDuration</code>, <code>pace</code>, <code>greeting</code> e <code>trailSummary</code>, e chame o resumo para as três trilhas. O arquivo completo está na etapa.</p>
           </section>
           <section data-step="O resultado no console">
             <tf-code src="17-javascript-basico/console.txt" caption="Console"></tf-code>
             <p>Repare no "4.5 km": o JavaScript escreve números com ponto. Para escrever com vírgula, use <code>toLocaleString('pt-BR')</code>, como no capítulo 19.</p>
           </section>
           <section data-step="Teste no console">
-            <p>As funções do <code>app.js</code> ficam disponíveis no console da página. Digite <code>formatarDuracao(65)</code> e aperte <kbd>Enter</kbd>: aparece <code>'1h05'</code>. Experimente outros valores, e <code>saudacao(7)</code>.</p>
+            <p>As funções do <code>app.js</code> ficam disponíveis no console da página. Digite <code>formatDuration(65)</code> e aperte <kbd>Enter</kbd>: aparece <code>'1h05'</code>. Experimente outros valores, e <code>greeting(7)</code>.</p>
           </section>
           <section data-step="E se eu tirar?">
-            <p>Tire o <code>return</code> da última linha da <code>formatarDuracao</code> e recarregue: o resumo do Salto passa a mostrar "undefined" no lugar da duração. Uma função sem <code>return</code> devolve <code>undefined</code>. Desfaça.</p>
+            <p>Tire o <code>return</code> da última linha da <code>formatDuration</code> e recarregue: o resumo do Salto passa a mostrar "undefined" no lugar da duração. Uma função sem <code>return</code> devolve <code>undefined</code>. Desfaça.</p>
           </section>
         </tf-steps>
       </tf-view>
 
       <tf-view kind="armadilhas" title="Armadilhas">
-        <tf-pitfall title="Usei um nome que não existe" message="Uncaught ReferenceError: duracao is not defined">
-          <p>O código usa <code>duracao</code>, mas nada com esse nome foi criado (talvez o nome certo seja <code>minutos</code>, ou faltou o acento, ou a variável foi criada dentro de outra função). O console mostra o arquivo e a linha ao lado da mensagem: clique neles para ir direto ao erro.</p>
+        <tf-pitfall title="Usei um nome que não existe" message="Uncaught ReferenceError: duration is not defined">
+          <p>O código usa <code>duration</code>, mas nada com esse nome foi criado (talvez o nome certo seja <code>minutes</code>, ou há um erro de digitação, ou a variável foi criada dentro de outra função). O console mostra o arquivo e a linha ao lado da mensagem: clique neles para ir direto ao erro.</p>
         </tf-pitfall>
         <tf-pitfall title="Tentei mudar uma constante" message="Uncaught TypeError: Assignment to constant variable.">
           <p>Uma variável criada com <code>const</code> não pode receber outro valor. Se ela precisa mudar (como um contador), crie com <code>let</code>.</p>
         </tf-pitfall>
-        <tf-pitfall title="Criei duas vezes a mesma variável" message="Uncaught SyntaxError: Identifier 'nome' has already been declared">
-          <p>Dois <code>let nome</code> (ou <code>const</code>) no mesmo bloco. Erros de sintaxe impedem o arquivo inteiro de rodar: nenhuma linha do <code>app.js</code> funciona até você corrigir. Para trocar o valor, escreva só <code>nome = 'Mirante';</code>, sem o <code>let</code>.</p>
+        <tf-pitfall title="Criei duas vezes a mesma variável" message="Uncaught SyntaxError: Identifier 'name' has already been declared">
+          <p>Dois <code>let name</code> (ou <code>const</code>) no mesmo bloco. Erros de sintaxe impedem o arquivo inteiro de rodar: nenhuma linha do <code>app.js</code> funciona até você corrigir. Para trocar o valor, escreva só <code>name = 'Mirante';</code>, sem o <code>let</code>.</p>
         </tf-pitfall>
         <tf-pitfall title="A conta deu 45 em vez de 9">
           <p>Um dos valores era texto: <code>'4' + 5</code> dá <code>'45'</code>, porque com texto o <code>+</code> junta. Isso acontece muito com valores que vêm de campos de formulário, que são sempre texto. Converta antes de somar: <code>Number('4') + 5</code>.</p>
@@ -106,7 +107,7 @@
             <p data-explain="c" hidden>O tipo não importa: a diferença é se a variável pode ou não receber outro valor.</p>
           </fieldset>
           <fieldset data-correct="c">
-            <legend>O que <code>formatarDuracao(65)</code> devolve?</legend>
+            <legend>O que <code>formatDuration(65)</code> devolve?</legend>
             <label><input type="radio" name="q2" value="a"> <code>'65 min'</code></label>
             <label><input type="radio" name="q2" value="b"> <code>'1h5'</code></label>
             <label><input type="radio" name="q2" value="c"> <code>'1h05'</code></label>
