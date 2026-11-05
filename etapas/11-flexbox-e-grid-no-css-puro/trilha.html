@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilha do Salto · Trilheiro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md py-3" data-bs-theme="dark" aria-label="Principal">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><i class="bi bi-compass" aria-hidden="true"></i> Trilheiro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir o menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Trilhas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Cadastrar trilha</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container flex-grow-1 py-5">
+    <nav aria-label="Você está em">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Início</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Trilha do Salto</li>
+      </ol>
+    </nav>
+
+    <h1 class="mb-2">Trilha do Salto</h1>
+    <p class="mb-4"><span class="badge text-bg-warning">Moderada</span> <span class="badge text-bg-light border">Ida e volta</span></p>
+
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <div id="fotos" class="carousel slide mb-4">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#fotos" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Foto 1"></button>
+            <button type="button" data-bs-target="#fotos" data-bs-slide-to="1" aria-label="Foto 2"></button>
+            <button type="button" data-bs-target="#fotos" data-bs-slide-to="2" aria-label="Foto 3"></button>
+          </div>
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active">
+              <img src="salto.svg" class="d-block w-100" alt="Queda-d'água vista de baixo, entre morros">
+            </div>
+            <div class="carousel-item">
+              <img src="salto-degraus.svg" class="d-block w-100" alt="Degraus de pedra descendo pela mata">
+            </div>
+            <div class="carousel-item">
+              <img src="araucarias.svg" class="d-block w-100" alt="Araucárias no começo da trilha">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#fotos" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Foto anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#fotos" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próxima foto</span>
+          </button>
+        </div>
+
+        <h2 class="h4">Sobre a trilha</h2>
+        <p>Descida por mata de araucárias até a base de uma queda-d'água, com volta pelo mesmo caminho. O trecho final tem degraus de pedra e pode ficar escorregadio depois da chuva.</p>
+        <h2 class="h4 mt-4">O que levar</h2>
+        <ul class="chips">
+          <li>Água</li>
+          <li>Lanche</li>
+          <li>Repelente</li>
+          <li>Capa de chuva</li>
+        </ul>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#dicas" aria-controls="dicas">
+          <i class="bi bi-shield-check" aria-hidden="true"></i> Dicas de segurança
+        </button>
+      </div>
+
+      <aside class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 card-title">Dados da trilha</h2>
+            <dl class="dados">
+              <dt>Distância</dt><dd>4,5 km</dd>
+              <dt>Duração</dt><dd>2h30</dd>
+              <dt>Cidade</dt><dd>Prudentópolis, PR</dd>
+              <dt>Última visita</dt><dd>12/10/2026</dd>
+            </dl>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-5" aria-labelledby="relatos">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="relatos" class="h4 mb-0">Relatos de quem foi</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novo-relato">Conte como foi</button>
+      </div>
+      <article class="card mb-3">
+        <div class="card-body">
+          <p class="mb-1"><strong>Ana</strong> · <span class="text-body-secondary small">visitou em 12/10/2026</span></p>
+          <p class="mb-0">Descida tranquila, mas a volta cansa. Leve água de sobra.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="dicas" aria-labelledby="dicas-titulo">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="dicas-titulo">Dicas de segurança</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul>
+        <li>Avise alguém aonde você vai e a que horas pretende voltar.</li>
+        <li>Leve água, lanche e uma capa de chuva.</li>
+        <li>Confira a previsão do tempo antes de sair.</li>
+        <li>Não saia da trilha marcada.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="modal fade" id="novo-relato" tabindex="-1" aria-labelledby="novo-relato-titulo" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="novo-relato-titulo">Conte como foi</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-relato">
+            <div class="mb-3">
+              <label for="relato-nome" class="form-label">Seu nome</label>
+              <input type="text" class="form-control" id="relato-nome">
+            </div>
+            <div class="mb-3">
+              <label for="relato-texto" class="form-label">Como foi?</label>
+              <textarea class="form-control" id="relato-texto" rows="4"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" form="form-relato">Publicar relato</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer__marca">
+      <strong>Trilheiro</strong>
+      <span>Trilhas da região de Guarapuava</span>
+    </div>
+    <div class="site-footer__fontes">
+      <span>Previsão do tempo: <a href="https://open-meteo.com">Open-Meteo</a></span>
+      <span>Endereços: <a href="https://viacep.com.br">ViaCEP</a></span>
+    </div>
+    <p class="site-footer__aviso">As trilhas são exemplos inspirados em lugares reais. O Trilheiro não é um guia de segurança.</p>
+  </footer>
+
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

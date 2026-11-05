@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="11-flexbox-e-grid-no-css-puro">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 11-flexbox-e-grid-no-css-puro -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Até aqui, quem organizou o layout foi o Bootstrap. Hoje você faz três layouts sem ele, em CSS puro: o <strong>rodapé</strong> do Trilheiro ganha três blocos lado a lado (a marca, as fontes dos dados e o aviso), que se empilham no celular; o "O que levar" da página da trilha vira <strong>etiquetas</strong> que quebram linha; e os dados da trilha ficam numa <strong>grade</strong> de rótulo e valor.</p>
+        <p>As classes <code>d-flex</code> e <code>row</code> do Bootstrap são Flexbox por baixo. Entender o Flexbox e o Grid diretamente é o que permite resolver o que o framework não prevê. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/11-flexbox-e-grid-no-css-puro">etapas/11-flexbox-e-grid-no-css-puro</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🥾" title="Flexbox é a fila na trilha; Grid é o mapa quadriculado">
+          <p>Numa trilha estreita, o grupo anda em fila: você decide a direção, quem vai na frente, o espaço entre as pessoas, e onde a fila quebra quando o caminho alarga. Isso é o <strong>Flexbox</strong>: uma dimensão, uma fila de itens.</p>
+          <p>Num mapa topográfico, o terreno é dividido em quadrados com linhas e colunas, e cada coisa ocupa a sua célula. Isso é o <strong>Grid</strong>: duas dimensões ao mesmo tempo.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3><a class="tf-term" href="{{base}}glossario/#flexbox">Flexbox</a>: o contêiner manda</h3>
+        <p>Com <code>display: flex</code>, o elemento vira um contêiner flexível, e os <strong>filhos diretos</strong> viram itens enfileirados. As propriedades principais vão no contêiner:</p>
+        <ul>
+          <li><code>flex-direction</code>: a direção da fila (<code>row</code>, em linha; <code>column</code>, em coluna);</li>
+          <li><code>justify-content</code>: como os itens se distribuem na direção da fila;</li>
+          <li><code>align-items</code>: como se alinham na direção cruzada;</li>
+          <li><code>flex-wrap: wrap</code>: deixa a fila quebrar em várias linhas quando não cabe;</li>
+          <li><code>gap</code>: o espaço entre os itens.</li>
+        </ul>
+        <p>E uma vai no item: <code>flex: 1 1 18rem</code> diz que ele pode crescer (1), pode encolher (1) e começa com 18rem. Experimente as do contêiner:</p>
+        <tf-flex-lab>
+          <div class="tf-flex-stage" data-flex-stage><span>Marca</span><span>Fontes</span><span>Aviso</span></div>
+        </tf-flex-lab>
+
+        <h3>Grid: linhas e colunas</h3>
+        <p>Com <code>display: grid</code>, você desenha as colunas com <code>grid-template-columns</code>. Alguns valores que resolvem muita coisa:</p>
+        <ul>
+          <li><code>max-content 1fr</code>: a primeira coluna do tamanho do conteúdo mais largo, a segunda com o resto (<code>fr</code> é "fração do espaço livre");</li>
+          <li><code>repeat(3, 1fr)</code>: três colunas iguais;</li>
+          <li><code>repeat(auto-fill, minmax(min(100%, 16rem), 1fr))</code>: quantas colunas de pelo menos 16rem couberem. Responsivo sem nenhum ponto de quebra.</li>
+        </ul>
+        <tf-code src="11-flexbox-e-grid-no-css-puro/auto-fill.css" caption="Exemplo"></tf-code>
+
+        <h3>Quando usar cada um</h3>
+        <p>Itens numa fila que pode quebrar (um menu, botões, etiquetas, os blocos do rodapé): Flexbox. Uma grade em que linhas e colunas importam juntas (uma galeria, um formulário em duas colunas, rótulo e valor): Grid. E o grid do Bootstrap? Ele é um Flexbox pronto, com as 12 colunas e os pontos de quebra já resolvidos: use-o para o esqueleto da página, e o CSS puro para os detalhes.</p>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O rodapé em três blocos">
+            <p>Troque o rodapé, nas duas páginas, por três blocos com classes próprias:</p>
+            <tf-code src="11-flexbox-e-grid-no-css-puro/rodape.html" caption="index.html e trilha.html"></tf-code>
+            <p>No <code>style.css</code>, o rodapé vira um contêiner flexível que quebra linha:</p>
+            <tf-code src="11-flexbox-e-grid-no-css-puro/rodape.css" caption="css/style.css"></tf-code>
+            <p>O bloco do aviso cresce para ocupar o espaço que sobra, mas não passa de 28rem:</p>
+            <tf-code src="11-flexbox-e-grid-no-css-puro/aviso.css" caption="css/style.css"></tf-code>
+            <p>Os nomes com dois sublinhados (<code>site-footer__marca</code>) seguem um costume chamado BEM: o bloco, dois sublinhados e o elemento. Ajuda a saber, só pelo nome, a que parte da página a classe pertence.</p>
+          </section>
+          <section data-step="As etiquetas">
+            <p>No <code>trilha.html</code>, crie a lista "O que levar" com a classe <code>chips</code>:</p>
+            <tf-code src="11-flexbox-e-grid-no-css-puro/chips.css" caption="css/style.css"></tf-code>
+          </section>
+          <section data-step="Rótulo e valor em grade">
+            <p>Troque a lista de dados da trilha (que usava <code>row</code> e <code>col-6</code>) por uma <code>&lt;dl class="dados"&gt;</code>:</p>
+            <tf-code src="11-flexbox-e-grid-no-css-puro/dados.css" caption="css/style.css"></tf-code>
+            <p>Cada <code>&lt;dt&gt;</code> e cada <code>&lt;dd&gt;</code> vira uma célula. A primeira coluna fica do tamanho do rótulo mais longo ("Última visita"), e os valores se alinham todos no mesmo ponto.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>flex-wrap: wrap</code> do rodapé e diminua a janela: os três blocos se espremem numa linha só, e o texto fica espremido em colunas estreitas. Devolva. Agora troque <code>max-content</code> por <code>1fr</code> na grade dos dados: as duas colunas ficam do mesmo tamanho, e os valores se afastam dos rótulos.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Pus justify-content no item e nada aconteceu">
+          <p><code>justify-content</code>, <code>align-items</code> e <code>flex-wrap</code> são propriedades do <strong>contêiner</strong>, o elemento com <code>display: flex</code>. No filho, elas não fazem nada, e o DevTools mostra a declaração com um aviso de que ela não tem efeito ali. Suba a propriedade para o pai.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Os itens não quebram linha e saem da tela">
+          <p>Por padrão, o Flexbox tenta pôr tudo numa linha só (<code>flex-wrap: nowrap</code>). Em telas pequenas, os itens encolhem até o limite e depois vazam. Acrescente <code>flex-wrap: wrap</code> ao contêiner.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A grade com minmax criou rolagem lateral no celular">
+          <p>Com <code>minmax(20rem, 1fr)</code>, cada coluna exige pelo menos 20rem, mesmo numa tela mais estreita que isso, e a página ganha rolagem para o lado. Use <code>minmax(min(100%, 20rem), 1fr)</code>: o <code>min()</code> deixa a coluna ser menor que 20rem quando a tela não comporta.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="11-flexbox-e-grid-no-css-puro" award>
+          <fieldset data-correct="c">
+            <legend>Em qual elemento vai o <code>justify-content</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Em cada item que você quer mover</label>
+            <label><input type="radio" name="q1" value="b"> No <code>&lt;body&gt;</code></label>
+            <label><input type="radio" name="q1" value="c"> No contêiner, o elemento com <code>display: flex</code></label>
+            <p data-explain="a" hidden>No item, o <code>justify-content</code> não tem efeito. Ele distribui os itens a partir do contêiner.</p>
+            <p data-explain="b" hidden>Só se o <code>&lt;body&gt;</code> for o contêiner flexível dos itens. A regra é: no pai dos itens.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Qual layout pede Grid, e não Flexbox?</legend>
+            <label><input type="radio" name="q2" value="a"> Uma tabela de rótulos e valores, alinhados em duas colunas</label>
+            <label><input type="radio" name="q2" value="b"> Uma fileira de botões</label>
+            <label><input type="radio" name="q2" value="c"> Etiquetas que quebram linha</label>
+            <p data-explain="b" hidden>Uma fileira é uma dimensão só: trabalho para o Flexbox.</p>
+            <p data-explain="c" hidden>Etiquetas que quebram linha são uma fila com <code>flex-wrap</code>.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>O que significa <code>1fr</code> no Grid?</legend>
+            <label><input type="radio" name="q3" value="a"> Uma coluna com 1 pixel</label>
+            <label><input type="radio" name="q3" value="b"> Uma fração do espaço que sobra</label>
+            <label><input type="radio" name="q3" value="c"> Uma coluna de largura fixa</label>
+            <p data-explain="a" hidden><code>fr</code> não é pixel: é uma parte do espaço livre, dividido entre as colunas com <code>fr</code>.</p>
+            <p data-explain="c" hidden>Ao contrário: <code>fr</code> é flexível, cresce e encolhe com o espaço disponível.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Os blocos do rodapé ficam espremidos numa linha só no celular. O que falta no contêiner?</legend>
+            <label><input type="radio" name="q4" value="a"> <code>align-items: center</code></label>
+            <label><input type="radio" name="q4" value="b"> <code>justify-content: space-between</code></label>
+            <label><input type="radio" name="q4" value="c"> <code>flex-wrap: wrap</code></label>
+            <p data-explain="a" hidden>Isso só alinha os itens na direção cruzada; eles continuam numa linha só.</p>
+            <p data-explain="b" hidden>Isso distribui o espaço entre os itens, mas não deixa a fila quebrar.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, faça pelo menos um layout com Flexbox e um com Grid, em CSS puro, no seu <code>style.css</code>: o rodapé, um menu, uma galeria, um formulário em duas colunas. Os dois precisam funcionar do celular ao computador.</p>
+        <ul>
+          <li><strong>O conceito:</strong> qual a diferença entre Flexbox e Grid?</li>
+          <li><strong>A motivação:</strong> por que, nesse lugar, CSS puro em vez das classes do Bootstrap?</li>
+          <li><strong>A anatomia:</strong> explique cada propriedade do seu contêiner flexível.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>flex-wrap</code> ou troque o <code>minmax</code> e mostre o que quebra no celular.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/CSS_layout/Flexbox">MDN: Flexbox</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/CSS_layout/Grids">MDN: Grids</a></li>
+          <li><a href="https://flexboxfroggy.com/#pt-br">Flexbox Froggy (jogo)</a></li>
+          <li><a href="https://cssgridgarden.com/#pt-br">Grid Garden (jogo)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 11-flexbox-e-grid-no-css-puro -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

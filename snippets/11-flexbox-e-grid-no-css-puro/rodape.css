@@ -1,0 +1,13 @@
+/* Rodapé: três blocos em Flexbox, sem classes do framework. */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+  color: var(--cor-superficie);
+  background-color: var(--cor-texto);
+}
+
