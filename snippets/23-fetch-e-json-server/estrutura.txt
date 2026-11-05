@@ -1,0 +1,9 @@
+js/
+├── api.js           novo: a conversa com o json-server
+├── feedback.js      novo: os avisos de "carregando" e de erro
+├── trail-detail.js  novo: a página de detalhe
+├── data.js          saiu: as trilhas agora vêm do db.json
+└── …                os outros, com home.js, trails.js e trail-form.js usando o api.js
+
+db.json              as trilhas e os relatos
+.vscode/settings.json  o Live Server ignora o db.json

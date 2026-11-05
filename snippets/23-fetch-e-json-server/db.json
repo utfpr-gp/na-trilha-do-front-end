@@ -1,0 +1,24 @@
+{
+  "trilhas": [
+    {
+      "id": "1",
+      "nome": "Trilha do Salto",
+      "cidade": "Prudentópolis",
+      "uf": "PR",
+      "distanciaKm": 4.5,
+      "dificuldade": "moderada",
+      "duracaoMin": 150,
+      "destaque": true
+    }
+  ],
+  "relatos": [
+    {
+      "id": "1",
+      "trilhaId": "1",
+      "nome": "Ana",
+      "dataVisita": "2026-10-12",
+      "nota": 5,
+      "texto": "Descida tranquila, mas a volta cansa. Leve água de sobra."
+    }
+  ]
+}

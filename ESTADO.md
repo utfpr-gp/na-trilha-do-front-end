@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 22 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 23 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -42,11 +42,12 @@
 - **Capítulo 20 publicado:** atributos HTML5, expressões regulares (pattern e `test`/`replace`), `validity`, `setCustomValidity` (balões, Atividade 16), `novalidate` + `.is-invalid`/`.invalid-feedback`, validação no servidor em Aprofundando; etapa com `cadastrar.html` (todos os campos do dicionário, RN01–RN05) e `js/trail-form.js` (mensagens por problema, regra do nome por regex, erro após `focusout`, foco no primeiro erro, objeto montado com FormData), testada no Chrome com teclas reais; `$danger` = vermelho de Difícil; armadilhas reais (pattern com hífen e flag v, minlength só com digitação); simulador `<tf-regex-lab>`; termo expressão regular.
 - **Capítulo 21 publicado:** localStorage (setItem/getItem/removeItem, prefixo `trilheiro:`, aba Application), JSON.stringify/parse, falhas (null, JSON estragado, bloqueio) com try/catch; sessionStorage, cookies e evento storage em Aprofundando; etapa com `js/storage.js` (seção 9 do architecture), favoritas e último filtro persistidos, testada no Chrome inclusive com valores estragados; erros reais (`1,3`, `[object Object]`, null.includes, SecurityError em iframe sandbox); simulador `<tf-storage-lab>` (grava de verdade em `tf-lab:favoritas`); termos JSON e localStorage.
 - **Capítulo 22 publicado:** função $, métodos e encadeamento, jQuery × JavaScript de hoje, plugin de máscara pelo CDN (ordem dos scripts), `.load()`/fetch para cabeçalho e rodapé em Aprofundando (com os custos; Trilheiro mantém o cabeçalho copiado e aponta o Vite), IMask como alternativa (Cleave.js descontinuado → cleave-zen); etapa com jQuery 4.0.0 + Mask 1.14.16 só no `cadastrar.html`, testada no Chrome com digitação real (com eventos rápidos demais o plugin embaralha o cursor; com ritmo humano, certo); erros reais (maskWatchers, .mask is not a function, $.trim removido no 4); simulador `<tf-mask-lab>`; termos jQuery e plugin.
+- **Capítulo 23 publicado:** API REST com json-server 1.0.0-beta.15 (rotas, `_embed`, 404, 201, defeito do `?trilhaId=1`, `$schema` acrescentado na 1ª gravação), fetch + async/await + response.ok, `api.js` (só modo local; o modo publicado entra no 26), then/AJAX do jQuery/XHR em Aprofundando; etapa com `db.json` completo, `api.js`, `feedback.js`, `trail-detail.js` (detalhe dinâmico por `?id=`, carrossel das fotos, guia, relatos ordenados, favorito no detalhe, modal de relato com `.was-validated` + POST), cadastro com POST e redirecionamento, `.vscode/settings.json` ignorando o db.json no Live Server; tudo testado no Chrome contra o json-server (inclusive servidor parado e id inexistente); erros reais (Failed to fetch, sem await, await fora de async); simulador `<tf-fetch-lab>`; termos API REST, fetch, async/await. `show()` do tf-array-lab passou a escrever arrays internos numa linha.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 23 (fetch e json-server: `db.json`, `api.js` com modo local e publicado, `GET /trilhas`, `GET /trilhas/:id?_embed=relatos` no detalhe, `POST` no cadastro e no relato; AJAX do jQuery e XMLHttpRequest em Aprofundando; base Atividade 19) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 24 (API pública e erros: Open-Meteo no detalhe com carregando/erro/fonte, ViaCEP no cadastro com `{erro:"true"}`, geocodificação ao salvar; Postman/Thunder Client, catálogos de APIs; base Atividade 20) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto
