@@ -1,0 +1,63 @@
+/* Regras próprias do Trilheiro. Este arquivo vem DEPOIS do Bootstrap no <head>. */
+
+/* Design tokens: cada decisão do design system, com um nome de papel. */
+:root {
+  --cor-marca: #2f5d3a;       /* verde-mata */
+  --cor-destaque: #8b5a2b;    /* terra */
+  --cor-marcacao: #f2c230;    /* amarelo de marcação */
+  --cor-fundo: #faf7f0;       /* papel */
+  --cor-superficie: #ffffff;
+  --cor-texto: #1f2a24;       /* tinta */
+  --cor-texto-suave: #55625a;
+  --fonte-titulos: "Bitter", Georgia, serif;
+  --fonte-texto: "Source Sans 3", system-ui, sans-serif;
+  --raio: 0.5rem;
+}
+
+body {
+  font-family: var(--fonte-texto);
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulos);
+  font-weight: 700;
+}
+
+.site-header {
+  padding: 1.5rem 1rem;
+  color: var(--cor-superficie);
+  background-color: var(--cor-marca);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.site-header p {
+  margin: 0;
+}
+
+.site-main {
+  padding: 2rem 1rem;
+}
+
+.card {
+  border-radius: var(--raio);
+}
+
+/* Mesma especificidade da regra .card-title do Bootstrap (0,1,0): vence por vir depois. */
+.card-title {
+  color: var(--cor-marca);
+}
+
+.site-footer {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: var(--cor-texto-suave);
+  border-top: 1px solid var(--cor-texto-suave);
+}
