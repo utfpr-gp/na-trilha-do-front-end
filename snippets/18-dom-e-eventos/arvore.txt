@@ -1,0 +1,13 @@
+document
+└── html
+    └── body
+        └── main
+            └── div#trail-list
+                └── div.trail-card  (data-dificuldade="moderada")
+                    └── article.card
+                        ├── picture
+                        └── div.card-body
+                            ├── span.badge   "Moderada"
+                            ├── h3           "Trilha do Salto"
+                            └── button.btn-favorite
+                                └── i.bi-heart

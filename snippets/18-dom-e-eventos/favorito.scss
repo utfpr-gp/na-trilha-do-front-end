@@ -1,0 +1,6 @@
+// O favorito marcado: amarelo de marcação, sempre com texto escuro (design system).
+.btn-favorite[aria-pressed="true"] {
+  color: t.$tinta;
+  background-color: t.$marcacao;
+  border-color: t.$marcacao;
+}

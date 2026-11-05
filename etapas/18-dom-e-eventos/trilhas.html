@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilhas · Trilheiro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md py-3" data-bs-theme="dark" aria-label="Principal">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><i class="bi bi-compass" aria-hidden="true"></i> Trilheiro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir o menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="trilhas.html">Trilhas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Cadastrar trilha</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container flex-grow-1 py-5">
+    <h1 class="mb-3">Todas as trilhas</h1>
+
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+      <div class="btn-group flex-wrap" role="group" aria-label="Filtrar por dificuldade" id="trail-filter">
+        <input type="radio" class="btn-check" name="filtro" id="filtro-todas" value="todas" checked>
+        <label class="btn btn-outline-primary" for="filtro-todas">Todas</label>
+        <input type="radio" class="btn-check" name="filtro" id="filtro-facil" value="facil">
+        <label class="btn btn-outline-primary" for="filtro-facil">Fácil</label>
+        <input type="radio" class="btn-check" name="filtro" id="filtro-moderada" value="moderada">
+        <label class="btn btn-outline-primary" for="filtro-moderada">Moderada</label>
+        <input type="radio" class="btn-check" name="filtro" id="filtro-dificil" value="dificil">
+        <label class="btn btn-outline-primary" for="filtro-dificil">Difícil</label>
+        <input type="radio" class="btn-check" name="filtro" id="filtro-favoritas" value="favoritas">
+        <label class="btn btn-outline-primary" for="filtro-favoritas"><i class="bi bi-heart-fill" aria-hidden="true"></i> Favoritas</label>
+      </div>
+      <p class="mb-0 text-body-secondary" id="trail-status" aria-live="polite"></p>
+    </div>
+
+    <section aria-labelledby="lista">
+      <h2 id="lista" class="visually-hidden">Lista de trilhas</h2>
+      <div class="row g-4" id="trail-list">
+        <div class="col-12 col-sm-6 col-lg-4 trail-card" data-dificuldade="moderada">
+          <article class="card h-100">
+            <picture>
+              <source type="image/webp" srcset="img/trilhas/salto-480.webp 480w, img/trilhas/salto-960.webp 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw">
+              <img src="img/trilhas/salto-480.jpg" srcset="img/trilhas/salto-480.jpg 480w, img/trilhas/salto-960.jpg 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw" width="480" height="360" loading="lazy" class="card-img-top" alt="Queda-d'água entre morros">
+            </picture>
+            <div class="card-body">
+              <span class="badge badge-moderada">Moderada</span>
+              <h3 class="card-title h5 my-2">Trilha do Salto</h3>
+              <p class="card-text small text-body-secondary"><i class="bi bi-geo-alt" aria-hidden="true"></i> Prudentópolis, PR · <i class="bi bi-signpost-2" aria-hidden="true"></i> 4,5 km · <i class="bi bi-clock" aria-hidden="true"></i> 2h30</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="trilha.html" class="btn btn-primary">Ver trilha</a>
+                <button type="button" class="btn btn-outline-secondary btn-favorite" aria-pressed="false" aria-label="Favoritar"><i class="bi bi-heart" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 trail-card" data-dificuldade="facil">
+          <article class="card h-100">
+            <picture>
+              <source type="image/webp" srcset="img/trilhas/araucarias-480.webp 480w, img/trilhas/araucarias-960.webp 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw">
+              <img src="img/trilhas/araucarias-480.jpg" srcset="img/trilhas/araucarias-480.jpg 480w, img/trilhas/araucarias-960.jpg 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw" width="480" height="360" loading="lazy" class="card-img-top" alt="Trilha de terra entre araucárias">
+            </picture>
+            <div class="card-body">
+              <span class="badge badge-facil">Fácil</span>
+              <h3 class="card-title h5 my-2">Caminho das Araucárias</h3>
+              <p class="card-text small text-body-secondary"><i class="bi bi-geo-alt" aria-hidden="true"></i> Guarapuava, PR · <i class="bi bi-signpost-2" aria-hidden="true"></i> 2,0 km · <i class="bi bi-clock" aria-hidden="true"></i> 45 min</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="btn btn-primary">Ver trilha</a>
+                <button type="button" class="btn btn-outline-secondary btn-favorite" aria-pressed="false" aria-label="Favoritar"><i class="bi bi-heart" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 trail-card" data-dificuldade="dificil">
+          <article class="card h-100">
+            <picture>
+              <source type="image/webp" srcset="img/trilhas/mirante-480.webp 480w, img/trilhas/mirante-960.webp 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw">
+              <img src="img/trilhas/mirante-480.jpg" srcset="img/trilhas/mirante-480.jpg 480w, img/trilhas/mirante-960.jpg 960w" sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw" width="480" height="360" loading="lazy" class="card-img-top" alt="Vale visto do alto de um mirante">
+            </picture>
+            <div class="card-body">
+              <span class="badge badge-dificil">Difícil</span>
+              <h3 class="card-title h5 my-2">Mirante da Serra</h3>
+              <p class="card-text small text-body-secondary"><i class="bi bi-geo-alt" aria-hidden="true"></i> Guarapuava, PR · <i class="bi bi-signpost-2" aria-hidden="true"></i> 8,0 km · <i class="bi bi-clock" aria-hidden="true"></i> 4h</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="btn btn-primary">Ver trilha</a>
+                <button type="button" class="btn btn-outline-secondary btn-favorite" aria-pressed="false" aria-label="Favoritar"><i class="bi bi-heart" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__marca">
+      <strong>Trilheiro</strong>
+      <span>Trilhas da região de Guarapuava</span>
+    </div>
+    <div class="site-footer__fontes">
+      <span>Previsão do tempo: <a href="https://open-meteo.com">Open-Meteo</a></span>
+      <span>Endereços: <a href="https://viacep.com.br">ViaCEP</a></span>
+    </div>
+    <p class="site-footer__aviso">As trilhas são exemplos inspirados em lugares reais. O Trilheiro não é um guia de segurança.</p>
+  </footer>
+
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/trails.js"></script>
+</body>
+</html>

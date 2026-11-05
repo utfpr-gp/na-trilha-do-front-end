@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 17 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 18 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -36,11 +36,13 @@
 - **Capítulo 15 publicado:** tipografia fluida com `clamp()`; função Sass `fluid($min, $max, $de: 360px, $ate: 1200px)` e `rem()` (etapa 15: título do destaque 28→44 px, `.secao-titulo` 24→32 px; conferido no Chrome: 36 px em 780 px); RFS do Bootstrap explicado; simulador `<tf-clamp-lab>`; erro real `28px and 1.75rem have incompatible units.`.
 - **Capítulo 16 publicado:** object-fit, srcset/sizes, `<picture>` com WebP e JPEG, width/height, `loading="lazy"`, Squoosh/TinyPNG/Cloudinary; imagens geradas em `etapas/16-imagens-responsivas/img/trilhas/` (480 e 960, WebP ≈ 1/3 do JPEG); escolha do arquivo conferida no Chrome (1200 px → 480.webp, ~3 KB; 500 px → 960); simulador `<tf-srcset-lab>`.
 - **Capítulo 17 publicado:** `<script>` e console, const/let, tipos, surpresas (`'4'+5`, `0.1+0.2`), funções e funções de seta, template strings, setTimeout/setInterval, prompt/confirm/alert em Aprofundando; etapa com `js/app.js` (saída conferida no Chrome); três mensagens reais nas armadilhas; simulador `<tf-function-lab>` (usa `src/js/trilheiro/funcoes.js`); termo "função" no glossário. O capítulo 19 deve mostrar `toLocaleString('pt-BR')` (prometido no 17).
+- **Nomes no código (05/11):** a etapa 17 passou para nomes em inglês (`formatDuration`, `pace`, `greeting`, `trailSummary`), como pede o `architecture.md`; o capítulo 17 explica a convenção. As classes e variáveis Sass próprias das etapas 13 a 18 continuam em português (`.secao-titulo`, `$verde-mata`); o app final em `trilheiro/` segue o architecture (inglês). Decisão em aberto para o professor: padronizar ou não as etapas antigas.
+- **Capítulo 18 publicado:** DOM (árvore, querySelector/All, textContent, classList, dataset, hidden, setAttribute, createElement), eventos (click, input, change, submit, keydown), target/closest/delegação, innerHTML × textContent (XSS, conferido no Chrome) em Aprofundando; etapa com `trilhas.html` (filtro Todas/Fácil/Moderada/Difícil/Favoritas com `.btn-check`, total com aria-live) e `js/trails.js` (favorito com aria-pressed e amarelo de marcação), testada no Chrome; erros reais de `null`; simulador `<tf-event-log>`; termos "DOM" e "delegação de eventos". O Início ainda tem o coração parado: os cartões passam a vir de um array no 19.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 18 (DOM e eventos, base Atividade 15) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 19 (objetos, arrays e classes; cartões montados a partir de um array, coração do Início, `toLocaleString('pt-BR')`) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

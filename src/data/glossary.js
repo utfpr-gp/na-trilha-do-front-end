@@ -24,5 +24,7 @@ export const GLOSSARY = [
   { id: 'clamp', term: 'clamp()', definition: 'Função do CSS que usa um valor preferido travado entre um mínimo e um máximo: clamp(1.75rem, 1.3rem + 1.9vw, 2.75rem). É a base da tipografia fluida.', chapter: 15 },
   { id: 'srcset', term: 'srcset', definition: 'Atributo de <img> e <source> com várias versões da mesma imagem e a largura real de cada uma (480w, 960w). Com o sizes, o navegador escolhe o arquivo certo para a tela.', chapter: 16 },
   { id: 'funcao', term: 'função', definition: 'Em JavaScript, um bloco de código com nome que recebe valores (parâmetros), faz um trabalho e devolve um resultado com return: formatDuration(150) devolve \'2h30\'.', chapter: 17 },
+  { id: 'dom', term: 'DOM', definition: 'A página como o JavaScript a enxerga: uma árvore de objetos, um para cada elemento do HTML. Com document.querySelector você pega um elemento e muda o texto, as classes e os atributos dele.', chapter: 18 },
+  { id: 'delegacao-de-eventos', term: 'delegação de eventos', definition: 'Pôr um ouvinte só no elemento que contém vários outros (a lista, em vez de cada botão). Os eventos sobem até ele, e event.target.closest() descobre de qual filho veio a ação.', chapter: 18 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];
