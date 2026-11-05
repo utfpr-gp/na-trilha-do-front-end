@@ -1,0 +1,49 @@
+// A moldura do site: cabeçalho, conteúdo e rodapé.
+body {
+  background: var(--tf-bg);
+  color: var(--tf-ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+a {
+  color: var(--tf-link);
+}
+
+.tf-header {
+  background: var(--tf-surface);
+  border-bottom: 3px solid var(--tf-brand);
+
+  .nav-link {
+    color: var(--tf-ink);
+  }
+}
+
+.tf-brand {
+  font-weight: 800;
+  color: var(--tf-brand);
+}
+
+.tf-theme-toggle {
+  color: var(--tf-ink);
+  border: 1px solid var(--tf-ink-muted);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.tf-footer {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  background: var(--tf-surface);
+  color: var(--tf-ink-muted);
+  font-size: 0.9rem;
+
+  p {
+    margin: 0.25rem 0;
+  }
+}

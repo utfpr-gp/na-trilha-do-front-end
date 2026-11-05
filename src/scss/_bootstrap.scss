@@ -1,0 +1,17 @@
+// As variáveis do Bootstrap vêm ANTES dele: como as dele têm !default, valem as nossas.
+$primary: $tf-verde-mata-light;
+$secondary: $tf-terra-light;
+$body-bg: $tf-papel-light;
+$body-color: $tf-tinta-light;
+$body-secondary-color: $tf-tinta-suave-light;
+$link-color: $tf-azul-ceu-light;
+$body-bg-dark: $tf-papel-dark;
+$body-color-dark: $tf-tinta-dark;
+$body-secondary-color-dark: $tf-tinta-suave-dark;
+$link-color-dark: $tf-azul-ceu-dark;
+$link-hover-color-dark: $tf-tinta-dark;
+$font-family-sans-serif: "Nunito Sans Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+$border-radius: 0.5rem;
+
+@import "bootstrap/scss/bootstrap";

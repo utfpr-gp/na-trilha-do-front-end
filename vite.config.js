@@ -12,6 +12,12 @@ export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/na-trilha-do-front-end/' : '/',
   publicDir: resolve(root, 'public'),
   plugins: [livroPlugin()],
+  css: {
+    preprocessorOptions: {
+      // O Bootstrap 5.3 ainda usa @import e funções globais do Sass: esconde os avisos dele.
+      scss: { quietDeps: true, silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'] },
+    },
+  },
   build: {
     outDir: resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
