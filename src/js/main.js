@@ -14,6 +14,7 @@ import { TfMark } from './components/tf-mark.js';
 import { TfSteps } from './components/tf-steps.js';
 import { TfTokenLab } from './components/tf-token-lab.js';
 import { TfTrailMap } from './components/tf-trail-map.js';
+import { TfUnitLab } from './components/tf-unit-lab.js';
 import { TfView } from './components/tf-view.js';
 import { initTheme, initThemeToggle } from './theme.js';
 
@@ -31,3 +32,4 @@ customElements.define('tf-cascade', TfCascade);
 customElements.define('tf-token-lab', TfTokenLab);
 customElements.define('tf-grid-sim', TfGridSim);
 customElements.define('tf-flex-lab', TfFlexLab);
+customElements.define('tf-unit-lab', TfUnitLab);

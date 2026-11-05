@@ -8,6 +8,14 @@ grep -q "'$slug'" src/data/catalog.js || { echo "slug $slug não está no catál
 if ! grep -q "PUBLISHED = new Set(\[[^]]*'$slug'" src/data/catalog.js; then
   sed -i "s/const PUBLISHED = new Set(\[\(.*\)\]);/const PUBLISHED = new Set([\1, '$slug']);/" src/data/catalog.js
 fi
+# Links externos do capítulo (a pasta da etapa no GitHub só existe depois do merge).
+bad=0
+for u in $(grep -ohE 'href="https?://[^"]+"' "src/capitulos/$slug/index.html" | sed 's/href="//; s/"$//' | sort -u); do
+  case "$u" in *github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/*) continue;; esac
+  code=$(curl -s -o /dev/null -L -m 20 -w "%{http_code}" "$u")
+  if [ "$code" != "200" ]; then echo "link externo $code: $u"; bad=1; fi
+done
+[ "$bad" = 0 ] || { echo "corrija os links externos"; exit 1; }
 npx vitest run > /tmp/vitest-$slug.log 2>&1 || { tail -30 /tmp/vitest-$slug.log; exit 1; }
 grep -E "Tests " /tmp/vitest-$slug.log
 npm run build > /tmp/build-$slug.log 2>&1 || { tail -30 /tmp/build-$slug.log; exit 1; }

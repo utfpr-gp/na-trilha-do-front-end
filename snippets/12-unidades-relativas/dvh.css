@@ -1,0 +1,4 @@
+.hero {
+  min-height: 40vh;  /* reserva para navegadores antigos */
+  min-height: 40dvh; /* a altura que sobra de fato, com a barra do navegador */
+}

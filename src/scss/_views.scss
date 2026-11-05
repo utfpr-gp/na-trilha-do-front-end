@@ -805,3 +805,31 @@ tf-flex-lab {
     font-weight: 700;
   }
 }
+
+// <tf-unit-lab>: px contra rem
+tf-unit-lab {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+  overflow-x: auto;
+}
+
+.tf-unit-bars {
+  display: grid;
+  gap: 0.75rem;
+
+  > div {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--bs-border-radius);
+    border: 2px solid var(--tf-brand);
+    background: var(--tf-bg);
+    font-family: var(--bs-font-monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+}

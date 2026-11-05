@@ -1,0 +1,9 @@
+/* Ignora a fonte que a pessoa escolheu no navegador */
+.texto-px {
+  font-size: 18px;
+}
+
+/* Acompanha a fonte do navegador: 1.125 × 16px = 18px, ou 1.125 × 20px = 22,5px */
+.texto-rem {
+  font-size: 1.125rem;
+}
