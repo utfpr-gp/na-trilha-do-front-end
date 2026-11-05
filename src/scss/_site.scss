@@ -137,3 +137,10 @@ a.tf-chapter-card:focus-visible {
   --bs-btn-active-bg: var(--tf-accent);
   --bs-btn-active-border-color: var(--tf-accent);
 }
+
+// Código sem ligaduras: num livro que ensina sintaxe, "||--o{" e "=>" precisam aparecer como foram digitados.
+code,
+pre,
+kbd {
+  font-variant-ligatures: none;
+}

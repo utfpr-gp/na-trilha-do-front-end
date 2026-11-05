@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 3 publicados; alinhamento com a disciplina no PR).
+> Última atualização: 2026-11-05 (capítulos 1 a 3 publicados e alinhados; capítulo 4 no PR).
 
 ## Feito
 
@@ -21,12 +21,13 @@
 - **Vite em Para ir além** (decisão do professor, 05/11): item novo no catálogo e no projeto (seção 5).
 - Link do MDN sobre `integrity` no capítulo 1 corrigido (o pt-BR saiu do ar; agora aponta para o inglês).
 - **Levantamento da disciplina** (05/11): `docs/mapa-disciplina.md` liga cada capítulo às atividades do Moodle/Notion, com divergências e lacunas.
-- **Alinhamento** (branch `feat/alinhamento-disciplina`): capítulo 2 reescrito no fluxo da disciplina (clonar primeiro, `.gitignore` antes do `npm install`, commits semânticos, token de acesso pessoal, LTS par, NVM, extensões, computador compartilhado); capítulo 1 avisa a troca do CDN pela `node_modules/`; **capítulo novo 17 (JavaScript básico)** e renumeração dos capítulos 18 a 26; decisão do MCP no capítulo 5 registrada no projeto.
+- **Alinhamento publicado** (PR #5, 05/11): capítulo 2 reescrito no fluxo da disciplina (clonar primeiro, `.gitignore` antes do `npm install`, commits semânticos, token de acesso pessoal, LTS par, NVM, extensões, computador compartilhado); capítulo 1 avisa a troca do CDN pela `node_modules/`; **capítulo novo 17 (JavaScript básico)** e renumeração dos capítulos 18 a 26; decisão do MCP no capítulo 5 registrada no projeto.
+- **Capítulo 4** escrito no branch `feat/capitulo-04` (base: Atividade 03): as sete seções do PRD, anatomia da história de usuário (quem, o quê, para quê), critérios de aceitação verificáveis, tabela "do PRD ao código", modelo de dados em Mermaid no `architecture.md`, pedido modelo para a IA com limites de escopo; etapa `etapas/04-prd-curto/` com `docs/prd.md` e a primeira versão do `docs/architecture.md`; armadilha do Mermaid reproduzida com o Mermaid 11; termos PRD e história de usuário; ligaduras desligadas no código do site inteiro.
 
 ## Próximos passos
 
-1. Revisão e merge do PR do alinhamento pelo professor.
-2. Capítulo 4 (PRD curto): partir da Atividade 03 (ler o enunciado completo no Notion) e do `trilheiro/docs/prd.md`.
+1. Revisão e merge do PR do capítulo 4 pelo professor.
+2. Capítulo 5 (prototipar com IA): Atividade 04 (Stitch: modo Web, mobile → desktop, Instant Prototype) e Atividade 08 (MCP), guiando para o escopo pequeno. Ler os dois enunciados completos.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

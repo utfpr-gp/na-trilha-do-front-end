@@ -578,3 +578,50 @@ tf-cascade {
   margin: 0;
   font-weight: 700;
 }
+
+// Anatomia de uma história de usuário
+.tf-story {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+
+  span {
+    flex: 1 1 12rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--bs-border-radius);
+    background: var(--tf-surface);
+    border-top: 4px solid var(--tf-story-color);
+  }
+
+  small {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--tf-story-color);
+  }
+}
+
+.tf-story-actor {
+  --tf-story-color: var(--tf-view-missao);
+}
+
+.tf-story-action {
+  --tf-story-color: var(--tf-brand);
+}
+
+.tf-story-value {
+  --tf-story-color: var(--tf-accent);
+}
+
+// Tabelas dos capítulos
+.tf-table {
+  --bs-table-bg: var(--tf-surface);
+  --bs-table-color: var(--tf-ink);
+  border-color: var(--tf-ink-muted);
+}

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="04-prd-curto">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 04-prd-curto -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Até aqui, o Trilheiro tem um cartão numa página. Antes de desenhar as outras telas e escrever mais código, ele ganha um documento que diz <strong>o que</strong> o site faz, <strong>para quem</strong> e <strong>por quê</strong>: o <a class="tf-term" href="{{base}}glossario/#prd">PRD</a>, num arquivo <code>docs/prd.md</code>.</p>
+        <p>Ele é curto: sete seções, e cabe numa leitura de cinco minutos. Mas é dele que saem as telas do protótipo (capítulo 5), as cores (capítulo 6) e cada linha de validação que o formulário vai ter. O PRD completo do Trilheiro está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/blob/main/trilheiro/docs/prd.md">trilheiro/docs/prd.md</a>, e a etapa deste capítulo em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/04-prd-curto">etapas/04-prd-curto</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🗺️" title="O PRD é o roteiro da expedição">
+          <p>Antes de uma travessia, o grupo combina um roteiro: aonde vai, quem vai, o que cada um precisa conseguir fazer no caminho, as regras (ninguém anda sozinho, todo mundo leva dois litros de água) e o que <strong>não</strong> vai acontecer desta vez (nada de subir o pico, que fica para a próxima).</p>
+          <p>Sem roteiro, cada um imagina uma trilha diferente, e a discussão acontece no meio do mato. Com ele, as dúvidas aparecem na mesa da cozinha, onde resolvê-las é barato.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>PRD vem de <em>Product Requirements Document</em>, documento de requisitos do produto. Num projeto do tamanho do Trilheiro, ele tem estas partes:</p>
+        <ol>
+          <li><strong>Visão e objetivo:</strong> o que o site é e que problema resolve, em poucas linhas.</li>
+          <li><strong>Público e atores:</strong> quem usa, e em que papel (o Trilheiro tem o visitante e o colaborador, sem login).</li>
+          <li><strong>Telas:</strong> a lista das páginas, cada uma com a sua função.</li>
+          <li><strong>Histórias de usuário:</strong> o que cada ator precisa conseguir fazer, com critérios de aceitação.</li>
+          <li><strong>Regras de negócio:</strong> as regras que valem em qualquer tela, numeradas.</li>
+          <li><strong>Requisitos não funcionais:</strong> como o site precisa ser (responsivo, acessível, leve).</li>
+          <li><strong>Fora do escopo:</strong> o que fica de fora, de propósito.</li>
+        </ol>
+
+        <h3>A anatomia de uma história de usuário</h3>
+        <p>Cada <a class="tf-term" href="{{base}}glossario/#historia-de-usuario">história de usuário</a> tem três partes, sempre na mesma ordem:</p>
+        <p class="tf-story" role="img" aria-label="História de usuário em três partes: Como visitante (o ator), quero filtrar as trilhas por dificuldade (a ação), para ver só as que combinam com o meu preparo (o motivo).">
+          <span class="tf-story-actor"><small>quem</small>Como visitante,</span>
+          <span class="tf-story-action"><small>o quê</small>quero filtrar as trilhas por dificuldade,</span>
+          <span class="tf-story-value"><small>para quê</small>para ver só as que combinam com o meu preparo.</span>
+        </p>
+        <p>O <strong>para quê</strong> é a parte que mais se esquece, e a mais útil: ele diz por que a funcionalidade existe, e ajuda a decidir o que cortar quando o tempo aperta. Depois da história vêm os <strong>critérios de aceitação</strong>: frases que dá para conferir com sim ou não. "A lista muda sem recarregar a página" é um critério; "o filtro é rápido e bonito" não é, porque ninguém consegue dizer quando ele está pronto.</p>
+
+        <h3>Do PRD ao código</h3>
+        <p>Cada parte do PRD vira, mais adiante, uma parte do Trilheiro:</p>
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col">No PRD</th><th scope="col">Vira</th><th scope="col">Capítulo</th></tr></thead>
+            <tbody>
+              <tr><td>As 4 telas</td><td>As telas do protótipo</td><td>5</td></tr>
+              <tr><td>US02: 1 cartão por linha no celular, 3 no computador</td><td>O grid do Bootstrap</td><td>7</td></tr>
+              <tr><td>US03: filtrar sem recarregar a página</td><td>Eventos no JavaScript</td><td>18</td></tr>
+              <tr><td>RN02: distância de 0,5 a 50 km</td><td><code>min</code> e <code>max</code> no formulário</td><td>20</td></tr>
+              <tr><td>RN06: favoritas guardadas no navegador</td><td>Web Storage</td><td>21</td></tr>
+              <tr><td>RN07: a falha da API não derruba a página</td><td>Tratamento de erros no <code>fetch</code></td><td>24</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>E o modelo de dados?</h3>
+        <p>O PRD diz o quê e por quê. O <strong>como</strong> fica num segundo documento, o <code>docs/architecture.md</code>, que começa pelo modelo de dados. Para achar as entidades, procure os <strong>substantivos</strong> que o site precisa guardar nas histórias: "cadastrar uma <em>trilha</em>", "deixar um <em>relato</em>". No Trilheiro, são duas, ligadas pelo id da trilha. O GitHub desenha o diagrama a partir de um texto em <a href="https://mermaid.js.org/syntax/entityRelationshipDiagram.html">Mermaid</a>:</p>
+        <tf-code src="04-prd-curto/er.md" caption="docs/architecture.md (trecho resumido)"></tf-code>
+        <p>O <code>||--o{</code> se lê "uma trilha recebe zero ou mais relatos". O resto do <code>architecture.md</code> (as cores, as rotas, as APIs) chega nos próximos capítulos.</p>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <p>Os documentos são escritos em <strong>Markdown</strong>, o mesmo formato do <code>README.md</code>: <code>#</code> para títulos, <code>-</code> para listas, <code>**negrito**</code> e tabelas com <code>|</code>. O GitHub mostra tudo formatado.</p>
+        <tf-steps>
+          <section data-step="Visão e objetivo">
+            <p>Crie a pasta <code>docs/</code> e, nela, o arquivo <code>prd.md</code>. Comece pelo que o site é e pelo problema que ele resolve:</p>
+            <tf-code src="04-prd-curto/prd-visao.md" caption="docs/prd.md"></tf-code>
+            <p>Se você não consegue dizer o problema em duas frases, a ideia ainda está grande demais.</p>
+          </section>
+          <section data-step="Atores e telas">
+            <p>Liste quem usa o site e as telas. No Trilheiro, o visitante e o colaborador, sem conta e sem login; e 4 telas: Início, Trilhas, Detalhe da trilha e Cadastrar trilha. Veja as seções 2 e 3 no <code>prd.md</code> da etapa.</p>
+          </section>
+          <section data-step="Histórias com critérios">
+            <p>Escreva uma história por funcionalidade, numerada, com os critérios logo abaixo:</p>
+            <tf-code src="04-prd-curto/historia.md" caption="docs/prd.md (trecho)"></tf-code>
+            <p>Repare no <code>(RN06)</code> no fim: o critério aponta para a regra de negócio, em vez de repeti-la.</p>
+          </section>
+          <section data-step="Regras de negócio">
+            <p>As regras que valem em mais de uma tela ganham um código e uma tabela própria:</p>
+            <tf-code src="04-prd-curto/regras.md" caption="docs/prd.md (trecho)"></tf-code>
+            <p>Escreva com números e valores concretos ("de 3 a 80 caracteres", "de 0,5 a 50 km"). É desse jeito que elas viram validação no capítulo 20, quase sem tradução.</p>
+          </section>
+          <section data-step="Fora do escopo">
+            <p>Termine dizendo o que fica de fora:</p>
+            <tf-code src="04-prd-curto/fora-do-escopo.md" caption="docs/prd.md (trecho)"></tf-code>
+            <p>Essa lista protege o projeto. Quando aparecer a vontade de "só acrescentar um login", a resposta já está escrita.</p>
+          </section>
+          <section data-step="A IA como assistente">
+            <p>Uma IA pode ajudar a pensar nas histórias, desde que você dê os limites. Um pedido como este funciona bem:</p>
+            <tf-code src="04-prd-curto/prompt-ia.txt" caption="Pedido para a IA"></tf-code>
+            <p>Leia a resposta com o lápis na mão: corte o que não cabe nas telas, reescreva os critérios vagos e confira se cada história tem o seu "para quê". O PRD é seu; a IA só dá ideias.</p>
+          </section>
+          <section data-step="Commit e E se eu tirar?">
+            <p>Guarde o documento com um commit do tipo <code>docs:</code>, como <code>git commit -m "docs: adiciona o PRD do Trilheiro"</code>, e envie.</p>
+            <p>Agora o teste: apague, em pensamento, os critérios de aceitação da US03. Como você saberia que o filtro está pronto? Ele precisa lembrar a última escolha? Precisa recarregar a página? Sem os critérios, cada pessoa responde de um jeito, e a discussão volta para o meio do mato.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O escopo cresceu antes de começar">
+          <p>Login, painel de administração, chat, mapa interativo, notificações: cada ideia parece pequena, e juntas elas não cabem no tempo que você tem. Mantenha o projeto do tamanho do Trilheiro, com 3 ou 4 telas e um cadastro com listagem, e mande o resto para "Fora do escopo". Um projeto pequeno e terminado ensina mais do que um grande pela metade.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O diagrama não aparece no GitHub" message="Parse error on line 2:
+...RILHA ||--o{ RELATO &quot;recebe&quot;
+-----------------------^
+Expecting 'COLON', 'STYLE_SEPARATOR', got 'ENTITY_NAME'">
+          <p>No lugar do desenho, o GitHub mostra um aviso de erro com a mensagem do Mermaid. Neste caso, faltaram os dois-pontos antes do rótulo da relação: o certo é <code>TRILHA ||--o{ RELATO : "recebe"</code>. A setinha <code>^</code> aponta onde o Mermaid se perdeu. Confira também se o bloco começa com <code>```mermaid</code> e termina com <code>```</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A tabela do Markdown apareceu como texto com barras">
+          <p>Sem a linha de separação logo abaixo do cabeçalho (<code>|---|---|</code>), o GitHub não reconhece a tabela e mostra as barras como texto comum. Não há mensagem de erro. Confira essa segunda linha e se cada linha da tabela tem o mesmo número de colunas.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="04-prd-curto" award>
+          <fieldset data-correct="b">
+            <legend>Qual destas é uma história de usuário completa?</legend>
+            <label><input type="radio" name="q1" value="a"> Filtro de trilhas por dificuldade</label>
+            <label><input type="radio" name="q1" value="b"> Como visitante, quero filtrar as trilhas por dificuldade, para ver só as que combinam com o meu preparo</label>
+            <label><input type="radio" name="q1" value="c"> Como visitante, quero filtrar as trilhas</label>
+            <p data-explain="a" hidden>Isso é o nome de uma funcionalidade. Falta quem usa e por quê.</p>
+            <p data-explain="c" hidden>Tem o ator e a ação, mas falta o "para quê", que justifica a funcionalidade.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Qual destes é um bom critério de aceitação?</legend>
+            <label><input type="radio" name="q2" value="a"> O filtro deve ser rápido</label>
+            <label><input type="radio" name="q2" value="b"> O filtro deve ser bonito e fácil de usar</label>
+            <label><input type="radio" name="q2" value="c"> A lista muda sem recarregar a página</label>
+            <p data-explain="a" hidden>"Rápido" não dá para conferir com sim ou não. Quão rápido? Medido como?</p>
+            <p data-explain="b" hidden>"Bonito" e "fácil" são opiniões. Um critério precisa ser conferido do mesmo jeito por qualquer pessoa.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para que serve a seção "Fora do escopo"?</legend>
+            <label><input type="radio" name="q3" value="a"> Para registrar, de propósito, o que o projeto não vai fazer, e evitar que ele cresça além do tempo disponível</label>
+            <label><input type="radio" name="q3" value="b"> Para listar os erros que ainda não foram corrigidos</label>
+            <label><input type="radio" name="q3" value="c"> Para guardar as ideias que serão feitas na semana seguinte</label>
+            <p data-explain="b" hidden>Erros não entram no PRD. A seção fala do que fica de fora por decisão.</p>
+            <p data-explain="c" hidden>Não é uma lista de tarefas futuras: é o limite do projeto. Se algo entrar, entra por uma decisão nova.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Onde ficam as entidades do sistema, como trilha e relato, e o diagrama delas?</legend>
+            <label><input type="radio" name="q4" value="a"> No PRD, junto com as histórias</label>
+            <label><input type="radio" name="q4" value="b"> No <code>architecture.md</code>, que trata do "como"</label>
+            <label><input type="radio" name="q4" value="c"> No <code>README.md</code></label>
+            <p data-explain="a" hidden>O PRD responde ao "o quê" e ao "por quê". O modelo de dados é o "como", e fica no <code>architecture.md</code>.</p>
+            <p data-explain="c" hidden>O README é a vitrine do projeto, com o essencial e links para os documentos.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Escreva o <code>docs/prd.md</code> do <strong>seu projeto</strong>, com as sete seções, do tamanho do Trilheiro: 3 ou 4 telas, de 6 a 10 histórias com critérios, as regras de negócio numeradas e a lista do que fica de fora. Comece também o <code>docs/architecture.md</code>, só com o diagrama das entidades.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que diferencia uma história de usuário de uma regra de negócio?</li>
+          <li><strong>A motivação:</strong> por que escrever o PRD antes do protótipo e do código?</li>
+          <li><strong>A anatomia:</strong> aponte, numa das suas histórias, o ator, a ação, o motivo e os critérios.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o "Fora do escopo" e diga que funcionalidade correria o risco de entrar sem planejamento.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub: sintaxe básica de Markdown</a></li>
+          <li><a href="https://docs.github.com/pt/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables">GitHub: tabelas em Markdown</a></li>
+          <li><a href="https://docs.github.com/pt/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams">GitHub: diagramas com Mermaid</a></li>
+          <li><a href="https://mermaid.js.org/syntax/entityRelationshipDiagram.html">Mermaid: diagramas entidade-relacionamento (em inglês)</a></li>
+          <li><a href="https://www.atlassian.com/br/agile/project-management/user-stories">Atlassian: histórias de usuário</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 04-prd-curto -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
