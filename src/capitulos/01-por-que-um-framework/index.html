@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="01-por-que-um-framework">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 01-por-que-um-framework -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Trilheiro ganha hoje a sua primeira peça: o <strong>cartão de uma trilha</strong>, com foto, dificuldade, nome, cidade, distância e um botão. E ele vai ser feito <strong>duas vezes</strong>.</p>
+        <figure class="tf-figure">
+          <img src="{{base}}img/capitulos/01-dois-cartoes.webp" width="830" height="430" loading="lazy" alt="Dois cartões iguais da Trilha do Salto, lado a lado: foto de uma queda-d'água entre morros, o selo amarelo Moderada, o nome da trilha, a cidade com distância e duração, e o botão azul Ver trilha.">
+          <figcaption>À esquerda, o cartão em CSS puro; à direita, com o Bootstrap. Dá para achar a diferença?</figcaption>
+        </figure>
+        <p>Não dá, porque não há diferença na tela. A diferença está no código: o da esquerda precisou de um arquivo CSS de <strong>85 linhas</strong>, escrito à mão. O da direita não tem nenhuma linha de CSS próprio, só nomes de classes no HTML. Ao fim do capítulo, você vai saber dizer o que essas classes estão fazendo por você, e quando vale a pena usá-las.</p>
+        <p>As duas versões estão na pasta <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/01-por-que-um-framework">etapas/01-por-que-um-framework</a> do repositório do livro.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="⛺" title="Um framework CSS é como uma barraca pronta">
+          <p>Para dormir no mato, você pode montar um abrigo com galhos, cordas e lona. Funciona, e fica do jeito que você quiser, mas leva tempo, e cada detalhe depende de você saber fazer.</p>
+          <p>Ou você leva uma barraca pronta: varetas numeradas, lona cortada na medida, montagem em minutos. Qualquer pessoa que já armou uma barraca daquele modelo sabe montar a sua. Em troca, ela pesa na mochila e se parece com a de metade do acampamento.</p>
+        </tf-analogy>
+        <p>O CSS puro é o abrigo de galhos; o <a class="tf-term" href="{{base}}glossario/#framework-css">framework CSS</a> é a barraca pronta. Guarde as duas palavras do fim da analogia, <strong>peso</strong> e <strong>parecido</strong>, porque elas vão voltar.</p>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Um framework CSS como o <strong>Bootstrap</strong> é, antes de tudo, <strong>um arquivo CSS grande, já escrito</strong>. Dentro dele há centenas de regras, cada uma presa a um nome de classe combinado: <code>.card</code>, <code>.card-body</code>, <code>.btn</code>, <code>.btn-primary</code>, <code>.badge</code>. Você não escreve essas regras. Você escreve o HTML e <strong>aplica as classes</strong>, e as regras que já estão no arquivo fazem o resto.</p>
+        <p>Experimente. O cartão abaixo usa o Bootstrap deste livro (por isso o botão é verde, e não azul). Desmarque uma classe e veja o que acontece com o cartão e com o código:</p>
+
+        <tf-class-toggle>
+          <div class="tf-sim-stage">
+            <article class="card" style="max-width: 22rem;" data-sim-classes="card">
+              <img src="{{base}}img/capitulos/01-salto.svg" class="card-img-top" alt="Queda-d'água entre morros" data-sim-classes="card-img-top">
+              <div class="card-body" data-sim-classes="card-body">
+                <span class="badge text-bg-warning" data-sim-classes="badge text-bg-warning">Moderada</span>
+                <p class="card-title h5 my-2" data-sim-classes="card-title h5">Trilha do Salto</p>
+                <p class="card-text">Prudentópolis, PR · 4,5 km · 2h30</p>
+                <a href="#missao" class="btn btn-primary" data-sim-classes="btn btn-primary">Ver trilha</a>
+              </div>
+            </article>
+          </div>
+        </tf-class-toggle>
+
+        <p>Repare no que cada classe resolve sozinha: <code>.card</code> desenha a borda e os cantos arredondados, <code>.card-body</code> dá o respiro interno, <code>.btn</code> transforma um link num botão com espaçamento, cursor e anel de foco para quem navega pelo teclado, e <code>.btn-primary</code> escolhe as cores desse botão.</p>
+        <p>Agora desmarque só a <code>.btn</code> e deixe a <code>.btn-primary</code>. O link volta a ser um link comum, sem cor de botão nenhuma. Por quê? No Bootstrap 5.3, a <code>.btn-primary</code> não pinta nada: ela só guarda as cores em variáveis CSS, como <code>--bs-btn-bg</code>. Quem usa essas variáveis para desenhar o fundo, a borda e o espaçamento é a <code>.btn</code>. Uma classe depende da outra.</p>
+
+        <h3>O que o framework resolve por você</h3>
+        <ul>
+          <li><strong>Consistência.</strong> Todos os botões, cartões e selos usam as mesmas medidas, os mesmos cantos e as mesmas cores. No CSS puro, isso depende de você não esquecer nenhum detalhe em nenhum arquivo.</li>
+          <li><strong>Componentes prontos.</strong> Cartão, botão, selo, menu, janela modal, carrossel: dezenas de peças testadas em vários navegadores.</li>
+          <li><strong>Responsividade.</strong> Um sistema de grid que reorganiza a página do celular ao computador. Você vê isso no capítulo 7.</li>
+          <li><strong>Acessibilidade dos componentes.</strong> Foco visível, contraste, e os componentes com JavaScript (como a janela modal) já cuidam do teclado e dos leitores de tela. Isso chega no capítulo 10.</li>
+        </ul>
+
+        <h3>O que você perde</h3>
+        <ul>
+          <li><strong>Identidade.</strong> Sem personalização, todo site feito com Bootstrap se parece. É a barraca igual à do vizinho. O capítulo 13 resolve isso com Sass.</li>
+          <li><strong>Peso.</strong> O <code>style.css</code> do cartão em CSS puro tem cerca de 1,3 KB. O <code>bootstrap.min.css</code> tem 232 KB (cerca de 30 KB comprimido na transferência), porque traz regras para tudo, inclusive para o que você não usa.</li>
+          <li><strong>Um vocabulário novo.</strong> É preciso aprender os nomes das classes, e entender o que elas fazem, para não colar classes sem saber o motivo.</li>
+        </ul>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: de onde vêm os 232 KB?</summary>
+          <p>O arquivo compilado do Bootstrap traz o grid, dezenas de componentes, centenas de classes utilitárias (<code>my-2</code>, <code>px-3</code>, <code>text-center</code>…) e as variáveis CSS dos temas claro e escuro. Na transferência, o servidor comprime o arquivo e ele cai para cerca de 30 KB. No capítulo 13, com Sass, você aprende a importar só as partes que usa.</p>
+        </details>
+
+        <h3>Quando <em>não</em> usar um framework?</h3>
+        <p>Um framework não é obrigatório. Ele costuma atrapalhar mais do que ajudar quando:</p>
+        <ul>
+          <li>a página é pequena e simples, como um cartão de visita ou uma página única de evento;</li>
+          <li>a identidade visual é muito própria, e você passaria mais tempo desfazendo o estilo do framework do que escrevendo o seu;</li>
+          <li>cada kilobyte importa, como numa página que precisa abrir rápido em conexões lentas;</li>
+          <li>o objetivo é aprender CSS: sem entender caixa, cascata e especificidade, as classes viram mágica. Por isso o capítulo 3 revisa esses conceitos antes de o livro mergulhar no Bootstrap.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <p>Abra a pasta da etapa no VS Code e siga os passos.</p>
+        <tf-steps>
+          <section data-step="O cartão em CSS puro">
+            <p>Abra <code>css-puro/index.html</code> com o Live Server. O HTML usa nomes de classes inventados por você:</p>
+            <tf-code src="01-por-que-um-framework/cartao.html" caption="css-puro/index.html"></tf-code>
+            <p>Cada uma dessas classes precisa de uma regra no <code>style.css</code>. Só o botão, com a cor, o efeito ao passar o mouse e o anel de foco, já ocupa 20 linhas:</p>
+            <tf-code src="01-por-que-um-framework/botao.css" caption="css-puro/style.css (trecho)"></tf-code>
+          </section>
+          <section data-step="Trazer o Bootstrap">
+            <p>Agora abra <code>bootstrap/index.html</code>. Não há nenhum arquivo CSS na pasta. O Bootstrap chega por uma linha no <code>&lt;head&gt;</code>, que busca o arquivo num <a class="tf-term" href="{{base}}glossario/#cdn">CDN</a>:</p>
+            <tf-code src="01-por-que-um-framework/link-cdn.html" caption="bootstrap/index.html"></tf-code>
+            <p>O atributo <code>integrity</code> é a impressão digital do arquivo: o navegador calcula a do arquivo que chegou e só o usa se as duas forem iguais. Se alguém alterar o arquivo no caminho, ele é bloqueado. O <code>crossorigin="anonymous"</code> deixa o navegador fazer essa conferência num arquivo que vem de outro site.</p>
+          </section>
+          <section data-step="Aplicar as classes">
+            <p>O cartão é o mesmo HTML, agora com as classes do Bootstrap. As linhas destacadas são as que trocaram:</p>
+            <tf-code src="01-por-que-um-framework/cartao-bootstrap.html" caption="bootstrap/index.html"></tf-code>
+            <p>O <code>style="max-width: 22rem;"</code> limita a largura do cartão, como faz a própria documentação do Bootstrap. No capítulo 7, quem vai cuidar da largura é o grid.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Na versão com Bootstrap, apague (ou comente) a linha do <code>&lt;link&gt;</code> e salve. O cartão vira texto solto, uma imagem enorme e um link sublinhado: as classes continuam no HTML, mas não existe mais nenhuma regra presa a elas.</p>
+            <p>Desfaça com <kbd>Ctrl</kbd>+<kbd>Z</kbd> e tire só a classe <code>btn</code> do link, deixando a <code>btn-primary</code>. Como você viu no simulador, sobra um link comum. Esse é o teste do <strong>"E se eu tirar?"</strong>, que acompanha todo o livro.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O Bootstrap não carrega e o console mostra um erro de integridade" message="Failed to find a valid digest in the 'integrity' attribute for resource 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' with computed SHA-384 integrity 'sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB'. The resource has been blocked.">
+          <p>O <code>integrity</code> do seu <code>&lt;link&gt;</code> não confere com o arquivo, e o navegador bloqueou o CSS por segurança. Acontece quando você troca a versão no endereço (por exemplo, de 5.3.3 para 5.3.8) e esquece de trocar o <code>integrity</code>, ou quando um caractere do hash se perde ao copiar. Copie de novo a linha inteira da página de introdução da documentação do Bootstrap, sempre com o endereço e o hash juntos.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O Bootstrap não carrega, e o console não mostra nada">
+          <p>Um erro de digitação no endereço (<code>bootstrp.min.css</code>, por exemplo) faz o CDN responder com o status <strong>404</strong>, e o cartão aparece sem estilo. O console pode ficar em branco. O sinal está na aba <strong>Network</strong> (Rede) do DevTools (<kbd>F12</kbd>): recarregue a página e procure a linha do arquivo CSS em vermelho, com o status 404. Confira o endereço letra por letra, ou copie-o de novo da documentação.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Escrevi a classe errada e nada aconteceu">
+          <p>Com <code>class="btn btn-primay"</code>, o botão fica com o formato, mas sem a cor, e nenhuma mensagem aparece. O CSS não avisa quando uma classe não existe: ele simplesmente não encontra nenhuma regra para ela. Inspecione o elemento no DevTools e veja, na aba <strong>Styles</strong> (Estilos), quais regras estão sendo aplicadas. Se a classe que você escreveu não aparece em nenhuma, o nome está errado.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="01-por-que-um-framework" award>
+          <fieldset data-correct="b">
+            <legend>O que é, de fato, um framework CSS como o Bootstrap?</legend>
+            <label><input type="radio" name="q1" value="a"> Um programa que gera o HTML da página para você</label>
+            <label><input type="radio" name="q1" value="b"> Um arquivo CSS pronto, com regras presas a nomes de classes que você aplica no HTML</label>
+            <label><input type="radio" name="q1" value="c"> Uma extensão do navegador que deixa os sites mais bonitos</label>
+            <p data-explain="a" hidden>Quem escreve o HTML continua sendo você. O framework só traz as regras de CSS prontas.</p>
+            <p data-explain="c" hidden>Nada é instalado no navegador de quem visita: o CSS do framework vem junto com a página, pelo <code>&lt;link&gt;</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Você tirou a classe <code>btn</code> de um link e deixou a <code>btn-primary</code>. O que acontece?</legend>
+            <label><input type="radio" name="q2" value="a"> Nada muda: <code>btn-primary</code> já faz tudo sozinha</label>
+            <label><input type="radio" name="q2" value="b"> O navegador mostra um erro no console</label>
+            <label><input type="radio" name="q2" value="c"> O link volta a ser um link comum, porque a <code>btn-primary</code> só guarda as cores que a <code>btn</code> usa</label>
+            <p data-explain="a" hidden>No Bootstrap 5.3, a <code>btn-primary</code> só guarda as cores em variáveis; quem desenha o botão com elas é a <code>btn</code>. Teste no simulador do Por dentro.</p>
+            <p data-explain="b" hidden>O CSS nunca mostra erro por causa de uma classe: ele só aplica, ou não, as regras que existem.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para que serve o atributo <code>integrity</code> no <code>&lt;link&gt;</code> do CDN?</legend>
+            <label><input type="radio" name="q3" value="a"> Para o navegador conferir se o arquivo que chegou é exatamente o esperado, e bloqueá-lo se não for</label>
+            <label><input type="radio" name="q3" value="b"> Para o arquivo carregar mais rápido</label>
+            <label><input type="radio" name="q3" value="c"> Para escolher a versão do Bootstrap</label>
+            <p data-explain="b" hidden>O <code>integrity</code> não muda a velocidade. Ele é uma conferência de segurança.</p>
+            <p data-explain="c" hidden>A versão está no endereço (<code>bootstrap@5.3.8</code>). O <code>integrity</code> é a impressão digital daquela versão, e por isso precisa mudar junto com ela.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Em qual destes casos faz mais sentido <strong>não</strong> usar um framework CSS?</legend>
+            <label><input type="radio" name="q4" value="a"> Um site com muitas páginas, menus e formulários, feito por uma equipe</label>
+            <label><input type="radio" name="q4" value="b"> Uma página única e simples, com uma identidade visual muito própria</label>
+            <label><input type="radio" name="q4" value="c"> Um painel com tabelas, botões e janelas modais</label>
+            <p data-explain="a" hidden>Aqui o framework brilha: muitas peças repetidas, e várias pessoas precisando manter tudo consistente.</p>
+            <p data-explain="c" hidden>Tabelas, botões e modais são exatamente os componentes prontos que o framework traz.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Abra o protótipo do <strong>seu projeto</strong> e escolha <strong>um</strong> componente que se repete, como um cartão, um botão ou um selo. Procure na documentação do Bootstrap o componente equivalente e monte essa peça numa página HTML, com o Bootstrap pelo CDN, do mesmo tamanho do cartão do Trilheiro. Só uma peça, sem layout ainda.</p>
+        <p>Depois, responda para você mesmo, em voz alta:</p>
+        <ul>
+          <li><strong>O conceito:</strong> que componente do Bootstrap é esse, e que classes ele usa?</li>
+          <li><strong>A motivação:</strong> por que usar o componente pronto, e não escrever o CSS à mão?</li>
+          <li><strong>A anatomia:</strong> o que cada classe do seu HTML faz?</li>
+          <li><strong>"E se eu tirar?":</strong> tire uma classe de cada vez e descreva o que quebra.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">Bootstrap 5.3: introdução e o link do CDN</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/card/">Bootstrap 5.3: Card</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/buttons/">Bootstrap 5.3: Buttons</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/badge/">Bootstrap 5.3: Badge</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Security/Subresource_Integrity">MDN: Subresource Integrity (o atributo <code>integrity</code>)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 01-por-que-um-framework -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

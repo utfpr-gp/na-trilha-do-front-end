@@ -47,12 +47,15 @@ const raw = [
   ]],
 ];
 
+// Capítulos já publicados.
+const PUBLISHED = new Set(['01-por-que-um-framework']);
+
 export const PARTS = raw.map(([id, title, hasMarks, chapters]) => ({
   id,
   title,
   hasMarks,
   chapters: chapters.map(([number, slug, question, minutes]) => ({
-    number, slug, question, minutes, published: false, partId: id,
+    number, slug, question, minutes, published: PUBLISHED.has(slug), partId: id,
   })),
 }));
 

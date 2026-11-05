@@ -1,6 +1,7 @@
 import '@fontsource-variable/nunito-sans';
 import '@fontsource-variable/jetbrains-mono';
 import { TfChallenge } from './components/tf-challenge.js';
+import { TfClassToggle } from './components/tf-class-toggle.js';
 import { TfCode } from './components/tf-code.js';
 import { TfMark } from './components/tf-mark.js';
 import { TfSteps } from './components/tf-steps.js';
@@ -17,3 +18,4 @@ customElements.define('tf-view', TfView);
 customElements.define('tf-challenge', TfChallenge);
 customElements.define('tf-mark', TfMark);
 customElements.define('tf-trail-map', TfTrailMap);
+customElements.define('tf-class-toggle', TfClassToggle);

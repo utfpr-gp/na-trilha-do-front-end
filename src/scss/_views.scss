@@ -376,3 +376,74 @@ tf-mark {
   text-decoration-style: dotted;
   text-underline-offset: 3px;
 }
+
+// Figuras dos capítulos
+.tf-figure {
+  margin: 1.5rem 0;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--bs-border-radius);
+    border: 1px solid var(--tf-ink-muted);
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--tf-ink-muted);
+  }
+}
+
+// <tf-class-toggle>: o simulador do "E se eu tirar?"
+tf-class-toggle {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+}
+
+.tf-sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+
+  legend {
+    float: none;
+    width: auto;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  label {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--bs-font-monospace);
+    font-size: 0.9rem;
+  }
+}
+
+.tf-sim-stage {
+  padding: 1rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.tf-sim-code {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+  font-size: 0.8rem;
+}
