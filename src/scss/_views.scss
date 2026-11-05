@@ -761,3 +761,47 @@ tf-grid-sim {
 .tf-demo {
   margin: 1rem 0 1.5rem;
 }
+
+// <tf-flex-lab>: o laboratório de Flexbox
+tf-flex-lab {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+}
+
+.tf-flex-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+  gap: 0.75rem;
+
+  label {
+    display: block;
+    font-family: var(--bs-font-monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  select {
+    min-height: 44px;
+  }
+}
+
+.tf-flex-stage {
+  min-height: 10rem;
+  padding: 0.75rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+  border: 2px dashed var(--tf-ink-muted);
+
+  span {
+    padding: 0.5rem 1rem;
+    border-radius: var(--bs-border-radius);
+    border: 2px solid var(--tf-brand);
+    background: var(--tf-surface);
+    font-weight: 700;
+  }
+}

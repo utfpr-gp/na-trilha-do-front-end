@@ -17,5 +17,6 @@ export const GLOSSARY = [
   { id: 'grid', term: 'grid', definition: 'O sistema de colunas do Bootstrap: um .container, fileiras (.row) e colunas (.col-*) que ocupam partes de 12, mudando conforme a largura da tela.', chapter: 7 },
   { id: 'breakpoint', term: 'breakpoint', definition: 'A largura de tela a partir da qual o layout muda. No Bootstrap, sm, md, lg, xl e xxl são os breakpoints.', chapter: 7 },
   { id: 'utilitario', term: 'classe utilitária', definition: 'Uma classe que faz uma coisa só, como py-4 (padding vertical) ou d-flex (contêiner flexível). No Bootstrap, os utilitários usam !important.', chapter: 8 },
+  { id: 'flexbox', term: 'Flexbox', definition: 'O modo de layout do CSS para itens em fila (uma dimensão): display: flex no contêiner, e justify-content, align-items, flex-wrap e gap para distribuir os filhos.', chapter: 11 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

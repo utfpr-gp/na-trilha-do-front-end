@@ -1,0 +1,9 @@
+/* "O que levar": etiquetas que quebram linha quando não cabem. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
