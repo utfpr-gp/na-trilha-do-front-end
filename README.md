@@ -2,14 +2,27 @@
 
 Um livro aberto, interativo e em português que ensina a construir uma aplicação web responsiva
 **com Bootstrap, Sass e JavaScript**, do protótipo ao site publicado.
-Cada capítulo responde a uma pergunta, traz uma analogia do cotidiano, um simulador para ver o conceito funcionando,
-prática guiada e um desafio que vale um marco na sua caderneta de trilha.
+Cada capítulo responde a uma pergunta, traz uma analogia do cotidiano, prática guiada e um desafio que vale um marco na sua caderneta de trilha.
 
-O livro ensina construindo um único app de exemplo, o **Trilheiro**: um guia de trilhas da região de Guarapuava.
+O livro ensina construindo um único app de exemplo, o **[Trilheiro](trilheiro/)**: um guia de trilhas da região de Guarapuava.
 
-> 🚧 **Em construção.** O projeto do livro está em [docs/projeto.md](docs/projeto.md).
+📖 **Site:** <https://utfpr-gp.github.io/na-trilha-do-front-end/> (🚧 em construção)
 
 Material do Prof. Roni Fabio Banaszewski · Tecnologia em Sistemas para Internet · UTFPR Guarapuava.
+
+## Para quem mantém o livro
+
+- [AGENTS.md](AGENTS.md): regras de escrita, anatomia do capítulo e como criar um capítulo.
+- [ESTADO.md](ESTADO.md): onde a construção parou.
+- [docs/](docs/): o projeto do livro e os planos.
+
+```bash
+npm ci
+npm run dev       # servidor de desenvolvimento
+npm test          # testes
+npm run build     # site em dist/
+npm run check     # contraste, páginas e links
+```
 
 ## Licenças
 
