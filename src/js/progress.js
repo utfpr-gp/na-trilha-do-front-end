@@ -30,13 +30,12 @@ function localDate(date) {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
-/** Dá o marco. Devolve true só no primeiro acerto, que guarda a data. */
+/** Dá o marco. Devolve true só no primeiro acerto que o navegador conseguiu guardar. */
 export function earnMark(slug, date = new Date()) {
   const progress = loadProgress();
   if (progress.marks[slug]) return false;
   progress.marks[slug] = { date: localDate(date) };
-  save(progress);
-  return true;
+  return save(progress);
 }
 
 export function hasMark(slug) {
@@ -68,6 +67,6 @@ export function importProgress(text) {
     return { ok: false, error: 'Este arquivo não é um progresso da caderneta.' };
   }
   if (!isValid(data)) return { ok: false, error: 'Este arquivo não é um progresso da caderneta.' };
-  save(data);
+  if (!save(data)) return { ok: false, error: 'Este navegador não deixou guardar o progresso.' };
   return { ok: true };
 }

@@ -124,3 +124,16 @@ a.tf-chapter-card:focus-visible {
   background: var(--tf-mark);
   color: var(--tf-on-mark);
 }
+
+// O Bootstrap compila o botão de contorno com a terra do modo claro;
+// no escuro, ela fica abaixo do contraste AA. Aqui ele passa a seguir o token.
+[data-bs-theme="dark"] .btn-outline-secondary {
+  --bs-btn-color: var(--tf-accent);
+  --bs-btn-border-color: var(--tf-accent);
+  --bs-btn-hover-color: var(--tf-bg);
+  --bs-btn-hover-bg: var(--tf-accent);
+  --bs-btn-hover-border-color: var(--tf-accent);
+  --bs-btn-active-color: var(--tf-bg);
+  --bs-btn-active-bg: var(--tf-accent);
+  --bs-btn-active-border-color: var(--tf-accent);
+}

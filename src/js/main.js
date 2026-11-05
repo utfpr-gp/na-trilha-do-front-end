@@ -6,8 +6,9 @@ import { TfMark } from './components/tf-mark.js';
 import { TfSteps } from './components/tf-steps.js';
 import { TfTrailMap } from './components/tf-trail-map.js';
 import { TfView } from './components/tf-view.js';
-import { initThemeToggle } from './theme.js';
+import { initTheme, initThemeToggle } from './theme.js';
 
+initTheme();
 document.querySelectorAll('[data-theme-toggle]').forEach(initThemeToggle);
 
 customElements.define('tf-code', TfCode);

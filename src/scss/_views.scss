@@ -346,6 +346,12 @@ tf-mark {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 2rem;
+
+  // O campo de arquivo fica escondido; o rótulo mostra onde está o foco.
+  label:focus-within {
+    outline: 3px solid var(--tf-link);
+    outline-offset: 2px;
+  }
 }
 
 // Glossário

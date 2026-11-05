@@ -1,4 +1,4 @@
-import { earnMark } from '../progress.js';
+import { earnMark, hasMark } from '../progress.js';
 
 /** <tf-challenge slug="…" award>: confere as respostas; acertar todas dá o marco. */
 export class TfChallenge extends HTMLElement {
@@ -46,6 +46,10 @@ export class TfChallenge extends HTMLElement {
     if (this.hasAttribute('award')) {
       const slug = this.getAttribute('slug');
       earnMark(slug);
+      if (!hasMark(slug)) {
+        status.textContent = 'Tudo certo! Este navegador não deixou guardar o marco.';
+        return;
+      }
       status.textContent = 'Marco conquistado!';
       this.dispatchEvent(new CustomEvent('tf-mark-earned', { detail: { slug }, bubbles: true }));
     } else {

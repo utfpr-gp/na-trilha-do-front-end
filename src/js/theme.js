@@ -9,6 +9,8 @@ const LABELS = {
 };
 const QUERY = '(prefers-color-scheme: dark)';
 let listening = false;
+// Reserva para quando o navegador não deixa gravar: a escolha vale até recarregar a página.
+let memoryChoice = null;
 
 export function resolveTheme(choice, prefersDark) {
   if (choice === 'light' || choice === 'dark') return choice;
@@ -16,7 +18,7 @@ export function resolveTheme(choice, prefersDark) {
 }
 
 export function getThemeChoice() {
-  const saved = safeStorage.get(KEY);
+  const saved = safeStorage.get(KEY) ?? memoryChoice;
   return CHOICES.includes(saved) ? saved : 'system';
 }
 
@@ -25,14 +27,24 @@ function apply() {
   document.documentElement.setAttribute('data-bs-theme', theme);
 }
 
+function listen() {
+  if (listening) return;
+  window.matchMedia(QUERY).addEventListener('change', () => {
+    if (getThemeChoice() === 'system') apply();
+  });
+  listening = true;
+}
+
+/** No carregamento: aplica o tema e passa a acompanhar a troca do sistema. */
+export function initTheme() {
+  listen();
+  apply();
+}
+
 export function setThemeChoice(choice) {
+  memoryChoice = choice;
   safeStorage.set(KEY, choice);
-  if (!listening) {
-    window.matchMedia(QUERY).addEventListener('change', () => {
-      if (getThemeChoice() === 'system') apply();
-    });
-    listening = true;
-  }
+  listen();
   apply();
 }
 
