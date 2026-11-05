@@ -489,3 +489,92 @@ tf-class-toggle {
   font-weight: 700;
   color: var(--tf-view-por-dentro);
 }
+
+// Modelo de caixa, desenhado com caixas
+.tf-box-model {
+  margin: 1.5rem 0;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.85rem;
+  text-align: center;
+
+  span {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  div {
+    padding: 0.5rem 1rem 1rem;
+    border-radius: var(--bs-border-radius);
+  }
+}
+
+.tf-box-margin {
+  border: 2px dashed var(--tf-accent);
+}
+
+.tf-box-border {
+  border: 3px solid var(--tf-ink);
+}
+
+.tf-box-padding {
+  background: color-mix(in srgb, var(--tf-brand) 18%, transparent);
+}
+
+.tf-box-content {
+  padding: 1rem !important;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-ink-muted);
+}
+
+// <tf-cascade>: o simulador da cascata
+tf-cascade {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+}
+
+.tf-cascade-stage {
+  padding: 1rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+
+  h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+}
+
+.tf-cascade-rules {
+  margin: 0;
+  padding-left: 1.5rem;
+
+  // Em bloco, com a caixa à esquerda: no celular a regra quebra sem deixar a caixa sozinha.
+  label {
+    display: block;
+    position: relative;
+    min-height: 44px;
+    padding: 0.6rem 0 0.6rem 1.75rem;
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+  }
+}
+
+.tf-cascade-spec {
+  font-family: var(--bs-font-monospace);
+  font-size: 0.8rem;
+  color: var(--tf-ink-muted);
+}
+
+.tf-cascade-status {
+  margin: 0;
+  font-weight: 700;
+}

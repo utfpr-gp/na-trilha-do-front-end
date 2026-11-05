@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="03-html-e-css-para-relembrar">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 03-html-e-css-para-relembrar -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O cartão da trilha ganha uma página em volta: um cabeçalho com o nome do Trilheiro, uma seção "Trilhas em destaque" e um rodapé. E ganha também o primeiro arquivo de CSS <strong>próprio</strong>, que deixa o título do cartão verde-mata, por cima da cor que vem do Bootstrap.</p>
+        <p>Parece pouco, mas é aqui que muita gente tropeça: a regra está certa, o arquivo está ligado, e a cor não muda. Este capítulo revisa, rápido, as quatro ideias de HTML e CSS que explicam por quê: <strong>semântica</strong>, <strong>caixa</strong>, <strong>cascata</strong> e <strong>especificidade</strong>. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/03-html-e-css-para-relembrar">etapas/03-html-e-css-para-relembrar</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🪧" title="A cascata é como as placas de um parque">
+          <p>Na entrada do parque, uma placa diz: "Proibido acampar". Lá dentro, numa clareira, outra placa diz: "Área de camping liberada". Qual vale ali? A da clareira, porque é <strong>mais específica</strong>: fala daquele lugar, e não do parque inteiro.</p>
+          <p>Se duas placas igualmente específicas disserem coisas diferentes, vale a <strong>mais recente</strong>. E se a Defesa Civil colar um aviso de interdição, ele passa por cima de todas as placas. É o <code>!important</code>: funciona, mas, se toda placa virar um aviso de emergência, ninguém mais entende o que vale.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Semântica: cada tag diz o que o conteúdo é</h3>
+        <p>Uma página feita só de <code>&lt;div&gt;</code> pode até ficar bonita, mas não diz nada sobre si mesma. As tags semânticas dizem: <code>&lt;header&gt;</code> é o cabeçalho, <code>&lt;main&gt;</code> é o conteúdo principal (só um por página), <code>&lt;section&gt;</code> é um bloco com título, <code>&lt;article&gt;</code> é uma peça que faria sentido sozinha (como o cartão de uma trilha) e <code>&lt;footer&gt;</code> é o rodapé. Quem usa leitor de tela pula direto para o <code>&lt;main&gt;</code>; o Google entende o que é o conteúdo; e o seu código fica mais fácil de ler.</p>
+        <p>Os títulos seguem a mesma lógica: um <code>&lt;h1&gt;</code> por página, e depois <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, em ordem, sem pular nível. Por isso o título do cartão virou <code>&lt;h3&gt;</code>: ele está dentro da seção "Trilhas em destaque", que é um <code>&lt;h2&gt;</code>. E repare na classe <code>h5</code> que continua lá: ela deixa o título com <strong>o tamanho</strong> de um h5, sem mudar <strong>o que ele é</strong>. A tag diz o significado; a classe cuida da aparência.</p>
+
+        <h3>Caixa: todo elemento é um retângulo</h3>
+        <p>Para o CSS, todo elemento é uma caixa com quatro camadas, de dentro para fora:</p>
+        <div class="tf-box-model" role="img" aria-label="Modelo de caixa: o conteúdo no centro, envolvido pelo padding, depois pela borda, e por fim pela margem.">
+          <div class="tf-box-margin"><span>margin</span>
+            <div class="tf-box-border"><span>border</span>
+              <div class="tf-box-padding"><span>padding</span>
+                <div class="tf-box-content">conteúdo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>O <strong>padding</strong> é o respiro de dentro (o <code>card-body</code> dá 1rem de padding ao cartão); a <strong>margem</strong> é o espaço de fora, que afasta a caixa das vizinhas. E há um detalhe que o Bootstrap muda para você. Por padrão, o <code>width</code> mede só o conteúdo, e o padding e a borda são somados por fora: uma caixa de <code>width: 300px</code> com 20px de padding acaba com 340px. O Bootstrap aplica esta regra a todos os elementos:</p>
+        <tf-code src="03-html-e-css-para-relembrar/box-sizing.css" caption="bootstrap.css (trecho)"></tf-code>
+        <p>Com <code>box-sizing: border-box</code>, o <code>width</code> passa a incluir o padding e a borda: a caixa de 300px fica com 300px. É por isso que as colunas do grid do Bootstrap (capítulo 7) se encaixam sem sobrar nem faltar.</p>
+
+        <h3><a class="tf-term" href="{{base}}glossario/#cascata">Cascata</a> e <a class="tf-term" href="{{base}}glossario/#especificidade">especificidade</a>: quem vence quando duas regras brigam</h3>
+        <p>Quando duas regras dão valores diferentes à mesma propriedade do mesmo elemento, o navegador decide nesta ordem:</p>
+        <ol>
+          <li><strong>Importância:</strong> uma declaração com <code>!important</code> passa na frente das outras.</li>
+          <li><strong>Especificidade:</strong> vence o seletor mais específico. Ela é contada em três números, (ids, classes, elementos): <code>h3</code> vale (0,0,1), <code>.titulo</code> vale (0,1,0), <code>.cartao .titulo</code> vale (0,2,0) e <code>#trilha-salto</code> vale (1,0,0). Compara-se da esquerda para a direita: um id vence qualquer quantidade de classes. Um <code>style="…"</code> escrito na própria tag passa na frente de todos os seletores.</li>
+          <li><strong>Ordem:</strong> empatou em tudo? Vence a que vem depois, no mesmo arquivo ou num arquivo carregado depois.</li>
+        </ol>
+        <p>Teste no simulador. Ligue e desligue as regras e veja qual cor o título assume, e por quê:</p>
+
+        <tf-cascade>
+          <div class="tf-cascade-stage" id="cascata-titulo">
+            <article class="cartao"><h4 class="titulo" id="trilha-salto">Trilha do Salto</h4></article>
+          </div>
+          <ol class="tf-cascade-rules">
+            <li data-selector="h4" data-color="var(--tf-brand)" data-on><code>h4 { color: verde-mata; }</code></li>
+            <li data-selector=".titulo" data-color="var(--tf-accent)"><code>.titulo { color: terra; }</code></li>
+            <li data-selector=".titulo" data-color="var(--tf-link)"><code>.titulo { color: azul; }</code></li>
+            <li data-selector=".cartao .titulo" data-color="var(--tf-view-por-dentro)"><code>.cartao .titulo { color: roxo; }</code></li>
+            <li data-selector="#trilha-salto" data-color="var(--tf-view-armadilhas)"><code>#trilha-salto { color: vermelho; }</code></li>
+            <li data-selector="h4" data-color="var(--tf-view-na-sua-trilha)" data-important><code>h4 { color: verde-água !important; }</code></li>
+          </ol>
+        </tf-cascade>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e quando a regra do Bootstrap usa uma variável vazia?</summary>
+          <p>A regra <code>.card-title</code> do Bootstrap 5.3 é <code>color: var(--bs-card-title-color)</code>, e essa variável vem vazia. Uma cor vazia não vale, e o título acaba herdando a cor do cartão. Mesmo assim, ela tem especificidade (0,1,0) e participa da briga: é por isso que, no passo "E se eu trocar?", a sua regra perde quando vem antes.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Estrutura semântica">
+            <p>Parta da etapa 2. No <code>index.html</code>, envolva o cartão numa página com cabeçalho, conteúdo e rodapé, e troque o título do cartão de <code>h2</code> para <code>h3</code>:</p>
+            <tf-code src="03-html-e-css-para-relembrar/estrutura.html" caption="index.html"></tf-code>
+            <p>O <code>aria-labelledby</code> liga a seção ao seu título: o leitor de tela anuncia "Trilhas em destaque, região" ao entrar nela.</p>
+          </section>
+          <section data-step="CSS próprio, depois do Bootstrap">
+            <p>Crie a pasta <code>css/</code> com um arquivo <code>style.css</code> e ligue-o no <code>&lt;head&gt;</code>, <strong>depois</strong> do Bootstrap:</p>
+            <tf-code src="03-html-e-css-para-relembrar/ordem-links.html" caption="index.html"></tf-code>
+            <p>No <code>style.css</code>, escreva as regras do cabeçalho e do rodapé (estão na etapa) e esta, para o título do cartão:</p>
+            <tf-code src="03-html-e-css-para-relembrar/card-title.css" caption="css/style.css (trecho)"></tf-code>
+            <p>O título fica verde-mata. A sua regra e a do Bootstrap têm o mesmo seletor e a mesma especificidade:</p>
+            <tf-code src="03-html-e-css-para-relembrar/bootstrap-card-title.css" caption="bootstrap.css (trecho)"></tf-code>
+            <p>Empate na especificidade: vence a que vem depois. E a sua vem depois, porque o <code>style.css</code> é carregado depois do Bootstrap.</p>
+          </section>
+          <section data-step="Veja no DevTools">
+            <p>Clique com o botão direito no título do cartão e escolha <strong>Inspecionar</strong>. Na aba <strong>Styles</strong> (Estilos), as regras aparecem da que vence, no topo, para a que perde: a sua <code>.card-title</code> está em cima, e o <code>color</code> do Bootstrap aparece logo abaixo, riscado. Na aba <strong>Computed</strong>, o desenho de caixas mostra o conteúdo, o padding, a borda e a margem do elemento, com as medidas.</p>
+          </section>
+          <section data-step="E se eu trocar?">
+            <p>Troque a ordem dos dois <code>&lt;link&gt;</code>, deixando o <code>style.css</code> antes do Bootstrap, e recarregue. O título volta a ficar escuro: agora quem vem depois é o Bootstrap. O cabeçalho e o rodapé continuam do mesmo jeito, porque o Bootstrap não tem nenhuma regra para <code>.site-header</code> nem para <code>.site-footer</code>. Só perde a regra que briga com outra.</p>
+            <p>Desfaça a troca. A regra de ouro do livro sai daqui: <strong>o seu CSS vem sempre depois do framework</strong>.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Escrevi a regra, o arquivo está ligado, e a cor não muda">
+          <p>O CSS não mostra mensagem quando uma regra perde: ela simplesmente não vale. As duas causas mais comuns são o seu <code>style.css</code> ligado <strong>antes</strong> do Bootstrap, ou um seletor menos específico que o do framework. Inspecione o elemento: se a sua declaração aparece riscada na aba <strong>Styles</strong>, a regra que está acima dela é a que venceu. Confira a ordem dos <code>&lt;link&gt;</code> e compare as especificidades.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Escrevi um valor que o CSS não conhece">
+          <p>Com <code>color: verde;</code>, nada acontece: <code>verde</code> não é um nome de cor do CSS (que conhece <code>green</code>), e o navegador ignora a declaração inteira, sem erro no console. No DevTools, a declaração aparece riscada e com um ícone de aviso ao lado. Use um nome em inglês, um código como <code>#2f5d3a</code> ou, a partir do capítulo 6, uma variável do seu design system.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Coloquei !important e agora nada mais funciona">
+          <p>O <code>!important</code> resolve na hora, e cria o próximo problema: para mudar aquela propriedade de novo, só com outro <code>!important</code>, mais específico. Em pouco tempo, todo o CSS vira uma disputa de avisos de emergência. Antes de usar, procure o motivo de a regra estar perdendo: quase sempre é a ordem dos arquivos ou um seletor fraco demais.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="03-html-e-css-para-relembrar" award>
+          <fieldset data-correct="b">
+            <legend>Qual seletor tem a maior especificidade?</legend>
+            <label><input type="radio" name="q1" value="a"> <code>.cartao .corpo .titulo</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>#trilha-salto</code></label>
+            <label><input type="radio" name="q1" value="c"> <code>article h3</code></label>
+            <p data-explain="a" hidden>Três classes valem (0,3,0). Um id vale (1,0,0), e a comparação começa pelos ids: um id vence qualquer quantidade de classes.</p>
+            <p data-explain="c" hidden>Dois elementos valem (0,0,2), a menor das três.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O seu <code>.card-title { color: ... }</code> está certo, mas o título não muda de cor. Qual é a causa mais provável?</legend>
+            <label><input type="radio" name="q2" value="a"> O navegador não aceita mudar a cor de títulos</label>
+            <label><input type="radio" name="q2" value="b"> Faltou <code>!important</code></label>
+            <label><input type="radio" name="q2" value="c"> O <code>style.css</code> está ligado antes do Bootstrap, e a regra dele, com a mesma especificidade, vem depois</label>
+            <p data-explain="a" hidden>Qualquer cor pode ser mudada. A questão é qual regra vence a briga.</p>
+            <p data-explain="b" hidden>O <code>!important</code> até resolveria, mas esconderia a causa real e criaria o próximo problema. A solução é carregar o seu CSS depois do framework.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Com <code>box-sizing: border-box</code>, uma caixa com <code>width: 300px</code>, <code>padding: 20px</code> e borda de 1px ocupa quanto de largura?</legend>
+            <label><input type="radio" name="q3" value="a"> 300px</label>
+            <label><input type="radio" name="q3" value="b"> 340px</label>
+            <label><input type="radio" name="q3" value="c"> 342px</label>
+            <p data-explain="b" hidden>340px seria sem a borda e sem o <code>border-box</code>. Com <code>border-box</code>, o padding e a borda ficam por dentro dos 300px.</p>
+            <p data-explain="c" hidden>342px é o resultado do <code>box-sizing</code> padrão (<code>content-box</code>), que soma o padding e a borda por fora. Com <code>border-box</code>, a caixa fica com os 300px.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que o título do cartão tem a tag <code>h3</code> e a classe <code>h5</code> ao mesmo tempo?</legend>
+            <label><input type="radio" name="q4" value="a"> É um erro: a classe deveria ser <code>h3</code> também</label>
+            <label><input type="radio" name="q4" value="b"> A tag diz o lugar do título na hierarquia da página; a classe só muda o tamanho do texto</label>
+            <label><input type="radio" name="q4" value="c"> Para o título contar duas vezes na busca do Google</label>
+            <p data-explain="a" hidden>Não é erro: a classe <code>h5</code> existe justamente para dar a aparência de um h5 a qualquer elemento, sem mudar o que ele é.</p>
+            <p data-explain="c" hidden>A classe não muda nada para o Google. Ela é só aparência; quem dá o significado é a tag.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, monte a estrutura semântica da página principal (<code>header</code>, <code>main</code>, seções com título e <code>footer</code>), com os títulos em ordem. Crie o seu <code>css/style.css</code>, ligado depois do framework, e use-o para mudar a cor de um elemento que o framework já estiliza.</p>
+        <ul>
+          <li><strong>O conceito:</strong> que tag semântica você usou em cada parte da página, e por quê?</li>
+          <li><strong>A motivação:</strong> por que o seu CSS precisa vir depois do framework?</li>
+          <li><strong>A anatomia:</strong> qual é a especificidade da sua regra e a da regra do framework que ela vence?</li>
+          <li><strong>"E se eu tirar?":</strong> troque a ordem dos <code>&lt;link&gt;</code> e explique o que muda, e o que não muda.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Glossary/Semantics">MDN: semântica no HTML</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Styling_basics/Box_model">MDN: o modelo de caixa</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts">MDN: cascata, especificidade e herança</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/box-sizing">MDN: box-sizing</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/content/reboot/">Bootstrap 5.3: Reboot (as regras base, como o box-sizing)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 03-html-e-css-para-relembrar -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

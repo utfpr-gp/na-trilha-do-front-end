@@ -1,0 +1,4 @@
+/* Mesma especificidade da regra .card-title do Bootstrap (0,1,0): vence por vir depois. */
+.card-title {
+  color: #2f5d3a;
+}

@@ -15,7 +15,7 @@ describe('catálogo', () => {
   it('tem 6 partes com marcos e 1 sem', () => {
     expect(PARTS.filter((p) => p.hasMarks)).toHaveLength(6);
     expect(PARTS.filter((p) => !p.hasMarks).map((p) => p.id)).toEqual(['para-ir-alem']);
-    expect(PARTS.find((p) => p.id === 'para-ir-alem').chapters).toHaveLength(4);
+    expect(PARTS.find((p) => p.id === 'para-ir-alem').chapters).toHaveLength(5);
   });
 
   it('cada capítulo sabe a sua parte e faz uma pergunta', () => {

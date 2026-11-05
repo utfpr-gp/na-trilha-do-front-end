@@ -1,0 +1,32 @@
+/* Regras próprias do Trilheiro. Este arquivo vem DEPOIS do Bootstrap no <head>. */
+
+.site-header {
+  padding: 1.5rem 1rem;
+  color: #ffffff;
+  background-color: #2f5d3a;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.site-header p {
+  margin: 0;
+}
+
+.site-main {
+  padding: 2rem 1rem;
+}
+
+/* Mesma especificidade da regra .card-title do Bootstrap (0,1,0): vence por vir depois. */
+.card-title {
+  color: #2f5d3a;
+}
+
+.site-footer {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #55625a;
+  border-top: 1px solid #dee2e6;
+}

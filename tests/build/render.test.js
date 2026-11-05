@@ -10,7 +10,7 @@ describe('renderCatalog', () => {
   it('sem capítulo publicado, não tem link de capítulo e marca todos como em breve', () => {
     const html = renderCatalog(withPublished(null), '/');
     expect(html).not.toContain('href="/capitulos/');
-    expect(count(html, 'em breve')).toBe(29);
+    expect(count(html, 'em breve')).toBe(30);
   });
 
   it('com um publicado, tem exatamente um link, para a URL dele', () => {
