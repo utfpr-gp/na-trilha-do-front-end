@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { PARTS } from '../src/data/catalog.js';
+import { PARTS, allChapters } from '../src/data/catalog.js';
+import { GLOSSARY } from '../src/data/glossary.js';
 import { highlightSnippets } from './highlight.js';
 import { expandIncludes, renderMarkers, replaceBase } from './html.js';
-import { renderCatalog, renderChapterHeader, renderPager, renderTrailMap } from './render.js';
+import { renderCatalog, renderChapterHeader, renderGlossary, renderPager, renderTrailMap } from './render.js';
 import { expandViews } from './views.js';
 
 const PARTIALS_DIR = resolve(import.meta.dirname, '../src/partials');
@@ -24,6 +25,7 @@ export function defaultRenderers() {
     'chapter-header': (slug, { base }) => renderChapterHeader(slug, base),
     pager: (slug, { base }) => renderPager(slug, base),
     'trail-map': () => renderTrailMap(PARTS),
+    glossary: (_arg, { base }) => renderGlossary(GLOSSARY, base, allChapters()),
   };
 }
 

@@ -56,3 +56,14 @@ export function renderTrailMap(parts) {
     .join('\n');
   return `<ol class="tf-trail">${stops}</ol>\n<p class="tf-summit" data-summit>O cume: todos os marcos do livro</p>`;
 }
+
+/** O glossário em ordem alfabética, com o link para o capítulo quando ele já foi publicado. */
+export function renderGlossary(entries, base, chapters) {
+  const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term, 'pt-BR'));
+  const items = sorted.map((e) => {
+    const chapter = chapters.find((c) => c.number === e.chapter && c.published);
+    const link = chapter ? ` <a href="${chapterUrl(chapter, base)}">Capítulo ${chapter.number}</a>` : '';
+    return `<dt id="${e.id}">${escapeHtml(e.term)}</dt><dd>${escapeHtml(e.definition)}${link}</dd>`;
+  });
+  return `<dl class="tf-glossary">${items.join('')}</dl>`;
+}

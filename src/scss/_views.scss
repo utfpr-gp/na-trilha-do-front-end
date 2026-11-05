@@ -347,3 +347,26 @@ tf-mark {
   gap: 0.75rem;
   margin-top: 2rem;
 }
+
+// Glossário
+.tf-glossary {
+  dt {
+    margin-top: 1.25rem;
+    font-weight: 800;
+    color: var(--tf-brand);
+    scroll-margin-top: 1rem;
+  }
+
+  dt:target {
+    background: color-mix(in srgb, var(--tf-mark) 30%, transparent);
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+  }
+}
+
+.tf-term {
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
