@@ -1,0 +1,2 @@
+- **US03: Filtrar por dificuldade.** Como visitante, quero filtrar as trilhas por dificuldade, para ver só as que combinam com o meu preparo.
+  - _Critérios de aceitação:_ as opções são "Todas", "Fácil", "Moderada" e "Difícil"; a lista muda sem recarregar a página; o site lembra o último filtro quando volto (RN06).

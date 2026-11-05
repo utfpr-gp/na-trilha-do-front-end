@@ -1,0 +1,8 @@
+Estou planejando um site de trilhas da região de Guarapuava, chamado Trilheiro.
+Ele tem 4 telas: Início, Trilhas (lista com filtro), Detalhe da trilha e Cadastrar trilha.
+Quem usa: visitantes, sem login.
+
+Sugira no máximo 10 histórias de usuário no formato
+"Como [ator], quero [ação], para [motivo]", cada uma com 2 ou 3 critérios de aceitação.
+Não invente telas novas nem login. Se uma história não couber nas 4 telas, deixe de fora
+e liste numa seção "Fora do escopo".

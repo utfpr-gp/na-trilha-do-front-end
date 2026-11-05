@@ -25,3 +25,9 @@ describe('desafio', () => {
     expect(css).toMatch(/tf-challenge label\{display:block/);
   });
 });
+
+describe('código', () => {
+  it('não junta caracteres em ligaduras', () => {
+    expect(css).toMatch(/code,pre,kbd\{font-variant-ligatures:none\}/);
+  });
+});
