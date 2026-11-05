@@ -1,0 +1,12 @@
+:root {
+  --cor-marca: #2f5d3a;       /* verde-mata */
+  --cor-destaque: #8b5a2b;    /* terra */
+  --cor-marcacao: #f2c230;    /* amarelo de marcação */
+  --cor-fundo: #faf7f0;       /* papel */
+  --cor-superficie: #ffffff;
+  --cor-texto: #1f2a24;       /* tinta */
+  --cor-texto-suave: #55625a;
+  --fonte-titulos: "Bitter", Georgia, serif;
+  --fonte-texto: "Source Sans 3", system-ui, sans-serif;
+  --raio: 0.5rem;
+}

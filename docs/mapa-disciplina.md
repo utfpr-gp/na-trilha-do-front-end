@@ -39,6 +39,23 @@ Este arquivo é de quem mantém o livro. O site não cita disciplina, atividades
 
 Os exemplos das atividades usam dois projetos próprios: o **Guaratur** (Atividades 09 a 12) e o **João Lenão** (Atividades 15 a 20, com um branch do GitHub por etapa). O livro usa o Trilheiro.
 
+## Assuntos do Moodle a incluir nos capítulos (05/11)
+
+Nenhum assunto pede capítulo próprio além do JavaScript básico (17). Os demais entram assim:
+
+- Cap. 8: rodapé grudado no fim da tela (`min-vh-100`, `flex-grow-1`, `mt-auto`, Atividade 08).
+- Cap. 9: Bootstrap Icons (Atividade 07); auditoria de 10 componentes como "Na sua trilha" (Atividade 08).
+- Cap. 11: material das seções ocultas de Flexbox e Grid.
+- Cap. 12: extensão cssrem (px → rem).
+- Cap. 15: Gridlover, TypeScale, Fluid Type Scale Calculator.
+- Cap. 16: Cloudinary (citado no ID 10), Squoosh, TinyPNG.
+- Cap. 17: `prompt`/`alert`/`confirm`, `setTimeout`/`setInterval`.
+- Cap. 22: cabeçalho e rodapé reaproveitados em várias páginas (`.load()` do jQuery ou `fetch`, com as limitações); IMask.js e Cleave.js como alternativas sem jQuery.
+- Cap. 23: AJAX do jQuery e `XMLHttpRequest` como "Aprofundando", ao lado do `fetch`.
+- Cap. 24: testar a API antes (Postman, Thunder Client) e os catálogos de APIs públicas (módulo 03); critérios de escolha (Atividade 05).
+- Cap. 26: `gh-pages` e a troca da `node_modules/` pelo CDN.
+- Para ir além: Materialize (Atividade 09); Lighthouse e SEO (apostila do módulo 09).
+
 ## Divergências encontradas nos capítulos já publicados
 
 ### Capítulo 2 (Atividades 01 e 06)

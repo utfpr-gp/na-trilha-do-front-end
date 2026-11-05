@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 5 publicados; o professor autorizou merge sem revisão até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 6 publicados; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -24,11 +24,12 @@
 - **Alinhamento publicado** (PR #5, 05/11): capítulo 2 reescrito no fluxo da disciplina (clonar primeiro, `.gitignore` antes do `npm install`, commits semânticos, token de acesso pessoal, LTS par, NVM, extensões, computador compartilhado); capítulo 1 avisa a troca do CDN pela `node_modules/`; **capítulo novo 17 (JavaScript básico)** e renumeração dos capítulos 18 a 26; decisão do MCP no capítulo 5 registrada no projeto.
 - **Capítulo 4 publicado** (PR #6) (base: Atividade 03): as sete seções do PRD, anatomia da história de usuário (quem, o quê, para quê), critérios de aceitação verificáveis, tabela "do PRD ao código", modelo de dados em Mermaid no `architecture.md`, pedido modelo para a IA com limites de escopo; etapa `etapas/04-prd-curto/` com `docs/prd.md` e a primeira versão do `docs/architecture.md`; armadilha do Mermaid reproduzida com o Mermaid 11; termos PRD e história de usuário; ligaduras desligadas no código do site inteiro.
 - **Capítulo 5 publicado** (base: Atividades 04 e 08): protótipo responsivo e navegável no Stitch, celular primeiro, Instant Prototype, triagem com o PRD (`docs/prototipo.md`), ajuste ao Bootstrap 5.3, MCP uma peça de cada vez; termos protótipo e MCP.
+- **Capítulo 6 publicado:** design tokens como variáveis CSS com nome de papel, `docs/design-system.md`, Google Fonts, simulador `<tf-token-lab>` (troca de cor com contraste ao vivo; `src/js/contrast.js` compartilhado com o verificador); termo variável CSS. Lista de assuntos do Moodle a incluir nos capítulos registrada no `docs/mapa-disciplina.md`.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 6 (design tokens) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Capítulo 7 (grid do Bootstrap) e seguintes, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

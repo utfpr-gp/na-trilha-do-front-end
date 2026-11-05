@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="06-design-tokens">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 06-design-tokens -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O protótipo mostrou a cara do Trilheiro: verde-mata, terra, um amarelo de marcação de trilha, títulos com serifa grossa. Hoje essas decisões saem do desenho e entram no código como <a class="tf-term" href="{{base}}glossario/#design-token">design tokens</a>: variáveis com nome de papel, como <code>--cor-marca</code>, guardadas num lugar só e usadas no site inteiro.</p>
+        <p>O resultado aparece na página: fundo cor de papel, títulos em Bitter, texto em Source Sans 3. E ganha um documento, o <code>docs/design-system.md</code>, que diz qual cor serve para quê. Tudo está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/06-design-tokens">etapas/06-design-tokens</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🟡" title="Os tokens são as cores das marcações de trilha">
+          <p>Num parque, cada trilha tem uma cor pintada nas árvores e nas pedras: amarelo para a do mirante, vermelho para a da cachoeira. Ninguém pinta "um amarelo parecido" no meio do caminho; existe um amarelo, com um significado.</p>
+          <p>Se o parque decidir trocar o amarelo por laranja, troca a tinta no depósito, e todas as marcações novas saem certas. Um design token é essa tinta do depósito: o nome diz o papel (<code>--cor-marca</code>), e o valor (<code>#2f5d3a</code>) pode mudar sem você caçar a cor em cada regra.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Um <strong>design system</strong> é o conjunto de regras visuais de um projeto: as cores, as fontes, os espaçamentos e como cada componente usa tudo isso. Os <strong>design tokens</strong> são as menores decisões desse conjunto, transformadas em dados com nome: uma cor, uma família de fonte, um raio de borda.</p>
+
+        <h3>Nome de papel, e não nome de cor</h3>
+        <p>Compare <code>--verde</code> com <code>--cor-marca</code>. O primeiro descreve a aparência; o segundo, a função. Se a marca mudar para azul, <code>--verde: blue</code> vira uma mentira no código, e <code>--cor-marca: blue</code> continua verdadeiro. Por isso os tokens do Trilheiro se chamam marca, destaque, marcação, fundo, superfície, texto e texto suave.</p>
+
+        <h3>No CSS, os tokens são variáveis</h3>
+        <p>Uma <a class="tf-term" href="{{base}}glossario/#variavel-css">variável CSS</a> (o nome oficial é <em>custom property</em>) começa com dois hífens e costuma ser declarada no <code>:root</code>, que é o elemento <code>&lt;html&gt;</code>: assim ela vale para a página inteira. Para usar, escreva <code>var(--nome)</code> no lugar do valor:</p>
+        <tf-code src="06-design-tokens/uso.css" caption="css/style.css (trecho)"></tf-code>
+
+        <h3>Experimente</h3>
+        <p>Neste laboratório, o cartão usa três tokens. Troque as cores e veja o cartão inteiro mudar de uma vez, e o contraste de cada par ser recalculado. O mínimo para texto, pela norma de acessibilidade WCAG, é 4,5:1 (o nível AA):</p>
+
+        <tf-token-lab>
+          <div class="tf-lab-preview" data-lab-preview>
+            <div class="tf-lab-card">
+              <p class="tf-lab-title">Trilha do Salto</p>
+              <p class="tf-lab-text">Prudentópolis, PR · 4,5 km · 2h30</p>
+              <span class="tf-lab-button">Ver trilha</span>
+            </div>
+          </div>
+          <ul class="tf-lab-tokens">
+            <li data-token="--lab-marca" data-value="#2F5D3A">Cor da marca</li>
+            <li data-token="--lab-fundo" data-value="#FAF7F0">Fundo</li>
+            <li data-token="--lab-texto" data-value="#1F2A24">Texto</li>
+          </ul>
+          <ul class="tf-lab-pairs">
+            <li data-fg="#FFFFFF" data-bg="--lab-marca">Texto branco sobre a marca (o botão)</li>
+            <li data-fg="--lab-marca" data-bg="--lab-fundo">Marca sobre o fundo (o título)</li>
+            <li data-fg="--lab-texto" data-bg="--lab-fundo">Texto sobre o fundo</li>
+          </ul>
+        </tf-token-lab>
+
+        <p>Tente deixar a marca amarela: o botão fica bonito, e ilegível. É por isso que o design system do Trilheiro diz que o amarelo de marcação vai "sempre com texto escuro, nunca branco".</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e as cores do Bootstrap?</summary>
+          <p>O Bootstrap também usa variáveis CSS, como <code>--bs-primary</code>. Dá para trocar algumas no <code>:root</code>, mas muitos componentes, como o <code>.btn-primary</code>, guardam cores próprias já compiladas, e não mudam (você viu isso no capítulo 1). O jeito certo de levar os tokens para dentro do Bootstrap é com Sass, no capítulo 13. Por isso, nesta etapa, o botão continua azul.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O design system no papel">
+            <p>Crie o <code>docs/design-system.md</code> a partir do protótipo: para cada cor, o nome do token, o valor e onde ela é usada.</p>
+            <tf-code src="06-design-tokens/paleta.md" caption="docs/design-system.md (trecho)"></tf-code>
+            <p>Confira o contraste de cada combinação de texto e fundo antes de seguir, com o laboratório acima ou com um verificador como o da WebAIM. Uma cor reprovada aqui é muito mais barata de trocar do que depois de espalhada pelo site.</p>
+          </section>
+          <section data-step="Os tokens no :root">
+            <p>No começo do <code>css/style.css</code>, declare os tokens:</p>
+            <tf-code src="06-design-tokens/tokens.css" caption="css/style.css"></tf-code>
+            <p>As fontes também são tokens, com uma lista de reserva no fim (<code>Georgia, serif</code>), usada enquanto a fonte carrega ou se ela falhar.</p>
+          </section>
+          <section data-step="Use os tokens">
+            <p>Troque cada cor escrita nas regras pelo token correspondente: o cabeçalho com <code>var(--cor-marca)</code>, o fundo da página com <code>var(--cor-fundo)</code>, o título do cartão com <code>var(--cor-marca)</code>, os títulos com <code>var(--fonte-titulos)</code>. Veja o arquivo completo na etapa. A regra de ouro: depois deste passo, nenhuma cor aparece escrita fora do <code>:root</code>.</p>
+          </section>
+          <section data-step="As fontes">
+            <p>No Google Fonts, escolha a Bitter (peso 700) e a Source Sans 3 (pesos 400 e 600) e copie o link. Ele entra no <code>&lt;head&gt;</code>, antes do seu CSS:</p>
+            <tf-code src="06-design-tokens/fontes.html" caption="index.html (trecho)"></tf-code>
+            <p>Os dois <code>preconnect</code> adiantam a conexão com os servidores de fontes, e o <code>display=swap</code> mostra o texto na fonte de reserva enquanto a escolhida carrega, em vez de deixá-lo invisível.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Troque o valor de <code>--cor-marca</code> por <code>#1f5f99</code>, um azul, e recarregue: o cabeçalho e o título do cartão mudam juntos, com uma linha alterada. Agora apague a declaração de <code>--cor-marca</code> do <code>:root</code>: o cabeçalho fica sem fundo e o título perde a cor, sem nenhuma mensagem de erro. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Errei o nome do token e a cor sumiu">
+          <p>Com <code>var(--cor-marcas)</code> (um "s" a mais), o navegador não encontra a variável, e a propriedade volta ao valor padrão: um fundo fica transparente, uma cor de texto passa a ser herdada do elemento pai. Não há mensagem no console. Inspecione o elemento: na aba <strong>Styles</strong>, o DevTools mostra o nome do token, e passar o mouse sobre ele revela se a variável existe. Para evitar, dê nomes curtos e consistentes, e copie em vez de redigitar.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Esqueci os dois hífens">
+          <p>Uma declaração como <code>cor-marca: #2f5d3a;</code> não é uma variável: é uma propriedade que o CSS não conhece, e é ignorada inteira. Variáveis sempre começam com <code>--</code>, tanto na declaração quanto dentro do <code>var()</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A fonte não mudou">
+          <p>O texto aparece na fonte de reserva. Confira se o link do Google Fonts está no <code>&lt;head&gt;</code>, se o nome da família no CSS é idêntico ao do link (<code>"Source Sans 3"</code>, com espaço e entre aspas) e se o peso usado foi carregado: pedir <code>font-weight: 800</code> com só o 700 no link faz o navegador simular o negrito. Na aba <strong>Computed</strong> do DevTools, o fim da lista mostra a fonte que foi de fato usada (<em>Rendered Fonts</em>).</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="06-design-tokens" award>
+          <fieldset data-correct="c">
+            <legend>Qual é o melhor nome para o token da cor principal do Trilheiro?</legend>
+            <label><input type="radio" name="q1" value="a"> <code>--verde</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>--cor1</code></label>
+            <label><input type="radio" name="q1" value="c"> <code>--cor-marca</code></label>
+            <p data-explain="a" hidden>O nome descreve a aparência. Se a marca mudar de cor, o nome vira mentira.</p>
+            <p data-explain="b" hidden>Um número não diz para que a cor serve. O nome deve dizer o papel.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que declarar os tokens no <code>:root</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque o <code>:root</code> é o elemento <code>&lt;html&gt;</code>, e as variáveis declaradas nele valem para a página inteira</label>
+            <label><input type="radio" name="q2" value="b"> Porque o navegador só aceita variáveis no <code>:root</code></label>
+            <label><input type="radio" name="q2" value="c"> Para elas carregarem mais rápido</label>
+            <p data-explain="b" hidden>Variáveis podem ser declaradas em qualquer seletor; elas valem para aquele elemento e os de dentro dele. No <code>:root</code>, isso é a página toda.</p>
+            <p data-explain="c" hidden>O lugar da declaração não muda a velocidade. Muda o alcance da variável.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Texto branco sobre um fundo amarelo deu contraste de 1,7:1. O que isso significa?</legend>
+            <label><input type="radio" name="q3" value="a"> Que passa no AA, porque é maior que 1</label>
+            <label><input type="radio" name="q3" value="b"> Que não passa no AA, que exige pelo menos 4,5:1 para texto</label>
+            <label><input type="radio" name="q3" value="c"> Que o amarelo nunca pode ser usado no site</label>
+            <p data-explain="a" hidden>O mínimo do AA para texto é 4,5:1. Com 1,7:1, muita gente não consegue ler.</p>
+            <p data-explain="c" hidden>O amarelo pode ser usado, com texto escuro, como diz o design system do Trilheiro.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que acontece com <code>background-color: var(--cor-marca)</code> se o token não foi declarado?</legend>
+            <label><input type="radio" name="q4" value="a"> O console mostra um erro em vermelho</label>
+            <label><input type="radio" name="q4" value="b"> O fundo fica preto</label>
+            <label><input type="radio" name="q4" value="c"> A propriedade volta ao valor padrão (fundo transparente), sem mensagem de erro</label>
+            <p data-explain="a" hidden>O CSS não mostra erro por variável inexistente. O sinal está no DevTools, inspecionando o elemento.</p>
+            <p data-explain="b" hidden>O valor padrão de <code>background-color</code> é transparente, e não preto.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Tire as cores e as fontes do protótipo do <strong>seu projeto</strong> e escreva o <code>docs/design-system.md</code>: cada token com nome de papel, valor e uso, e o contraste de cada combinação de texto e fundo. Depois, declare os tokens no <code>:root</code> do seu <code>style.css</code>, use-os nas regras e carregue as fontes.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é um design token, e qual a diferença para um design system?</li>
+          <li><strong>A motivação:</strong> por que usar <code>var(--cor-marca)</code> em vez de escrever a cor em cada regra?</li>
+          <li><strong>A anatomia:</strong> explique cada parte de <code>--fonte-titulos: "Bitter", Georgia, serif;</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> apague um token do <code>:root</code> e mostre o que acontece na página.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/Using_CSS_custom_properties">MDN: usando variáveis CSS</a></li>
+          <li><a href="https://webaim.org/resources/contrastchecker/">WebAIM: verificador de contraste (em inglês)</a></li>
+          <li><a href="https://fonts.google.com/">Google Fonts</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/customize/css-variables/">Bootstrap 5.3: variáveis CSS</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 06-design-tokens -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -625,3 +625,81 @@ tf-cascade {
   --bs-table-color: var(--tf-ink);
   border-color: var(--tf-ink-muted);
 }
+
+// <tf-token-lab>: o laboratório de design tokens
+tf-token-lab {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+}
+
+// A prévia usa só os tokens do laboratório, de propósito, nos dois modos do site.
+.tf-lab-preview {
+  padding: 1.5rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--lab-fundo);
+}
+
+.tf-lab-card {
+  max-width: 18rem;
+  padding: 1rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--lab-texto);
+}
+
+.tf-lab-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--lab-marca);
+}
+
+.tf-lab-text {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--lab-texto);
+}
+
+.tf-lab-button {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--lab-marca);
+  color: #ffffff; // o par "texto branco sobre a marca" que o laboratório mede
+}
+
+.tf-lab-tokens,
+.tf-lab-pairs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.tf-lab-tokens li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+
+  input {
+    width: 3rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 1px solid var(--tf-ink-muted);
+    border-radius: var(--bs-border-radius);
+  }
+}
+
+.tf-lab-pairs li {
+  font-weight: 600;
+  color: var(--tf-view-mao-no-codigo);
+
+  &.is-fail {
+    color: var(--tf-view-armadilhas);
+  }
+}
