@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="05-prototipar-com-ia">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 05-prototipar-com-ia -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Com o PRD pronto, o Trilheiro ganha um <a class="tf-term" href="{{base}}glossario/#prototipo">protótipo</a>: as 4 telas desenhadas no celular e no computador, com os botões ligados entre si, para você clicar e sentir o site antes de escrever o HTML.</p>
+        <p>Quem desenha é uma IA, o <strong>Stitch</strong>, a partir de um pedido que você escreve com o PRD aberto do lado. E o trabalho mais importante vem depois: <strong>cortar</strong> o que a IA inventou e o PRD não pede. Os pedidos usados e as decisões de corte ficam num documento, o <code>docs/prototipo.md</code>, na etapa <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/05-prototipar-com-ia">etapas/05-prototipar-com-ia</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🧭" title="A IA é um guia empolgado">
+          <p>Imagine um guia que conhece cada canto da serra e, a cada bifurcação, sugere mais um desvio: uma cachoeira escondida, um mirante, uma gruta. Tudo lindo, e no fim do dia o grupo não chegou aonde queria.</p>
+          <p>A IA de protótipo é esse guia: rápida, criativa, cheia de ideias. Quem decide o trajeto é o roteiro, o seu PRD. Você ouve as sugestões, aproveita as boas e corta o resto sem dó.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Um protótipo é a planta da casa antes da obra: mostra onde fica cada coisa e como se vai de um cômodo a outro, mas ainda não tem parede de verdade. Mudar a planta custa minutos; mudar a casa pronta custa dias. Por isso ele vem antes do código.</p>
+        <p>Um bom protótipo para começar a programar tem três características:</p>
+        <ul>
+          <li><strong>Responsivo:</strong> cada tela existe no celular e no computador.</li>
+          <li><strong>Navegável:</strong> os botões e links levam às outras telas, como no site de verdade.</li>
+          <li><strong>Do tamanho do PRD:</strong> só as telas e os componentes que as histórias pedem.</li>
+        </ul>
+
+        <h3>As ferramentas</h3>
+        <ul>
+          <li><strong><a href="https://stitch.withgoogle.com/">Stitch</a>:</strong> uma ferramenta do Google que gera telas a partir de um texto (ou de uma imagem de inspiração). Ela monta junto um design system com as cores e as fontes, cria a versão de computador a partir da de celular e liga os botões com o recurso <em>Instant Prototype</em>.</li>
+          <li><strong><a href="https://www.figma.com/education/">Figma</a>:</strong> a prancheta de design mais usada no mercado. O Stitch exporta as telas para ele, para ajustes finos à mão.</li>
+          <li><strong><a class="tf-term" href="{{base}}glossario/#mcp">MCP</a></strong> (<em>Model Context Protocol</em>): uma forma de a IA do seu editor conversar com outras ferramentas. Com o MCP do Stitch, a IA do editor lê as telas do protótipo e ajuda a escrever o HTML. Ele entra em cena quando você começa a programar, a partir do capítulo 7.</li>
+        </ul>
+
+        <h3>Celular primeiro</h3>
+        <p>Peça primeiro a versão de celular. A tela pequena obriga a escolher o essencial: o que não cabe ali, provavelmente não é tão importante. Depois, a versão de computador só redistribui o espaço que sobrou. É o mesmo caminho que o grid do Bootstrap faz, do menor para o maior, no capítulo 7.</p>
+
+        <h3>A triagem: o passo que a IA não faz por você</h3>
+        <p>A IA quase sempre devolve mais do que foi pedido. No Trilheiro, ela criou uma tela de login, um mapa interativo, estrelas em cada cartão e uma busca por texto. Cada sugestão passou por uma pergunta só: <strong>alguma história do PRD pede isso?</strong></p>
+        <tf-code src="05-prototipar-com-ia/triagem.md" caption="docs/prototipo.md (trecho)"></tf-code>
+        <p>Cortar não é desperdício: cada tela a mais é HTML, CSS e JavaScript que você vai precisar escrever, testar e saber explicar. E a regra do livro vale aqui também: <strong>nenhum componente entra no código sem que você saiba dizer o que ele é e por que está ali</strong>.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e o código que o Stitch gera?</summary>
+          <p>Por trás de cada tela, o Stitch escreve HTML, e por padrão costuma usar o Tailwind CSS, um framework que pensa de um jeito diferente do Bootstrap (o capítulo "Para ir além" sobre o Tailwind explica a diferença). Neste livro, o framework é o Bootstrap: depois de escolher, peça ao Stitch para ajustar as telas aos componentes do Bootstrap 5.3. O protótipo serve para você enxergar o site; o código você escreve e entende, nos próximos capítulos.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Peça a versão de celular">
+            <p>No Stitch, crie um projeto novo, escolhendo a opção <strong>Web</strong> no início. Escreva o pedido com o PRD aberto: as telas, o que vai em cada uma, as cores e as fontes, e o que <strong>não</strong> deve aparecer:</p>
+            <tf-code src="05-prototipar-com-ia/prompt-stitch.txt" caption="Pedido para o Stitch"></tf-code>
+            <p>A última linha é a mais importante. Sem ela, a IA preenche o vazio com o que costuma aparecer em sites parecidos.</p>
+          </section>
+          <section data-step="Gere a versão de computador">
+            <p>Confira as telas de celular. Depois, selecione as 4 e peça a versão de computador, dizendo como o espaço extra deve ser usado:</p>
+            <tf-code src="05-prototipar-com-ia/prompt-desktop.txt" caption="Pedido para o Stitch"></tf-code>
+          </section>
+          <section data-step="Faça a triagem">
+            <p>Passe por cada tela e por cada componente com o PRD do lado. Para cada coisa que nenhuma história pede, apague a tela ou peça ao Stitch para tirá-la. Anote as decisões no <code>docs/prototipo.md</code>, como na tabela do Por dentro: daqui a algumas semanas, ninguém lembra por que o mapa saiu.</p>
+          </section>
+          <section data-step="Ligue as telas">
+            <p>Com as telas selecionadas, use o <strong>Instant Prototype</strong>, no menu <strong>Generate</strong>. A IA encontra os botões e os links e liga cada um à tela de destino. Clique pelo protótipo como se fosse o site: do Início para Trilhas, de um cartão para o Detalhe, do botão "Cadastrar trilha" para o formulário.</p>
+          </section>
+          <section data-step="Aproxime do Bootstrap">
+            <p>Peça ao Stitch para ajustar as telas aos componentes do framework, assim o desenho fica parecido com o que você vai conseguir montar:</p>
+            <tf-code src="05-prototipar-com-ia/prompt-bootstrap.txt" caption="Pedido para o Stitch"></tf-code>
+            <p>Depois, aponte no protótipo pelo menos três componentes que virão prontos do Bootstrap (no Trilheiro: a navbar, o card e o modal) e registre-os no design system, que é o assunto do capítulo 6.</p>
+          </section>
+          <section data-step="Compartilhe o link">
+            <p>No botão de compartilhar, deixe o acesso como <strong>qualquer pessoa com o link pode ver</strong>, copie o link e ponha no <code>README.md</code> do projeto:</p>
+            <tf-code src="05-prototipar-com-ia/readme-prototipo.md" caption="README.md (trecho)"></tf-code>
+            <p>Faça o commit com <code>docs:</code>, junto com o <code>docs/prototipo.md</code>.</p>
+          </section>
+          <section data-step="Mais tarde: o MCP">
+            <p>Quando começar a programar, o MCP do Stitch deixa a IA do seu editor ler as telas. Use-o com o mesmo cuidado da triagem: <strong>uma peça de cada vez</strong>, com um pedido que nomeia o componente e as classes, e nunca "gere todas as telas":</p>
+            <tf-code src="05-prototipar-com-ia/prompt-mcp.txt" caption="Pedido para a IA do editor"></tf-code>
+            <p>A última frase do pedido não é enfeite: se você não consegue explicar uma classe que a IA usou, ela não entra no seu código.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Faça o teste: num projeto de rascunho, peça ao Stitch só "um site de trilhas", sem o PRD e sem a última linha do pedido. Compare com o seu protótipo: quantas telas a mais apareceram? Cada uma delas seria trabalho para você.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O protótipo virou um site de dez telas">
+          <p>A IA criou login, painel, perfil e configurações, e agora parece que tudo isso precisa ser feito. Não precisa. Volte ao PRD: o que nenhuma história pede sai do protótipo e vai para "Fora do escopo". O protótipo serve ao projeto, e não o contrário.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O código das telas veio com Tailwind">
+          <p>Classes como <code>bg-green-700</code>, <code>rounded-lg</code> e, principalmente, as que têm dois-pontos, como <code>md:grid-cols-3</code>, são do Tailwind, e não do Bootstrap. Não copie esse código para o projeto. Peça ao Stitch para ajustar as telas aos componentes do Bootstrap 5.3, e escreva o HTML seguindo os capítulos 7 a 10.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Quem abre o link vê uma tela de acesso negado">
+          <p>O protótipo ficou privado. No botão de compartilhar, mude o acesso para <strong>qualquer pessoa com o link pode ver</strong> e teste o link numa janela anônima, onde você não está logado.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A versão de computador é o celular esticado">
+          <p>Os cartões viraram faixas enormes, um embaixo do outro, com espaço vazio dos lados. Peça explicitamente como usar o espaço: quantos cartões por linha, o que vai numa coluna lateral. A IA não adivinha o layout que você imaginou.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="05-prototipar-com-ia" award>
+          <fieldset data-correct="b">
+            <legend>A IA criou uma tela de login no protótipo do Trilheiro. O que fazer?</legend>
+            <label><input type="radio" name="q1" value="a"> Manter, porque todo site tem login</label>
+            <label><input type="radio" name="q1" value="b"> Cortar, porque nenhuma história do PRD pede login, e registrar a decisão</label>
+            <label><input type="radio" name="q1" value="c"> Manter e deixar para decidir quando for programar</label>
+            <p data-explain="a" hidden>O Trilheiro não tem login: o PRD diz isso em "Fora do escopo". O protótipo segue o PRD.</p>
+            <p data-explain="c" hidden>Deixar para depois faz a tela parecer parte do projeto. A triagem é justamente o momento de decidir.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que começar o protótipo pela versão de celular?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque a tela pequena obriga a escolher o essencial, e o computador só redistribui o espaço que sobra</label>
+            <label><input type="radio" name="q2" value="b"> Porque o Stitch só gera telas de celular</label>
+            <label><input type="radio" name="q2" value="c"> Porque ninguém usa computador para visitar sites</label>
+            <p data-explain="b" hidden>O Stitch gera as duas versões. Começar pelo celular é uma escolha de projeto.</p>
+            <p data-explain="c" hidden>Muita gente usa computador. Celular primeiro é sobre prioridade, e não sobre deixar o computador de lado.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Qual pedido de MCP segue a regra do livro?</legend>
+            <label><input type="radio" name="q3" value="a"> "Importe todas as telas do protótipo e gere o site completo"</label>
+            <label><input type="radio" name="q3" value="b"> "Gere a tela Trilhas com o que achar melhor"</label>
+            <label><input type="radio" name="q3" value="c"> "Leia a tela Trilhas e gere só o HTML do cartão com o card do Bootstrap 5.3, e explique cada classe"</label>
+            <p data-explain="a" hidden>Gerar tudo de uma vez traz componentes e classes que você não sabe explicar. Uma peça de cada vez.</p>
+            <p data-explain="b" hidden>"O que achar melhor" deixa a IA decidir o escopo e o framework. Nomeie a peça e o componente.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>O código de uma tela tem <code>md:grid-cols-3</code>. O que isso indica?</legend>
+            <label><input type="radio" name="q4" value="a"> Uma classe do grid do Bootstrap</label>
+            <label><input type="radio" name="q4" value="b"> Uma classe do Tailwind, que precisa ser trocada pelo equivalente do Bootstrap</label>
+            <label><input type="radio" name="q4" value="c"> Um erro de digitação</label>
+            <p data-explain="a" hidden>O Bootstrap escreve as colunas como <code>col-md-4</code>, com hífen. Os dois-pontos são marca do Tailwind.</p>
+            <p data-explain="c" hidden>Não é erro: é a sintaxe do Tailwind, que o Stitch costuma usar por padrão.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Gere o protótipo do <strong>seu projeto</strong> a partir do seu PRD: celular primeiro, depois computador, as telas ligadas pelo Instant Prototype e ajustadas aos componentes do Bootstrap. Faça a triagem e registre os pedidos e as decisões no <code>docs/prototipo.md</code>. Ponha o link no README, com acesso para qualquer pessoa com o link.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que torna um protótipo responsivo e navegável?</li>
+          <li><strong>A motivação:</strong> por que prototipar antes de escrever o HTML?</li>
+          <li><strong>A anatomia:</strong> aponte no seu protótipo três componentes que virão prontos do Bootstrap.</li>
+          <li><strong>"E se eu tirar?":</strong> diga uma coisa que a IA sugeriu, que você cortou, e qual história do PRD justificou o corte.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://stitch.withgoogle.com/">Stitch</a></li>
+          <li><a href="https://help.figma.com/hc/pt-br">Central de ajuda do Figma</a></li>
+          <li><a href="https://www.figma.com/education/">Figma para educação (acesso gratuito para estudantes)</a></li>
+          <li><a href="https://modelcontextprotocol.io/">Model Context Protocol (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap 5.3: exemplos de páginas prontas</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 05-prototipar-com-ia -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

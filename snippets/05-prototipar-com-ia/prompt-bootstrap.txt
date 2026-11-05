@@ -1,0 +1,1 @@
+Ajuste o design destas telas para seguir os componentes do Bootstrap 5.3: navbar, card, badge, button group, carousel, modal e os campos de formulário. Não use Tailwind.

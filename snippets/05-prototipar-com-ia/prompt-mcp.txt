@@ -1,0 +1,5 @@
+Pelo MCP do Stitch, leia só a tela "Trilhas" (versão de celular) do projeto Trilheiro.
+Gere apenas o HTML do cartão de uma trilha, com o componente card do Bootstrap 5.3
+e as classes que já usamos no index.html. Não gere a página inteira, não use Tailwind
+e não acrescente nenhum componente que não esteja no cartão.
+Depois, explique em uma linha o que faz cada classe que você usou.
