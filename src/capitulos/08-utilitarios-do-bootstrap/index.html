@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="08-utilitarios-do-bootstrap">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 08-utilitarios-do-bootstrap -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Três ajustes deixam a página do Trilheiro mais acabada. O rodapé passa a ficar sempre no fim da tela, mesmo quando o conteúdo é curto. O título "Trilhas em destaque" ganha, na mesma linha e alinhado com ele, um link "Ver todas as trilhas", que some no celular. E os espaçamentos saem do CSS próprio e viram classes no HTML.</p>
+        <p>Tudo isso com as <a class="tf-term" href="{{base}}glossario/#utilitario">classes utilitárias</a> do Bootstrap: cada uma faz uma coisa só, e você combina várias. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/08-utilitarios-do-bootstrap">etapas/08-utilitarios-do-bootstrap</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🔧" title="Os utilitários são as peças de um canivete suíço">
+          <p>Um canivete tem a lâmina, a tesourinha, o abridor, a chave de fenda. Cada peça faz uma tarefa, e nenhuma tenta fazer tudo. No mato, você abre a que precisa, na hora.</p>
+          <p>As classes utilitárias são as peças: <code>py-4</code> dá respiro em cima e embaixo, <code>d-flex</code> põe os filhos lado a lado, <code>d-none</code> esconde. Em vez de inventar uma classe nova e escrever o CSS dela, você abre a peça certa direto no HTML.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Espaçamento: margem e padding</h3>
+        <p>As classes de espaçamento seguem um padrão: <strong>propriedade</strong> (<code>m</code> para margem, <code>p</code> para padding), <strong>lado</strong> (<code>t</code> em cima, <code>b</code> embaixo, <code>s</code> no início, <code>e</code> no fim, <code>x</code> nas laterais, <code>y</code> em cima e embaixo, ou nada para os quatro lados) e <strong>tamanho</strong>, de 0 a 5:</p>
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col">Tamanho</th><th scope="col">0</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th></tr></thead>
+            <tbody><tr><th scope="row">Valor</th><td>0</td><td>0,25rem</td><td>0,5rem</td><td>1rem</td><td>1,5rem</td><td>3rem</td></tr></tbody>
+          </table>
+        </div>
+        <p>Assim, <code>py-4</code> é padding de 1,5rem em cima e embaixo, e <code>mb-0</code> tira a margem de baixo. Com os pontos de quebra do capítulo 7, dá para variar por tamanho: <code>p-2 p-md-4</code>. O <code>mt-auto</code> é especial: uma margem que ocupa todo o espaço livre, empurrando o elemento para o fim.</p>
+
+        <h3>Flexbox em classes</h3>
+        <p><code>d-flex</code> transforma o elemento num contêiner flexível: os filhos ficam lado a lado. A partir daí:</p>
+        <ul>
+          <li><code>justify-content-between</code>, <code>-center</code>, <code>-end</code>: distribuem os filhos na direção principal;</li>
+          <li><code>align-items-center</code>, <code>-baseline</code>: alinham na outra direção;</li>
+          <li><code>flex-column</code>: empilha os filhos; <code>gap-3</code>: espaço entre eles; <code>flex-grow-1</code>: deixa um filho crescer e ocupar o que sobra.</li>
+        </ul>
+        <p>O Flexbox por baixo dessas classes é o assunto do capítulo 11, em CSS puro.</p>
+
+        <h3>Visibilidade e texto</h3>
+        <p><code>d-none</code> esconde; <code>d-sm-inline</code> mostra de novo a partir do sm. Juntas, <code>d-none d-sm-inline</code> querem dizer "escondido no celular, visível do sm para cima". Para texto: <code>text-center</code>, <code>fw-bold</code>, <code>text-uppercase</code>, <code>small</code> e <code>text-body-secondary</code>, a cor de texto de apoio.</p>
+
+        <h3>Experimente</h3>
+        <p>O título da seção e o link usam quatro utilitários. Desmarque cada um e veja o que acontece:</p>
+        <tf-class-toggle>
+          <div class="tf-sim-stage">
+            <div class="d-flex justify-content-between align-items-baseline" data-sim-classes="d-flex justify-content-between align-items-baseline">
+              <p class="h4 mb-0" data-sim-classes="mb-0">Trilhas em destaque</p>
+              <a href="#missao">Ver todas as trilhas</a>
+            </div>
+          </div>
+        </tf-class-toggle>
+
+        <h3>O rodapé no fim da tela</h3>
+        <p>Numa página com pouco conteúdo, o rodapé sobe e fica no meio da tela. A solução tem três partes: o <code>&lt;body&gt;</code> vira um contêiner flexível em coluna (<code>d-flex flex-column</code>) com pelo menos a altura da tela (<code>min-vh-100</code>), e o <code>&lt;main&gt;</code> cresce para ocupar o que sobra (<code>flex-grow-1</code>). O rodapé é empurrado para baixo. Outro jeito, com o mesmo efeito, é pôr <code>mt-auto</code> no rodapé no lugar do <code>flex-grow-1</code> no main.</p>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O rodapé no fim">
+            <p>No <code>index.html</code>, acrescente as classes ao <code>&lt;body&gt;</code> e ao <code>&lt;main&gt;</code>:</p>
+            <tf-code src="08-utilitarios-do-bootstrap/rodape.html" caption="index.html"></tf-code>
+            <p>Abra a página numa tela alta: o rodapé fica colado no fim.</p>
+          </section>
+          <section data-step="Espaços em classes">
+            <p>O <code>style.css</code> tinha estas regras só para dar espaço:</p>
+            <tf-code src="08-utilitarios-do-bootstrap/antes.css" caption="css/style.css (antes)"></tf-code>
+            <p>Apague os <code>padding</code> e use <code>py-4 px-3</code> no cabeçalho, <code>py-5</code> no conteúdo e <code>py-3 px-3</code> no rodapé. O CSS próprio fica só com o que é identidade (as cores e as fontes dos tokens), e os espaços seguem a escala do Bootstrap.</p>
+          </section>
+          <section data-step="Título e link na mesma linha">
+            <tf-code src="08-utilitarios-do-bootstrap/titulo-secao.html" caption="index.html"></tf-code>
+            <p>O <code>align-items-baseline</code> alinha os dois pela linha de base do texto, o que fica melhor que centralizar quando os tamanhos são diferentes. O <code>mb-0</code> no título tira a margem que o Bootstrap põe em todo <code>h2</code>, que desalinharia o par.</p>
+          </section>
+          <section data-step="Detalhes de texto">
+            <p>Nos dados de cada trilha, use <code>small text-body-secondary</code>: texto menor e na cor de apoio, para o nome da trilha continuar sendo o destaque.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>min-vh-100</code> do <code>&lt;body&gt;</code>: numa tela alta, o rodapé volta a subir. Devolva, e tire o <code>flex-grow-1</code> do <code>&lt;main&gt;</code>: o efeito é o mesmo, porque agora ninguém ocupa o espaço que sobra. As três classes trabalham juntas.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Minha regra de CSS não muda o espaço de um elemento com classe utilitária">
+          <p>Todo utilitário do Bootstrap usa <code>!important</code>:</p>
+          <tf-code src="08-utilitarios-do-bootstrap/important.css" caption="bootstrap.css (trecho)"></tf-code>
+          <p>Por isso, uma regra sua como <code>.site-header { padding: 2rem; }</code> perde para o <code>p-3</code>, mesmo vindo depois. Não brigue com ele: troque a classe no HTML (<code>p-4</code>, <code>p-5</code>) ou tire o utilitário e cuide do espaço só no CSS. Misturar os dois no mesmo elemento é pedir confusão.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O rodapé continua subindo">
+          <p>As três peças precisam estar no lugar certo: <code>d-flex flex-column min-vh-100</code> no <strong>pai</strong> (o <code>&lt;body&gt;</code>) e <code>flex-grow-1</code> num <strong>filho direto</strong> dele (o <code>&lt;main&gt;</code>). Se houver uma <code>&lt;div&gt;</code> envolvendo tudo, as classes do pai precisam ir para ela.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O elemento sumiu também no computador">
+          <p><code>d-none</code> sozinho esconde em todos os tamanhos. Para esconder só no celular, combine com a classe que mostra de novo a partir de um ponto de quebra: <code>d-none d-sm-inline</code>, <code>d-none d-md-block</code>. E o contrário, esconder só no computador: <code>d-lg-none</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="08-utilitarios-do-bootstrap" award>
+          <fieldset data-correct="b">
+            <legend>O que faz a classe <code>py-4</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Margem de 4px em cima e embaixo</label>
+            <label><input type="radio" name="q1" value="b"> Padding de 1,5rem em cima e embaixo</label>
+            <label><input type="radio" name="q1" value="c"> Padding de 4rem nas laterais</label>
+            <p data-explain="a" hidden>O <code>p</code> é de padding, e o 4 é um degrau da escala (1,5rem), e não pixels.</p>
+            <p data-explain="c" hidden>O <code>y</code> é o eixo vertical (em cima e embaixo). As laterais seriam <code>px</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Como esconder um elemento no celular e mostrá-lo a partir do md?</legend>
+            <label><input type="radio" name="q2" value="a"> <code>d-md-none</code></label>
+            <label><input type="radio" name="q2" value="b"> <code>d-none</code></label>
+            <label><input type="radio" name="q2" value="c"> <code>d-none d-md-block</code></label>
+            <p data-explain="a" hidden><code>d-md-none</code> faz o contrário: esconde a partir do md.</p>
+            <p data-explain="b" hidden><code>d-none</code> sozinho esconde em todos os tamanhos.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para o rodapé ficar no fim da tela, quais classes vão no <code>&lt;body&gt;</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> <code>d-flex flex-column min-vh-100</code></label>
+            <label><input type="radio" name="q3" value="b"> <code>fixed-bottom</code></label>
+            <label><input type="radio" name="q3" value="c"> <code>mb-5</code></label>
+            <p data-explain="b" hidden><code>fixed-bottom</code> prende o elemento na tela, por cima do conteúdo, mesmo ao rolar. Não é o mesmo que empurrar o rodapé para o fim.</p>
+            <p data-explain="c" hidden>Uma margem fixa não acompanha a altura da tela.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Sua regra <code>.titulo { margin-bottom: 2rem; }</code> não funciona num elemento com <code>mb-0</code>. Por quê?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque o seu CSS está antes do Bootstrap</label>
+            <label><input type="radio" name="q4" value="b"> Porque os utilitários do Bootstrap usam <code>!important</code>, que passa na frente da sua regra</label>
+            <label><input type="radio" name="q4" value="c"> Porque margem não funciona em títulos</label>
+            <p data-explain="a" hidden>Mesmo com o seu CSS depois, o <code>!important</code> do utilitário vence. Troque a classe ou tire o utilitário.</p>
+            <p data-explain="c" hidden>Margem funciona em títulos. O problema é o <code>!important</code> do utilitário.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, ponha o rodapé no fim da tela com os utilitários, troque os espaçamentos do seu CSS por classes da escala e alinhe uma linha com título e ação (um botão ou link) usando <code>d-flex</code>. Esconda um elemento secundário no celular.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é uma classe utilitária, e no que ela difere de uma classe de componente como <code>.card</code>?</li>
+          <li><strong>A motivação:</strong> por que trocar <code>padding: 1.5rem</code> no CSS por <code>py-4</code> no HTML?</li>
+          <li><strong>A anatomia:</strong> leia em voz alta cada parte de <code>d-none d-sm-inline</code> e de <code>justify-content-between</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>flex-grow-1</code> e explique por que o rodapé sobe.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/utilities/spacing/">Bootstrap 5.3: Spacing</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/utilities/flex/">Bootstrap 5.3: Flex</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/utilities/display/">Bootstrap 5.3: Display</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/utilities/text/">Bootstrap 5.3: Text</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/utilities/sizing/">Bootstrap 5.3: Sizing (vh e vw)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 08-utilitarios-do-bootstrap -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

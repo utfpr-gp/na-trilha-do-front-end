@@ -1,0 +1,9 @@
+.site-header {
+  padding: 1.5rem 1rem; /* [!code highlight] */
+  color: var(--cor-superficie);
+  background-color: var(--cor-marca);
+}
+
+.site-main {
+  padding: 2rem 1rem; /* [!code highlight] */
+}

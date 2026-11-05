@@ -16,5 +16,6 @@ export const GLOSSARY = [
   { id: 'variavel-css', term: 'variável CSS', definition: 'Um valor com nome, declarado com dois hífens (--cor-marca: #2f5d3a) e usado com var(--cor-marca). É a forma de guardar design tokens no CSS.', chapter: 6 },
   { id: 'grid', term: 'grid', definition: 'O sistema de colunas do Bootstrap: um .container, fileiras (.row) e colunas (.col-*) que ocupam partes de 12, mudando conforme a largura da tela.', chapter: 7 },
   { id: 'breakpoint', term: 'breakpoint', definition: 'A largura de tela a partir da qual o layout muda. No Bootstrap, sm, md, lg, xl e xxl são os breakpoints.', chapter: 7 },
+  { id: 'utilitario', term: 'classe utilitária', definition: 'Uma classe que faz uma coisa só, como py-4 (padding vertical) ou d-flex (contêiner flexível). No Bootstrap, os utilitários usam !important.', chapter: 8 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];
