@@ -1,0 +1,76 @@
+// A paleta do livro: o único lugar com cor escrita. Confira com `node scripts/check-contrast.mjs`.
+
+$tf-papel-light: #FAF7F0;
+$tf-papel-dark: #121815;
+$tf-superficie-light: #FFFFFF;
+$tf-superficie-dark: #1B231E;
+$tf-tinta-light: #1F2A24;
+$tf-tinta-dark: #E8EDE9;
+$tf-tinta-suave-light: #55625A;
+$tf-tinta-suave-dark: #B4C0B8;
+$tf-verde-mata-light: #2F5D3A;
+$tf-verde-mata-dark: #7FBF8E;
+$tf-terra-light: #8B5A2B;
+$tf-terra-dark: #D9A066;
+$tf-amarelo-light: #F2C230;
+$tf-amarelo-dark: #F2C230;
+$tf-tinta-sobre-amarelo-light: #1F2A24;
+$tf-tinta-sobre-amarelo-dark: #1F2A24;
+$tf-azul-ceu-light: #1F5F99;
+$tf-azul-ceu-dark: #8AB8E6;
+
+// Uma cor por visão do capítulo
+$tf-view-missao-light: #1F5F99;
+$tf-view-missao-dark: #8AB8E6;
+$tf-view-ideia-light: #8A5A00;
+$tf-view-ideia-dark: #E8B65C;
+$tf-view-por-dentro-light: #5B3F99;
+$tf-view-por-dentro-dark: #B9A3E8;
+$tf-view-mao-no-codigo-light: #2F5D3A;
+$tf-view-mao-no-codigo-dark: #7FBF8E;
+$tf-view-armadilhas-light: #A3271F;
+$tf-view-armadilhas-dark: #F08A80;
+$tf-view-desafio-light: #8B5A2B;
+$tf-view-desafio-dark: #D9A066;
+$tf-view-na-sua-trilha-light: #0F6B66;
+$tf-view-na-sua-trilha-dark: #6CC9C1;
+$tf-view-para-ir-alem-light: #4A5560;
+$tf-view-para-ir-alem-dark: #AEB8C2;
+
+// O mesmo, como mapa, para os laços do Sass
+$tf-palette: (
+  papel-light: $tf-papel-light,
+  papel-dark: $tf-papel-dark,
+  superficie-light: $tf-superficie-light,
+  superficie-dark: $tf-superficie-dark,
+  tinta-light: $tf-tinta-light,
+  tinta-dark: $tf-tinta-dark,
+  tinta-suave-light: $tf-tinta-suave-light,
+  tinta-suave-dark: $tf-tinta-suave-dark,
+  verde-mata-light: $tf-verde-mata-light,
+  verde-mata-dark: $tf-verde-mata-dark,
+  terra-light: $tf-terra-light,
+  terra-dark: $tf-terra-dark,
+  amarelo-light: $tf-amarelo-light,
+  amarelo-dark: $tf-amarelo-dark,
+  tinta-sobre-amarelo-light: $tf-tinta-sobre-amarelo-light,
+  tinta-sobre-amarelo-dark: $tf-tinta-sobre-amarelo-dark,
+  azul-ceu-light: $tf-azul-ceu-light,
+  azul-ceu-dark: $tf-azul-ceu-dark,
+  view-missao-light: $tf-view-missao-light,
+  view-missao-dark: $tf-view-missao-dark,
+  view-ideia-light: $tf-view-ideia-light,
+  view-ideia-dark: $tf-view-ideia-dark,
+  view-por-dentro-light: $tf-view-por-dentro-light,
+  view-por-dentro-dark: $tf-view-por-dentro-dark,
+  view-mao-no-codigo-light: $tf-view-mao-no-codigo-light,
+  view-mao-no-codigo-dark: $tf-view-mao-no-codigo-dark,
+  view-armadilhas-light: $tf-view-armadilhas-light,
+  view-armadilhas-dark: $tf-view-armadilhas-dark,
+  view-desafio-light: $tf-view-desafio-light,
+  view-desafio-dark: $tf-view-desafio-dark,
+  view-na-sua-trilha-light: $tf-view-na-sua-trilha-light,
+  view-na-sua-trilha-dark: $tf-view-na-sua-trilha-dark,
+  view-para-ir-alem-light: $tf-view-para-ir-alem-light,
+  view-para-ir-alem-dark: $tf-view-para-ir-alem-dark,
+);

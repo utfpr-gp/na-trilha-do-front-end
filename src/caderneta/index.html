@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-title" content="Minha caderneta">
+  <meta name="tf-description" content="Os marcos, mirantes e o cume que você conquistou na trilha do livro.">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container">
+    <div class="tf-reading">
+      <header class="tf-chapter-header">
+        <p class="tf-kicker">Seu progresso</p>
+        <h1>Minha caderneta</h1>
+      </header>
+      <p>Cada capítulo termina num desafio. Acertando todas as perguntas, você ganha o marco daquele trecho da trilha. Ao fechar uma parte, você chega a um <strong>mirante</strong>; ao fechar o livro, ao <strong>cume</strong>.</p>
+      <p>A caderneta fica guardada só neste navegador, sem login. Para levar o progresso a outro computador, exporte o arquivo aqui e importe lá.</p>
+      <tf-trail-map>
+        <p class="tf-count" data-count aria-live="polite"></p>
+        <!-- @render trail-map -->
+        <div class="tf-transfer">
+          <button type="button" class="btn btn-outline-secondary" data-export>Exportar progresso</button>
+          <label class="btn btn-outline-secondary">Importar progresso <input type="file" accept="application/json,.json" data-import class="visually-hidden"></label>
+        </div>
+        <p data-status aria-live="polite"></p>
+      </tf-trail-map>
+    </div>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

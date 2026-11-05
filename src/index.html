@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-title" content="Na Trilha do Front-End">
+  <meta name="tf-description" content="Livro aberto e interativo que ensina a construir um site responsivo com Bootstrap, Sass e JavaScript, do protótipo ao site publicado.">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" data-pagefind-body>
+    <section class="tf-hero">
+      <div class="container py-5">
+        <p class="tf-kicker">Um livro aberto, em português</p>
+        <h1>Na Trilha do Front-End</h1>
+        <p class="lead">Aprenda a construir um site responsivo com <strong>Bootstrap, Sass e JavaScript</strong>, do protótipo ao site publicado, entendendo o que cada linha faz e por que ela está ali.</p>
+        <p>Ao longo da trilha, você constrói o <strong>Trilheiro</strong>, um site de trilhas da região de Guarapuava: um capítulo de cada vez, cada um respondendo a uma pergunta e deixando o app um pouco mais completo. Ao fechar cada capítulo, um desafio rápido vale um marco na sua <a href="{{base}}caderneta/">caderneta</a>.</p>
+        <p><a class="btn btn-primary btn-lg" href="{{base}}como-ler/">Como ler este livro</a></p>
+      </div>
+    </section>
+    <div class="container py-5">
+      <h2 class="visually-hidden">Capítulos</h2>
+      <!-- @render catalog -->
+    </div>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

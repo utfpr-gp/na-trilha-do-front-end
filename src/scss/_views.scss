@@ -1,0 +1,378 @@
+// As visões do capítulo e os seus componentes.
+
+// <tf-code>: o Shiki escreve as duas cores em variáveis; o tema escolhe uma.
+tf-code {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+.tf-code-figure {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--tf-ink-muted);
+  border-radius: var(--bs-border-radius);
+  overflow: hidden;
+
+  figcaption {
+    padding: 0.4rem 1rem;
+    font-family: var(--bs-font-monospace);
+    font-size: 0.85rem;
+    color: var(--tf-ink-muted);
+    background: var(--tf-surface);
+    border-bottom: 1px solid var(--tf-ink-muted);
+  }
+
+  pre {
+    margin: 0;
+    padding: 1rem 0;
+    overflow-x: auto;
+    font-size: 0.9rem;
+  }
+
+  .line {
+    display: inline-block;
+    min-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .line.highlighted {
+    background: color-mix(in srgb, var(--tf-mark) 25%, transparent);
+    box-shadow: inset 4px 0 0 var(--tf-mark);
+  }
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+[data-bs-theme="dark"] .shiki,
+[data-bs-theme="dark"] .shiki span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+.shiki .line.highlighted span {
+  background-color: transparent;
+}
+
+.tf-copy {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  min-height: 2rem;
+  color: var(--tf-ink);
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-ink-muted);
+}
+
+// Coluna de leitura
+.tf-reading {
+  max-width: 48rem;
+}
+
+.tf-chapter-header {
+  padding: 2rem 0 1rem;
+
+  h1 {
+    font-weight: 800;
+    color: var(--tf-ink);
+  }
+}
+
+// <tf-view>: cada visão com a sua cor na borda e no título
+tf-view {
+  display: block;
+}
+
+.tf-view {
+  margin: 2.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 4px solid var(--tf-view-color);
+  scroll-margin-top: 1rem;
+}
+
+@each $view in $tf-views {
+  .tf-view-#{$view} {
+    --tf-view-color: var(--tf-view-#{$view});
+  }
+}
+
+.tf-view-title {
+  font-weight: 800;
+  color: var(--tf-view-color);
+}
+
+.tf-anchor {
+  margin-left: 0.5rem;
+  padding: 0 0.4rem;
+  border: 0;
+  background: transparent;
+  color: var(--tf-ink-muted);
+  opacity: 0;
+}
+
+.tf-view-title:hover .tf-anchor,
+.tf-anchor:focus-visible {
+  opacity: 1;
+}
+
+// <tf-analogy> e <tf-pitfall>: caixas sem JavaScript
+tf-analogy,
+tf-pitfall {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-ink-muted);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+tf-pitfall {
+  border-color: var(--tf-view-armadilhas);
+}
+
+.tf-box-title {
+  font-weight: 800;
+}
+
+.tf-pitfall-message {
+  padding: 0.75rem 1rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--tf-bg);
+  color: var(--tf-view-armadilhas);
+  white-space: pre-wrap;
+}
+
+.tf-deep-dive {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px dashed var(--tf-ink-muted);
+
+  summary {
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+// <tf-steps>
+tf-steps {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+.tf-steps-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  border-bottom: 2px solid var(--tf-ink-muted);
+  margin-bottom: 1rem;
+
+  [role="tab"] {
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--tf-ink-muted);
+    font-weight: 700;
+  }
+
+  [aria-selected="true"] {
+    color: var(--tf-ink);
+    border-bottom-color: var(--tf-brand);
+  }
+}
+
+// Navegação entre capítulos
+.tf-pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 3rem 0 1rem;
+
+  span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--tf-ink-muted);
+  }
+}
+
+// <tf-challenge>
+tf-challenge {
+  display: block;
+
+  fieldset {
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--tf-ink-muted);
+    border-radius: var(--bs-border-radius);
+    background: var(--tf-surface);
+  }
+
+  legend {
+    float: none;
+    width: auto;
+    padding: 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  [data-explain] {
+    margin: 0.5rem 0 0;
+    color: var(--tf-ink-muted);
+  }
+}
+
+.tf-feedback {
+  margin: 0.5rem 0 0;
+  font-weight: 700;
+
+  &.is-right {
+    color: var(--tf-view-mao-no-codigo);
+  }
+
+  &.is-wrong {
+    color: var(--tf-view-armadilhas);
+  }
+}
+
+.tf-challenge-status {
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+// <tf-mark>: o espaço do marco no cabeçalho
+tf-mark {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px dashed var(--tf-ink-muted);
+  color: var(--tf-ink-muted);
+  font-size: 0.9rem;
+
+  &.is-done {
+    border: 0;
+    background: var(--tf-mark);
+    color: var(--tf-on-mark);
+    font-weight: 700;
+  }
+}
+
+// A caderneta
+.tf-count {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--tf-brand);
+}
+
+.tf-trail,
+.tf-stops {
+  list-style: none;
+  padding: 0;
+}
+
+.tf-trail-part {
+  margin: 2rem 0;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+}
+
+.tf-stop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-left: 3px dotted var(--tf-ink-muted);
+
+  &.is-done {
+    border-left: 3px solid var(--tf-brand);
+
+    .tf-stop-state {
+      background: var(--tf-mark);
+      color: var(--tf-on-mark);
+    }
+  }
+}
+
+.tf-stop-number {
+  font-weight: 800;
+  color: var(--tf-accent);
+}
+
+.tf-stop-state {
+  font-size: 0.85rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  color: var(--tf-ink-muted);
+}
+
+.tf-viewpoint,
+.tf-summit {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px dashed var(--tf-ink-muted);
+  color: var(--tf-ink-muted);
+  font-weight: 700;
+
+  &.is-done {
+    border: 0;
+    background: var(--tf-brand);
+    color: var(--tf-surface);
+  }
+}
+
+.tf-transfer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+
+  // O campo de arquivo fica escondido; o rótulo mostra onde está o foco.
+  label:focus-within {
+    outline: 3px solid var(--tf-link);
+    outline-offset: 2px;
+  }
+}
+
+// Glossário
+.tf-glossary {
+  dt {
+    margin-top: 1.25rem;
+    font-weight: 800;
+    color: var(--tf-brand);
+    scroll-margin-top: 1rem;
+  }
+
+  dt:target {
+    background: color-mix(in srgb, var(--tf-mark) 30%, transparent);
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+  }
+}
+
+.tf-term {
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}

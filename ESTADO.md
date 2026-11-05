@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-04 (documento técnico = `architecture.md`; protótipo do Trilheiro como Artifact).
+> Última atualização: 2026-11-04 (estrutura do site construída no branch `feat/estrutura`).
 
 ## Feito
 
@@ -12,10 +12,12 @@
 - Protótipo do Trilheiro publicado como Artifact (canvas de design, 4 telas × computador e celular, navegável, com os componentes do Bootstrap apontados): <https://claude.ai/artifact/Q3NTpoz8Jtq87mgzywVVYP>. **Privado até o professor compartilhar** pelo menu Share.
 - `trilheiro/README.md` (vitrine) e `trilheiro/checklist.md` (itens atuais, desmarcados, com o arquivo onde cada prova vai estar) escritos em 04/11. O app em si ainda não existe: os arquivos citados nascem com os capítulos.
 
+- **Estrutura do site construída** (plano 1, branch `feat/estrutura`, 04/11): Vite com várias páginas, paleta aprovada pelo professor, catálogo dos 25 capítulos, visões do capítulo, página "Como ler este livro", desafio, caderneta com marcos, mirantes e cume, glossário, busca (Pagefind), SEO, 404, verificações (`npm run check`), publicação por GitHub Actions e `AGENTS.md`.
+
 ## Próximos passos
 
-1. ~~Escrever~~ Executar `docs/plano-1-estrutura.md` (escrito em 04/11, aguardando revisão do professor): o site em **HTML, Bootstrap 5.3, Sass e JavaScript puro, com Vite** (projeto, seção 10). Do *Volta ao Mundo* vêm o formato e as regras, e não o código.
-2. Estrutura: página inicial, "Minha caderneta", o catálogo dos 25 capítulos como "em breve", a identidade visual (verde-mata, terra, amarelo de marcação) e o `AGENTS.md` adaptado.
+1. **Merge do Pull Request da estrutura** pelo professor. Antes, em *Settings → Pages* do repositório, escolher **GitHub Actions** como origem da publicação.
+2. Conferir o site publicado: início, `como-ler/`, caderneta, busca e uma 404 aninhada.
 3. Capítulos na ordem do livro, do 1 em diante.
 
 ## Em aberto

@@ -1,0 +1,13 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="{{base}}favicon.svg" type="image/svg+xml">
+<script>
+  (function () {
+    var c = null;
+    try { c = localStorage.getItem('trilha:tema'); } catch (e) {}
+    if (c !== 'light' && c !== 'dark') c = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-bs-theme', c);
+  })();
+</script>
+<link rel="stylesheet" href="/scss/main.scss">
+<script type="module" src="/js/main.js"></script>

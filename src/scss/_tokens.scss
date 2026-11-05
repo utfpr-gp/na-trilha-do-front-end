@@ -1,0 +1,27 @@
+// Tokens com nome de papel. Os componentes do site só usam estas variáveis.
+$tf-roles: papel, superficie, tinta, tinta-suave, verde-mata, terra, amarelo, tinta-sobre-amarelo, azul-ceu;
+$tf-views: missao, ideia, por-dentro, mao-no-codigo, armadilhas, desafio, na-sua-trilha, para-ir-alem;
+
+@mixin tf-tokens($mode) {
+  --tf-bg: #{map-get($tf-palette, papel-#{$mode})};
+  --tf-surface: #{map-get($tf-palette, superficie-#{$mode})};
+  --tf-ink: #{map-get($tf-palette, tinta-#{$mode})};
+  --tf-ink-muted: #{map-get($tf-palette, tinta-suave-#{$mode})};
+  --tf-brand: #{map-get($tf-palette, verde-mata-#{$mode})};
+  --tf-accent: #{map-get($tf-palette, terra-#{$mode})};
+  --tf-mark: #{map-get($tf-palette, amarelo-#{$mode})};
+  --tf-on-mark: #{map-get($tf-palette, tinta-sobre-amarelo-#{$mode})};
+  --tf-link: #{map-get($tf-palette, azul-ceu-#{$mode})};
+  @each $view in $tf-views {
+    --tf-view-#{$view}: #{map-get($tf-palette, view-#{$view}-#{$mode})};
+  }
+}
+
+:root,
+[data-bs-theme="light"] {
+  @include tf-tokens(light);
+}
+
+[data-bs-theme="dark"] {
+  @include tf-tokens(dark);
+}
