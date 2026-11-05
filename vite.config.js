@@ -7,9 +7,10 @@ const root = resolve(import.meta.dirname, 'src');
 const pages = globSync('**/index.html', { cwd: root }).map((p) => resolve(root, p));
 if (existsSync(resolve(root, '404.html'))) pages.push(resolve(root, '404.html'));
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, isPreview }) => ({
   root,
-  base: command === 'build' ? '/na-trilha-do-front-end/' : '/',
+  // O preview serve o dist/, que foi gerado com a base do GitHub Pages.
+  base: command === 'build' || isPreview ? '/na-trilha-do-front-end/' : '/',
   publicDir: resolve(root, 'public'),
   plugins: [livroPlugin()],
   css: {
