@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="16-imagens-responsivas">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 16-imagens-responsivas -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>As fotos do Trilheiro passam a chegar <strong>no tamanho certo para cada tela</strong>. Cada uma existe em duas larguras (480 e 960 px) e dois formatos (WebP e JPEG), e o navegador escolhe sozinho: num computador, onde cada cartão ocupa um terço da tela, ele baixa a versão de 480 px; num celular com tela de alta densidade, a de 960 px. As fotos fora da tela só carregam quando a pessoa rola até elas.</p>
+        <p>Imagens costumam ser a maior parte do peso de uma página. Mandar uma foto de 2000 px para um cartão de 400 px é gastar o plano de dados de quem visita. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/16-imagens-responsivas">etapas/16-imagens-responsivas</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🗺️" title="O mapa na escala certa">
+          <p>Para uma trilha de 4 km, ninguém leva o mapa do estado inteiro, nem uma folha gigante com cada pedra desenhada: leva o mapa na escala da trilha. E, se a vista estiver ruim, uma versão um pouco mais detalhada.</p>
+          <p>O <code>srcset</code> é a pasta com o mesmo mapa em várias escalas. O <code>sizes</code> diz de que tamanho é a mochila (quanto da tela a foto ocupa). E o navegador, que sabe a largura e a densidade da tela, puxa o mapa certo.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>A foto que preenche a moldura: object-fit</h3>
+        <p>O primeiro problema é de CSS: fotos com proporções diferentes deixam os cartões tortos. O <code>object-fit: cover</code> faz a imagem cobrir toda a área, cortando o que sobra, sem distorcer. O Trilheiro já usa isso desde o capítulo 14, no mixin das fotos:</p>
+        <tf-code src="16-imagens-responsivas/mixin.scss" caption="scss/_mixins.scss"></tf-code>
+        <p>Com <code>object-fit: contain</code>, a imagem inteira aparece, com faixas vazias nas sobras. Sem nenhum dos dois, ela estica.</p>
+
+        <h3>O arquivo certo: <a class="tf-term" href="{{base}}glossario/#srcset">srcset</a> e sizes</h3>
+        <ul>
+          <li><code>srcset="salto-480.webp 480w, salto-960.webp 960w"</code>: os arquivos disponíveis, cada um com a sua largura real em pixels (o <code>w</code>);</li>
+          <li><code>sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw"</code>: quanto da tela a imagem vai ocupar, em cada situação. É o grid do capítulo 7 escrito de novo: 3 cartões a partir do lg, 2 a partir do sm, 1 no celular.</li>
+        </ul>
+        <p>O navegador multiplica a largura que a foto ocupa pela densidade da tela e baixa o menor arquivo que cobre o resultado:</p>
+        <tf-srcset-lab data-sizes="(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw" data-srcset="salto-480.webp 480w, salto-960.webp 960w"></tf-srcset-lab>
+        <p>Isto foi conferido no Chrome: numa tela de 1200 px, cada foto ocupa cerca de 396 px, e o navegador baixou o WebP de 480 px, com uns 3 KB. Numa tela de 500 px, a foto ocupa os 500 px, o arquivo de 480 não basta, e ele baixou o de 960.</p>
+
+        <h3>O formato certo: WebP e o &lt;picture&gt;</h3>
+        <p>O WebP é um formato de imagem moderno, bem mais leve que o JPEG com a mesma aparência. Nas imagens do Trilheiro, ele ficou com cerca de um terço do tamanho; em fotos de verdade, a economia costuma ser menor, mas ainda grande. O <code>&lt;picture&gt;</code> oferece o WebP primeiro e o JPEG como reserva:</p>
+        <tf-code src="16-imagens-responsivas/picture.html" caption="index.html (trecho)"></tf-code>
+        <tf-code src="16-imagens-responsivas/tamanhos.txt" caption="Os arquivos do Trilheiro"></tf-code>
+        <p>O navegador lê os <code>&lt;source&gt;</code> em ordem e usa o primeiro que entende. O <code>&lt;img&gt;</code> é obrigatório: é ele que aparece na tela, com o <code>alt</code>, o <code>class</code> e o tamanho.</p>
+
+        <h3>width, height e loading</h3>
+        <p>O <code>width="480" height="360"</code> não fixa o tamanho na tela (o CSS manda nisso): ele diz a proporção, para o navegador reservar o espaço antes de a imagem chegar. Sem isso, o texto "pula" para baixo quando a foto carrega. E o <code>loading="lazy"</code> adia o download das imagens que estão longe da área visível. Não use <code>lazy</code> na primeira imagem da página, a que aparece sem rolar: ela precisa chegar o quanto antes.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: como gerar as versões, e o Cloudinary</summary>
+          <p>Para converter e comprimir à mão, o <strong>Squoosh</strong> (do Google) e o <strong>TinyPNG</strong> funcionam no navegador. Com muitas imagens, um serviço como o <strong>Cloudinary</strong> guarda a original e gera cada versão pelo endereço: um trecho como <code>w_480,f_auto,q_auto</code> no meio da URL pede 480 px de largura, no melhor formato que o navegador aceita, com a qualidade ajustada sozinha. Aí o <code>srcset</code> aponta para URLs do Cloudinary, em vez de arquivos seus.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Gere as versões">
+            <p>Para cada foto, gere duas larguras (480 e 960 px) em WebP e em JPEG, com o Squoosh ou outra ferramenta, e salve em <code>img/trilhas/</code> com o nome e a largura: <code>salto-480.webp</code>, <code>salto-960.jpg</code>. A etapa já traz os arquivos das quatro imagens.</p>
+          </section>
+          <section data-step="O &lt;picture&gt; nos cartões">
+            <p>Troque o <code>&lt;img&gt;</code> de cada cartão pelo <code>&lt;picture&gt;</code> do Por dentro, mantendo a classe <code>card-img-top</code> e o <code>alt</code> no <code>&lt;img&gt;</code>. O <code>sizes</code> dos cartões é o do grid: <code>(min-width: 992px) 33vw, (min-width: 576px) 50vw, 100vw</code>.</p>
+          </section>
+          <section data-step="O carrossel">
+            <p>No <code>trilha.html</code>, faça o mesmo nas fotos do carrossel, com o <code>sizes</code> da coluna em que ele está: <code>(min-width: 992px) 66vw, 100vw</code>. A primeira foto fica <strong>sem</strong> <code>loading="lazy"</code>, porque aparece assim que a página abre; as outras, com.</p>
+          </section>
+          <section data-step="Confira o arquivo baixado">
+            <p>No DevTools, aba <strong>Network</strong>, filtre por <strong>Img</strong> e recarregue. Veja quais arquivos vieram e o tamanho de cada um. No console, <code>document.querySelector('.card-img-top').currentSrc</code> mostra o arquivo que a primeira foto está usando. Mude a largura com o modo de dispositivos e recarregue: o arquivo muda.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>sizes</code> de um cartão e recarregue numa tela larga: sem ele, o navegador supõe que a foto ocupa a tela inteira (<code>100vw</code>) e baixa a versão de 960 px para um espaço de 400. Devolva. Agora tire o <code>width</code> e o <code>height</code> e recarregue com a rede lenta (Network → <em>Slow 4G</em>): o texto abaixo da foto pula quando ela chega.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O navegador sempre baixa a imagem maior">
+          <p>Duas causas comuns. Faltou o <code>sizes</code>: sem ele, o navegador supõe <code>100vw</code>, e numa tela larga escolhe o arquivo maior. Ou o <code>w</code> do <code>srcset</code> está errado: ele precisa ser a largura <strong>real</strong> do arquivo, em pixels, e não o tamanho em que a foto aparece. Lembre também da densidade: numa tela 2x, um espaço de 400 px pede um arquivo de 800 px, e o de 960 está certo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O texto pula quando a imagem carrega">
+          <p>Sem <code>width</code> e <code>height</code> (ou um <code>aspect-ratio</code> no CSS), o navegador não sabe o tamanho da imagem até ela chegar, e reserva espaço zero. Quando a foto carrega, tudo abaixo dela é empurrado. Declare as dimensões no <code>&lt;img&gt;</code>; o CSS continua controlando o tamanho na tela.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Pus o srcset no &lt;source&gt; e esqueci o &lt;img&gt;">
+          <p>Um <code>&lt;picture&gt;</code> sem o <code>&lt;img&gt;</code> não mostra nada: o <code>&lt;source&gt;</code> só oferece opções, e quem aparece na tela é o <code>&lt;img&gt;</code>. Ele é obrigatório, e é nele que vão o <code>alt</code>, as classes e o <code>loading</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="16-imagens-responsivas" award>
+          <fieldset data-correct="b">
+            <legend>O que diz o <code>480w</code> em <code>srcset="salto-480.webp 480w"</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Que a foto vai aparecer com 480 px na tela</label>
+            <label><input type="radio" name="q1" value="b"> Que o arquivo tem 480 px de largura real</label>
+            <label><input type="radio" name="q1" value="c"> Que a foto só aparece em telas de até 480 px</label>
+            <p data-explain="a" hidden>O tamanho na tela vem do CSS e do <code>sizes</code>. O <code>w</code> descreve o arquivo.</p>
+            <p data-explain="c" hidden>Quem fala de tamanho de tela é o <code>sizes</code>, com as media queries. O <code>w</code> é a largura do arquivo.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Para que serve o <code>sizes</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Para dizer ao navegador quanto da tela a imagem vai ocupar, antes de o CSS carregar</label>
+            <label><input type="radio" name="q2" value="b"> Para redimensionar a imagem</label>
+            <label><input type="radio" name="q2" value="c"> Para listar os formatos disponíveis</label>
+            <p data-explain="b" hidden>O <code>sizes</code> não muda a imagem: ele ajuda o navegador a escolher o arquivo.</p>
+            <p data-explain="c" hidden>Os formatos ficam nos <code>&lt;source type="…"&gt;</code> do <code>&lt;picture&gt;</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>A foto ocupa 400 px numa tela de densidade 2x. O <code>srcset</code> tem 480w e 960w. Qual arquivo o navegador baixa?</legend>
+            <label><input type="radio" name="q3" value="a"> O de 480, porque é maior que 400</label>
+            <label><input type="radio" name="q3" value="b"> Os dois</label>
+            <label><input type="radio" name="q3" value="c"> O de 960, porque 400 × 2 = 800 px, e o de 480 não cobre</label>
+            <p data-explain="a" hidden>Numa tela 2x, cada pixel do CSS tem dois pixels de verdade. São precisos 800 px de largura.</p>
+            <p data-explain="b" hidden>O navegador escolhe um arquivo só.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Em qual imagem <strong>não</strong> usar <code>loading="lazy"</code>?</legend>
+            <label><input type="radio" name="q4" value="a"> Nas fotos do fim da página</label>
+            <label><input type="radio" name="q4" value="b"> Na primeira imagem, a que aparece sem rolar</label>
+            <label><input type="radio" name="q4" value="c"> Em nenhuma: <code>lazy</code> serve para todas</label>
+            <p data-explain="a" hidden>As do fim da página são justamente as que ganham com o <code>lazy</code>.</p>
+            <p data-explain="c" hidden>Na primeira imagem visível, o <code>lazy</code> atrasa o que a pessoa vê primeiro.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, gere as imagens principais em WebP, em pelo menos duas larguras, e use <code>&lt;picture&gt;</code> ou <code>srcset</code> com <code>sizes</code> coerente com o seu layout. Declare <code>width</code> e <code>height</code>, use <code>loading="lazy"</code> onde fizer sentido e mantenha as proporções com <code>object-fit</code>. Confira na aba Network qual arquivo cada tela baixa.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que fazem o <code>srcset</code>, o <code>sizes</code> e o <code>&lt;picture&gt;</code>?</li>
+          <li><strong>A motivação:</strong> quantos bytes o WebP e o tamanho certo economizaram no seu projeto?</li>
+          <li><strong>A anatomia:</strong> leia em voz alta o seu <code>sizes</code>, condição por condição.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>sizes</code> e mostre, na aba Network, o arquivo que passa a ser baixado.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Guides/Responsive_images">MDN: imagens responsivas</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">MDN: object-fit (em inglês)</a></li>
+          <li><a href="https://squoosh.app/">Squoosh</a></li>
+          <li><a href="https://tinypng.com/">TinyPNG</a></li>
+          <li><a href="https://cloudinary.com/documentation/image_transformations">Cloudinary: transformações de imagem (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 16-imagens-responsivas -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -1,0 +1,5 @@
+@mixin cover-image($largura, $altura) {
+  width: 100%;
+  aspect-ratio: #{$largura} / #{$altura};
+  object-fit: cover; // [!code highlight]
+}
