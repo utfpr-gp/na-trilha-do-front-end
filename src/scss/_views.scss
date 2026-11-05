@@ -204,3 +204,146 @@ tf-steps {
     color: var(--tf-ink-muted);
   }
 }
+
+// <tf-challenge>
+tf-challenge {
+  display: block;
+
+  fieldset {
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--tf-ink-muted);
+    border-radius: var(--bs-border-radius);
+    background: var(--tf-surface);
+  }
+
+  legend {
+    float: none;
+    width: auto;
+    padding: 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  [data-explain] {
+    margin: 0.5rem 0 0;
+    color: var(--tf-ink-muted);
+  }
+}
+
+.tf-feedback {
+  margin: 0.5rem 0 0;
+  font-weight: 700;
+
+  &.is-right {
+    color: var(--tf-view-mao-no-codigo);
+  }
+
+  &.is-wrong {
+    color: var(--tf-view-armadilhas);
+  }
+}
+
+.tf-challenge-status {
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+// <tf-mark>: o espaço do marco no cabeçalho
+tf-mark {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px dashed var(--tf-ink-muted);
+  color: var(--tf-ink-muted);
+  font-size: 0.9rem;
+
+  &.is-done {
+    border: 0;
+    background: var(--tf-mark);
+    color: var(--tf-on-mark);
+    font-weight: 700;
+  }
+}
+
+// A caderneta
+.tf-count {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--tf-brand);
+}
+
+.tf-trail,
+.tf-stops {
+  list-style: none;
+  padding: 0;
+}
+
+.tf-trail-part {
+  margin: 2rem 0;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+}
+
+.tf-stop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-left: 3px dotted var(--tf-ink-muted);
+
+  &.is-done {
+    border-left: 3px solid var(--tf-brand);
+
+    .tf-stop-state {
+      background: var(--tf-mark);
+      color: var(--tf-on-mark);
+    }
+  }
+}
+
+.tf-stop-number {
+  font-weight: 800;
+  color: var(--tf-accent);
+}
+
+.tf-stop-state {
+  font-size: 0.85rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  color: var(--tf-ink-muted);
+}
+
+.tf-viewpoint,
+.tf-summit {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px dashed var(--tf-ink-muted);
+  color: var(--tf-ink-muted);
+  font-weight: 700;
+
+  &.is-done {
+    border: 0;
+    background: var(--tf-brand);
+    color: var(--tf-surface);
+  }
+}
+
+.tf-transfer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}

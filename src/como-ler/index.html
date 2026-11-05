@@ -61,6 +61,33 @@
 
       <tf-view kind="desafio" title="Desafio">
         <p>No fim, de 3 a 5 perguntas sobre o capítulo. Acertando todas, você ganha um <strong>marco</strong> na sua caderneta de trilha. Pode tentar de novo quantas vezes quiser, e cada resposta errada explica por que não é aquela.</p>
+        <p>Experimente com estas três perguntas sobre esta página. Elas não valem marco:</p>
+        <tf-challenge slug="como-ler">
+          <fieldset data-correct="b">
+            <legend>Em que visão aparece o resultado do capítulo, antes de qualquer explicação?</legend>
+            <label><input type="radio" name="q1" value="a"> Na ideia</label>
+            <label><input type="radio" name="q1" value="b"> Na missão</label>
+            <label><input type="radio" name="q1" value="c"> No desafio</label>
+            <p data-explain="a" hidden>A ideia traz a comparação com o dia a dia. O resultado vem antes, na missão.</p>
+            <p data-explain="c" hidden>O desafio fecha o capítulo. O resultado aparece logo no começo, na missão.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que faz o teste do "E se eu tirar?"?</legend>
+            <label><input type="radio" name="q2" value="a"> Apaga o projeto e começa de novo</label>
+            <label><input type="radio" name="q2" value="b"> Remove o framework do site</label>
+            <label><input type="radio" name="q2" value="c"> Tira uma linha ou classe para ver o que quebra</label>
+            <p data-explain="a" hidden>Nada tão drástico: você tira só uma linha, uma classe ou uma regra, e observa a diferença.</p>
+            <p data-explain="b" hidden>O teste é pequeno: uma linha, uma classe ou uma regra de cada vez.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Onde ficam os marcos que você conquista?</legend>
+            <label><input type="radio" name="q3" value="a"> Na caderneta, guardada no seu navegador</label>
+            <label><input type="radio" name="q3" value="b"> Numa conta, depois de fazer login</label>
+            <p data-explain="b" hidden>O livro não tem login: o progresso fica no seu navegador, e você pode exportá-lo num arquivo.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
       </tf-view>
 
       <tf-view kind="na-sua-trilha" title="Na sua trilha">

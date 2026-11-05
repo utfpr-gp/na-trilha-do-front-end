@@ -43,3 +43,16 @@ export function renderPager(slug, base) {
     c ? `<a class="tf-pager-${rel}" rel="${rel}" href="${chapterUrl(c, base)}"><span>${label}</span> ${escapeHtml(c.question)}</a>` : '';
   return `<nav class="tf-pager" aria-label="Capítulos">${link(prev, 'prev', 'Anterior')}${link(next, 'next', 'Próximo')}</nav>`;
 }
+
+/** O mapa da trilha: uma parada por capítulo com marco, um mirante por parte e o cume. */
+export function renderTrailMap(parts) {
+  const stops = parts
+    .filter((p) => p.hasMarks)
+    .map((p) => `<li class="tf-trail-part">
+  <h2>${escapeHtml(p.title)}</h2>
+  <ol class="tf-stops">${p.chapters.map((c) => `<li class="tf-stop" data-slug="${c.slug}"><span class="tf-stop-number">${c.number}</span> <span class="tf-stop-question">${escapeHtml(c.question)}</span> <span class="tf-stop-state">ainda não conquistado</span></li>`).join('')}</ol>
+  <p class="tf-viewpoint" data-viewpoint="${p.id}">Mirante: ${escapeHtml(p.title)}</p>
+</li>`)
+    .join('\n');
+  return `<ol class="tf-trail">${stops}</ol>\n<p class="tf-summit" data-summit>O cume: todos os marcos do livro</p>`;
+}
