@@ -14,6 +14,7 @@ export const GLOSSARY = [
   { id: 'mcp', term: 'MCP', definition: 'Model Context Protocol: a forma de a IA do editor conversar com outras ferramentas, como ler as telas de um protótipo no Stitch.', chapter: 5 },
   { id: 'design-token', term: 'design token', definition: 'Uma decisão de design com nome, como a cor principal ou o tamanho dos títulos, guardada num só lugar e usada no site inteiro.', chapter: 6 },
   { id: 'variavel-css', term: 'variável CSS', definition: 'Um valor com nome, declarado com dois hífens (--cor-marca: #2f5d3a) e usado com var(--cor-marca). É a forma de guardar design tokens no CSS.', chapter: 6 },
+  { id: 'grid', term: 'grid', definition: 'O sistema de colunas do Bootstrap: um .container, fileiras (.row) e colunas (.col-*) que ocupam partes de 12, mudando conforme a largura da tela.', chapter: 7 },
   { id: 'breakpoint', term: 'breakpoint', definition: 'A largura de tela a partir da qual o layout muda. No Bootstrap, sm, md, lg, xl e xxl são os breakpoints.', chapter: 7 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];
