@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="22-jquery-e-plugin-de-mascara">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 22-jquery-e-plugin-de-mascara -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>No cadastro do capítulo 20, quem digita o telefone do guia precisa acertar os parênteses, o espaço e o hífen, senão leva um "Use o formato (00) 00000-0000". Hoje o formulário passa a ajudar: o CEP e o telefone ganham <strong>máscaras</strong>. A pessoa digita só os números, e o hífen e os parênteses aparecem sozinhos, no lugar certo; letras nem entram.</p>
+        <p>Para isso, o Trilheiro usa o <strong>jQuery</strong>, a biblioteca que dominou o front-end por mais de uma década, e um <strong>plugin</strong> dele, o jQuery Mask Plugin, os dois carregados por um CDN. Você vai entender o que o jQuery faz, por que ele ainda aparece em tanto projeto, e quando o JavaScript de hoje já basta. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/22-jquery-e-plugin-de-mascara">etapas/22-jquery-e-plugin-de-mascara</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🧰" title="O canivete e o acessório da loja">
+          <p>Antigamente, todo trilheiro levava um canivete suíço: abria lata, cortava corda, apertava parafuso, coisas que as ferramentas da época faziam mal. Hoje as mochilas vêm com bolsos e fivelas melhores, e o canivete ficou menos necessário. Mas a loja ainda vende acessórios que só encaixam nele.</p>
+          <p>O <a class="tf-term" href="{{base}}glossario/#jquery">jQuery</a> é o canivete: resolvia o DOM e os eventos quando cada navegador fazia de um jeito. Os navegadores melhoraram, e o <code>querySelector</code> e o <code>fetch</code> fazem quase tudo o que ele fazia. Mas existem muitos <a class="tf-term" href="{{base}}glossario/#plugin">plugins</a> prontos, como o de máscara, que só funcionam com ele.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>A função $</h3>
+        <p>Tudo no jQuery começa pela função <code>$</code> (que também se chama <code>jQuery</code>). Ela recebe um seletor CSS e devolve os elementos que combinam, embrulhados num objeto com dezenas de métodos:</p>
+        <tf-code src="22-jquery-e-plugin-de-mascara/basico.js" caption="Exemplo"></tf-code>
+        <p>Repare em duas facilidades: os métodos valem para todos os elementos de uma vez, sem <code>forEach</code>, e cada um devolve os mesmos elementos, então dá para encadear.</p>
+
+        <h3>jQuery e o JavaScript de hoje, lado a lado</h3>
+        <tf-code src="22-jquery-e-plugin-de-mascara/comparacao.js" caption="Comparação"></tf-code>
+        <p>Quando o jQuery nasceu, em 2006, a coluna da direita não existia, ou funcionava diferente em cada navegador. Hoje existe, e por isso projetos novos raramente adotam o jQuery. Mas você vai encontrá-lo em sistemas que já existem, em temas prontos e em plugins, e precisa saber lê-lo.</p>
+
+        <h3>O plugin de máscara</h3>
+        <p>Um plugin acrescenta métodos ao jQuery. O jQuery Mask Plugin acrescenta o <code>.mask()</code>, que recebe o formato: <code>0</code> é um dígito, e o resto (hífen, parênteses, espaço) entra sozinho. Experimente:</p>
+        <tf-mask-lab></tf-mask-lab>
+        <p>O valor do campo fica com a máscara (<code>85010-260</code>), que é o formato que a validação e o banco de dados esperam (RN04). Para os dígitos limpos, o plugin oferece o <code>.cleanVal()</code>.</p>
+
+        <h3>Pelo CDN, e na ordem certa</h3>
+        <p>O jQuery e o plugin vêm de um <a class="tf-term" href="{{base}}glossario/#cdn">CDN</a>, com a versão fixa no endereço, como manda o <code>architecture.md</code>. A ordem importa: primeiro o jQuery, depois o plugin (que se pendura nele), e por último o seu código, que usa os dois.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: cabeçalho e rodapé num arquivo só, com .load()</summary>
+          <p>As quatro páginas do Trilheiro repetem o mesmo cabeçalho e o mesmo rodapé. Mudar um link do menu é mudar quatro arquivos. Um jeito antigo de evitar isso é o <code>.load()</code> do jQuery, que busca um arquivo HTML e o põe dentro de um elemento:</p>
+          <tf-code src="22-jquery-e-plugin-de-mascara/load.html" caption="Exemplo"></tf-code>
+          <p>Sem jQuery, o mesmo sai com o <code>fetch</code> do capítulo 23:</p>
+          <tf-code src="22-jquery-e-plugin-de-mascara/include.js" caption="Exemplo"></tf-code>
+          <p>Funciona, mas tem um preço: o cabeçalho aparece um instante depois do resto, some se o JavaScript falhar, não funciona abrindo o arquivo por <code>file://</code>, e o link ativo do menu precisa ser marcado por código em cada página. Por isso o Trilheiro continua com o cabeçalho copiado. A solução de verdade é montar as páginas antes de publicar, com uma ferramenta como o Vite (veja "Para ir além" no fim do livro).</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Os scripts pelo CDN">
+            <p>No <code>cadastrar.html</code>, antes do <code>trail-form.js</code>, inclua o jQuery 4 e o plugin, nesta ordem:</p>
+            <tf-code src="22-jquery-e-plugin-de-mascara/cdn.html" caption="cadastrar.html"></tf-code>
+            <p>Só a página de cadastro precisa deles: as outras ficam mais leves sem.</p>
+          </section>
+          <section data-step="As máscaras">
+            <p>No começo do <code>js/trail-form.js</code>, logo depois da data de hoje, aplique as duas máscaras:</p>
+            <tf-code src="22-jquery-e-plugin-de-mascara/mascaras.js" caption="js/trail-form.js"></tf-code>
+            <p>O <code>trail-form.js</code> é um módulo, e mesmo assim enxerga o <code>$</code>: o jQuery, carregado por um <code>&lt;script&gt;</code> comum, fica disponível para a página inteira. E os módulos só rodam depois que a página foi lida, então o jQuery já está lá.</p>
+          </section>
+          <section data-step="Confira">
+            <p>Pelo Live Server, abra o cadastro e digite <code>85010260</code> no CEP: aparece <code>85010-260</code>. Digite <code>42999991234</code> no telefone: <code>(42) 99999-1234</code>. Tente uma letra: ela não entra. As mensagens do capítulo 20 continuam funcionando: um CEP pela metade ainda mostra "Use o formato 00000-000".</p>
+            <p>No console, confira a versão: <code>$.fn.jquery</code> responde <code>'4.0.0'</code>.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Troque a ordem dos dois <code>&lt;script&gt;</code> do CDN, com o plugin antes do jQuery, e recarregue: o console mostra o erro do plugin, as máscaras somem e, pior, o <code>trail-form.js</code> para na linha da máscara, e nenhuma validação funciona. Um erro num script derruba o que vem depois dele. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O plugin veio antes do jQuery" message="Uncaught TypeError: Cannot set properties of undefined (setting 'maskWatchers')">
+          <p>O plugin tenta se pendurar no jQuery, que ainda não existe. Logo depois vem um <code>Uncaught ReferenceError: $ is not defined</code>. A ordem é sempre: biblioteca, plugins, o seu código.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Esqueci o plugin" message="Uncaught TypeError: $(...).mask is not a function">
+          <p>O jQuery está lá, mas o <code>.mask()</code> não: o <code>&lt;script&gt;</code> do plugin falta, ou o endereço está errado (confira a aba <strong>Network</strong> do DevTools: um 404 no plugin explica tudo).</p>
+        </tf-pitfall>
+        <tf-pitfall title="O tutorial antigo usa algo que o jQuery 4 tirou" message="Uncaught TypeError: $.trim is not a function">
+          <p>O jQuery 4 removeu funções que o JavaScript já tinha, como o <code>$.trim</code>, o <code>$.isArray</code> e o <code>$.now</code>. Muito exemplo na internet é da época do jQuery 1 ou 3. Use o equivalente do JavaScript, e consulte o guia de atualização (link em "Para ir além").</p>
+          <tf-code src="22-jquery-e-plugin-de-mascara/trim.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="O .value deu undefined">
+          <p>O <code>$('#cep')</code> não é o elemento: é um objeto do jQuery que embrulha o elemento. Use os métodos do jQuery, ou desembrulhe com <code>[0]</code>.</p>
+          <tf-code src="22-jquery-e-plugin-de-mascara/embrulho.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="Usei a versão slim e o .load() sumiu">
+          <p>O jQuery tem uma versão "slim", menor, sem as funções de AJAX (<code>.load()</code>, <code>$.ajax</code>, <code>$.getJSON</code>) e de animação. Se um exemplo usa essas funções, carregue a versão completa, <code>jquery.min.js</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="22-jquery-e-plugin-de-mascara" award>
+          <fieldset data-correct="b">
+            <legend>Qual é o equivalente sem jQuery de <code>$('#cep').val()</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> <code>document.querySelector('#cep').textContent</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>document.querySelector('#cep').value</code></label>
+            <label><input type="radio" name="q1" value="c"> <code>document.querySelectorAll('#cep').val()</code></label>
+            <p data-explain="a" hidden>Campo de formulário guarda o que foi digitado no <code>value</code>. O <code>textContent</code> é o texto entre as tags.</p>
+            <p data-explain="c" hidden>O <code>.val()</code> é do jQuery: a lista do <code>querySelectorAll</code> não tem esse método.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Na máscara <code>'(00) 00000-0000'</code>, o que significa o <code>0</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Que o campo começa com zero</label>
+            <label><input type="radio" name="q2" value="b"> Qualquer caractere</label>
+            <label><input type="radio" name="q2" value="c"> Um dígito</label>
+            <p data-explain="a" hidden>No plugin, o <code>0</code> é um lugar para um dígito, qualquer um de 0 a 9.</p>
+            <p data-explain="b" hidden>Só dígitos: é por isso que as letras não entram.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Em que ordem os scripts precisam vir?</legend>
+            <label><input type="radio" name="q3" value="a"> jQuery, plugin, e o seu código</label>
+            <label><input type="radio" name="q3" value="b"> O seu código, jQuery, plugin</label>
+            <label><input type="radio" name="q3" value="c"> Tanto faz, o navegador organiza</label>
+            <p data-explain="b" hidden>O seu código usa o <code>$</code> e o <code>.mask()</code>: os dois precisam existir antes.</p>
+            <p data-explain="c" hidden>Os scripts comuns rodam na ordem em que aparecem. O plugin precisa do jQuery já carregado.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que um projeto novo raramente começa com jQuery hoje?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque ele não funciona mais nos navegadores</label>
+            <label><input type="radio" name="q4" value="b"> Porque o JavaScript dos navegadores já faz quase tudo o que ele fazia</label>
+            <label><input type="radio" name="q4" value="c"> Porque é proibido usar CDN</label>
+            <p data-explain="a" hidden>Funciona muito bem: a versão 4 é recente. Ele só ficou menos necessário.</p>
+            <p data-explain="c" hidden>CDN é comum e o Trilheiro usa. A razão é que <code>querySelector</code>, <code>classList</code> e <code>fetch</code> cobrem o que o jQuery resolvia.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, use o jQuery e um plugin dele (o de máscara ou outro que faça sentido no seu tema), carregados pelo CDN com a versão fixa. Aplique máscaras aos campos com formato (CEP, telefone, CPF, data) e confira se a validação continua funcionando. Se preferir uma biblioteca sem jQuery, como o IMask, explique a escolha.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é o jQuery, e o que é um plugin?</li>
+          <li><strong>A motivação:</strong> o que a máscara muda para quem preenche o formulário?</li>
+          <li><strong>A anatomia:</strong> explique a ordem dos seus <code>&lt;script&gt;</code> e a linha do <code>.mask()</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> inverta a ordem dos scripts e mostre o erro no console.</li>
+        </ul>
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: máscaras sem jQuery</summary>
+          <p>O <a href="https://imask.js.org/">IMask</a> faz o mesmo sem depender do jQuery, com o mesmo <code>0</code> para dígito. O Cleave.js, outra opção conhecida, foi descontinuado pelo autor, que indica a versão nova, o cleave-zen.</p>
+          <tf-code src="22-jquery-e-plugin-de-mascara/imask.html" caption="Exemplo"></tf-code>
+        </details>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://api.jquery.com/">jQuery: a documentação (em inglês)</a></li>
+          <li><a href="https://jquery.com/upgrade-guide/4.0/">jQuery: o guia de atualização para a versão 4 (em inglês)</a></li>
+          <li><a href="https://igorescobar.github.io/jQuery-Mask-Plugin/">jQuery Mask Plugin: exemplos e opções</a></li>
+          <li><a href="https://imask.js.org/">IMask: máscaras sem jQuery</a></li>
+          <li><a href="https://youmightnotneedjquery.com/">You Might Not Need jQuery: o jQuery traduzido para o JavaScript de hoje</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 22-jquery-e-plugin-de-mascara -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
