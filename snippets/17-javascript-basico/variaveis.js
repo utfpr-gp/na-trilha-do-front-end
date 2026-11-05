@@ -1,8 +1,8 @@
-const NOME_DO_SITE = 'Trilheiro'; // const: não pode receber outro valor
-let favoritas = 0;                // let: pode mudar
-favoritas = favoritas + 1;
+const SITE_NAME = 'Trilheiro'; // const: não pode receber outro valor
+let favoriteCount = 0;         // let: pode mudar
+favoriteCount = favoriteCount + 1;
 
 // Os tipos básicos
-const nome = 'Trilha do Salto'; // string (texto)
-const distanciaKm = 4.5;         // number (número, com ponto decimal)
-const destaque = true;           // boolean (verdadeiro ou falso)
+const name = 'Trilha do Salto'; // string (texto)
+const distanceKm = 4.5;         // number (número, com ponto decimal)
+const featured = true;          // boolean (verdadeiro ou falso)

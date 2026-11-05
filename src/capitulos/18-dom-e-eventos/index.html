@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="18-dom-e-eventos">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 18-dom-e-eventos -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Agora o JavaScript passa a mexer na página. O Trilheiro ganha uma página nova, <code>trilhas.html</code>, com todas as trilhas e um filtro: <strong>Todas, Fácil, Moderada, Difícil e Favoritas</strong>. Escolheu "Fácil", e só as trilhas fáceis ficam na tela, sem recarregar nada, com o total logo ao lado ("1 trilha"). E o coração de cada cartão passa a funcionar: um clique marca a trilha como favorita, o ícone fica preenchido e amarelo, e o filtro "Favoritas" mostra só as marcadas.</p>
+        <p>Para isso, você vai usar as duas metades do JavaScript no navegador: o <strong>DOM</strong>, para encontrar e mudar os elementos, e os <strong>eventos</strong>, para reagir ao que a pessoa faz. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/18-dom-e-eventos">etapas/18-dom-e-eventos</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🔔" title="O guarda-parque e o sino da portaria">
+          <p>O guarda-parque tem a planta do parque, com cada trilha, placa e portão marcados. Quando precisa fechar uma trilha, ele acha a placa certa na planta e troca o aviso. Mas ele não fica rondando o dia inteiro para saber se alguém chegou: deixa um sino na portaria e combina "quando tocar, eu atendo".</p>
+          <p>O <strong>DOM</strong> é a planta: cada elemento da página como um objeto que o JavaScript encontra e muda. O <strong>evento</strong> é o sino: com <code>addEventListener</code>, você combina com o navegador "quando clicarem aqui, rode esta função". E um sino só, na portaria, atende o parque inteiro: é a delegação de eventos.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>A página vira uma árvore</h3>
+        <p>Ao ler o HTML, o navegador monta o <a class="tf-term" href="{{base}}glossario/#dom">DOM</a>: uma árvore de objetos, um para cada elemento, com os filhos dentro dos pais. Um cartão do Trilheiro, nessa árvore:</p>
+        <tf-code src="18-dom-e-eventos/arvore.txt" caption="Um cartão no DOM"></tf-code>
+        <p>Você vê essa árvore no DevTools, na aba <strong>Elements</strong>. Tudo o que o JavaScript muda nela aparece na hora na tela.</p>
+
+        <h3>Encontrar: querySelector</h3>
+        <tf-code src="18-dom-e-eventos/selecionar.js" caption="Exemplo"></tf-code>
+        <p>Os seletores são os mesmos do CSS: <code>#id</code>, <code>.classe</code>, <code>button</code>, <code>.card .btn</code>. Se nada combinar, <code>querySelector</code> devolve <code>null</code>, e é daí que vem o erro mais comum deste capítulo (veja as armadilhas).</p>
+
+        <h3>Mudar: texto, classes e atributos</h3>
+        <tf-code src="18-dom-e-eventos/mudar.js" caption="Exemplo"></tf-code>
+        <p>Mudar a <strong>classe</strong>, em vez do estilo direto (<code>el.style.color = …</code>), mantém a aparência no CSS (e no Sass) e o comportamento no JavaScript. O atributo <code>data-*</code> guarda informação para o JavaScript no próprio HTML: <code>data-dificuldade="moderada"</code> vira <code>card.dataset.dificuldade</code>.</p>
+        <p>Também dá para criar elementos do zero. Isso vai ser o centro do próximo capítulo, quando os cartões passarem a ser montados a partir dos dados:</p>
+        <tf-code src="18-dom-e-eventos/criar.js" caption="Exemplo"></tf-code>
+
+        <h3>Reagir: eventos</h3>
+        <tf-code src="18-dom-e-eventos/evento.js" caption="Exemplo"></tf-code>
+        <p>A função recebe um objeto com os detalhes do evento. Os eventos que você mais vai usar:</p>
+        <ul>
+          <li><code>click</code>: um clique (ou <kbd>Enter</kbd> e <kbd>Espaço</kbd> num botão, para quem usa o teclado);</li>
+          <li><code>input</code>: cada letra digitada num campo;</li>
+          <li><code>change</code>: um valor escolhido de vez (um rádio, uma caixa de seleção, um <code>&lt;select&gt;</code>);</li>
+          <li><code>submit</code>: o envio de um formulário (capítulo 20);</li>
+          <li><code>keydown</code>: uma tecla apertada.</li>
+        </ul>
+
+        <h3>O evento sobe: target, closest e delegação</h3>
+        <p>Um clique no ícone de coração acontece no <code>&lt;i&gt;</code>, mas não para ali: o evento <strong>sobe</strong> pela árvore, passando pelo botão, pelo cartão e pela lista, até o <code>document</code>. Por isso, um ouvinte posto na lista inteira escuta os cliques de todos os botões. O <code>event.target</code> diz onde o clique começou, e o <code>closest(seletor)</code> sobe a partir dele até achar o elemento que interessa.</p>
+        <p>Clique no ícone, no texto do botão, no título e digite no campo. O cartão tem um ouvinte só, e o registro mostra o que ele recebe:</p>
+        <tf-event-log></tf-event-log>
+        <p>Isso é a <a class="tf-term" href="{{base}}glossario/#delegacao-de-eventos">delegação de eventos</a>: um ouvinte no contêiner, em vez de um em cada botão. Ela tem duas vantagens: é um ouvinte só, não importa quantos cartões existam, e vale também para os cartões que o JavaScript criar depois.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: innerHTML ou textContent?</summary>
+          <p>O <code>innerHTML</code> lê o texto como HTML; o <code>textContent</code>, como texto puro. Para pôr na página algo que veio de uma pessoa (o nome digitado num formulário, um relato), use sempre o <code>textContent</code>:</p>
+          <tf-code src="18-dom-e-eventos/inner-html.js" caption="Exemplo"></tf-code>
+          <p>Esse tipo de ataque se chama XSS (<em>cross-site scripting</em>). O <code>innerHTML</code> continua útil para montar um pedaço de HTML que você mesmo escreveu, sem nada vindo de fora.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A página de trilhas">
+            <p>Crie <code>trilhas.html</code> com o mesmo cabeçalho e rodapé do Início, e o menu com "Trilhas" ativo. Copie os três cartões e marque, em cada coluna, a classe <code>trail-card</code> e a dificuldade. Os botões de favorito ganham a classe <code>btn-favorite</code> e o <code>aria-pressed</code>:</p>
+            <tf-code src="18-dom-e-eventos/cartao.html" caption="trilhas.html"></tf-code>
+            <p>Acima da lista, o filtro, um grupo de botões de rádio do Bootstrap (<code>.btn-check</code>), e um parágrafo para o total. O <code>aria-live</code> faz o leitor de tela anunciar o total quando ele muda:</p>
+            <tf-code src="18-dom-e-eventos/filtro.html" caption="trilhas.html"></tf-code>
+            <p>No Início, aponte para a nova página o link "Trilhas" do menu e o "Ver todas as trilhas".</p>
+          </section>
+          <section data-step="O filtro">
+            <p>Crie <code>js/trails.js</code> e inclua-o só em <code>trilhas.html</code>, no fim do <code>&lt;body&gt;</code>:</p>
+            <tf-code src="18-dom-e-eventos/script.html" caption="trilhas.html"></tf-code>
+            <p>Primeiro, encontre os elementos; depois, a função que esconde os cartões fora do filtro e escreve o total:</p>
+            <tf-code src="18-dom-e-eventos/aplicar-filtro.js" caption="js/trails.js"></tf-code>
+          </section>
+          <section data-step="O favorito">
+            <p>A função que liga ou desliga um botão de favorito: o ícone, o <code>aria-pressed</code> e o texto para leitores de tela.</p>
+            <tf-code src="18-dom-e-eventos/favorito.js" caption="js/trails.js"></tf-code>
+            <p>E o estilo do favorito marcado, no amarelo de marcação do design system:</p>
+            <tf-code src="18-dom-e-eventos/favorito.scss" caption="scss/_cards.scss"></tf-code>
+          </section>
+          <section data-step="Os ouvintes">
+            <p>Por fim, os dois ouvintes, cada um num contêiner, e a primeira chamada, para o total aparecer assim que a página abre:</p>
+            <tf-code src="18-dom-e-eventos/ouvintes.js" caption="js/trails.js"></tf-code>
+            <p>Teste: "Fácil" deixa só o Caminho das Araucárias e escreve "1 trilha"; "Favoritas", antes de marcar alguma, mostra "Nenhuma trilha neste filtro."; marque o Mirante, volte a "Favoritas", e ele aparece sozinho. Recarregue a página: as favoritas somem. Guardá-las no navegador é assunto do capítulo 21.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Na delegação do favorito, troque a linha do <code>closest</code> por <code>const button = event.target;</code> e o <code>if (!button) return;</code> por <code>if (!button.classList.contains('btn-favorite')) return;</code>. Clicar na borda do botão funciona; clicar bem no coração não faz nada, porque aí o <code>target</code> é o <code>&lt;i&gt;</code>, e não o botão. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O seletor não achou nada" message="Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')">
+          <p>O <code>querySelector</code> devolveu <code>null</code>, e não existe <code>null.addEventListener</code>. Ou o seletor está errado (<code>#trail-lista</code> no lugar de <code>#trail-list</code>, ou faltou o <code>#</code> ou o ponto), ou o elemento ainda não existia: o <code>&lt;script&gt;</code> está no <code>&lt;head&gt;</code> e rodou antes de o navegador ler o resto do HTML. Deixe o script no fim do <code>&lt;body&gt;</code>, ou use <code>&lt;script src="…" defer&gt;</code> no <code>&lt;head&gt;</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Mudar o texto de algo que não existe" message="Uncaught TypeError: Cannot set properties of null (setting 'textContent')">
+          <p>A mesma causa, na hora de escrever: <code>document.querySelector('#trail-status').textContent = …</code> com um id que não está no HTML. Copie o id do HTML para o JavaScript, em vez de digitar de novo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A função rodou uma vez e o clique não faz nada">
+          <p>Escreveu <code>addEventListener('click', applyFilter())</code>, com parênteses. Os parênteses <strong>chamam</strong> a função na hora, e o que vai para o ouvinte é o resultado dela (<code>undefined</code>). Passe a função sem chamar, <code>applyFilter</code>, ou uma função de seta: <code>() =&gt; applyFilter('facil')</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O formulário recarrega a página">
+          <p>Ao enviar um formulário, o navegador manda os dados e recarrega a página, e tudo o que o JavaScript fez se perde. No ouvinte do <code>submit</code>, chame <code>event.preventDefault()</code> primeiro:</p>
+          <tf-code src="18-dom-e-eventos/submit.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="18-dom-e-eventos" award>
+          <fieldset data-correct="c">
+            <legend>O que <code>document.querySelector('.trail-card')</code> devolve quando há três cartões?</legend>
+            <label><input type="radio" name="q1" value="a"> Uma lista com os três</label>
+            <label><input type="radio" name="q1" value="b"> O último cartão</label>
+            <label><input type="radio" name="q1" value="c"> O primeiro cartão</label>
+            <p data-explain="a" hidden>Essa é a <code>querySelectorAll</code>. A <code>querySelector</code> devolve um elemento só.</p>
+            <p data-explain="b" hidden>Ela devolve o primeiro que combina, na ordem do HTML.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Um clique bem no ícone <code>&lt;i&gt;</code>, dentro do botão. O que é o <code>event.target</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> O botão</label>
+            <label><input type="radio" name="q2" value="b"> O <code>&lt;i&gt;</code></label>
+            <label><input type="radio" name="q2" value="c"> O elemento onde está o ouvinte</label>
+            <p data-explain="a" hidden>O target é onde o clique começou: o ícone. O <code>closest('.btn-favorite')</code> sobe até o botão.</p>
+            <p data-explain="c" hidden>Esse é o <code>event.currentTarget</code>. O <code>target</code> é onde o clique começou.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que pôr um ouvinte só na lista, em vez de um em cada botão de favorito?</legend>
+            <label><input type="radio" name="q3" value="a"> Os cliques sobem até a lista, e um ouvinte só vale para todos os botões, até os criados depois</label>
+            <label><input type="radio" name="q3" value="b"> Porque um botão não pode ter ouvinte</label>
+            <label><input type="radio" name="q3" value="c"> Para o clique ficar mais rápido</label>
+            <p data-explain="b" hidden>Pode, sim. A delegação só evita repetir o ouvinte em cada botão.</p>
+            <p data-explain="c" hidden>A velocidade é a mesma. A vantagem é um ouvinte só, que vale também para os cartões novos.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Para mostrar o nome que alguém digitou, o que usar?</legend>
+            <label><input type="radio" name="q4" value="a"> <code>innerHTML</code>, que aceita qualquer coisa</label>
+            <label><input type="radio" name="q4" value="b"> <code>setAttribute('nome', …)</code></label>
+            <label><input type="radio" name="q4" value="c"> <code>textContent</code></label>
+            <p data-explain="a" hidden>O <code>innerHTML</code> interpreta o texto como HTML, e um "nome" com uma tag pode rodar código na página (XSS).</p>
+            <p data-explain="b" hidden>Um atributo não aparece na tela. Para o texto, use <code>textContent</code>.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, faça a página reagir: um filtro ou uma busca que esconde e mostra itens, e um botão que liga e desliga um estado (favorito, "já visitei", "quero ir"), com a mudança de classe e de <code>aria-pressed</code>. Use a delegação de eventos em pelo menos um dos dois.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é o DOM, e o que é um evento?</li>
+          <li><strong>A motivação:</strong> por que mudar a classe, e não o estilo, pelo JavaScript?</li>
+          <li><strong>A anatomia:</strong> explique o seu ouvinte linha por linha, com o <code>target</code> e o <code>closest</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>closest</code> e mostre o clique no ícone falhando.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting/DOM_scripting">MDN: manipulando documentos (o DOM)</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting/Events">MDN: introdução aos eventos</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling">MDN: a propagação dos eventos e a delegação (em inglês)</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Element/closest">MDN: closest</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/forms/checks-radios/#radio-toggle-buttons">Bootstrap: botões de rádio em grupo</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 18-dom-e-eventos -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

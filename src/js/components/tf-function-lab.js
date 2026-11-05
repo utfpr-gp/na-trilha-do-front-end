@@ -1,6 +1,6 @@
 import * as funcoes from '../trilheiro/funcoes.js';
 
-/** <tf-function-lab data-fn="formatarDuracao" data-arg="150">: chama uma função do Trilheiro com o valor digitado. */
+/** <tf-function-lab data-fn="formatDuration" data-arg="150">: chama uma função do Trilheiro com o valor digitado. */
 export class TfFunctionLab extends HTMLElement {
   connectedCallback() {
     if (this.querySelector('input')) return;
