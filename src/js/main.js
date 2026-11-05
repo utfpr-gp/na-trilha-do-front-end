@@ -1,5 +1,9 @@
 import '@fontsource-variable/nunito-sans';
 import '@fontsource-variable/jetbrains-mono';
+// Só os componentes do Bootstrap que os capítulos demonstram ao vivo (capítulo 10).
+import 'bootstrap/js/dist/carousel.js';
+import 'bootstrap/js/dist/modal.js';
+import 'bootstrap/js/dist/offcanvas.js';
 import { TfCascade } from './components/tf-cascade.js';
 import { TfChallenge } from './components/tf-challenge.js';
 import { TfClassToggle } from './components/tf-class-toggle.js';

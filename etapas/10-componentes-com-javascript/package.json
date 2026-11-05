@@ -1,0 +1,11 @@
+{
+  "name": "trilheiro",
+  "version": "1.0.0",
+  "description": "Trilheiro: guia de trilhas da região de Guarapuava",
+  "scripts": {},
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.2"
+  },
+  "private": true
+}
