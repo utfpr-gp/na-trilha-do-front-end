@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastrar trilha · Trilheiro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md py-3" data-bs-theme="dark" aria-label="Principal">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><i class="bi bi-compass" aria-hidden="true"></i> Trilheiro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir o menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="trilhas.html">Trilhas</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="cadastrar.html">Cadastrar trilha</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container flex-grow-1 py-5">
+    <h1 class="mb-2">Cadastrar trilha</h1>
+    <p class="text-body-secondary mb-4">Os campos com <span aria-hidden="true">*</span><span class="visually-hidden">asterisco</span> são obrigatórios.</p>
+
+    <form id="trail-form" class="trail-form" novalidate>
+      <fieldset class="mb-4">
+        <legend class="h5">A trilha</legend>
+        <div class="mb-3">
+          <label class="form-label" for="nome">Nome *</label>
+          <input class="form-control" id="nome" name="nome" required minlength="3" maxlength="80" aria-describedby="erro-nome">
+          <div class="invalid-feedback d-block" id="erro-nome" data-feedback-for="nome"></div>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6">
+            <label class="form-label" for="dificuldade">Dificuldade *</label>
+            <select class="form-select" id="dificuldade" name="dificuldade" required aria-describedby="erro-dificuldade">
+              <option value="">Escolha…</option>
+              <option value="facil">Fácil</option>
+              <option value="moderada">Moderada</option>
+              <option value="dificil">Difícil</option>
+            </select>
+            <div class="invalid-feedback d-block" id="erro-dificuldade" data-feedback-for="dificuldade"></div>
+          </div>
+          <div class="col-sm-6">
+            <span class="form-label d-block" id="rotulo-percurso">Tipo de percurso *</span>
+            <div role="radiogroup" aria-labelledby="rotulo-percurso" aria-describedby="erro-tipoPercurso">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tipoPercurso" id="percurso-ida-e-volta" value="ida-e-volta" required>
+                <label class="form-check-label" for="percurso-ida-e-volta">Ida e volta</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tipoPercurso" id="percurso-circular" value="circular">
+                <label class="form-check-label" for="percurso-circular">Circular</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tipoPercurso" id="percurso-travessia" value="travessia">
+                <label class="form-check-label" for="percurso-travessia">Travessia</label>
+              </div>
+            </div>
+            <div class="invalid-feedback d-block" id="erro-tipoPercurso" data-feedback-for="tipoPercurso"></div>
+          </div>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6">
+            <label class="form-label" for="distanciaKm">Distância (km) *</label>
+            <input class="form-control" type="number" id="distanciaKm" name="distanciaKm" required min="0.5" max="50" step="0.1" inputmode="decimal" aria-describedby="erro-distanciaKm">
+            <div class="invalid-feedback d-block" id="erro-distanciaKm" data-feedback-for="distanciaKm"></div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="duracaoMin">Duração (minutos) *</label>
+            <input class="form-control" type="number" id="duracaoMin" name="duracaoMin" required min="10" max="1440" step="1" inputmode="numeric" aria-describedby="erro-duracaoMin">
+            <div class="invalid-feedback d-block" id="erro-duracaoMin" data-feedback-for="duracaoMin"></div>
+          </div>
+        </div>
+        <div>
+          <label class="form-label" for="descricao">Descrição *</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="4" required minlength="20" maxlength="1000" aria-describedby="erro-descricao"></textarea>
+          <div class="invalid-feedback d-block" id="erro-descricao" data-feedback-for="descricao"></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="mb-4">
+        <legend class="h5">Onde começa</legend>
+        <div class="row g-3">
+          <div class="col-sm-4">
+            <label class="form-label" for="cep">CEP *</label>
+            <input class="form-control" id="cep" name="cep" required pattern="\d{5}-?\d{3}" maxlength="9" inputmode="numeric" placeholder="00000-000" aria-describedby="erro-cep">
+            <div class="invalid-feedback d-block" id="erro-cep" data-feedback-for="cep"></div>
+          </div>
+          <div class="col-sm-5">
+            <label class="form-label" for="cidade">Cidade *</label>
+            <input class="form-control" id="cidade" name="cidade" required maxlength="60" aria-describedby="erro-cidade">
+            <div class="invalid-feedback d-block" id="erro-cidade" data-feedback-for="cidade"></div>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label" for="uf">UF *</label>
+            <input class="form-control" id="uf" name="uf" required pattern="[A-Za-z]{2}" maxlength="2" aria-describedby="erro-uf">
+            <div class="invalid-feedback d-block" id="erro-uf" data-feedback-for="uf"></div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="bairro">Bairro</label>
+            <input class="form-control" id="bairro" name="bairro" maxlength="60">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="mb-4">
+        <legend class="h5">O que levar</legend>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-agua" value="agua"><label class="form-check-label" for="levar-agua">Água</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-lanche" value="lanche"><label class="form-check-label" for="levar-lanche">Lanche</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-protetor" value="protetor-solar"><label class="form-check-label" for="levar-protetor">Protetor solar</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-repelente" value="repelente"><label class="form-check-label" for="levar-repelente">Repelente</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-capa" value="capa-de-chuva"><label class="form-check-label" for="levar-capa">Capa de chuva</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="oQueLevar" id="levar-lanterna" value="lanterna"><label class="form-check-label" for="levar-lanterna">Lanterna</label></div>
+      </fieldset>
+
+      <fieldset class="mb-4">
+        <legend class="h5">Guia e última visita</legend>
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label" for="guiaNome">Nome do guia</label>
+            <input class="form-control" id="guiaNome" name="guiaNome" maxlength="60">
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="guiaTelefone">Telefone do guia</label>
+            <input class="form-control" type="tel" id="guiaTelefone" name="guiaTelefone" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(00) 00000-0000" aria-describedby="erro-guiaTelefone">
+            <div class="invalid-feedback d-block" id="erro-guiaTelefone" data-feedback-for="guiaTelefone"></div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="ultimaVisita">Data da última visita *</label>
+            <input class="form-control" type="date" id="ultimaVisita" name="ultimaVisita" required aria-describedby="erro-ultimaVisita">
+            <div class="invalid-feedback d-block" id="erro-ultimaVisita" data-feedback-for="ultimaVisita"></div>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary btn-lg">Salvar trilha</button>
+      <div class="alert alert-danger mt-4" id="form-error" role="alert" hidden></div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__marca">
+      <strong>Trilheiro</strong>
+      <span>Trilhas da região de Guarapuava</span>
+    </div>
+    <div class="site-footer__fontes">
+      <span>Previsão do tempo: <a href="https://open-meteo.com">Open-Meteo</a></span>
+      <span>Endereços: <a href="https://viacep.com.br">ViaCEP</a></span>
+    </div>
+    <p class="site-footer__aviso">As trilhas são exemplos inspirados em lugares reais. O Trilheiro não é um guia de segurança.</p>
+  </footer>
+
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+  <script type="module" src="js/trail-form.js"></script>
+</body>
+</html>

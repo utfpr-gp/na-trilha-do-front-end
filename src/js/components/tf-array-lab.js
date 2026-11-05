@@ -17,18 +17,19 @@ const EXAMPLES = [
   { code: 'trails.filter((trail) => trail.destaque).length', run: (t) => t.filter((trail) => trail.destaque).length },
 ];
 
-export function show(value) {
+// Escreve um valor como o console mostraria. Só o array de fora quebra linha; os de dentro ficam numa linha.
+export function show(value, depth = 0) {
   if (typeof value === 'string') return `'${value}'`;
   if (Array.isArray(value)) {
     if (value.length === 0) return '[]';
-    const items = value.map(show);
-    if (value.some((item) => typeof item === 'object' && item !== null)) {
+    const items = value.map((item) => show(item, depth + 1));
+    if (depth === 0 && value.some((item) => typeof item === 'object' && item !== null)) {
       return `[\n${items.map((item) => `  ${item}`).join(',\n')}\n]`;
     }
     return `[${items.join(', ')}]`;
   }
   if (typeof value === 'object' && value !== null) {
-    const fields = Object.entries(value).map(([key, field]) => `${key}: ${show(field)}`);
+    const fields = Object.entries(value).map(([key, field]) => `${key}: ${show(field, depth + 1)}`);
     return `{ ${fields.join(', ')} }`;
   }
   return String(value);

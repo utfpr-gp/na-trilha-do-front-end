@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="23-fetch-e-json-server">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 23-fetch-e-json-server -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Até aqui, as trilhas moravam num arquivo JavaScript, e o formulário de cadastro conferia tudo, mas não gravava nada. Hoje o Trilheiro ganha um <strong>servidor</strong>: o json-server, que transforma um arquivo <code>db.json</code> numa API de verdade, rodando no seu computador. As páginas passam a <strong>pedir</strong> os dados pela rede, com o <code>fetch</code>, e a esperar a resposta.</p>
+        <p>Muda muita coisa de uma vez: o Início e a tela Trilhas buscam as trilhas no servidor, com um aviso de "Carregando" e uma mensagem se algo falhar; a página da trilha deixa de ser sempre a do Salto e mostra a trilha do endereço (<code>trilha.html?id=3</code>), com as fotos, o guia e os relatos dela; o cadastro grava a trilha nova e leva ao detalhe dela; e o modal "Conte como foi" publica um relato. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/23-fetch-e-json-server">etapas/23-fetch-e-json-server</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="📻" title="O rádio da base de apoio">
+          <p>Na trilha, você pede pelo rádio: "Base, qual a previsão para amanhã?". A resposta não vem na hora: a base precisa consultar, e a ligação pode cair. Enquanto espera, você não fica parado; segue arrumando a mochila. Quando a resposta chega, você a usa. E se ninguém responde, você precisa de um plano B.</p>
+          <p>O <a class="tf-term" href="{{base}}glossario/#fetch">fetch</a> é o rádio: manda o pedido para um endereço e devolve uma promessa de resposta. O <a class="tf-term" href="{{base}}glossario/#async-await">await</a> é o "fico esperando esta resposta", sem travar o resto da página. E o <code>try/catch</code> é o plano B para quando a base não responde.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Uma API REST no seu computador</h3>
+        <p>O json-server lê o <code>db.json</code> e cria uma <a class="tf-term" href="{{base}}glossario/#api-rest">API REST</a>: cada lista do arquivo vira um endereço, e o <strong>método</strong> do pedido diz o que fazer:</p>
+        <ul>
+          <li><code>GET /trilhas</code>: todas as trilhas;</li>
+          <li><code>GET /trilhas/3</code>: a trilha de id 3 (ou <strong>404</strong>, se não existir);</li>
+          <li><code>GET /trilhas/3?_embed=relatos</code>: a trilha, com os relatos dela dentro, num campo <code>relatos</code>;</li>
+          <li><code>POST /trilhas</code>: grava uma trilha nova e responde com ela, já com o id que o servidor gerou (status <strong>201</strong>);</li>
+          <li><code>POST /relatos</code>: grava um relato.</li>
+        </ul>
+        <p>O relato sabe de que trilha é pelo campo <code>trilhaId</code>, o nome que o json-server espera para ligar as duas listas. Os dados são gravados de volta no <code>db.json</code>: pare e rode o servidor de novo, e eles continuam lá.</p>
+
+        <h3>fetch, async e await</h3>
+        <p>Pedir dados pela rede leva tempo, e o JavaScript não fica parado esperando. O <code>fetch</code> devolve na hora uma <strong>Promise</strong>, uma promessa de resposta. Dentro de uma função <code>async</code>, o <code>await</code> pausa só aquela função até a promessa se cumprir:</p>
+        <tf-code src="23-fetch-e-json-server/fetch-basico.js" caption="Exemplo"></tf-code>
+        <p>São dois <code>await</code>: o primeiro espera a resposta começar a chegar (o status e os cabeçalhos); o segundo, o corpo inteiro, que o <code>.json()</code> transforma de texto JSON em objeto (o <code>JSON.parse</code> do capítulo 21). Envie os pedidos e repare na ordem:</p>
+        <tf-fetch-lab></tf-fetch-lab>
+        <p>Dois detalhes que a simulação mostra. Um <strong>404 não é erro</strong> para o <code>fetch</code>: ele só falha se a rede cair. Por isso o código confere o <code>response.ok</code>. E o filtro pela URL, <code>/relatos?trilhaId=1</code>, volta vazio nesta versão do json-server: ele lê o <code>1</code> como número, e o número <code>1</code> não é igual ao texto <code>"1"</code> dos dados. O <code>_embed</code> não tem esse problema.</p>
+
+        <h3>Um arquivo para a rede: api.js</h3>
+        <p>As páginas não chamam o <code>fetch</code> direto: pedem ao <code>api.js</code>, como define a seção 6 do <code>architecture.md</code>. Se o endereço do servidor mudar, ou se o site for publicado sem servidor (capítulo 26), muda um arquivo só.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: then, o AJAX do jQuery e o XMLHttpRequest</summary>
+          <p>O <code>await</code> é a forma moderna de esperar uma Promise. Antes dele, e ainda em muito código, usa-se o <code>.then()</code>, que recebe a função a rodar quando a resposta chegar:</p>
+          <tf-code src="23-fetch-e-json-server/then.js" caption="Exemplo"></tf-code>
+          <p>"AJAX" é o nome antigo para buscar dados sem recarregar a página. O jQuery do capítulo 22 tem as suas funções para isso, comuns em projetos mais velhos:</p>
+          <tf-code src="23-fetch-e-json-server/jquery-ajax.js" caption="Exemplo"></tf-code>
+          <p>E, por baixo de tudo isso, antes do <code>fetch</code>, existia o <code>XMLHttpRequest</code>, com eventos em vez de Promises:</p>
+          <tf-code src="23-fetch-e-json-server/xhr.js" caption="Exemplo"></tf-code>
+          <p>Os três fazem o mesmo pedido. Em código novo, use o <code>fetch</code>.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O json-server">
+            <p>Instale o json-server na versão do <code>architecture.md</code> e crie o script <code>api</code> no <code>package.json</code>:</p>
+            <tf-code src="23-fetch-e-json-server/package.txt" caption="package.json (trecho)"></tf-code>
+            <p>Crie o <code>db.json</code> com as quatro trilhas, agora com todos os campos do dicionário de dados (descrição, tipo de percurso, o que levar, guia, coordenadas, fotos), e alguns relatos:</p>
+            <tf-code src="23-fetch-e-json-server/db.json" caption="db.json (trecho)"></tf-code>
+            <p>Num terminal separado, deixe o servidor rodando:</p>
+            <tf-code src="23-fetch-e-json-server/terminal.txt" caption="Terminal"></tf-code>
+            <p>Abra <code>http://localhost:3000/trilhas</code> no navegador: aparece o JSON das trilhas. Tente também <code>/trilhas/1?_embed=relatos</code>.</p>
+          </section>
+          <section data-step="O Live Server e o db.json">
+            <p>A cada <code>POST</code>, o json-server reescreve o <code>db.json</code>, e o Live Server, que recarrega a página a cada arquivo salvo, recarrega o site no meio do cadastro. Peça a ele para ignorar o arquivo:</p>
+            <tf-code src="23-fetch-e-json-server/live-server.json" caption=".vscode/settings.json"></tf-code>
+            <p>Na primeira gravação, o json-server também acrescenta uma linha <code>"$schema"</code> no fim do <code>db.json</code>. Pode deixar.</p>
+          </section>
+          <section data-step="O api.js">
+            <p>Crie <code>js/api.js</code>. A função <code>request</code> faz o pedido, confere o status e lê o JSON; as outras dão nome a cada rota. O <code>NotFoundError</code> é um erro com nome próprio, para o detalhe saber a diferença entre "a trilha não existe" e "a rede caiu":</p>
+            <tf-code src="23-fetch-e-json-server/api.js" caption="js/api.js"></tf-code>
+            <p>Apague o <code>data.js</code>. A pasta fica assim:</p>
+            <tf-code src="23-fetch-e-json-server/estrutura.txt" caption="Os arquivos"></tf-code>
+          </section>
+          <section data-step="As listas">
+            <p>O Início espera as trilhas do servidor, com um aviso de "Carregando" antes e uma mensagem se falhar. O detalhe técnico vai para o console, para quem desenvolve; a pessoa vê uma frase clara:</p>
+            <tf-code src="23-fetch-e-json-server/home.js" caption="js/home.js"></tf-code>
+            <p>Na tela Trilhas, o array <code>trails</code> começa vazio e é preenchido quando a resposta chega. O filtro e as favoritas continuam iguais: só mudou de onde o array vem, como o <code>architecture.md</code> previa.</p>
+            <tf-code src="23-fetch-e-json-server/trails-carregar.js" caption="js/trails.js (o fim)"></tf-code>
+          </section>
+          <section data-step="O detalhe">
+            <p>O <code>trilha.html</code> perde o conteúdo escrito à mão e fica com os lugares vazios (<code>data-field</code>), que o <code>js/trail-detail.js</code> preenche. O id vem do endereço:</p>
+            <tf-code src="23-fetch-e-json-server/id.js" caption="js/trail-detail.js"></tf-code>
+            <tf-code src="23-fetch-e-json-server/detalhe-carregar.js" caption="js/trail-detail.js"></tf-code>
+            <p>O resto do arquivo monta o carrossel a partir das fotos (com a foto padrão quando não há nenhuma), a lista do que levar, o guia (só se houver) e os relatos, do mais recente para o mais antigo. A classe <code>Trail</code> ganha métodos para o tipo de percurso, a data (<code>12/10/2026</code>) e o que levar, e passa a copiar todos os campos com <code>Object.assign(this, data)</code>.</p>
+          </section>
+          <section data-step="Gravar">
+            <p>No cadastro, quando tudo está válido, o formulário grava a trilha e leva ao detalhe dela. O botão fica desligado durante o envio, para dois cliques não gravarem duas trilhas:</p>
+            <tf-code src="23-fetch-e-json-server/cadastro-envio.js" caption="js/trail-form.js (o fim do submit)"></tf-code>
+            <p>No detalhe, o modal do relato usa a validação do próprio Bootstrap (<code>.was-validated</code>, que mostra as mensagens de todos os campos inválidos de uma vez), grava com <code>POST</code>, fecha o modal e põe o relato novo no topo:</p>
+            <tf-code src="23-fetch-e-json-server/relato.js" caption="js/trail-detail.js"></tf-code>
+          </section>
+          <section data-step="Confira">
+            <p>Com o json-server e o Live Server rodando: o Início mostra os destaques; <code>trilha.html?id=3</code> mostra o Mirante, com o guia; <code>?id=4</code>, a Escadaria com a foto padrão e "Ainda não há relatos"; <code>?id=99</code>, "Esta trilha não existe". Publique um relato e cadastre uma trilha: os dois aparecem no <code>db.json</code>.</p>
+            <p>Agora pare o json-server (<kbd>Ctrl</kbd>+<kbd>C</kbd>) e recarregue o Início: aparece "Não foi possível carregar as trilhas agora", e o console mostra o motivo.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>No <code>api.js</code>, tire a linha do <code>if (response.status === 404)</code> e abra <code>trilha.html?id=99</code>. Em vez de "Esta trilha não existe", aparece a mensagem genérica de falha: o erro ainda é pego pelo <code>!response.ok</code>, mas a página não sabe mais que a trilha não existe. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O servidor não está rodando" message="TypeError: Failed to fetch">
+          <p>Com o json-server parado, o pedido não acha ninguém em <code>localhost:3000</code>, e o console também mostra <code>net::ERR_CONNECTION_REFUSED</code>. Confira o terminal do <code>npm run api</code>: ele precisa ficar aberto enquanto você testa.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Esqueci o await" message="Uncaught TypeError: data.filter is not a function">
+          <p>Sem o <code>await</code>, a variável guarda a Promise, e não os dados. O mesmo erro aparece se você esquecer o <code>response.json()</code> e tentar usar a resposta como se fosse o array (<code>Uncaught (in promise) TypeError: response.filter is not a function</code>).</p>
+          <tf-code src="23-fetch-e-json-server/sem-await.js" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="await fora de uma função async" message="Uncaught SyntaxError: await is only valid in async functions and the top level bodies of modules">
+          <p>O <code>await</code> só vale dentro de uma função marcada com <code>async</code>, ou solto num módulo (<code>type="module"</code>). Num <code>&lt;script&gt;</code> comum, fora de função, ele é erro de sintaxe, e o arquivo inteiro não roda.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A página recarrega sozinha depois de salvar">
+          <p>É o Live Server vendo o <code>db.json</code> mudar. O redirecionamento para o detalhe, ou o relato novo na tela, some num piscar. Acrescente o <code>db.json</code> ao <code>liveServer.settings.ignoreFiles</code>, como no passo 2.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O filtro pela URL volta vazio">
+          <p><code>GET /relatos?trilhaId=1</code> devolve <code>[]</code> mesmo com relatos da trilha 1: nesta versão do json-server, o <code>1</code> da URL vira número e não bate com o texto <code>"1"</code>. Use <code>/trilhas/1?_embed=relatos</code>, ou filtre no JavaScript, com o <code>filter</code> do capítulo 19.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="23-fetch-e-json-server" award>
+          <fieldset data-correct="b">
+            <legend>O que <code>fetch(url)</code> devolve, logo que é chamado?</legend>
+            <label><input type="radio" name="q1" value="a"> Os dados, já lidos</label>
+            <label><input type="radio" name="q1" value="b"> Uma Promise, que vai se cumprir quando a resposta chegar</label>
+            <label><input type="radio" name="q1" value="c"> O texto JSON da resposta</label>
+            <p data-explain="a" hidden>A resposta ainda nem chegou. É por isso que existe o <code>await</code>.</p>
+            <p data-explain="c" hidden>Primeiro vem a resposta; o corpo se lê depois, com <code>await response.json()</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O servidor respondeu 404. O que o <code>fetch</code> faz?</legend>
+            <label><input type="radio" name="q2" value="a"> Lança um erro, que cai no <code>catch</code></label>
+            <label><input type="radio" name="q2" value="b"> Tenta de novo</label>
+            <label><input type="radio" name="q2" value="c"> Devolve a resposta normalmente, com <code>response.ok</code> igual a <code>false</code></label>
+            <p data-explain="a" hidden>Para o <code>fetch</code>, um 404 é uma resposta como outra qualquer. Ele só falha se a rede cair: o seu código confere o status.</p>
+            <p data-explain="b" hidden>O <code>fetch</code> não repete nada sozinho.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que a trilha é pedida com <code>?_embed=relatos</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Para vir num pedido só, com os relatos dela num campo <code>relatos</code></label>
+            <label><input type="radio" name="q3" value="b"> Porque sem ele o servidor responde 404</label>
+            <label><input type="radio" name="q3" value="c"> Para o servidor esconder os relatos</label>
+            <p data-explain="b" hidden>Sem ele, vem a trilha sozinha, sem os relatos.</p>
+            <p data-explain="c" hidden>É o contrário: o <code>_embed</code> põe os relatos dentro da trilha.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que o botão "Salvar trilha" fica desligado durante o envio?</legend>
+            <label><input type="radio" name="q4" value="a"> Para o formulário parecer mais rápido</label>
+            <label><input type="radio" name="q4" value="b"> Para um segundo clique, durante a espera, não gravar a trilha duas vezes</label>
+            <label><input type="radio" name="q4" value="c"> Porque o <code>fetch</code> exige</label>
+            <p data-explain="a" hidden>Não muda a velocidade: só evita um envio repetido.</p>
+            <p data-explain="c" hidden>O <code>fetch</code> não sabe do botão. É uma proteção que o seu código faz.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, leve os dados para um <code>db.json</code> servido pelo json-server, com pelo menos duas listas ligadas (como trilhas e relatos). Concentre o <code>fetch</code> num módulo de API. Faça uma página de lista e uma de detalhe (pelo id no endereço), um cadastro que grava com <code>POST</code>, e trate o "carregando", a falha de rede e o item que não existe.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é uma API REST, e o que fazem o <code>fetch</code> e o <code>await</code>?</li>
+          <li><strong>A motivação:</strong> o que mudou no seu projeto quando os dados foram para um servidor?</li>
+          <li><strong>A anatomia:</strong> explique a sua função de pedido, com o status e o <code>try/catch</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> pare o json-server e mostre a mensagem de falha na página.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch">MDN: usando o fetch</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Extensions/Async_JS/Promises">MDN: Promises</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/async_function">MDN: funções async</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Status">MDN: os códigos de status HTTP</a></li>
+          <li><a href="https://github.com/typicode/json-server">json-server: a documentação (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 23-fetch-e-json-server -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -34,5 +34,8 @@ export const GLOSSARY = [
   { id: 'localstorage', term: 'localStorage', definition: 'Um armazenamento do navegador, separado por site, que guarda pares de chave e texto e continua lá depois de fechar o navegador. setItem grava, getItem lê, removeItem apaga.', chapter: 21 },
   { id: 'jquery', term: 'jQuery', definition: 'Uma biblioteca de JavaScript que simplifica o DOM e os eventos com a função $: $(\'#cep\').val(). Muito usada antes de os navegadores terem querySelector e fetch, segue viva em projetos antigos e em plugins.', chapter: 22 },
   { id: 'plugin', term: 'plugin', definition: 'Um pedaço de código que acrescenta um recurso a uma biblioteca. O jQuery Mask Plugin dá ao jQuery o método .mask(), que formata um campo enquanto a pessoa digita.', chapter: 22 },
+  { id: 'api-rest', term: 'API REST', definition: 'Um jeito de um servidor oferecer dados pela web: cada coleção tem um endereço (/trilhas), e o método HTTP diz o que fazer com ela, como GET para ler e POST para criar. As respostas costumam vir em JSON.', chapter: 23 },
+  { id: 'fetch', term: 'fetch', definition: 'A função do navegador que faz um pedido HTTP e devolve uma Promise com a resposta: await fetch(url). O corpo vem à parte, com await response.json(). Um 404 não é erro para o fetch: confira response.ok.', chapter: 23 },
+  { id: 'async-await', term: 'async/await', definition: 'O jeito de esperar algo que demora (como uma resposta do servidor) sem travar a página. Dentro de uma função async, o await pausa só aquela função até a Promise terminar.', chapter: 23 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];
