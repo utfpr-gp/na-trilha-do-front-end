@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="17-javascript-basico">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 17-javascript-basico -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Trilheiro ganha o seu primeiro arquivo de JavaScript, o <code>js/app.js</code>. Ele ainda não mexe na página: por enquanto, conversa com você pelo <strong>console</strong> do navegador. Dá bom dia (ou boa tarde, conforme a hora), mostra o resumo de cada trilha, com a duração escrita do jeito que as pessoas falam ("2h30", e não "150 minutos") e o ritmo em minutos por quilômetro, e três segundos depois manda uma dica.</p>
+        <p>Por trás disso estão as peças que todo o resto do livro usa: variáveis, tipos, funções, decisões com <code>if</code>, textos montados com template strings e um temporizador. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/17-javascript-basico">etapas/17-javascript-basico</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="📓" title="O caderno de campo com fórmulas prontas">
+          <p>Um guia experiente anota no caderno umas fórmulas que usa toda hora: "para saber a duração, divido a distância pelo ritmo do grupo". Ele não refaz o raciocínio a cada trilha; consulta a fórmula, troca os números e pronto.</p>
+          <p>Uma <strong>função</strong> é uma fórmula do caderno: tem um nome (<code>formatarDuracao</code>), recebe os números da vez (<code>150</code>) e devolve o resultado (<code>"2h30"</code>). As <strong>variáveis</strong> são os campos onde você anota os números.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Onde o JavaScript mora</h3>
+        <p>Num arquivo <code>.js</code>, ligado ao HTML por um <code>&lt;script&gt;</code> no fim do <code>&lt;body&gt;</code>, depois do Bootstrap. No fim, porque assim o HTML já está todo carregado quando o script roda. O <code>console.log()</code> escreve no console do DevTools (<kbd>F12</kbd> → <strong>Console</strong>): é o jeito mais simples de ver o que o seu código está fazendo.</p>
+
+        <h3>Variáveis e tipos</h3>
+        <tf-code src="17-javascript-basico/variaveis.js" caption="Exemplo"></tf-code>
+        <p>Use <code>const</code> por padrão, e <code>let</code> só para o que vai mudar. O antigo <code>var</code> ainda funciona, mas tem regras confusas: deixe-o de lado.</p>
+
+        <h3>Funções</h3>
+        <p>Uma <a class="tf-term" href="{{base}}glossario/#funcao">função</a> recebe valores (os parâmetros), faz o trabalho e devolve um resultado com <code>return</code>:</p>
+        <tf-code src="17-javascript-basico/funcao.js" caption="js/app.js"></tf-code>
+        <p>Experimente: digite uma quantidade de minutos e veja o que a função do Trilheiro devolve.</p>
+        <tf-function-lab data-fn="formatarDuracao" data-arg="150" data-label="Minutos"></tf-function-lab>
+        <p>A <strong>função de seta</strong> é outra forma de escrever a mesma coisa, muito usada em JavaScript moderno:</p>
+        <tf-code src="17-javascript-basico/seta.js" caption="js/app.js"></tf-code>
+
+        <h3>Template strings</h3>
+        <p>Com crases (<code>`</code>) em vez de aspas, um texto pode ter valores no meio, dentro de <code>${…}</code>, até a chamada de outras funções:</p>
+        <tf-code src="17-javascript-basico/template.js" caption="js/app.js"></tf-code>
+
+        <h3>Temporizadores</h3>
+        <p><code>setTimeout(função, ms)</code> roda uma função uma vez, depois de um tempo em milissegundos; <code>setInterval(função, ms)</code> roda de novo a cada intervalo, até alguém pará-lo com <code>clearInterval</code>.</p>
+        <tf-code src="17-javascript-basico/settimeout.js" caption="js/app.js"></tf-code>
+
+        <h3>Três surpresas que todo mundo encontra</h3>
+        <tf-code src="17-javascript-basico/surpresas.js" caption="No console"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: prompt, confirm e alert</summary>
+          <p>Três caixas de diálogo prontas do navegador, ótimas para os primeiros exercícios (como um jogo de adivinhação):</p>
+          <tf-code src="17-javascript-basico/dialogos.js" caption="Exemplo"></tf-code>
+          <p>Elas param a página inteira até a pessoa responder, e não dá para mudar a aparência. Num site de verdade, como o Trilheiro, use formulários e modais (capítulo 10).</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O arquivo e o script">
+            <p>Crie a pasta <code>js/</code> com o arquivo <code>app.js</code> e ligue-o nas duas páginas, depois do Bootstrap:</p>
+            <tf-code src="17-javascript-basico/script.html" caption="index.html e trilha.html"></tf-code>
+            <p>Escreva <code>console.log('Olá, Trilheiro!');</code> no arquivo, abra o console e recarregue: a mensagem aparece.</p>
+          </section>
+          <section data-step="As funções">
+            <p>Escreva as funções <code>formatarDuracao</code>, <code>ritmo</code>, <code>saudacao</code> e <code>resumoDaTrilha</code>, e chame o resumo para as três trilhas. O arquivo completo está na etapa.</p>
+          </section>
+          <section data-step="O resultado no console">
+            <tf-code src="17-javascript-basico/console.txt" caption="Console"></tf-code>
+            <p>Repare no "4.5 km": o JavaScript escreve números com ponto. Para escrever com vírgula, use <code>toLocaleString('pt-BR')</code>, como no capítulo 19.</p>
+          </section>
+          <section data-step="Teste no console">
+            <p>As funções do <code>app.js</code> ficam disponíveis no console da página. Digite <code>formatarDuracao(65)</code> e aperte <kbd>Enter</kbd>: aparece <code>'1h05'</code>. Experimente outros valores, e <code>saudacao(7)</code>.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>return</code> da última linha da <code>formatarDuracao</code> e recarregue: o resumo do Salto passa a mostrar "undefined" no lugar da duração. Uma função sem <code>return</code> devolve <code>undefined</code>. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Usei um nome que não existe" message="Uncaught ReferenceError: duracao is not defined">
+          <p>O código usa <code>duracao</code>, mas nada com esse nome foi criado (talvez o nome certo seja <code>minutos</code>, ou faltou o acento, ou a variável foi criada dentro de outra função). O console mostra o arquivo e a linha ao lado da mensagem: clique neles para ir direto ao erro.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Tentei mudar uma constante" message="Uncaught TypeError: Assignment to constant variable.">
+          <p>Uma variável criada com <code>const</code> não pode receber outro valor. Se ela precisa mudar (como um contador), crie com <code>let</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Criei duas vezes a mesma variável" message="Uncaught SyntaxError: Identifier 'nome' has already been declared">
+          <p>Dois <code>let nome</code> (ou <code>const</code>) no mesmo bloco. Erros de sintaxe impedem o arquivo inteiro de rodar: nenhuma linha do <code>app.js</code> funciona até você corrigir. Para trocar o valor, escreva só <code>nome = 'Mirante';</code>, sem o <code>let</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A conta deu 45 em vez de 9">
+          <p>Um dos valores era texto: <code>'4' + 5</code> dá <code>'45'</code>, porque com texto o <code>+</code> junta. Isso acontece muito com valores que vêm de campos de formulário, que são sempre texto. Converta antes de somar: <code>Number('4') + 5</code>.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="17-javascript-basico" award>
+          <fieldset data-correct="b">
+            <legend>Quando usar <code>let</code> em vez de <code>const</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Sempre: <code>let</code> é mais moderno</label>
+            <label><input type="radio" name="q1" value="b"> Quando a variável vai receber outro valor depois, como um contador</label>
+            <label><input type="radio" name="q1" value="c"> Para textos; <code>const</code> é só para números</label>
+            <p data-explain="a" hidden>Os dois são modernos. Use <code>const</code> por padrão e <code>let</code> só quando o valor muda.</p>
+            <p data-explain="c" hidden>O tipo não importa: a diferença é se a variável pode ou não receber outro valor.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que <code>formatarDuracao(65)</code> devolve?</legend>
+            <label><input type="radio" name="q2" value="a"> <code>'65 min'</code></label>
+            <label><input type="radio" name="q2" value="b"> <code>'1h5'</code></label>
+            <label><input type="radio" name="q2" value="c"> <code>'1h05'</code></label>
+            <p data-explain="a" hidden>65 minutos têm 1 hora inteira: a função só usa "min" quando as horas são zero.</p>
+            <p data-explain="b" hidden>O <code>padStart(2, '0')</code> completa os minutos com um zero à esquerda: 5 vira "05".</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Qual é o resultado de <code>`${'Salto'}: ${4.5} km`</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> <code>'Salto: 4.5 km'</code></label>
+            <label><input type="radio" name="q3" value="b"> <code>'${Salto}: ${4.5} km'</code></label>
+            <label><input type="radio" name="q3" value="c"> <code>'Salto: 4,5 km'</code></label>
+            <p data-explain="b" hidden>Com crases, o <code>${…}</code> é trocado pelo valor. Com aspas comuns, ele apareceria como texto.</p>
+            <p data-explain="c" hidden>O JavaScript escreve números com ponto. A vírgula só com <code>toLocaleString('pt-BR')</code>.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Qual a diferença entre <code>setTimeout</code> e <code>setInterval</code>?</legend>
+            <label><input type="radio" name="q4" value="a"> Nenhuma</label>
+            <label><input type="radio" name="q4" value="b"> <code>setTimeout</code> roda uma vez depois do tempo; <code>setInterval</code> repete a cada intervalo</label>
+            <label><input type="radio" name="q4" value="c"> <code>setTimeout</code> usa segundos; <code>setInterval</code>, minutos</label>
+            <p data-explain="a" hidden>Um roda uma vez; o outro repete até ser parado com <code>clearInterval</code>.</p>
+            <p data-explain="c" hidden>Os dois usam milissegundos: 3000 é 3 segundos.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, crie o <code>js/app.js</code> e escreva pelo menos três funções úteis para o seu tema (formatar um valor, calcular algo, montar um texto com template string), com uma decisão com <code>if</code>. Mostre os resultados no console e teste as funções digitando chamadas no console.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é uma função, um parâmetro e um retorno?</li>
+          <li><strong>A motivação:</strong> que repetição as suas funções evitam?</li>
+          <li><strong>A anatomia:</strong> explique uma das suas funções linha por linha.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>return</code> de uma função e mostre o que aparece no console.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Scripting">MDN: primeiros passos com JavaScript</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Functions">MDN: funções</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Template_literals">MDN: template strings</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout">MDN: setTimeout (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 17-javascript-basico -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

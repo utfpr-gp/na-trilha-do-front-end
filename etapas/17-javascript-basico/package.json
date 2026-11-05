@@ -1,0 +1,17 @@
+{
+  "name": "trilheiro",
+  "version": "1.0.0",
+  "description": "Trilheiro: guia de trilhas da região de Guarapuava",
+  "scripts": {
+    "sass": "sass --load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map scss/main.scss css/main.css",
+    "sass:watch": "sass --watch --load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map scss/main.scss css/main.css"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.2"
+  },
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.107.1"
+  }
+}
