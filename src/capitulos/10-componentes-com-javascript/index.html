@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="10-componentes-com-javascript">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 10-componentes-com-javascript -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Trilheiro ganha a segunda página: o <strong>detalhe da trilha</strong>, aberto pelo botão "Ver trilha". Nela, as fotos passam para o lado num <strong>carrossel</strong>; um botão abre, pela lateral, um painel com dicas de segurança (o <strong>offcanvas</strong>); e o botão "Conte como foi" abre uma janela por cima da página com o formulário do relato (o <strong>modal</strong>).</p>
+        <p>Os três se mexem, e por isso precisam do JavaScript do Bootstrap, aquele que entrou no capítulo 9 para o menu do celular. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/10-componentes-com-javascript">etapas/10-componentes-com-javascript</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🔦" title="O HTML é a lanterna, o JavaScript são as pilhas">
+          <p>Uma lanterna sem pilhas tem tudo no lugar: o corpo, a lâmpada, o botão. Você aperta, e nada acontece. Não há defeito à vista; só falta energia.</p>
+          <p>Um modal sem o JavaScript do Bootstrap é essa lanterna. O HTML e o CSS estão prontos, mas abrir, fechar, deslizar e prender o foco do teclado são <strong>comportamentos</strong>, e quem traz o comportamento é o arquivo de JavaScript.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <p>Esses componentes funcionam sem você escrever JavaScript, graças aos atributos <code>data-bs-*</code>. Ao carregar, o script do Bootstrap procura esses atributos na página e liga cada botão ao seu alvo:</p>
+        <ul>
+          <li><code>data-bs-toggle</code>: o que o botão faz (<code>modal</code>, <code>offcanvas</code>, <code>collapse</code>);</li>
+          <li><code>data-bs-target="#id"</code>: em qual elemento;</li>
+          <li><code>data-bs-dismiss</code>: o botão que fecha (o "×" e o "Cancelar");</li>
+          <li><code>data-bs-slide</code> e <code>data-bs-slide-to</code>: os controles do carrossel.</li>
+        </ul>
+
+        <h3>Modal</h3>
+        <p>Uma janela por cima da página, que escurece o fundo e prende o foco do teclado dentro dela até fechar. Use para uma tarefa curta que não merece uma página: deixar um relato, confirmar uma ação. Experimente:</p>
+        <div class="tf-demo">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#demo-modal">Conte como foi</button>
+        </div>
+        <div class="modal fade" id="demo-modal" tabindex="-1" aria-labelledby="demo-modal-titulo" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <p class="modal-title h5" id="demo-modal-titulo">Conte como foi</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+              </div>
+              <div class="modal-body">
+                <p>Este é um modal de verdade. Repare: a tecla <kbd>Tab</kbd> não sai daqui de dentro, e <kbd>Esc</kbd> fecha a janela.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Carrossel</h3>
+        <p>Uma sequência de itens que passam para o lado, com setas e indicadores. Um item, e só um, começa com a classe <code>active</code>:</p>
+        <div id="demo-fotos" class="carousel slide tf-demo">
+          <div class="carousel-inner rounded">
+            <div class="carousel-item active"><img src="{{base}}img/capitulos/01-salto.svg" class="d-block w-100" alt="Queda-d'água entre morros"></div>
+            <div class="carousel-item"><img src="{{base}}img/capitulos/salto-degraus.svg" class="d-block w-100" alt="Degraus de pedra descendo pela mata"></div>
+            <div class="carousel-item"><img src="{{base}}img/capitulos/araucarias.svg" class="d-block w-100" alt="Araucárias no começo da trilha"></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#demo-fotos" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Foto anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#demo-fotos" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Próxima foto</span>
+          </button>
+        </div>
+
+        <h3>Offcanvas</h3>
+        <p>Um painel que desliza da lateral, bom para conteúdo de apoio que não precisa ficar sempre à vista: filtros, um menu, dicas. Funciona como o modal (escurece o fundo, fecha com <kbd>Esc</kbd>), mas encostado numa borda: <code>offcanvas-end</code> (direita), <code>offcanvas-start</code> (esquerda), <code>offcanvas-bottom</code>.</p>
+        <div class="tf-demo">
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo-dicas" aria-controls="demo-dicas">Dicas de segurança</button>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="demo-dicas" aria-labelledby="demo-dicas-titulo">
+          <div class="offcanvas-header">
+            <p class="offcanvas-title h5" id="demo-dicas-titulo">Dicas de segurança</p>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul><li>Avise alguém aonde você vai.</li><li>Leve água e capa de chuva.</li><li>Não saia da trilha marcada.</li></ul>
+          </div>
+        </div>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: abrir pelo JavaScript</summary>
+          <p>Quando a abertura depende de uma condição (por exemplo, abrir o modal só depois de salvar algo), dá para usar a API do Bootstrap no seu próprio JavaScript:</p>
+          <tf-code src="10-componentes-com-javascript/js-api.js" caption="Exemplo"></tf-code>
+          <p>O <code>getOrCreateInstance</code> pega o componente que já existe naquele elemento, ou cria um. Você vai usar isso no capítulo 23, para fechar o modal depois de enviar o relato.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A página da trilha">
+            <p>Crie o <code>trilha.html</code> copiando o <code>&lt;head&gt;</code>, a navbar, o rodapé e o script do <code>index.html</code>. No primeiro cartão do <code>index.html</code>, aponte o "Ver trilha" para <code>trilha.html</code>. No conteúdo da página nova, ponha um breadcrumb ("Início / Trilha do Salto"), o <code>&lt;h1&gt;</code> com o nome e os badges. O arquivo completo está na etapa.</p>
+            <p>A navbar e o rodapé repetidos em cada página são um incômodo que o capítulo 22 resolve.</p>
+          </section>
+          <section data-step="O carrossel">
+            <tf-code src="10-componentes-com-javascript/carousel.html" caption="trilha.html"></tf-code>
+            <p>O <code>id="fotos"</code> é o alvo de todos os botões. Os botões de seta têm um texto <code>visually-hidden</code>: invisível na tela, lido pelo leitor de tela.</p>
+          </section>
+          <section data-step="O offcanvas">
+            <p>O botão, no conteúdo:</p>
+            <tf-code src="10-componentes-com-javascript/offcanvas-botao.html" caption="trilha.html"></tf-code>
+            <p>E o painel, no fim do <code>&lt;body&gt;</code>, fora do <code>&lt;main&gt;</code>:</p>
+            <tf-code src="10-componentes-com-javascript/offcanvas.html" caption="trilha.html"></tf-code>
+          </section>
+          <section data-step="O modal">
+            <p>Na seção de relatos, um botão com <code>data-bs-toggle="modal" data-bs-target="#novo-relato"</code>. O modal também vai no fim do <code>&lt;body&gt;</code>:</p>
+            <tf-code src="10-componentes-com-javascript/modal.html" caption="trilha.html"></tf-code>
+            <p>O botão "Publicar relato" fica no rodapé do modal, fora do <code>&lt;form&gt;</code>, e se liga a ele pelo atributo <code>form="form-relato"</code>. Por enquanto o formulário não salva nada: a validação chega no capítulo 20, e o envio, no 23.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire a classe <code>active</code> do primeiro item do carrossel: as fotos somem, porque nenhum item está marcado para aparecer. Devolva. Agora mude o <code>data-bs-target</code> do botão do modal para <code>#novo-relatorio</code>: o clique não faz nada, porque o alvo não existe.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Abrir o modal pelo JavaScript deu erro" message="Uncaught ReferenceError: bootstrap is not defined">
+          <p>O seu código usou <code>bootstrap.Modal</code>, mas o <code>bootstrap.bundle.min.js</code> não foi carregado, ou foi carregado <strong>depois</strong> do seu script. A ordem no fim do <code>&lt;body&gt;</code> é: primeiro o Bootstrap, depois o seu arquivo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Troquei o bundle pelo bootstrap.min.js e um componente quebrou" message="Uncaught TypeError: Bootstrap's dropdowns require Popper (https://popper.js.org/docs/v2/)">
+          <p>O <code>bootstrap.min.js</code> não traz o Popper, uma biblioteca que posiciona menus suspensos (dropdowns) e dicas (tooltips). O <code>bootstrap.bundle.min.js</code> já vem com ele. Use o bundle, a menos que você carregue o Popper à parte.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O carrossel aparece vazio">
+          <p>Nenhum item tem a classe <code>active</code>, ou mais de um tem. Exatamente um <code>.carousel-item</code> deve começar com ela. Também confira se as imagens têm <code>d-block w-100</code>, para ocuparem a largura toda.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="10-componentes-com-javascript" award>
+          <fieldset data-correct="b">
+            <legend>O que faz o atributo <code>data-bs-dismiss="modal"</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> Abre o modal</label>
+            <label><input type="radio" name="q1" value="b"> Faz o botão fechar o modal em que ele está</label>
+            <label><input type="radio" name="q1" value="c"> Apaga o modal da página</label>
+            <p data-explain="a" hidden>Quem abre é o <code>data-bs-toggle="modal"</code>, com o <code>data-bs-target</code>.</p>
+            <p data-explain="c" hidden>O modal só é escondido; ele continua no HTML, pronto para abrir de novo.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Quando usar um offcanvas em vez de um modal?</legend>
+            <label><input type="radio" name="q2" value="a"> Para conteúdo de apoio encostado numa lateral, como filtros, um menu ou dicas</label>
+            <label><input type="radio" name="q2" value="b"> Sempre: o offcanvas substitui o modal</label>
+            <label><input type="radio" name="q2" value="c"> Só quando não há JavaScript</label>
+            <p data-explain="b" hidden>Os dois têm usos diferentes: o modal para uma tarefa curta no centro, o offcanvas para apoio na lateral.</p>
+            <p data-explain="c" hidden>O offcanvas também precisa do JavaScript do Bootstrap.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O console mostra <code>Uncaught ReferenceError: bootstrap is not defined</code>. A causa mais provável é:</legend>
+            <label><input type="radio" name="q3" value="a"> O CSS do Bootstrap não carregou</label>
+            <label><input type="radio" name="q3" value="b"> O modal está sem a classe <code>fade</code></label>
+            <label><input type="radio" name="q3" value="c"> O JavaScript do Bootstrap não foi carregado, ou foi carregado depois do seu script</label>
+            <p data-explain="a" hidden>O erro fala do objeto <code>bootstrap</code>, que vem do arquivo de JavaScript, e não do CSS.</p>
+            <p data-explain="b" hidden>O <code>fade</code> só liga a animação. O erro diz que o objeto <code>bootstrap</code> não existe.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que as setas do carrossel têm um texto com <code>visually-hidden</code>?</legend>
+            <label><input type="radio" name="q4" value="a"> Para o texto aparecer quando o mouse passa por cima</label>
+            <label><input type="radio" name="q4" value="b"> Para o leitor de tela anunciar "Próxima foto", já que a seta é só um desenho</label>
+            <label><input type="radio" name="q4" value="c"> Para o Google indexar as fotos</label>
+            <p data-explain="a" hidden><code>visually-hidden</code> esconde o texto da tela em qualquer situação; ele existe para o leitor de tela.</p>
+            <p data-explain="c" hidden>A descrição das fotos fica no <code>alt</code> das imagens. O texto das setas descreve o botão.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, use pelo menos dois componentes com JavaScript onde eles fazem sentido: um modal para uma tarefa curta e um carrossel ou um offcanvas. Teste cada um só com o teclado (<kbd>Tab</kbd>, <kbd>Enter</kbd> e <kbd>Esc</kbd>).</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que os atributos <code>data-bs-toggle</code> e <code>data-bs-target</code> fazem?</li>
+          <li><strong>A motivação:</strong> por que um modal para essa tarefa, e não uma página nova?</li>
+          <li><strong>A anatomia:</strong> explique as partes do seu modal: o diálogo, o cabeçalho, o corpo, o rodapé e o botão de fechar.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o script do Bootstrap e mostre o que para de funcionar, e o que continua.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/modal/">Bootstrap 5.3: Modal</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/carousel/">Bootstrap 5.3: Carousel</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/offcanvas/">Bootstrap 5.3: Offcanvas</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/components/breadcrumb/">Bootstrap 5.3: Breadcrumb</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 10-componentes-com-javascript -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
