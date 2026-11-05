@@ -1,0 +1,24 @@
+@use "tokens" as t;
+@use "mixins" as m;
+@use "functions" as f;
+
+// Títulos de seção, como "Trilhas em destaque": fluidos também.
+.secao-titulo {
+  font-size: f.fluid(24px, 32px);
+}
+
+.card-title {
+  color: t.$verde-mata;
+}
+
+.card-img-top {
+  @include m.cover-image(4, 3);
+}
+
+// Um selo por dificuldade, gerado a partir do mapa: .badge-facil, .badge-moderada, .badge-dificil.
+@each $nome, $cor in t.$dificuldades {
+  .badge-#{$nome} {
+    color: t.$superficie;
+    background-color: $cor;
+  }
+}
