@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="lighthouse">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header lighthouse -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Trilheiro está publicado e funciona. Mas funciona <strong>bem</strong>, num celular comum, com uma internet comum? Achismo não responde isso. O <strong>Lighthouse</strong>, que vem dentro do Chrome, abre a página como um celular numa rede 4G lenta, mede tudo e devolve notas de 0 a 100, com a lista do que atrapalha.</p>
+        <p>Neste extra, o Lighthouse examinou o Trilheiro da etapa 26, e achou coisas de verdade: o rodapé pulando quando as trilhas chegam, a foto principal do Início esperando a vez, a página sem descrição para os buscadores, o CSS sem compressão e, a melhor de todas, as fotos do carrossel <strong>achatadas</strong> no celular, um defeito que ninguém tinha visto. Corrigido o que ele apontou, o desempenho do Início foi de 69 para 86. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/extra-lighthouse">etapas/extra-lighthouse</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🩺" title="A revisão antes da expedição">
+          <p>Antes de uma travessia longa, o grupo passa por uma revisão: alguém confere o fôlego de cada um numa subida de teste, a mochila na balança, as botas, o kit de primeiros socorros. Sai com uma lista: "a mochila está pesada demais", "esta bota aperta". Ninguém precisa adivinhar o que melhorar.</p>
+          <p>O Lighthouse é essa revisão para o site: uma subida de teste num celular simulado, com nota em quatro áreas (desempenho, acessibilidade, boas práticas e SEO) e, para cada nota baixa, o motivo e o elemento da página que causou.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>As quatro notas</h3>
+        <ul>
+          <li><strong>Desempenho:</strong> quanto tempo a página leva para aparecer e para ficar estável, num celular simulado com rede lenta;</li>
+          <li><strong>Acessibilidade:</strong> contraste, textos alternativos, rótulos de formulário, ordem dos títulos. É uma conferência automática: pega muito, mas não tudo (veja o extra de acessibilidade);</li>
+          <li><strong>Boas práticas:</strong> HTTPS, erros no console, bibliotecas com falhas de segurança conhecidas;</li>
+          <li><strong>SEO:</strong> o que ajuda os buscadores a entender a página, como o título e a descrição.</li>
+        </ul>
+
+        <h3>As métricas que mais pesam: <a class="tf-term" href="{{base}}glossario/#lcp-e-cls">LCP e CLS</a></h3>
+        <ul>
+          <li><strong>LCP</strong> (<em>Largest Contentful Paint</em>): quando aparece a maior coisa da tela, em geral uma foto ou um título. Bom é até 2,5 s;</li>
+          <li><strong>CLS</strong> (<em>Cumulative Layout Shift</em>): o quanto as coisas pulam de lugar enquanto a página carrega. Bom é até 0,1. É aquele botão que foge do dedo na hora do toque;</li>
+          <li><strong>FCP</strong> (<em>First Contentful Paint</em>): quando aparece a primeira coisa, qualquer uma.</li>
+        </ul>
+
+        <h3>O que o Lighthouse achou no Trilheiro</h3>
+        <p>Os números abaixo são de execuções de verdade, no celular simulado do Lighthouse 13, com o site servido como no GitHub Pages (no modo publicado, lendo o <code>db.json</code>). As notas variam um pouco a cada execução.</p>
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col">Página</th><th scope="col">Desempenho</th><th scope="col">CLS</th><th scope="col">SEO</th></tr></thead>
+            <tbody>
+              <tr><td>Início, antes</td><td>69</td><td>0,31</td><td>91</td></tr>
+              <tr><td>Início, depois</td><td>86</td><td>0</td><td>100</td></tr>
+              <tr><td>Trilha, antes</td><td>69</td><td>0,31</td><td>91</td></tr>
+              <tr><td>Trilha, depois</td><td>88</td><td>0,02</td><td>100</td></tr>
+              <tr><td>Cadastro, antes</td><td>81 a 87</td><td>0 a 0,11</td><td>90</td></tr>
+              <tr><td>Cadastro, depois</td><td>89 a 92</td><td>0 a 0,02</td><td>100</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A acessibilidade deu 100 nas três páginas, antes e depois: o cuidado com contraste, rótulos e textos alternativos dos capítulos anteriores apareceu na nota. As boas práticas ficaram em 78 só por causa do HTTPS, que o servidor de teste não tinha; publicado no GitHub Pages, com HTTPS, esse item passa.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e os 260 KB de CSS que não são usados?</summary>
+          <p>O Lighthouse também aponta "CSS não usado": o <code>css/main.css</code> traz o Bootstrap inteiro, e o Trilheiro usa uma parte. Dá para importar no Sass só os pedaços que o projeto usa (a grid, os botões, os cartões, o modal…), em vez do <code>bootstrap/scss/bootstrap</code> completo, como mostra a página de otimização do Bootstrap. O ganho é real, mas exige cuidado: um componente esquecido some da página sem aviso. Ferramentas de build, como o Vite, ajudam nesse tipo de corte.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Rodar o Lighthouse">
+            <p>Abra o site publicado (ou o local) no Chrome, de preferência numa janela anônima, para as extensões não atrapalharem a medida. No DevTools, abra a aba <strong>Lighthouse</strong>, deixe marcado <strong>Mobile</strong> e as quatro categorias, e clique em <strong>Analyze page load</strong>. Em meio minuto, saem as notas e, abaixo de cada uma, a lista do que melhorar, com o elemento da página que causou cada item.</p>
+            <p>Também dá para rodar pelo terminal, que é como os números deste extra foram tirados:</p>
+            <tf-code src="lighthouse/cli.txt" caption="Terminal"></tf-code>
+          </section>
+          <section data-step="O rodapé que pula (CLS)">
+            <p>O Lighthouse apontou o rodapé como culpado do CLS de 0,31. Quando a página abre, as trilhas ainda não chegaram: o conteúdo é curto, e o rodapé aparece no meio da tela. Quando os cartões chegam, ele é empurrado para baixo. A correção é reservar o espaço: o conteúdo principal ocupa pelo menos a altura da tela, e o rodapé já nasce abaixo dela.</p>
+            <tf-code src="lighthouse/layout.scss" caption="scss/_layout.scss"></tf-code>
+            <p>A classe <code>site-main</code> vai no <code>&lt;main&gt;</code> das quatro páginas. No cadastro, o pulo vinha do aviso de "só leitura", que aparecia no topo depois que a página já estava na tela. Agora ele já vem no HTML, e o modo local é que o remove:</p>
+            <tf-code src="lighthouse/aviso.js" caption="js/trail-form.js"></tf-code>
+          </section>
+          <section data-step="As fotos achatadas">
+            <p>No detalhe, o item "imagens com proporção incorreta" mostrava a foto do Salto exibida com 388 × 360 px num arquivo de 960 × 720. O atributo <code>height="360"</code>, que serve para reservar o espaço (capítulo 16), estava valendo como altura fixa, enquanto a largura encolhia com a tela. Só no celular, por isso ninguém tinha visto.</p>
+            <tf-code src="lighthouse/carrossel.scss" caption="scss/_trilha.scss"></tf-code>
+          </section>
+          <section data-step="A foto principal primeiro (LCP)">
+            <p>A maior coisa da tela no Início é a foto do primeiro cartão, e ela estava com <code>loading="lazy"</code>, como todas: o navegador esperava para pedi-la. Agora a primeira foto de cada lista é pedida na hora, e com prioridade:</p>
+            <tf-code src="lighthouse/prioridade.js" caption="js/trail-card.js"></tf-code>
+            <tf-code src="lighthouse/home.js" caption="js/home.js (e o mesmo no trails.js)"></tf-code>
+            <p>No detalhe, a primeira foto do carrossel ganha o mesmo <code>fetchPriority = 'high'</code>.</p>
+          </section>
+          <section data-step="A descrição e o CSS comprimido">
+            <p>Cada página ganha uma descrição, que os buscadores mostram abaixo do título nos resultados:</p>
+            <tf-code src="lighthouse/meta.html" caption="index.html"></tf-code>
+            <p>E o Sass passa a gerar o CSS comprimido, sem espaços nem comentários: o arquivo caiu de 279 KB para 235 KB.</p>
+            <tf-code src="lighthouse/sass.txt" caption="package.json (o script sass)"></tf-code>
+          </section>
+          <section data-step="Meça de novo">
+            <p>Compile o Sass, publique e rode o Lighthouse outra vez. Compare com a tabela do "Por dentro". Uma medida só pode enganar: rode duas ou três vezes e olhe a tendência.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>height: auto</code> do carrossel, abra o detalhe de uma trilha e ponha o DevTools no modo celular (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>): a foto volta a ficar achatada. Rode o Lighthouse e o item da proporção volta para a lista. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="A nota muda a cada vez que eu rodo">
+          <p>O desempenho depende do computador, da rede e do que mais está aberto. Rode mais de uma vez, numa janela anônima, e compare tendências, não um número só. O <a href="https://pagespeed.web.dev/">PageSpeed Insights</a> roda o mesmo Lighthouse nos servidores do Google, com resultados mais estáveis para o site publicado.</p>
+        </tf-pitfall>
+        <tf-pitfall title="As extensões do navegador entraram na medida">
+          <p>Extensões rodam código em toda página e pesam no desempenho. Uma janela anônima (sem extensões) dá a medida do site, e não do seu navegador.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Medi no computador e o celular é outra história">
+          <p>O modo <strong>Desktop</strong> do Lighthouse simula um computador rápido, com rede rápida, e quase tudo passa. Quem visita o Trilheiro antes de uma trilha está no celular. Meça no modo <strong>Mobile</strong>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Corri atrás do 100 e piorei o site">
+          <p>A nota é um meio. Tirar fotos para ganhar desempenho, ou esconder o aviso de "só leitura" para zerar o CLS, piora o site para quem usa. Corrija o que atrapalha as pessoas, e aceite um 90 honesto.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="lighthouse" award>
+          <fieldset data-correct="c">
+            <legend>O que mede o CLS?</legend>
+            <label><input type="radio" name="q1" value="a"> O tempo até a página aparecer</label>
+            <label><input type="radio" name="q1" value="b"> O tamanho do CSS</label>
+            <label><input type="radio" name="q1" value="c"> O quanto os elementos pulam de lugar enquanto a página carrega</label>
+            <p data-explain="a" hidden>Isso é o FCP (a primeira coisa) e o LCP (a maior coisa).</p>
+            <p data-explain="b" hidden>O tamanho do CSS aparece em outros itens. O CLS mede os pulos do layout.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que a foto do primeiro cartão não deve ter <code>loading="lazy"</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque ela é a maior coisa da tela ao abrir (o LCP), e o lazy faz o navegador esperar para pedi-la</label>
+            <label><input type="radio" name="q2" value="b"> Porque o lazy deixa a foto com menos qualidade</label>
+            <label><input type="radio" name="q2" value="c"> Porque o lazy não funciona no celular</label>
+            <p data-explain="b" hidden>A qualidade é a mesma. O lazy só muda quando a foto é pedida.</p>
+            <p data-explain="c" hidden>Funciona, e é ótimo para as fotos de baixo. Só a primeira, visível ao abrir, sai perdendo.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Como o Trilheiro acabou com o pulo do rodapé?</legend>
+            <label><input type="radio" name="q3" value="a"> Escondendo o rodapé até as trilhas chegarem</label>
+            <label><input type="radio" name="q3" value="b"> Reservando o espaço: o conteúdo principal ocupa pelo menos a altura da tela</label>
+            <label><input type="radio" name="q3" value="c"> Tirando o aviso de "Carregando"</label>
+            <p data-explain="a" hidden>O rodapé esconderia e depois apareceria: outro pulo. A solução é ele já nascer no lugar certo.</p>
+            <p data-explain="c" hidden>O aviso ajuda quem espera. O problema era o espaço que crescia depois.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Por que medir no modo Mobile?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque o modo Desktop não funciona</label>
+            <label><input type="radio" name="q4" value="b"> Porque dá notas mais altas</label>
+            <label><input type="radio" name="q4" value="c"> Porque simula um celular com rede lenta, que é como muita gente visita o site</label>
+            <p data-explain="a" hidden>Funciona, mas simula um computador rápido: esconde os problemas de quem está no celular.</p>
+            <p data-explain="b" hidden>É o contrário: o Mobile é mais exigente, e por isso mostra mais.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Rode o Lighthouse no <strong>seu projeto</strong> publicado, no modo Mobile, nas páginas principais. Anote as notas, corrija pelo menos três itens que ele apontar e meça de novo, guardando o antes e o depois numa tabela no README.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que medem o LCP e o CLS?</li>
+          <li><strong>A motivação:</strong> que problema real o Lighthouse achou no seu site?</li>
+          <li><strong>A anatomia:</strong> explique uma das correções, e por que ela muda a nota.</li>
+          <li><strong>"E se eu tirar?":</strong> desfaça uma correção e mostre o item voltando ao relatório.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://developer.chrome.com/docs/lighthouse/overview">Chrome: o Lighthouse (em inglês)</a></li>
+          <li><a href="https://developer.chrome.com/docs/lighthouse/performance/performance-scoring">Chrome: como a nota de desempenho é calculada (em inglês)</a></li>
+          <li><a href="https://web.dev/articles/lcp">web.dev: LCP (em inglês)</a></li>
+          <li><a href="https://web.dev/articles/cls">web.dev: CLS (em inglês)</a></li>
+          <li><a href="https://web.dev/articles/fetch-priority">web.dev: prioridade de carregamento (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/customize/optimize/">Bootstrap: deixar o CSS menor (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager lighthouse -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

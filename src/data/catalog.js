@@ -50,7 +50,7 @@ const raw = [
 ];
 
 // Capítulos já publicados.
-const PUBLISHED = new Set(['01-por-que-um-framework', '02-preparar-o-ambiente', '03-html-e-css-para-relembrar', '04-prd-curto', '05-prototipar-com-ia', '06-design-tokens', '07-grid-do-bootstrap', '08-utilitarios-do-bootstrap', '09-componentes-prontos', '10-componentes-com-javascript', '11-flexbox-e-grid-no-css-puro', '12-unidades-relativas', '13-personalizar-o-bootstrap-com-sass', '14-organizar-o-css-com-sass', '15-tipografia-fluida', '16-imagens-responsivas', '17-javascript-basico', '18-dom-e-eventos', '19-objetos-arrays-e-classes', '20-validar-formularios', '21-web-storage-e-json', '22-jquery-e-plugin-de-mascara', '23-fetch-e-json-server', '24-api-publica-e-erros', '25-prettier-e-eslint', '26-publicar-no-github-pages', 'vite-e-bundlers']);
+const PUBLISHED = new Set(['01-por-que-um-framework', '02-preparar-o-ambiente', '03-html-e-css-para-relembrar', '04-prd-curto', '05-prototipar-com-ia', '06-design-tokens', '07-grid-do-bootstrap', '08-utilitarios-do-bootstrap', '09-componentes-prontos', '10-componentes-com-javascript', '11-flexbox-e-grid-no-css-puro', '12-unidades-relativas', '13-personalizar-o-bootstrap-com-sass', '14-organizar-o-css-com-sass', '15-tipografia-fluida', '16-imagens-responsivas', '17-javascript-basico', '18-dom-e-eventos', '19-objetos-arrays-e-classes', '20-validar-formularios', '21-web-storage-e-json', '22-jquery-e-plugin-de-mascara', '23-fetch-e-json-server', '24-api-publica-e-erros', '25-prettier-e-eslint', '26-publicar-no-github-pages', 'vite-e-bundlers', 'lighthouse']);
 
 export const PARTS = raw.map(([id, title, hasMarks, chapters]) => ({
   id,

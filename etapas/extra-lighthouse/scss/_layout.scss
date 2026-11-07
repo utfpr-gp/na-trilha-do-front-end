@@ -1,0 +1,5 @@
+// O conteúdo principal ocupa pelo menos a tela inteira. Enquanto as trilhas carregam, o rodapé
+// já fica abaixo da tela, e não pula para baixo quando os cartões chegam (CLS, no Lighthouse).
+.site-main {
+  min-height: 100vh;
+}
