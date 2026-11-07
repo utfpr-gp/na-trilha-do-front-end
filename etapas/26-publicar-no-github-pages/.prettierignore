@@ -1,0 +1,6 @@
+# O que o Prettier não formata: arquivos gerados, dados e documentos.
+css/
+db.json
+package-lock.json
+*.html
+*.md

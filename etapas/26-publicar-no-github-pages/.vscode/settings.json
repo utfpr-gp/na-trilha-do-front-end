@@ -1,0 +1,5 @@
+{
+  "liveServer.settings.ignoreFiles": [".vscode/**", "**/*.scss", "db.json"],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

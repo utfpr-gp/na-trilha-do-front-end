@@ -1,0 +1,14 @@
+// O formulário de cadastro "flutua" sobre o papel, como os cartões (design system).
+@use "tokens" as t;
+
+.trail-form {
+  max-width: 48rem;
+  padding: 1.5rem;
+  background-color: t.$superficie;
+  border-radius: t.$raio;
+  box-shadow: 0 1px 3px rgba(t.$tinta, 0.12);
+
+  legend {
+    color: t.$verde-mata;
+  }
+}

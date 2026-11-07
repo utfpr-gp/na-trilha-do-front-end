@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="26-publicar-no-github-pages">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 26-publicar-no-github-pages -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Até aqui, o Trilheiro só existiu no seu computador, em <code>127.0.0.1:5500</code>. Hoje ele ganha um endereço na internet, como <code>https://seu-usuario.github.io/trilheiro/</code>, que você pode mandar para qualquer pessoa, e que abre no celular dela.</p>
+        <p>Publicar um site estático é fácil; o trabalho está no que muda quando ele sai do seu computador. O GitHub Pages só serve arquivos: não roda o json-server nem tem a pasta <code>node_modules</code>. Por isso, o <code>api.js</code> ganha um <strong>modo publicado</strong>, que lê as trilhas direto do <code>db.json</code> e avisa que cadastrar só funciona no computador; o JavaScript do Bootstrap e os ícones passam a vir de um <strong>CDN</strong>; e a aba do navegador ganha o ícone do Trilheiro. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/26-publicar-no-github-pages">etapas/26-publicar-no-github-pages</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🪧" title="O mural na entrada do parque">
+          <p>No escritório do parque, o guia tem tudo: o caderno de registros, o rádio, o telefone para marcar passeios. Na entrada, há um mural com as trilhas, as fotos e os mapas, aberto para quem passar. O mural mostra tudo o que está no caderno, mas não dá para marcar passeio nele: para isso, só no escritório.</p>
+          <p>O GitHub Pages é o mural: mostra os arquivos do seu repositório para o mundo, mas não roda nenhum servidor. O site publicado lê o <code>db.json</code> como quem lê o mural; gravar continua sendo coisa do escritório, o seu computador com o json-server.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>O que é um site estático</h3>
+        <p>O GitHub Pages publica um <a class="tf-term" href="{{base}}glossario/#site-estatico">site estático</a>: pega os arquivos de um repositório e os serve como estão: o navegador pede <code>trilha.html</code>, e recebe o <code>trilha.html</code>. Não há programa nenhum rodando do lado de lá. Isso basta para HTML, CSS, imagens e JavaScript, porque todo o trabalho deles acontece no navegador de quem visita. Mas não serve para nada que precise de um servidor, como gravar um relato.</p>
+        <p>Três consequências para o Trilheiro:</p>
+        <ul>
+          <li><strong>O <code>node_modules</code> não vai junto.</strong> Ele está no <code>.gitignore</code> desde o capítulo 2 (e não deve ir: são milhares de arquivos). Tudo o que as páginas usavam de lá passa a vir de um CDN, com a versão fixa no endereço;</li>
+          <li><strong>O CSS compilado vai.</strong> O navegador não lê <code>.scss</code>: o <code>css/main.css</code> que o Sass gera precisa estar no repositório, atualizado;</li>
+          <li><strong>Não há json-server.</strong> O site publicado lê o <code>db.json</code> como um arquivo comum, com <code>fetch('db.json')</code>, e não grava nada.</li>
+        </ul>
+        <tf-code src="26-publicar-no-github-pages/publicado.txt" caption="O que vai para o GitHub"></tf-code>
+
+        <h3>Um código, dois modos</h3>
+        <p>O <code>architecture.md</code> já previa isso, na seção 6: o <code>api.js</code> escolhe o modo pelo endereço. Em <code>localhost</code> ou <code>127.0.0.1</code>, fala com o json-server; em qualquer outro, lê o <code>db.json</code>. As páginas continuam chamando as mesmas funções, <code>getTrails</code> e <code>getTrail</code>, sem saber de onde os dados vêm. Foi para este momento que, lá no capítulo 23, o <code>fetch</code> ficou num arquivo só.</p>
+        <p>No modo publicado, o <code>_embed</code> que o json-server fazia passa a ser feito pelo JavaScript: o <code>find</code> acha a trilha, e o <code>filter</code> junta os relatos dela, os mesmos métodos do capítulo 19.</p>
+
+        <h3>Caminhos relativos</h3>
+        <p>Um site de projeto no GitHub Pages fica numa pasta com o nome do repositório: <code>https://seu-usuario.github.io/trilheiro/</code>. Um caminho que começa com <code>/</code> aponta para a raiz do domínio, fora dessa pasta, e quebra. Os caminhos do Trilheiro são todos relativos à página, desde o começo:</p>
+        <tf-code src="26-publicar-no-github-pages/caminhos.html" caption="Exemplo"></tf-code>
+        <p>Digite caminhos e veja para onde cada um aponta, numa página publicada:</p>
+        <tf-path-lab></tf-path-lab>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e quando o projeto tem uma etapa de build?</summary>
+          <p>O Trilheiro vai para o ar do jeito que está no repositório. Projetos com uma ferramenta de build, como o Vite (veja "Para ir além"), geram uma pasta <code>dist</code> com o site pronto, e é ela que precisa ser publicada. O pacote <a href="https://github.com/tschaub/gh-pages">gh-pages</a> faz isso: copia a pasta para uma branch separada, <code>gh-pages</code>, e o GitHub Pages é configurado para servir essa branch.</p>
+          <tf-code src="26-publicar-no-github-pages/gh-pages.txt" caption="package.json de um projeto com Vite (trecho)"></tf-code>
+          <p>Outro caminho, comum em projetos maiores, é o GitHub Actions: um roteiro que roda no próprio GitHub a cada <code>push</code>, faz o build e publica. É assim que este livro vai para o ar.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O CDN no lugar da node_modules">
+            <p>Nas quatro páginas, troque os dois endereços que apontavam para a <code>node_modules</code> pelos do CDN, nas mesmas versões, e acrescente o ícone da aba (um SVG pequeno, em <code>img/favicon.svg</code>):</p>
+            <tf-code src="26-publicar-no-github-pages/cdn.html" caption="index.html (e as outras três páginas)"></tf-code>
+            <p>O jQuery e o plugin de máscara do cadastro já vinham do CDN desde o capítulo 22. O CSS do Bootstrap continua dentro do <code>css/main.css</code>, compilado com o tema: esse não muda.</p>
+          </section>
+          <section data-step="O modo publicado">
+            <p>O <code>js/api.js</code> ganha a escolha de modo, a leitura do <code>db.json</code>, a função <code>canWrite</code> e a mensagem do <code>architecture.md</code>:</p>
+            <tf-code src="26-publicar-no-github-pages/api.js" caption="js/api.js"></tf-code>
+          </section>
+          <section data-step="As páginas avisam">
+            <p>No cadastro, logo no começo do <code>js/trail-form.js</code>, o aviso e o botão desligado (com um <code>&lt;div class="alert alert-info" id="read-only" role="status" hidden&gt;</code> no <code>cadastrar.html</code>, acima do formulário):</p>
+            <tf-code src="26-publicar-no-github-pages/cadastro-leitura.js" caption="js/trail-form.js"></tf-code>
+            <p>No detalhe, o botão "Conte como foi" (que ganha o <code>id="report-button"</code>) dá lugar ao mesmo aviso:</p>
+            <tf-code src="26-publicar-no-github-pages/detalhe-leitura.js" caption="js/trail-detail.js"></tf-code>
+          </section>
+          <section data-step="Teste o modo publicado antes de publicar">
+            <p>Não é preciso publicar para ver o modo publicado. Pare o json-server e, no <code>api.js</code>, troque por um momento a linha do <code>LOCAL</code> por <code>const LOCAL = false;</code>. Recarregue: as trilhas aparecem, lidas do <code>db.json</code>, com os relatos e a previsão do tempo; o cadastro mostra o aviso, com o botão desligado; o detalhe troca o "Conte como foi" pelo aviso. Volte a linha original depois.</p>
+          </section>
+          <section data-step="Publique">
+            <p>Compile o Sass, confira o formato e o lint, e envie tudo:</p>
+            <tf-code src="26-publicar-no-github-pages/terminal.txt" caption="Terminal"></tf-code>
+            <p>No GitHub, abra o repositório e vá em <strong>Settings</strong> → <strong>Pages</strong>. Em <strong>Build and deployment</strong>, escolha <strong>Deploy from a branch</strong>, a branch <code>main</code> e a pasta <code>/ (root)</code>, e clique em <strong>Save</strong>. Em um ou dois minutos, a aba <strong>Actions</strong> mostra o "pages build and deployment" com um ✓, e o endereço aparece no alto da página de <strong>Pages</strong>.</p>
+            <p>Abra o endereço no celular. Ponha o link no <code>README.md</code> do projeto e na descrição do repositório (a engrenagem ao lado de <strong>About</strong>, campo <strong>Website</strong>). A cada <code>git push</code>, o site se atualiza sozinho.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Volte o <code>&lt;script&gt;</code> do Bootstrap do <code>index.html</code> para o endereço da <code>node_modules</code> e renomeie a pasta <code>node_modules</code> para <code>node_modules-fora</code>: é o que o GitHub Pages enxerga, nada. Recarregue: o console mostra o 404 do arquivo, e o menu do celular (o botão de três linhas, numa tela estreita) para de abrir. Desfaça as duas coisas.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Funciona no meu computador e quebra no site publicado" message="Failed to load resource: the server responded with a status of 404">
+          <p>As três causas mais comuns: um arquivo que vem da <code>node_modules</code> (que não está no GitHub); um caminho começando com <code>/</code>; ou um nome com maiúscula diferente, como <code>img/Salto.jpg</code> para o arquivo <code>salto.jpg</code>. No Windows e no macOS, o nome com maiúscula diferente funciona; no servidor do GitHub, não. Abra o site publicado com a aba <strong>Network</strong> do DevTools e procure as linhas em vermelho.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Para mim o site publicado grava, para os outros não">
+          <p>Se o <code>api.js</code> mandasse o site publicado falar com <code>http://localhost:3000</code>, ele funcionaria no <strong>seu</strong> navegador, enquanto o seu json-server estivesse rodando. Para qualquer outra pessoa, <code>localhost</code> é o computador dela, onde não há servidor nenhum. Teste sempre o site publicado com o json-server parado, ou em outro aparelho.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Mudei o Sass e o site publicado não mudou">
+          <p>O GitHub Pages serve o <code>css/main.css</code>, e não o <code>.scss</code>. Rode <code>npm run sass</code> antes do commit, para o CSS compilado ir junto. A mesma coisa vale para o <code>db.json</code>: o site publicado mostra o que estava nele no último <code>push</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A página de Pages não aparece, ou o site dá 404">
+          <p>Num plano gratuito, o GitHub Pages exige um repositório <strong>público</strong>. Confira também se a branch e a pasta escolhidas existem e se há um <code>index.html</code> na raiz. Depois de salvar, espere o ✓ na aba <strong>Actions</strong>: antes disso, o endereço responde 404.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Atualizei, e o site mostra a versão velha">
+          <p>O navegador guarda uma cópia dos arquivos (o cache). Depois de um <code>push</code>, espere o ✓ em <strong>Actions</strong> e recarregue com <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>, que ignora o cache.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="26-publicar-no-github-pages" award>
+          <fieldset data-correct="b">
+            <legend>Por que o cadastro não grava no site publicado?</legend>
+            <label><input type="radio" name="q1" value="a"> Porque o GitHub proíbe formulários</label>
+            <label><input type="radio" name="q1" value="b"> Porque o GitHub Pages só serve arquivos, sem nenhum servidor para receber o <code>POST</code></label>
+            <label><input type="radio" name="q1" value="c"> Porque o <code>db.json</code> fica escondido</label>
+            <p data-explain="a" hidden>O formulário aparece e até valida. O que falta é quem grave os dados do outro lado.</p>
+            <p data-explain="c" hidden>O <code>db.json</code> é público: é justamente dele que o site publicado lê as trilhas.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que o JavaScript do Bootstrap passou a vir do CDN?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque a <code>node_modules</code> está no <code>.gitignore</code> e não vai para o GitHub</label>
+            <label><input type="radio" name="q2" value="b"> Porque o CDN tem uma versão mais nova</label>
+            <label><input type="radio" name="q2" value="c"> Porque o GitHub Pages não aceita arquivos .js</label>
+            <p data-explain="b" hidden>A versão é a mesma, 5.3.8, fixa no endereço. A troca é só de lugar.</p>
+            <p data-explain="c" hidden>Aceita, sim: todos os arquivos da pasta <code>js/</code> vão e funcionam.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O site está em <code>https://ana.github.io/trilheiro/</code>. Para onde aponta <code>href="/css/main.css"</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> <code>https://ana.github.io/trilheiro/css/main.css</code></label>
+            <label><input type="radio" name="q3" value="b"> Para o <code>css/main.css</code> do computador da Ana</label>
+            <label><input type="radio" name="q3" value="c"> <code>https://ana.github.io/css/main.css</code>, fora da pasta do projeto</label>
+            <p data-explain="a" hidden>Esse seria o caminho relativo, <code>css/main.css</code>, sem a barra no começo.</p>
+            <p data-explain="b" hidden>Os caminhos são resolvidos a partir do endereço da página, no servidor.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Como testar o modo publicado sem publicar?</legend>
+            <label><input type="radio" name="q4" value="a"> Não tem como: só publicando</label>
+            <label><input type="radio" name="q4" value="b"> Parar o json-server e trocar por um momento o <code>LOCAL</code> do <code>api.js</code> por <code>false</code></label>
+            <label><input type="radio" name="q4" value="c"> Abrir o <code>index.html</code> com dois cliques</label>
+            <p data-explain="a" hidden>O modo é escolhido por uma constante só, o <code>LOCAL</code>: com ela em <code>false</code>, o seu computador se comporta como o site publicado.</p>
+            <p data-explain="c" hidden>Pelo <code>file://</code>, os módulos nem carregam (capítulo 19).</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Publique o <strong>seu projeto</strong> no GitHub Pages. Troque tudo o que vinha da <code>node_modules</code> por um CDN, garanta que o CSS compilado está no repositório, e faça a parte que dependia do json-server funcionar só para leitura no site publicado, com um aviso claro. Teste o endereço no celular, e ponha o link no README e na descrição do repositório.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é um site estático, e o que ele não consegue fazer?</li>
+          <li><strong>A motivação:</strong> o que precisou mudar no seu projeto para ele funcionar publicado?</li>
+          <li><strong>A anatomia:</strong> explique como o seu código escolhe entre o modo local e o publicado.</li>
+          <li><strong>"E se eu tirar?":</strong> aponte um arquivo para a <code>node_modules</code> e mostre o 404 no site publicado.</li>
+        </ul>
+        <p>E com isso, a trilha chegou ao fim: o Trilheiro saiu de um cartão solto num arquivo HTML e virou um site publicado, com tema próprio, dados num servidor, APIs de verdade e código revisado por ferramentas. Para continuar, os capítulos de "Para ir além" mostram outros caminhos: outros frameworks de CSS, acessibilidade, desempenho e ferramentas de build.</p>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://docs.github.com/pt/pages/getting-started-with-github-pages/what-is-github-pages">GitHub Docs: o que é o GitHub Pages</a></li>
+          <li><a href="https://docs.github.com/pt/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub Docs: escolher de onde o site é publicado</a></li>
+          <li><a href="https://docs.github.com/pt/pages/getting-started-with-github-pages/troubleshooting-404-errors-for-github-pages-sites">GitHub Docs: resolver os erros 404 do Pages</a></li>
+          <li><a href="https://github.com/tschaub/gh-pages">gh-pages: publicar uma pasta numa branch (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 26-publicar-no-github-pages -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
