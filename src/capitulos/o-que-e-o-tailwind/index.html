@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="o-que-e-o-tailwind">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header o-que-e-o-tailwind -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>Nos frameworks dos capítulos anteriores, um cartão é uma peça pronta: você escreve <code>class="card"</code> e recebe borda, sombra e espaçamento. O <strong>Tailwind</strong>, um dos nomes mais comentados do front-end hoje, não tem cartão. Tem só classes pequenas, cada uma com uma propriedade: <code>rounded-lg</code> arredonda, <code>shadow-sm</code> põe a sombra, <code>p-5</code> dá o espaço. O cartão você monta, classe por classe, direto no HTML.</p>
+        <p>Neste extra, a vitrine do Início do Trilheiro é refeita em Tailwind 4, com as cores e as fontes do design system virando o tema dele. No fim, o CSS da página inteira tem 10,7 KB, porque o Tailwind gera só as classes que o HTML usa. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/extra-tailwind">etapas/extra-tailwind</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🧱" title="O abrigo pronto e o kit de peças">
+          <p>Num parque, dá para alugar um abrigo pronto: chega montado, do jeito que o fabricante desenhou. Ou dá para levar um kit de peças padronizadas (estacas, lonas, cordas de tamanhos fixos) e montar o abrigo do seu jeito, peça por peça. Dá mais trabalho no começo e mais liberdade depois.</p>
+          <p>O Bootstrap é o abrigo pronto: componentes com a cara dele, que você personaliza. O Tailwind é o kit: peças pequenas e padronizadas, as <a class="tf-term" href="{{base}}glossario/#utility-first">classes utilitárias</a>, que você combina para chegar exatamente ao seu design. Você já usou peças assim nos utilitários do Bootstrap (capítulo 8), como o <code>mb-3</code>. O Tailwind faz a página inteira assim.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>O mesmo cartão, dois jeitos</h3>
+        <tf-code src="o-que-e-o-tailwind/cartao-bootstrap.html" caption="Bootstrap"></tf-code>
+        <tf-code src="o-que-e-o-tailwind/cartao.html" caption="Tailwind"></tf-code>
+        <p>No Tailwind, cada classe é uma decisão visível: <code>flex flex-col</code> empilha, <code>overflow-hidden rounded-lg</code> arredonda os cantos da foto junto com o cartão, <code>aspect-4/3 object-cover</code> é o mixin de foto do capítulo 14, <code>text-verde-mata</code> é a cor do título. Muita classe, e nenhum arquivo de CSS para abrir.</p>
+        <p>Os breakpoints viram prefixos, como no Bootstrap. A grade de cartões é uma linha só:</p>
+        <tf-code src="o-que-e-o-tailwind/grade.html" caption="index.html"></tf-code>
+        <p>Uma coluna no celular, duas a partir do <code>sm</code>, três a partir do <code>lg</code>, com o <code>display: grid</code> do capítulo 11 por baixo.</p>
+
+        <h3>O tema: o design system vira classes</h3>
+        <p>No Tailwind 4, o tema é CSS. Cada variável do <code>@theme</code> gera uma família de classes: <code>--color-verde-mata</code> cria <code>bg-verde-mata</code>, <code>text-verde-mata</code>, <code>border-verde-mata</code>, e assim por diante.</p>
+        <tf-code src="o-que-e-o-tailwind/input.css" caption="css/input.css"></tf-code>
+
+        <h3>Só o que é usado</h3>
+        <p>O Tailwind lê os seus arquivos procurando nomes de classe e gera o CSS só com eles. A página do Trilheiro inteira ficou com 10,7 KB de CSS, contra os 30 KB (comprimidos) do Bootstrap completo. O preço: o nome da classe precisa aparecer inteiro em algum arquivo, como texto.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: utilitário ou componente, qual é melhor?</summary>
+          <p>Nenhum dos dois, em geral. O Tailwind brilha quando o design é próprio e cheio de detalhes, e quando a equipe trabalha com componentes de JavaScript (Angular, React, Vue): o "cartão" vira um componente, e as classes ficam escritas num lugar só. O Bootstrap brilha quando os componentes prontos bastam e o tempo é curto, e quando é preciso JavaScript pronto para modal, carrossel e menu, que o Tailwind não tem. Muitos projetos misturam as ideias: o próprio Trilheiro usa componentes do Bootstrap e utilitários como <code>d-flex</code> e <code>mb-3</code>.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Instalar">
+            <p>Numa pasta nova, instale o Tailwind e a ferramenta de linha de comando dele, e crie os scripts:</p>
+            <tf-code src="o-que-e-o-tailwind/scripts.txt" caption="package.json (trecho)"></tf-code>
+          </section>
+          <section data-step="O tema">
+            <p>Crie <code>css/input.css</code> com o <code>@import</code> do Tailwind e o <code>@theme</code> do Trilheiro, como no "Por dentro". Rode o script, que lê o HTML e gera o <code>css/tailwind.css</code>:</p>
+            <tf-code src="o-que-e-o-tailwind/terminal.txt" caption="Terminal"></tf-code>
+            <p>Durante o trabalho, deixe o <code>npm run css:watch</code> rodando: a cada classe nova no HTML, o CSS é refeito.</p>
+          </section>
+          <section data-step="A página">
+            <p>No <code>index.html</code>, o <code>&lt;link&gt;</code> aponta para o <code>css/tailwind.css</code>. O <code>&lt;body&gt;</code> já recebe as cores e a fonte do tema (<code>bg-papel font-texto text-tinta</code>), e cada parte da página é montada com utilitários: o menu com <code>flex</code> e <code>justify-between</code>, o banner com <code>bg-marcacao py-12</code>, os cartões como no "Por dentro".</p>
+            <p>O botão do cartão ganha um contorno de foco no amarelo do tema, bem visível sobre o verde, para quem usa o teclado: <code>focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-marcacao</code>.</p>
+          </section>
+          <section data-step="O menu do celular">
+            <p>O Tailwind não tem JavaScript. O menu fica escondido no celular (<code>hidden</code>) e aparece a partir do <code>md</code> (<code>md:flex</code>); o botão é seu:</p>
+            <tf-code src="o-que-e-o-tailwind/menu.js" caption="index.html (no &lt;script&gt;)"></tf-code>
+          </section>
+          <section data-step="Confira">
+            <p>Abra pelo Live Server e compare com o Início do Trilheiro e com as versões em Materialize e Bulma: as mesmas trilhas e as mesmas cores. Abra o <code>css/tailwind.css</code>: só estão lá as classes que a página usa. A página passou no axe sem problemas, no celular e no computador.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Troque <code>bg-moderada</code> por <code>bg-moderado</code>, que não existe no tema, e rode <code>npm run css</code>. Nenhum erro: o Tailwind só não gera a classe, e o selo fica sem fundo, com o texto branco invisível sobre o branco. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="A classe montada pelo JavaScript não funciona">
+          <p>O Tailwind lê os arquivos como texto e procura nomes inteiros. Um nome montado na hora, como <code>`bg-${trail.dificuldade}`</code>, nunca aparece inteiro, e a classe não é gerada (foi conferido: só a classe escrita por inteiro foi para o CSS). Escreva os nomes completos, num objeto, por exemplo: <code>{ facil: 'bg-facil', moderada: 'bg-moderada', dificil: 'bg-dificil' }</code>.</p>
+          <tf-code src="o-que-e-o-tailwind/classe-montada.html" caption="Exemplo"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="Classe com erro de digitação não dá erro">
+          <p>Um <code>bg-verde-mta</code> simplesmente não gera nada, sem aviso. A extensão <strong>Tailwind CSS IntelliSense</strong>, do VS Code, completa os nomes e mostra o CSS de cada classe ao passar o mouse.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O tutorial é do Tailwind 3">
+          <p>O Tailwind 4 mudou a configuração: o tema saiu do <code>tailwind.config.js</code> e foi para o <code>@theme</code> no CSS, e o <code>@tailwind base; @tailwind components;</code> virou um <code>@import "tailwindcss";</code>. Muitos exemplos na internet ainda são da versão 3. Confira a versão antes de copiar.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O HTML ficou ilegível">
+          <p>Vinte classes num elemento, repetidas em três cartões, é difícil de manter: mudar a sombra é mudar em três lugares. Num site de HTML puro, como o Trilheiro, monte o elemento repetido pelo JavaScript (como o <code>createTrailCard</code> do capítulo 19), para as classes ficarem num lugar só.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="o-que-e-o-tailwind" award>
+          <fieldset data-correct="b">
+            <legend>O que é uma classe utilitária?</legend>
+            <label><input type="radio" name="q1" value="a"> Um componente pronto, como <code>.card</code></label>
+            <label><input type="radio" name="q1" value="b"> Uma classe pequena, com uma propriedade só, como <code>p-5</code> ou <code>rounded-lg</code></label>
+            <label><input type="radio" name="q1" value="c"> Uma classe que só funciona com JavaScript</label>
+            <p data-explain="a" hidden>O <code>.card</code> junta várias propriedades num componente. A utilitária faz uma coisa só.</p>
+            <p data-explain="c" hidden>As utilitárias são só CSS.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que o CSS do Tailwind do Trilheiro ficou com 10,7 KB?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque ele gera só as classes que aparecem nos arquivos</label>
+            <label><input type="radio" name="q2" value="b"> Porque o Tailwind tem poucas classes</label>
+            <label><input type="radio" name="q2" value="c"> Porque ele baixa o resto do CDN depois</label>
+            <p data-explain="b" hidden>Ele tem milhares de classes possíveis. Só as usadas vão para o arquivo final.</p>
+            <p data-explain="c" hidden>Não há nada no CDN: o CSS gerado é tudo o que a página usa.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que <code>sm:grid-cols-2 lg:grid-cols-3</code> faz?</legend>
+            <label><input type="radio" name="q3" value="a"> Duas colunas no celular e três no tablet</label>
+            <label><input type="radio" name="q3" value="b"> Sempre três colunas</label>
+            <label><input type="radio" name="q3" value="c"> Duas colunas a partir do sm, três a partir do lg (e uma, antes do sm)</label>
+            <p data-explain="a" hidden>O prefixo vale <strong>a partir</strong> do breakpoint, como no Bootstrap. No celular, sem prefixo, a grade tem uma coluna.</p>
+            <p data-explain="b" hidden>Três só a partir do lg.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Como as cores do Trilheiro viraram classes do Tailwind?</legend>
+            <label><input type="radio" name="q4" value="a"> Escrevendo cada classe à mão num arquivo CSS</label>
+            <label><input type="radio" name="q4" value="b"> Pelo <code>@theme</code>: cada variável <code>--color-*</code> gera as classes de cor</label>
+            <label><input type="radio" name="q4" value="c"> Não dá: o Tailwind só tem as cores dele</label>
+            <p data-explain="a" hidden>O Tailwind gera as classes a partir do tema: <code>--color-verde-mata</code> vira <code>bg-verde-mata</code>, <code>text-verde-mata</code>…</p>
+            <p data-explain="c" hidden>Dá, e é o jeito recomendado: o design system vira o tema.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Refaça uma tela do <strong>seu projeto</strong> em Tailwind 4, com o seu design system no <code>@theme</code>. Depois, compare com a versão em Bootstrap: o tamanho do CSS, o tempo que levou e o quanto o HTML ficou mais longo.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que muda entre um framework de componentes e um de utilitários?</li>
+          <li><strong>A motivação:</strong> em que tipo de projeto você escolheria o Tailwind, e em qual o Bootstrap?</li>
+          <li><strong>A anatomia:</strong> explique, classe por classe, um elemento da sua tela.</li>
+          <li><strong>"E se eu tirar?":</strong> digite errado uma classe e mostre que nada avisa.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://tailwindcss.com/docs/installation/tailwind-cli">Tailwind: instalar pela linha de comando (em inglês)</a></li>
+          <li><a href="https://tailwindcss.com/docs/theme">Tailwind: o tema e o @theme (em inglês)</a></li>
+          <li><a href="https://tailwindcss.com/docs/detecting-classes-in-source-files">Tailwind: como ele acha as classes nos arquivos (em inglês)</a></li>
+          <li><a href="https://tailwindcss.com/docs/upgrade-guide">Tailwind: o que mudou da versão 3 para a 4 (em inglês)</a></li>
+          <li><a href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss">Tailwind CSS IntelliSense, para o VS Code</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager o-que-e-o-tailwind -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
