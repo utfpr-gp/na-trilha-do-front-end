@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="acessibilidade-na-pratica">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header acessibilidade-na-pratica -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Lighthouse deu nota 100 de acessibilidade ao Trilheiro. Isso quer dizer que ele é acessível? Quer dizer que ele passou nas conferências que uma máquina sabe fazer. Neste extra, o Trilheiro passa por uma revisão mais funda: uma ferramenta mais completa (o axe), o <strong>teclado</strong> no lugar do mouse, e o que o <strong>leitor de tela</strong> de fato fala, elemento por elemento.</p>
+        <p>A revisão achou oito problemas que a nota 100 escondia. Quem usa o teclado precisava passar pelo menu inteiro em toda página; quem usa leitor de tela ouvia "Favoritar, Favoritar, Favoritar" sem saber de qual trilha, e o asterisco lido junto com o nome do campo; e, numa tela de 320 px, o detalhe da trilha rolava para o lado. Todos foram corrigidos. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/extra-acessibilidade">etapas/extra-acessibilidade</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="♿" title="A trilha adaptada">
+          <p>Uma trilha adaptada não é a que tem uma placa dizendo "acessível". É a que alguém percorreu de cadeira de rodas, com bengala, com um carrinho de bebê, e confirmou: a rampa tem a inclinação certa, o piso tátil leva até o mirante, a placa em braile está na altura da mão. A placa ajuda, mas a prova é percorrer.</p>
+          <p>A nota do Lighthouse é a placa. Testar com o teclado e ouvir o que o leitor de tela fala é percorrer a trilha. Acessibilidade é o site funcionar para todo mundo: quem não enxerga, quem não usa mouse, quem aumenta a letra, quem está no sol forte com o celular na mão.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Três jeitos de testar</h3>
+        <ul>
+          <li><strong>Ferramentas automáticas:</strong> o Lighthouse e o axe (a extensão <a href="https://chromewebstore.google.com/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd">axe DevTools</a>, do Chrome) acham contraste baixo, imagem sem <code>alt</code>, campo sem rótulo. São rápidas, mas pegam só uma parte dos problemas;</li>
+          <li><strong>O teclado:</strong> guarde o mouse e use só <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Espaço</kbd> e as setas. Dá para chegar a tudo? Dá para ver onde está o foco? A ordem faz sentido?</li>
+          <li><strong>O <a class="tf-term" href="{{base}}glossario/#leitor-de-tela">leitor de tela</a>:</strong> o NVDA (gratuito, no Windows), o VoiceOver (no Mac e no iPhone, <kbd>Cmd</kbd>+<kbd>F5</kbd>) ou o TalkBack (no Android). Sem instalar nada, o DevTools mostra o que o leitor de tela recebe: na aba <strong>Elements</strong>, o painel <strong>Accessibility</strong> traz o nome, o papel e os estados de cada elemento.</li>
+        </ul>
+
+        <h3>O que a revisão achou</h3>
+        <p>O axe achou um problema, e o Lighthouse, nenhum:</p>
+        <tf-code src="acessibilidade-na-pratica/axe-antes.txt" caption="axe-core 4.14, nas quatro páginas"></tf-code>
+        <p>O teclado e a árvore de acessibilidade acharam o resto. O primeiro <kbd>Tab</kbd> de toda página caía na marca do Trilheiro, e era preciso passar pelos quatro itens do menu antes de chegar às trilhas. E isto é o que o leitor de tela recebia:</p>
+        <tf-code src="acessibilidade-na-pratica/arvore-antes.txt" caption="Painel Accessibility, antes"></tf-code>
+        <p>Por fim, a tela de 320 px de largura (a de um celular pequeno, ou a de um computador com o zoom em 400%): o detalhe da trilha ficava 12 px mais largo que a tela, e rolava para o lado.</p>
+
+        <h3>As regras por trás</h3>
+        <p>As <strong>WCAG</strong> (as diretrizes de acessibilidade do W3C, a referência internacional, que o eMAG do governo brasileiro também segue) dão nome a cada problema:</p>
+        <ul>
+          <li><strong>2.4.1, pular blocos:</strong> deve haver um jeito de pular o que se repete em toda página, como o menu;</li>
+          <li><strong>2.4.4, propósito do link:</strong> o nome do link, com o contexto, precisa dizer aonde ele leva;</li>
+          <li><strong>2.5.3, rótulo no nome:</strong> o nome que o leitor de tela fala precisa conter o texto que aparece na tela, para quem usa comando de voz ("clicar em Ver trilha");</li>
+          <li><strong>1.4.10, reflow:</strong> numa largura de 320 px, nada pode exigir rolagem para o lado.</li>
+        </ul>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: um botão de alternância muda o nome ou o estado?</summary>
+          <p>O Trilheiro trocava o nome do favorito ("Favoritar" e "Remover das favoritas") <strong>e</strong> mudava o <code>aria-pressed</code>. Parece mais claro, mas o leitor de tela fala as duas coisas: "Remover das favoritas, botão de alternância, pressionado", e a pessoa fica sem saber se apertar vai favoritar ou desfavoritar. O padrão do W3C para botões de alternância é um nome fixo e o estado no <code>aria-pressed</code>: "Favoritar Trilha do Salto, pressionado". Ou, se o nome muda, sem <code>aria-pressed</code>. Os dois juntos, não.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Pular para o conteúdo">
+            <p>O primeiro elemento do <code>&lt;body&gt;</code> é um link para o conteúdo, escondido até receber o foco. O <code>.visually-hidden-focusable</code> do Bootstrap faz isso; o <code>tabindex="-1"</code> no <code>&lt;main&gt;</code> deixa o foco ir para lá:</p>
+            <tf-code src="acessibilidade-na-pratica/pular.html" caption="index.html (e as outras três páginas)"></tf-code>
+            <tf-code src="acessibilidade-na-pratica/pular.scss" caption="scss/_acessibilidade.scss"></tf-code>
+          </section>
+          <section data-step="O banner dentro das regiões">
+            <p>No Início, o banner do topo ficava entre o <code>&lt;header&gt;</code> e o <code>&lt;main&gt;</code>, fora de qualquer região. Quem navega pelas regiões (uma tecla do leitor de tela pula de uma para outra) nunca chegava a ele. Ele passa para dentro do <code>&lt;main&gt;</code>:</p>
+            <tf-code src="acessibilidade-na-pratica/banner.html" caption="index.html"></tf-code>
+          </section>
+          <section data-step="Botões e links com contexto">
+            <p>Cada cartão diz de qual trilha é. O nome do favorito fica fixo, e o estado vai só no <code>aria-pressed</code>:</p>
+            <tf-code src="acessibilidade-na-pratica/cartao.js" caption="js/trail-card.js (createTrailCard)"></tf-code>
+            <tf-code src="acessibilidade-na-pratica/rotulo.js" caption="js/trail-card.js"></tf-code>
+            <p>O detalhe usa o mesmo <code>setFavoriteLabel</code> no botão dele.</p>
+          </section>
+          <section data-step="O asterisco e a previsão">
+            <p>O <code>required</code> já faz o leitor de tela dizer "obrigatório". O asterisco é para quem vê, e sai da leitura com <code>aria-hidden</code>:</p>
+            <tf-code src="acessibilidade-na-pratica/asterisco.html" caption="cadastrar.html"></tf-code>
+            <p>Na previsão, "27° / 18°" é claro para quem vê a caixa, mas lido em voz alta não diz qual é a máxima. O leitor de tela recebe uma frase completa:</p>
+            <tf-code src="acessibilidade-na-pratica/previsao.js" caption="js/trail-detail.js"></tf-code>
+          </section>
+          <section data-step="A tela de 320 px">
+            <p>O <code>g-5</code> do detalhe dava à linha da grade margens negativas de 1,5 rem, maiores que o espaço de 0,75 rem do <code>.container</code> no celular. Um espaço menor até o breakpoint <code>lg</code> resolve:</p>
+            <tf-code src="acessibilidade-na-pratica/reflow.html" caption="trilha.html"></tf-code>
+          </section>
+          <section data-step="Confira de novo">
+            <p>O axe passa limpo nas quatro páginas. O primeiro <kbd>Tab</kbd> mostra "Pular para o conteúdo", e o <kbd>Enter</kbd> leva o foco direto às trilhas. E o leitor de tela recebe:</p>
+            <tf-code src="acessibilidade-na-pratica/arvore-depois.txt" caption="Painel Accessibility, depois"></tf-code>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>aria-hidden="true"</code> do asterisco do nome e olhe o painel <strong>Accessibility</strong> do campo: o nome volta a ser "Nome *". Um leitor de tela volta a ler o símbolo junto com o nome. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="A nota 100 do Lighthouse">
+          <p>A conferência automática não sabe se o texto de um link faz sentido, se a ordem do <kbd>Tab</kbd> é lógica ou se o leitor de tela fala algo útil. O Trilheiro tinha 100 e oito problemas. Use a nota como o começo da revisão, e não como o fim.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Tirei o contorno do foco porque achei feio">
+          <p>Um <code>outline: none</code> nos botões e links deixa quem usa o teclado sem saber onde está. Se o contorno padrão não combina com o design, troque por outro (o Bootstrap usa uma sombra na cor do tema), mas nunca tire. A única exceção é um elemento que recebe o foco só por código, como o <code>&lt;main&gt;</code> do link de pular.</p>
+        </tf-pitfall>
+        <tf-pitfall title="ARIA demais">
+          <p>A primeira regra do ARIA é não usar ARIA quando o HTML resolve. Um <code>&lt;button&gt;</code> já é botão, já recebe foco e já responde ao <kbd>Enter</kbd> e ao <kbd>Espaço</kbd>; uma <code>&lt;div role="button"&gt;</code> precisa de tudo isso escrito à mão. Um <code>aria-label</code> errado é pior que nenhum: ele substitui o texto que estava certo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Escondi o texto de todo mundo">
+          <p>O <code>.visually-hidden</code> esconde da tela e deixa para o leitor de tela; o <code>aria-hidden="true"</code> faz o contrário. Trocar um pelo outro some com a informação para quem mais precisa dela. E um elemento com <code>aria-hidden</code> nunca pode receber o foco.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="acessibilidade-na-pratica" award>
+          <fieldset data-correct="b">
+            <legend>O Lighthouse deu 100 de acessibilidade. O que isso garante?</legend>
+            <label><input type="radio" name="q1" value="a"> Que o site é acessível para todo mundo</label>
+            <label><input type="radio" name="q1" value="b"> Que passou nas conferências automáticas; o teclado e o leitor de tela ainda precisam ser testados</label>
+            <label><input type="radio" name="q1" value="c"> Que o site segue todas as WCAG</label>
+            <p data-explain="a" hidden>O Trilheiro tinha 100 e oito problemas, achados com o teclado e o leitor de tela.</p>
+            <p data-explain="c" hidden>Muitos critérios das WCAG não podem ser conferidos por uma máquina, como o sentido do texto de um link.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Para que serve o link "Pular para o conteúdo"?</legend>
+            <label><input type="radio" name="q2" value="a"> Para o Google achar o conteúdo</label>
+            <label><input type="radio" name="q2" value="b"> Para voltar ao topo da página</label>
+            <label><input type="radio" name="q2" value="c"> Para quem usa o teclado não passar pelo menu inteiro em toda página</label>
+            <p data-explain="a" hidden>Os buscadores não precisam dele. Ele é para quem navega com o <kbd>Tab</kbd>.</p>
+            <p data-explain="b" hidden>Ele vai para o conteúdo principal, logo depois do menu.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que o nome do favorito ficou fixo, com o estado só no <code>aria-pressed</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Porque mudar o nome e o estado juntos faz o leitor de tela dizer coisas contraditórias</label>
+            <label><input type="radio" name="q3" value="b"> Porque o <code>aria-label</code> não pode mudar</label>
+            <label><input type="radio" name="q3" value="c"> Para economizar código</label>
+            <p data-explain="b" hidden>Pode, mas aí sem o <code>aria-pressed</code>. Os dois juntos confundem.</p>
+            <p data-explain="c" hidden>A razão é o que a pessoa ouve: "Remover das favoritas, pressionado" não diz o que o botão vai fazer.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>O que é o critério de reflow (1.4.10)?</legend>
+            <label><input type="radio" name="q4" value="a"> O site precisa carregar em menos de 2 segundos</label>
+            <label><input type="radio" name="q4" value="b"> Numa largura de 320 px, nada pode exigir rolagem para o lado</label>
+            <label><input type="radio" name="q4" value="c"> O texto precisa ter contraste de 4,5:1</label>
+            <p data-explain="a" hidden>Isso é desempenho, não reflow.</p>
+            <p data-explain="c" hidden>Esse é o critério de contraste (1.4.3).</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Revise o <strong>seu projeto</strong> pelos três jeitos: o axe nas páginas principais, um percurso inteiro só com o teclado (do Início até concluir a tarefa principal) e o painel Accessibility (ou um leitor de tela) nos botões, links e campos. Ponha o site em 320 px de largura. Anote o que achou e o que corrigiu.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que a ferramenta automática não consegue conferir?</li>
+          <li><strong>A motivação:</strong> que problema você achou com o teclado ou o leitor de tela, e quem ele atrapalhava?</li>
+          <li><strong>A anatomia:</strong> mostre o nome de um elemento no painel Accessibility, antes e depois.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o link de pular e conte quantos <kbd>Tab</kbd> levam ao conteúdo.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C: a referência rápida das WCAG 2.2 (em inglês)</a></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">W3C: o padrão de botões, inclusive os de alternância (em inglês)</a></li>
+          <li><a href="https://developer.chrome.com/docs/devtools/accessibility/reference">Chrome DevTools: o painel de acessibilidade (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/getting-started/accessibility/">Bootstrap: acessibilidade (em inglês)</a></li>
+          <li><a href="https://www.nvaccess.org/download/">NVDA: o leitor de tela gratuito para Windows</a></li>
+          <li><a href="https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/acessibilidade-digital/modelo-de-acessibilidade">Governo Digital: o modelo de acessibilidade em governo eletrônico (eMAG)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager acessibilidade-na-pratica -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

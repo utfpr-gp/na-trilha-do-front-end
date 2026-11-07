@@ -1,0 +1,11 @@
+Os botões e links dos cartões, como o leitor de tela os recebe:
+
+botão  "Favoritar"   pressionado: não
+botão  "Favoritar"   pressionado: não
+botão  "Favoritar"   pressionado: não
+link   "Ver trilha"
+link   "Ver trilha"
+link   "Ver trilha"
+
+O campo do nome:
+caixa de texto  "Nome *"   obrigatório

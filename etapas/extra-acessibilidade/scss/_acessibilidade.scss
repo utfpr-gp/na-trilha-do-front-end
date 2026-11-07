@@ -1,0 +1,18 @@
+@use "tokens" as t;
+
+// O link "Pular para o conteúdo": invisível até receber o foco do teclado (o primeiro Tab da página).
+.skip-link:focus {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1100;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  background-color: t.$verde-mata;
+  border-radius: t.$raio;
+}
+
+// O destino do link recebe o foco por código (tabindex="-1"); o contorno ali só confundiria.
+#conteudo:focus {
+  outline: none;
+}

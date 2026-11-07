@@ -1,0 +1,7 @@
+// Foto que preenche a moldura numa proporção fixa, cortando o excesso sem distorcer.
+// cover-image(4, 3) gera "aspect-ratio: 4 / 3" (a interpolação #{} escreve a barra como texto).
+@mixin cover-image($largura, $altura) {
+  width: 100%;
+  aspect-ratio: #{$largura} / #{$altura};
+  object-fit: cover;
+}

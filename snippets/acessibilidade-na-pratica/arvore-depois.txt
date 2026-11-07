@@ -1,0 +1,8 @@
+botão  "Favoritar Trilha do Salto"           pressionado: sim
+botão  "Favoritar Caminho das Araucárias"    pressionado: não
+botão  "Favoritar Mirante da Serra"          pressionado: não
+link   "Ver trilha: Trilha do Salto"
+link   "Ver trilha: Caminho das Araucárias"
+link   "Ver trilha: Mirante da Serra"
+
+caixa de texto  "Nome"   obrigatório
