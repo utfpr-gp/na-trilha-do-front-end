@@ -1,0 +1,1 @@
+"sass": "sass --load-path=node_modules --quiet-deps --silence-deprecation=import --no-source-map --style=compressed scss/main.scss css/main.css"

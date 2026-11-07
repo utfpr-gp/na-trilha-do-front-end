@@ -43,5 +43,6 @@ export const GLOSSARY = [
   { id: 'linter', term: 'linter', definition: 'Uma ferramenta que lê o código sem rodá-lo e aponta prováveis defeitos: variável sem uso, nome que não existe, == no lugar de ===. O ESLint é o linter do JavaScript.', chapter: 25 },
   { id: 'site-estatico', term: 'site estático', definition: 'Um site feito só de arquivos (HTML, CSS, JavaScript, imagens) que o servidor serve como estão, sem programa nenhum rodando do lado dele. O GitHub Pages publica sites estáticos; gravar dados exige outro servidor.', chapter: 26 },
   { id: 'bundler', term: 'bundler', definition: 'Uma ferramenta de build, como o Vite, que junta os módulos, o CSS e as bibliotecas do npm num site pronto e encolhido, numa pasta como dist/. No desenvolvimento, serve o projeto e atualiza a página a cada mudança.', slug: 'vite-e-bundlers' },
+  { id: 'lcp-e-cls', term: 'LCP e CLS', definition: 'Duas medidas do Lighthouse para a experiência de quem abre a página. O LCP é quando aparece a maior coisa da tela (bom até 2,5 s); o CLS, o quanto os elementos pulam de lugar ao carregar (bom até 0,1).', slug: 'lighthouse' },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

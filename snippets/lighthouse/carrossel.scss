@@ -1,0 +1,5 @@
+// As fotos do carrossel: o atributo height="360" valia mais que a largura de 100%,
+// e a foto ficava achatada no celular. Com height: auto, a proporção vem do arquivo.
+.carousel-item img {
+  height: auto;
+}
