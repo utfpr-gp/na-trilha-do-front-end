@@ -1,0 +1,17 @@
+@use "tokens" as t;
+
+.site-header {
+  background-color: t.$verde-mata;
+
+  .navbar {
+    // 55% de opacidade dava 3,55:1 sobre o verde-mata; 85% dá 6,07:1.
+    --bs-navbar-color: rgba(255, 255, 255, 0.85);
+    --bs-navbar-hover-color: #{t.$superficie};
+  }
+
+  .navbar-brand {
+    font-family: t.$fonte-titulos;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+}

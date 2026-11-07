@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Ilustração de um vale visto do alto de um mirante">
+  <rect width="640" height="400" fill="#e9dccb"/>
+  <circle cx="110" cy="90" r="38" fill="#f2c230"/>
+  <path d="M0 220 Q160 150 320 210 T640 190 L640 400 L0 400 Z" fill="#8fae8b"/>
+  <path d="M0 270 Q200 220 360 265 T640 250 L640 400 L0 400 Z" fill="#3f7a4c"/>
+  <path d="M360 400 L420 300 L640 300 L640 400 Z" fill="#8b5a2b"/>
+  <rect x="440" y="250" width="6" height="50" fill="#1f2a24"/><rect x="560" y="250" width="6" height="50" fill="#1f2a24"/><rect x="436" y="248" width="134" height="6" fill="#1f2a24"/>
+</svg>

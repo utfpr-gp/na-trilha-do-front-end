@@ -25,6 +25,13 @@ describe('renderGlossary', () => {
     expect(order).toEqual(['ancora', 'breakpoint', 'design-token']);
   });
 
+  it('um termo de Para ir além liga pelo slug, com o rótulo "Para ir além"', () => {
+    const list = [...chapters, { number: null, slug: 'vite-e-bundlers', published: true }, { number: null, slug: 'lighthouse', published: true }];
+    const html = renderGlossary([{ id: 'bundler', term: 'bundler', definition: 'Junta os arquivos do site.', slug: 'vite-e-bundlers' }], '/', list);
+    expect(html).toContain('<a href="/capitulos/vite-e-bundlers/">Para ir além</a>');
+    expect(html).not.toContain('lighthouse');
+  });
+
   it('liga ao capítulo só quando ele está publicado', () => {
     const html = renderGlossary(entries, '/b/', chapters);
     expect(html).toContain('href="/b/capitulos/06-design-tokens/"');

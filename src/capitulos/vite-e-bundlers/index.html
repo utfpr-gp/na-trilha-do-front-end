@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="vite-e-bundlers">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header vite-e-bundlers -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>No fim da trilha, o Trilheiro funciona, mas o processo para mantê-lo tem remendos: um terminal para o Sass, o Live Server num canto, as bibliotecas vindas de um CDN porque a <code>node_modules</code> não vai para o ar, o cabeçalho copiado em quatro páginas. Projetos que crescem resolvem isso com uma ferramenta de build, e a mais usada hoje no front-end é o <strong>Vite</strong>.</p>
+        <p>Neste extra, o Trilheiro da etapa 26 passa a ser montado pelo Vite. Nada muda na tela. Muda o caminho até ela: um servidor de desenvolvimento que compila o Sass sozinho e atualiza a página na hora, as bibliotecas instaladas pelo npm e importadas no JavaScript, e um comando, <code>npm run build</code>, que gera o site pronto e otimizado numa pasta <code>dist/</code>. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/extra-vite-e-bundlers">etapas/extra-vite-e-bundlers</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🎒" title="Arrumar a mochila antes de sair">
+          <p>Em casa, o equipamento fica espalhado: o fogareiro numa prateleira, a lanterna na gaveta, a comida no armário, cada coisa na embalagem original. Antes da trilha, você junta só o que vai usar, tira as embalagens que pesam e arruma tudo numa mochila compacta.</p>
+          <p>Um <a class="tf-term" href="{{base}}glossario/#bundler">bundler</a> faz isso com o site. Durante o desenvolvimento, os arquivos ficam separados e legíveis: os módulos do capítulo 19, os parciais do Sass, os pacotes do npm. No build, ele junta tudo o que as páginas usam, tira o que não é usado, encolhe o código e deixa uma pasta pronta para a viagem.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Dois modos: desenvolver e construir</h3>
+        <ul>
+          <li><strong><code>npm run dev</code></strong>: um servidor no seu computador, como o Live Server, mas que entende o que o navegador não entende. Ele compila o <code>.scss</code> no momento em que a página pede, resolve um <code>import 'bootstrap'</code> buscando o pacote na <code>node_modules</code>, e troca só o que mudou quando você salva, sem recarregar a página inteira;</li>
+          <li><strong><code>npm run build</code></strong>: gera a pasta <code>dist/</code>, com o HTML, um CSS e alguns JavaScripts já juntos, encolhidos e com um código no nome (<code>format-BumuxZ1i.css</code>). Quando o arquivo muda, o nome muda, e o navegador nunca usa uma cópia velha do cache.</li>
+        </ul>
+        <p>Foi o que o Trilheiro ganhou, comparado com a etapa 26:</p>
+        <ul>
+          <li>o HTML aponta direto para o <code>scss/main.scss</code>, e o <code>css/main.css</code> compilado à mão deixou de existir;</li>
+          <li>o Bootstrap, os ícones, o jQuery e o plugin de máscara vêm do npm, com <code>import</code>, e vão para o <code>dist/</code> junto com o resto: não há mais CDN nem globais como o <code>$</code>;</li>
+          <li>a imagem do topo, pequena, foi embutida no próprio CSS, e as fontes dos ícones foram copiadas com o código no nome.</li>
+        </ul>
+        <tf-code src="vite-e-bundlers/build.txt" caption="Terminal"></tf-code>
+
+        <h3>A pasta public</h3>
+        <p>O Vite só sabe de um arquivo quando algum código o cita de forma que ele consiga ler: um <code>import</code>, um <code>href</code> no HTML, um <code>url()</code> no CSS. As fotos do Trilheiro são montadas pelo JavaScript a partir do nome que vem do <code>db.json</code> (<code>`img/trilhas/${photo.arquivo}-480.webp`</code>), e esse texto o Vite não tem como adivinhar. O que vai para a pasta <code>public/</code> é copiado para o <code>dist/</code> como está, sem código no nome: é o lugar das fotos, do ícone da aba e do <code>db.json</code>.</p>
+        <tf-code src="vite-e-bundlers/estrutura.txt" caption="O projeto com Vite"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e o cabeçalho repetido?</summary>
+          <p>O Vite, sozinho, não junta pedaços de HTML: as quatro páginas continuam com o cabeçalho copiado. Isso se resolve com um plugin do Vite que inclui parciais, ou com um framework que monta as páginas a partir de componentes. Este livro, por exemplo, é feito com o Vite e um plugin próprio que troca marcadores como <code>&lt;!-- @include header --&gt;</code> pelo cabeçalho, em todas as páginas. Frameworks como o Angular, o React e o Vue vão além: a página inteira vira uma árvore de componentes.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Instalar">
+            <p>Numa cópia do projeto da etapa 26, instale o Vite e as bibliotecas que vinham do CDN:</p>
+            <tf-code src="vite-e-bundlers/instalar.txt" caption="Terminal"></tf-code>
+            <p>Os scripts mudam: o Live Server dá lugar ao <code>dev</code>, e o <code>sass</code> some, porque o Vite compila o Sass sozinho. Mova a pasta <code>img/</code> e o <code>db.json</code> para dentro de uma pasta nova, <code>public/</code>:</p>
+            <tf-code src="vite-e-bundlers/scripts.txt" caption="package.json (trecho)"></tf-code>
+          </section>
+          <section data-step="A configuração">
+            <p>O Vite já entende um site de uma página só. Para várias, cada HTML entra como uma porta de entrada. O <code>base: './'</code> deixa os caminhos do <code>dist/</code> relativos, para o site funcionar numa pasta do GitHub Pages (capítulo 26):</p>
+            <tf-code src="vite-e-bundlers/vite.config.mjs" caption="vite.config.mjs"></tf-code>
+          </section>
+          <section data-step="O HTML e os imports">
+            <p>Nas quatro páginas, o <code>&lt;link&gt;</code> do CSS aponta para o Sass, e somem os <code>&lt;script&gt;</code> e o <code>&lt;link&gt;</code> do CDN. Fica só o módulo da página:</p>
+            <tf-code src="vite-e-bundlers/html.html" caption="index.html"></tf-code>
+            <p>As bibliotecas passam a entrar por <code>import</code>. O que todas as páginas usam fica num arquivo só, importado no começo de cada uma. Repare no CSS importado dentro do JavaScript: o navegador não sabe fazer isso, mas o Vite sabe.</p>
+            <tf-code src="vite-e-bundlers/vendor.js" caption="js/vendor.js"></tf-code>
+            <p>O cadastro importa o jQuery e o plugin. No detalhe, o <code>bootstrap.Modal</code> vira <code>Modal</code>, importado de <code>'bootstrap'</code>:</p>
+            <tf-code src="vite-e-bundlers/imports.js" caption="js/trail-form.js"></tf-code>
+          </section>
+          <section data-step="Rodar e construir">
+            <p>Com o json-server num terminal, rode o Vite no outro e abra o endereço que ele mostra:</p>
+            <tf-code src="vite-e-bundlers/dev.txt" caption="Terminal"></tf-code>
+            <p>Mude uma cor no <code>scss/_tokens.scss</code> e salve: a página muda na hora, sem recarregar e sem o terminal do Sass. Depois, rode <code>npm run build</code> e <code>npm run preview</code>, e confira o site pronto, servido do <code>dist/</code>. É essa pasta que vai para o ar, por exemplo com o pacote <code>gh-pages</code> do capítulo 26.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>base: './'</code> da configuração e rode o build. Abra o <code>dist/index.html</code> num editor: os endereços passam a começar com <code>/assets/</code>. Numa pasta do GitHub Pages (<code>https://seu-usuario.github.io/trilheiro/</code>), eles apontariam para fora do projeto, e o site abriria sem CSS e sem JavaScript, o mesmo problema dos caminhos do capítulo 26. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O pacote não foi instalado (ou o nome está errado)" message="Error: [vite]: Rolldown failed to resolve import &quot;jqueryy&quot; from &quot;js/trail-form.js&quot;.">
+          <p>O Vite procura o pacote na <code>node_modules</code> e não acha. Confira o nome no <code>import</code> e se ele está no <code>package.json</code>; depois de clonar o projeto, rode <code>npm install</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="As fotos sumiram no build">
+          <p>Imagens citadas só por um texto montado no JavaScript não são vistas pelo Vite e não vão para o <code>dist/</code>. Guarde-as em <code>public/</code>. A mesma coisa vale para o <code>db.json</code>, que o modo publicado lê com <code>fetch</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Abri o dist/index.html com dois cliques">
+          <p>Pelo <code>file://</code>, os módulos não carregam (capítulo 19), e a página fica sem cartões. Use o <code>npm run preview</code>, que serve o <code>dist/</code> por <code>http://</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Publiquei a pasta errada">
+          <p>Com o Vite, a raiz do projeto tem o código-fonte, que o navegador não entende (o <code>.scss</code>, os <code>import 'bootstrap'</code>). O que vai para o ar é o <code>dist/</code>, gerado pelo build. E o <code>dist/</code> fica no <code>.gitignore</code>: ele é refeito a cada build.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="vite-e-bundlers" award>
+          <fieldset data-correct="b">
+            <legend>O que o <code>npm run build</code> do Vite produz?</legend>
+            <label><input type="radio" name="q1" value="a"> Um servidor que precisa ficar rodando para o site funcionar</label>
+            <label><input type="radio" name="q1" value="b"> Uma pasta <code>dist/</code> com o site pronto: HTML, CSS e JavaScript juntos e encolhidos</label>
+            <label><input type="radio" name="q1" value="c"> O <code>css/main.css</code>, como o script do Sass fazia</label>
+            <p data-explain="a" hidden>O <code>dist/</code> é um site estático: qualquer servidor de arquivos, como o GitHub Pages, serve.</p>
+            <p data-explain="c" hidden>O build faz bem mais: junta o JavaScript, as bibliotecas e o CSS, e põe tudo no <code>dist/</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que as fotos do Trilheiro ficam em <code>public/</code>?</legend>
+            <label><input type="radio" name="q2" value="a"> Porque o JavaScript monta o nome delas a partir dos dados, e o Vite não tem como saber quais arquivos copiar</label>
+            <label><input type="radio" name="q2" value="b"> Porque o Vite não aceita imagens</label>
+            <label><input type="radio" name="q2" value="c"> Para elas ficarem escondidas</label>
+            <p data-explain="b" hidden>Aceita, e até otimiza, quando a imagem é citada no HTML, no CSS ou num <code>import</code>.</p>
+            <p data-explain="c" hidden>É o contrário: o que está em <code>public/</code> é copiado como está e fica acessível no site.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Por que o nome do arquivo gerado tem um código, como <code>format-BumuxZ1i.css</code>?</legend>
+            <label><input type="radio" name="q3" value="a"> Por segurança, para ninguém achar o arquivo</label>
+            <label><input type="radio" name="q3" value="b"> Para o arquivo ficar menor</label>
+            <label><input type="radio" name="q3" value="c"> Para o nome mudar quando o conteúdo muda, e o navegador nunca usar uma cópia velha do cache</label>
+            <p data-explain="a" hidden>O nome está no HTML, à vista. O código serve para o cache.</p>
+            <p data-explain="b" hidden>O nome não muda o tamanho. Ele muda quando o conteúdo muda.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Com o Vite, o ESLint ainda precisa do <code>$</code> nos <code>globals</code>?</legend>
+            <label><input type="radio" name="q4" value="a"> Sim, sempre</label>
+            <label><input type="radio" name="q4" value="b"> Não: o jQuery agora chega por <code>import $ from 'jquery'</code>, e o ESLint vê de onde ele vem</label>
+            <label><input type="radio" name="q4" value="c"> Não, porque o Vite desliga o ESLint</label>
+            <p data-explain="a" hidden>Os <code>globals</code> eram para o que vinha de um <code>&lt;script&gt;</code> comum. Com o <code>import</code>, o nome é declarado no próprio arquivo.</p>
+            <p data-explain="c" hidden>Os dois são independentes: o ESLint continua rodando com <code>npm run lint</code>.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Se quiser ir além no <strong>seu projeto</strong>, faça a migração numa branch: instale o Vite, configure as páginas, troque o CDN por <code>import</code> e o CSS compilado pelo Sass direto. Rode o build, confira com o <code>preview</code> e publique o <code>dist/</code>.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que faz um bundler, no desenvolvimento e no build?</li>
+          <li><strong>A motivação:</strong> que remendos do seu projeto o Vite resolveu, e qual ele não resolve?</li>
+          <li><strong>A anatomia:</strong> explique o seu <code>vite.config.mjs</code> e o que foi para o <code>public/</code>.</li>
+          <li><strong>"E se eu tirar?":</strong> tire o <code>base</code> e mostre os caminhos que mudam no <code>dist/</code>.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://vite.dev/guide/">Vite: o guia (em inglês)</a></li>
+          <li><a href="https://vite.dev/guide/assets">Vite: imagens, CSS e a pasta public (em inglês)</a></li>
+          <li><a href="https://vite.dev/guide/static-deploy">Vite: publicar o site, inclusive no GitHub Pages (em inglês)</a></li>
+          <li><a href="https://getbootstrap.com/docs/5.3/getting-started/vite/">Bootstrap: usar com o Vite (em inglês)</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_tools">MDN: as ferramentas do lado do cliente (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager vite-e-bundlers -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

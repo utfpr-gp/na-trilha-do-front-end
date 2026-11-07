@@ -1,0 +1,8 @@
+trilheiro/
+├── index.html  trilhas.html  trilha.html  cadastrar.html
+├── vite.config.mjs
+├── scss/  js/                 o código-fonte
+├── public/                    copiado como está para o dist/
+│   ├── img/                   as fotos, o ícone da aba
+│   └── db.json
+└── dist/                      gerado pelo npm run build (vai para o ar, não para o Git)

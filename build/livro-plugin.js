@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { PARTS, allChapters } from '../src/data/catalog.js';
+import { PARTS } from '../src/data/catalog.js';
 import { GLOSSARY } from '../src/data/glossary.js';
 import { SITE_URL } from '../scripts/post-build.mjs';
 import { highlightSnippets } from './highlight.js';
@@ -27,7 +27,7 @@ export function defaultRenderers() {
     'chapter-header': (slug, { base }) => renderChapterHeader(slug, base),
     pager: (slug, { base }) => renderPager(slug, base),
     'trail-map': () => renderTrailMap(PARTS),
-    glossary: (_arg, { base }) => renderGlossary(GLOSSARY, base, allChapters()),
+    glossary: (_arg, { base }) => renderGlossary(GLOSSARY, base, PARTS.flatMap((p) => p.chapters)),
   };
 }
 

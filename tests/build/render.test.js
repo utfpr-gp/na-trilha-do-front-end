@@ -53,6 +53,11 @@ describe('renderPager', () => {
   it('sem vizinhos publicados, não gera links', () => {
     expect(renderPager('01-a', '/', [list[0], list[1]])).not.toContain('href=');
   });
+  it('sem lista, um item de Para ir além tem vizinhos na ordem de leitura, depois do capítulo 26', () => {
+    const html = renderPager('vite-e-bundlers', '/');
+    expect(html).toContain('rel="prev"');
+    expect(html).not.toContain('01-por-que-um-framework');
+  });
   it('liga ao próximo publicado, pulando o que não foi publicado', () => {
     const html = renderPager('01-a', '/x/', list);
     expect(html).toContain('href="/x/capitulos/03-c/"');
