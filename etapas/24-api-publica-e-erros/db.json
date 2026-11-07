@@ -1,0 +1,117 @@
+{
+  "trilhas": [
+    {
+      "id": "1",
+      "nome": "Trilha do Salto",
+      "cidade": "Prudentópolis",
+      "uf": "PR",
+      "bairro": "",
+      "cep": "84400-000",
+      "latitude": -25.21,
+      "longitude": -50.98,
+      "distanciaKm": 4.5,
+      "dificuldade": "moderada",
+      "tipoPercurso": "ida-e-volta",
+      "duracaoMin": 150,
+      "oQueLevar": ["agua", "lanche", "repelente", "capa-de-chuva"],
+      "descricao": "Descida por mata de araucárias até a base de uma queda-d'água, com volta pelo mesmo caminho. O trecho final tem degraus de pedra e pode ficar escorregadio depois da chuva.",
+      "guiaNome": "",
+      "guiaTelefone": "",
+      "ultimaVisita": "2026-10-12",
+      "destaque": true,
+      "fotos": [
+        { "arquivo": "salto", "alt": "Queda-d'água vista de baixo, entre morros" },
+        { "arquivo": "salto-degraus", "alt": "Degraus de pedra descendo pela mata" }
+      ]
+    },
+    {
+      "id": "2",
+      "nome": "Caminho das Araucárias",
+      "cidade": "Guarapuava",
+      "uf": "PR",
+      "bairro": "Santa Cruz",
+      "cep": "85015-000",
+      "latitude": -25.39,
+      "longitude": -51.46,
+      "distanciaKm": 2,
+      "dificuldade": "facil",
+      "tipoPercurso": "circular",
+      "duracaoMin": 45,
+      "oQueLevar": ["agua", "protetor-solar"],
+      "descricao": "Volta curta e plana por uma trilha de terra entre araucárias, boa para quem está começando e para ir com crianças.",
+      "guiaNome": "",
+      "guiaTelefone": "",
+      "ultimaVisita": "2026-09-28",
+      "destaque": true,
+      "fotos": [{ "arquivo": "araucarias", "alt": "Trilha de terra entre araucárias" }]
+    },
+    {
+      "id": "3",
+      "nome": "Mirante da Serra",
+      "cidade": "Guarapuava",
+      "uf": "PR",
+      "bairro": "",
+      "cep": "85010-000",
+      "latitude": -25.39,
+      "longitude": -51.46,
+      "distanciaKm": 8,
+      "dificuldade": "dificil",
+      "tipoPercurso": "travessia",
+      "duracaoMin": 240,
+      "oQueLevar": ["agua", "lanche", "protetor-solar", "lanterna"],
+      "descricao": "Subida longa e íngreme até um mirante sobre o vale, terminando do outro lado da serra. Combine o transporte de volta antes de sair.",
+      "guiaNome": "Carlos Pereira",
+      "guiaTelefone": "(42) 99999-1234",
+      "ultimaVisita": "2026-08-15",
+      "destaque": true,
+      "fotos": [{ "arquivo": "mirante", "alt": "Vale visto do alto de um mirante" }]
+    },
+    {
+      "id": "4",
+      "nome": "Escadaria do Salto",
+      "cidade": "Prudentópolis",
+      "uf": "PR",
+      "bairro": "",
+      "cep": "84400-000",
+      "latitude": -25.21,
+      "longitude": -50.98,
+      "distanciaKm": 1.2,
+      "dificuldade": "facil",
+      "tipoPercurso": "ida-e-volta",
+      "duracaoMin": 40,
+      "oQueLevar": ["agua"],
+      "descricao": "Caminho curto, com corrimão, até o primeiro mirante da queda-d'água. Ideal para quem quer ver o Salto sem fazer a trilha inteira.",
+      "guiaNome": "",
+      "guiaTelefone": "",
+      "ultimaVisita": "2026-10-05",
+      "destaque": false,
+      "fotos": []
+    }
+  ],
+  "relatos": [
+    {
+      "id": "1",
+      "trilhaId": "1",
+      "nome": "Ana",
+      "dataVisita": "2026-10-12",
+      "nota": 5,
+      "texto": "Descida tranquila, mas a volta cansa. Leve água de sobra."
+    },
+    {
+      "id": "2",
+      "trilhaId": "1",
+      "nome": "Bruno",
+      "dataVisita": "2026-09-20",
+      "nota": 4,
+      "texto": "Os degraus estavam molhados. Vá com calçado que segure bem."
+    },
+    {
+      "id": "3",
+      "trilhaId": "3",
+      "nome": "Marta",
+      "dataVisita": "2026-08-15",
+      "nota": 5,
+      "texto": "A vista do mirante compensa cada passo da subida."
+    }
+  ]
+}

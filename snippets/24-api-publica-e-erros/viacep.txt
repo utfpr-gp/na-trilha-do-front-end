@@ -1,0 +1,23 @@
+GET https://viacep.com.br/ws/85010260/json/
+
+200 OK
+{
+  "cep": "85010-260",
+  "logradouro": "Rua Vicente Machado",
+  "bairro": "Centro",
+  "localidade": "Guarapuava",
+  "uf": "PR",
+  "estado": "Paraná",
+  "ddd": "42"
+}
+
+GET https://viacep.com.br/ws/99999999/json/
+
+200 OK
+{
+  "erro": "true"
+}
+
+GET https://viacep.com.br/ws/123/json/
+
+400 Bad Request

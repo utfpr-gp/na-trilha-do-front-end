@@ -1034,3 +1034,33 @@ tf-fetch-lab {
     font-size: 0.8125rem;
   }
 }
+
+// <tf-cep-lab>: uma consulta de verdade ao ViaCEP
+tf-cep-lab {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--tf-view-por-dentro);
+  background: var(--tf-surface);
+
+  code {
+    overflow-wrap: anywhere;
+  }
+
+  .tf-cep-body {
+    margin: 0;
+    max-height: 14rem;
+    overflow: auto;
+    font-size: 0.8125rem;
+  }
+
+  .tf-cep-body:empty {
+    display: none;
+  }
+
+  output {
+    font-weight: 600;
+  }
+}
