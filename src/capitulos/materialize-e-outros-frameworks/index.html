@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="materialize-e-outros-frameworks">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header materialize-e-outros-frameworks -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O Bootstrap é o framework CSS mais usado, mas está longe de ser o único. Neste extra, a vitrine do Início do Trilheiro (o menu, o banner, os três cartões e as dicas de segurança num modal) é refeita em dois outros: o <strong>Materialize</strong>, que segue o Material Design do Google, e o <strong>Bulma</strong>, que é só CSS. Os mesmos dados, as mesmas cores do design system, três jeitos de escrever.</p>
+        <p>A comparação mostra o que muda (os nomes das classes, quem cuida do JavaScript, como se troca o tema) e o que não muda: grid, cartões, botões e menus existem em todos. E mostra uma lição de quem trabalha com ferramentas de terceiros: a documentação, o tutorial e a versão instalada nem sempre concordam. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/extra-materialize">etapas/extra-materialize</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🥾" title="Três marcas de bota">
+          <p>Toda bota de trilha tem solado, cano e cadarço. Muda o desenho, o peso, o jeito de amarrar, e cada marca chama as peças por um nome. Quem sabe o que precisa de uma bota (firmeza no tornozelo, sola que segura na pedra) troca de marca sem medo: só precisa aprender onde fica cada coisa.</p>
+          <p>Os <a class="tf-term" href="{{base}}glossario/#framework-css">frameworks CSS</a> são as marcas. Grid, cartão, botão, menu e modal existem em todos. O que você aprendeu com o Bootstrap (pensar em colunas por breakpoint, montar componentes com classes, trocar o tema por variáveis) vale para qualquer um.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>O mesmo cartão, três vezes</h3>
+        <tf-code src="materialize-e-outros-frameworks/cartao-bootstrap.html" caption="Bootstrap 5.3"></tf-code>
+        <tf-code src="materialize-e-outros-frameworks/cartao-materialize.html" caption="Materialize 2.4"></tf-code>
+        <tf-code src="materialize-e-outros-frameworks/cartao-bulma.html" caption="Bulma 1.0"></tf-code>
+        <p>A estrutura é a mesma: uma coluna que ocupa a tela inteira no celular, metade no tablet e um terço no computador, com um cartão dentro. Mudam os nomes: <code>col-12 col-sm-6 col-lg-4</code> no Bootstrap, <code>col s12 m6 l4</code> no Materialize, <code>column is-12-mobile is-6-tablet is-4-desktop</code> no Bulma.</p>
+
+        <h3>Lado a lado</h3>
+        <div class="table-responsive">
+          <table class="table tf-table">
+            <thead><tr><th scope="col"></th><th scope="col">Bootstrap 5.3</th><th scope="col">Materialize 2.4</th><th scope="col">Bulma 1.0</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Estilo</th><td>Neutro, para personalizar</td><td>Material Design, do Google</td><td>Neutro e moderno</td></tr>
+              <tr><th scope="row">JavaScript</th><td>Próprio (modal, carrossel, menu)</td><td>Próprio, com <code>init</code> em cada componente; o modal é o <code>&lt;dialog&gt;</code> do navegador</td><td>Nenhum: só CSS</td></tr>
+              <tr><th scope="row">Tema</th><td>Variáveis do Sass e do CSS</td><td>Variáveis do CSS (<code>--md-sys-color-*</code>)</td><td>Variáveis do CSS e do Sass (<code>--bulma-*</code>)</td></tr>
+              <tr><th scope="row">CSS (comprimido)</th><td>30 KB</td><td>20 KB</td><td>63 KB</td></tr>
+              <tr><th scope="row">JavaScript (comprimido)</th><td>23 KB</td><td>33 KB</td><td>–</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Os tamanhos são dos arquivos completos no CDN, comprimidos como o navegador baixa. Com o Sass, cada um deles pode ser montado só com as partes que o projeto usa.</p>
+
+        <h3>Materialize: uma história em duas versões</h3>
+        <p>O Materialize original (<code>materialize-css</code>) parou na versão 1.0.0, de 2018. A comunidade continuou o projeto com outro nome, <code>@materializecss/materialize</code>, e a versão 2 mudou bastante coisa: o tema passou para as variáveis do Material Design 3, o menu ganhou outra marcação, e o modal virou o <code>&lt;dialog&gt;</code> do próprio navegador. A maior parte dos tutoriais na internet é da versão 1, e o código deles não funciona igual na 2.</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e o Pico, e os frameworks "sem classes"?</summary>
+          <p>Há frameworks que vão no caminho oposto ao do Bootstrap. O <a href="https://picocss.com/">Pico</a> estiliza o HTML semântico direto: um <code>&lt;button&gt;</code> já sai bonito, um <code>&lt;article&gt;</code> vira cartão, sem nenhuma classe. É ótimo para páginas simples e protótipos, e fica limitado quando o design pede algo próprio. E há o Tailwind, que não tem componentes prontos, só classes pequenas, uma para cada propriedade (veja o extra do Tailwind).</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="O Materialize pelo CDN">
+            <p>Crie <code>materialize.html</code> com o CSS e o JavaScript do Materialize 2.4.0 e os ícones do Material. No <code>&lt;html&gt;</code>, o <code>theme="light"</code> fixa o tema claro (sem ele, o Materialize segue o modo escuro do sistema). As cores do Trilheiro entram pelas variáveis do Material Design:</p>
+            <tf-code src="materialize-e-outros-frameworks/tema-materialize.css" caption="materialize.html (no &lt;style&gt;)"></tf-code>
+          </section>
+          <section data-step="O menu da versão 2">
+            <p>A marcação do menu é a da documentação da versão 2. O <code>primary</code> pinta o fundo; o <code>hide-on-med-and-down</code> esconde os links no celular, e o <code>hide-on-large-only</code> esconde o botão do menu no computador:</p>
+            <tf-code src="materialize-e-outros-frameworks/nav-materialize.html" caption="materialize.html"></tf-code>
+          </section>
+          <section data-step="O modal e o menu do celular">
+            <p>O modal é um <code>&lt;dialog&gt;</code> com as classes do Materialize. Dentro de um <code>&lt;form method="dialog"&gt;</code>, o botão fecha o modal sem nenhuma linha de JavaScript:</p>
+            <tf-code src="materialize-e-outros-frameworks/modal-materialize.html" caption="materialize.html"></tf-code>
+            <p>O menu do celular precisa ser ligado com o <code>init</code>; o modal abre com o <code>showModal()</code> do navegador:</p>
+            <tf-code src="materialize-e-outros-frameworks/js-materialize.js" caption="materialize.html (no &lt;script&gt;)"></tf-code>
+          </section>
+          <section data-step="O Bulma">
+            <p>Crie <code>bulma.html</code> com o CSS do Bulma 1.0.4. A cor primária entra em matiz, saturação e luminosidade (o verde-mata é <code>hsl(134deg 33% 27%)</code>), e o <code>--bulma-primary-invert-l</code> deixa o texto sobre ela branco:</p>
+            <tf-code src="materialize-e-outros-frameworks/tema-bulma.css" caption="bulma.html (no &lt;style&gt;)"></tf-code>
+            <p>O Bulma é só CSS: até o botão do menu do celular precisa de JavaScript seu. A documentação sugere este:</p>
+            <tf-code src="materialize-e-outros-frameworks/js-bulma.js" caption="bulma.html (no &lt;script&gt;)"></tf-code>
+          </section>
+          <section data-step="Confira">
+            <p>Abra as duas páginas pelo Live Server e compare com o Início do Trilheiro: as mesmas trilhas e as mesmas cores, com a cara de cada framework. Estreite a janela: as colunas viram uma só, e o menu vira o botão do celular nos três. As duas páginas passaram no axe sem nenhum problema de acessibilidade.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire o <code>--bulma-primary-invert-l: 100%</code> do Bulma e recarregue: o texto do menu fica escuro sobre o verde, quase ilegível. O Bulma calcula a cor do texto a partir da luminosidade da cor primária, e o padrão dele espera uma cor clara. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O tutorial é da versão 1">
+          <p>Um <code>&lt;nav&gt;</code> sem classe, com <code>.nav-wrapper</code>, ganhava a cor primária no Materialize 1; no 2, sai sem fundo e com os links no azul padrão. A <code>.modal</code> numa <code>&lt;div&gt;</code> com <code>M.Modal.init</code> não abre mais. Confira a versão do tutorial e use a documentação da versão que você instalou.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A documentação e o CSS não concordam">
+          <p>A documentação do Materialize 2 mostra o botão preenchido como <code>class="btn filled"</code>, mas o CSS da 2.4.0 só tem <code>.btn-filled</code>. O botão saiu cinza até isso ser conferido no próprio arquivo CSS. Quando algo não funciona, abra o CSS do framework e procure a classe.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Os links saem azuis, sem motivo aparente">
+          <p>O CSS distribuído do Materialize 2.4.0 tem uma regra quebrada para os links: uma função do Sass que não foi compilada. O navegador ignora a regra, e os links ficam no azul padrão. A correção é dar a cor no seu CSS: <code>a { color: var(--md-sys-color-primary); }</code>.</p>
+          <tf-code src="materialize-e-outros-frameworks/bug-materialize.css" caption="materialize.css 2.4.0"></tf-code>
+        </tf-pitfall>
+        <tf-pitfall title="A minha regra não pega">
+          <p>No CSS do Materialize 2.4, o <code>.nav-wrapper</code> vem depois do <code>.primary</code>, com a mesma especificidade, e ganha: o menu ficava claro mesmo com a classe <code>primary</code>. É a cascata do capítulo 3: <code>.nav-wrapper.primary</code>, com as duas classes, desempata.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="materialize-e-outros-frameworks" award>
+          <fieldset data-correct="b">
+            <legend>Qual é o equivalente, no Materialize, de <code>col-12 col-sm-6 col-lg-4</code>?</legend>
+            <label><input type="radio" name="q1" value="a"> <code>column is-4</code></label>
+            <label><input type="radio" name="q1" value="b"> <code>col s12 m6 l4</code></label>
+            <label><input type="radio" name="q1" value="c"> <code>grid-4</code></label>
+            <p data-explain="a" hidden>Esse é o jeito do Bulma.</p>
+            <p data-explain="c" hidden>O Materialize usa <code>col</code> com o tamanho por breakpoint: <code>s</code>, <code>m</code>, <code>l</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que o Bulma oferece para o menu do celular abrir?</legend>
+            <label><input type="radio" name="q2" value="a"> Um JavaScript próprio, como o do Bootstrap</label>
+            <label><input type="radio" name="q2" value="b"> Um <code>init</code>, como o Materialize</label>
+            <label><input type="radio" name="q2" value="c"> Só o CSS: o JavaScript que liga o botão é seu</label>
+            <p data-explain="a" hidden>O Bulma não tem JavaScript nenhum.</p>
+            <p data-explain="b" hidden>O <code>init</code> é do Materialize. No Bulma, quem abre e fecha é o seu código.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Como as cores do Trilheiro entraram nos três frameworks?</legend>
+            <label><input type="radio" name="q3" value="a"> Por variáveis: do Sass no Bootstrap, e do CSS no Materialize e no Bulma</label>
+            <label><input type="radio" name="q3" value="b"> Reescrevendo cada componente</label>
+            <label><input type="radio" name="q3" value="c"> Não dá para mudar as cores de um framework</label>
+            <p data-explain="b" hidden>Os três foram feitos para trocar o tema por variáveis, sem reescrever componentes.</p>
+            <p data-explain="c" hidden>Dá, e por variáveis: foi o que o capítulo 13 fez com o Bootstrap.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Um exemplo da internet não funciona com o framework instalado. Qual é o primeiro passo?</legend>
+            <label><input type="radio" name="q4" value="a"> Trocar de framework</label>
+            <label><input type="radio" name="q4" value="b"> Conferir a versão do exemplo e a documentação (e o CSS) da versão instalada</label>
+            <label><input type="radio" name="q4" value="c"> Copiar o CSS do exemplo para o projeto</label>
+            <p data-explain="a" hidden>Muitas vezes o problema é só a versão: o Materialize 2 mudou o menu e o modal.</p>
+            <p data-explain="c" hidden>Copiar sem entender pode trazer regras de outra versão e brigar com as do framework.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>Escolha uma página do <strong>seu projeto</strong> e refaça-a em outro framework (o Materialize, o Bulma ou outro), com as suas cores entrando pelas variáveis do tema. Anote o que mudou e o que ficou igual, e decida qual dos dois você usaria no projeto inteiro.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que todo framework CSS oferece, e o que muda de um para outro?</li>
+          <li><strong>A motivação:</strong> que critério você usou para escolher (a aparência, o JavaScript, o tamanho, a documentação)?</li>
+          <li><strong>A anatomia:</strong> compare o mesmo componente nos dois, classe por classe.</li>
+          <li><strong>"E se eu tirar?":</strong> tire uma variável do tema e mostre o que volta ao padrão do framework.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://materializeweb.com/">Materialize: a documentação da versão 2 (em inglês)</a></li>
+          <li><a href="https://github.com/materializecss/materialize">Materialize: o projeto da comunidade no GitHub (em inglês)</a></li>
+          <li><a href="https://bulma.io/documentation/">Bulma: a documentação (em inglês)</a></li>
+          <li><a href="https://picocss.com/">Pico: CSS para o HTML semântico, sem classes (em inglês)</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Elements/dialog">MDN: o elemento &lt;dialog&gt;</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager materialize-e-outros-frameworks -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

@@ -1,0 +1,5 @@
+/* No CSS 2.4.0 distribuído (materialize.css, perto da linha 1386):
+   uma função do Sass que não foi compilada. O navegador ignora a regra inteira. */
+a {
+  color: colorFunc("light-blue", "darken-1");
+}

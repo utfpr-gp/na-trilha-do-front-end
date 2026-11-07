@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR" theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilheiro em Materialize</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.4.0/dist/css/materialize.min.css">
+  <style>
+    /* O tema: o Materialize 2 usa as variáveis do Material Design 3. Trocá-las muda tudo de uma vez. */
+    :root[theme=light] {
+      --md-sys-color-primary: #2f5d3a;
+      --md-sys-color-on-primary: #ffffff;
+    }
+    /* O menu na cor primária, com o texto na cor "sobre a primária" (on-primary). */
+    /* No CSS do Materialize 2.4, o .nav-wrapper vem depois do .primary e ganha: as duas classes juntas desempatam. */
+    .nav-wrapper.primary { background-color: var(--md-sys-color-primary); }
+    .nav-wrapper.primary .brand-logo,
+    .nav-wrapper.primary ul > li > a { color: var(--md-sys-color-on-primary); }
+    .nav-wrapper ul.right { margin-left: auto; margin-right: 1rem; }
+    .nav-wrapper { padding: 0 1rem; }
+    /* O CSS 2.4.0 distribuído tem uma regra quebrada para os links (colorFunc, uma função do Sass que não foi
+       compilada). O navegador a ignora, e os links ficam no azul padrão. A cor vem daqui. */
+    a { color: var(--md-sys-color-primary); }
+    .hero h1 { font-size: 2.25rem; margin: 0 0 0.5rem; }
+    .hero { padding: 3rem 0; background-color: #f2c230; color: #1f2a24; }
+    .card .card-image img { aspect-ratio: 4 / 3; height: auto; object-fit: cover; }
+    .card .card-title { font-size: 1.25rem; }
+    /* O 2.4 puxa o primeiro link do card-action para a borda (margem negativa): aqui ele volta para dentro. */
+    .card .card-action { padding-block: 1rem; }
+    .card .card-action a:first-child { margin-inline-start: 0; }
+    main h2 { font-size: 1.75rem; }
+    .chip.facil { background-color: #2e7d32; color: #fff; }
+    .chip.moderada { background-color: #a35f00; color: #fff; }
+    .chip.dificil { background-color: #b3261e; color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav navbar">
+      <div class="nav-wrapper primary">
+        <a href="#" class="brand-logo">Trilheiro</a>
+        <a href="#" data-target="menu-celular" class="sidenav-trigger hide-on-large-only" aria-label="Abrir o menu"><i class="material-icons" aria-hidden="true">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li class="active"><a href="#">Início</a></li>
+          <li><a href="#">Trilhas</a></li>
+          <li><a href="#">Cadastrar trilha</a></li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="menu-celular">
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Trilhas</a></li>
+      <li><a href="#">Cadastrar trilha</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Escolha a trilha do seu fim de semana</h1>
+        <p>Trilhas da região de Guarapuava, com a dificuldade, a distância e a duração de cada uma.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <h2>Trilhas em destaque</h2>
+      <div class="row">
+        <div class="col s12 m6 l4">
+          <article class="card">
+            <div class="card-image">
+              <img src="img/trilhas/salto-480.jpg" width="480" height="360" alt="Queda-d'água entre morros">
+            </div>
+            <div class="card-content">
+              <span class="chip moderada">Moderada</span>
+              <h3 class="card-title">Trilha do Salto</h3>
+              <p>Prudentópolis, PR · 4,5 km · 2h30</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Ver trilha</a>
+            </div>
+          </article>
+        </div>
+        <div class="col s12 m6 l4">
+          <article class="card">
+            <div class="card-image">
+              <img src="img/trilhas/araucarias-480.jpg" width="480" height="360" alt="Trilha de terra entre araucárias">
+            </div>
+            <div class="card-content">
+              <span class="chip facil">Fácil</span>
+              <h3 class="card-title">Caminho das Araucárias</h3>
+              <p>Guarapuava, PR · 2,0 km · 45 min</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Ver trilha</a>
+            </div>
+          </article>
+        </div>
+        <div class="col s12 m6 l4">
+          <article class="card">
+            <div class="card-image">
+              <img src="img/trilhas/mirante-480.jpg" width="480" height="360" alt="Vale visto do alto de um mirante">
+            </div>
+            <div class="card-content">
+              <span class="chip dificil">Difícil</span>
+              <h3 class="card-title">Mirante da Serra</h3>
+              <p>Guarapuava, PR · 8,0 km · 4h</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Ver trilha</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <p><button type="button" class="btn btn-filled" id="abrir-dicas">Dicas de segurança</button></p>
+    </div>
+
+    <dialog id="dicas" class="modal" aria-labelledby="dicas-titulo">
+      <div class="modal-header">
+        <h2 id="dicas-titulo">Dicas de segurança</h2>
+      </div>
+      <div class="modal-content">
+        <ul class="browser-default">
+          <li>Avise alguém aonde você vai e a que horas pretende voltar.</li>
+          <li>Leve água, lanche e uma capa de chuva.</li>
+          <li>Confira a previsão do tempo antes de sair.</li>
+        </ul>
+      </div>
+      <form method="dialog" class="modal-footer">
+        <button class="btn-flat">Fechar</button> <!-- num form method="dialog", o botão fecha o dialog -->
+      </form>
+    </dialog>
+  </main>
+
+  <footer class="page-footer">
+    <div class="container">Trilheiro · Trilhas da região de Guarapuava</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.4.0/dist/js/materialize.min.js"></script>
+  <script>
+    // O menu do celular é um componente do Materialize, ligado pelo init.
+    M.Sidenav.init(document.querySelectorAll('.sidenav'));
+    // O modal, no Materialize 2, é o <dialog> do próprio navegador: o showModal abre.
+    document.querySelector('#abrir-dicas').addEventListener('click', () => {
+      document.querySelector('#dicas').showModal();
+    });
+  </script>
+</body>
+</html>
