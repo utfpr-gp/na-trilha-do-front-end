@@ -56,8 +56,7 @@
 
 ## Próximos passos
 
-1. Depois do deploy, pôr o link do Trilheiro no ar no capítulo 26 (o verificador de links só aceita o endereço depois que ele existe).
-2. Avisar o professor que o livro está pronto para a avaliação de uma vez.
+1. Avisar o professor que o livro está pronto para a avaliação de uma vez (o link do Trilheiro no ar já está no capítulo 26).
 
 O verificador de links externos já existe: o `publicar-capitulo.sh` confere os links de cada capítulo antes do PR.
 
