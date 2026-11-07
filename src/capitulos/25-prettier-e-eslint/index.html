@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="25-prettier-e-eslint">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 25-prettier-e-eslint -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O JavaScript do Trilheiro cresceu: são treze arquivos, escritos em momentos diferentes, e já dá para ver linhas de mais de 120 caracteres ao lado de linhas curtinhas. Hoje o projeto ganha duas ferramentas que trabalham por você. O <strong>Prettier</strong> deixa todo o código com a mesma aparência, a cada vez que você salva. O <strong>ESLint</strong> lê o código procurando defeitos: uma variável que não existe, um <code>==</code> no lugar de <code>===</code>, um <code>console.log</code> esquecido.</p>
+        <p>Nada muda na tela: a missão é deixar o projeto mais fácil de ler, de revisar e de manter, por você e por quem trabalhar com você. No fim, <code>npm run format</code> e <code>npm run lint</code> passam limpos. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/25-prettier-e-eslint">etapas/25-prettier-e-eslint</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="📋" title="O revisor do diário de bordo e o guia experiente">
+          <p>Num grupo grande, cada um escreve o diário de bordo do seu jeito: datas de um jeito, horários de outro, letra miúda e garranchos. Um revisor passa a limpo, sempre no mesmo formato, sem mudar o que foi dito. E um guia experiente lê o diário procurando o que pode dar problema: "aqui diz que saíram sem água", "este trecho cita uma trilha que não existe".</p>
+          <p>O Prettier é o revisor: um <a class="tf-term" href="{{base}}glossario/#formatador">formatador</a>, que muda a aparência e nunca o sentido. O ESLint é o guia: um <a class="tf-term" href="{{base}}glossario/#linter">linter</a>, que não muda nada sozinho, mas aponta o que parece errado, com a linha e o motivo.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Formatar e procurar defeitos são coisas diferentes</h3>
+        <p>Veja o mesmo arquivo de três jeitos: como foi escrito, depois do Prettier e com o relatório do ESLint. As saídas são as das duas ferramentas de verdade, com a configuração do Trilheiro:</p>
+        <tf-lint-lab></tf-lint-lab>
+        <p>O Prettier pôs os espaços, o ponto e vírgula e as aspas simples, mas o <code>==</code> e o <code>trails</code> que não existe continuam lá. É o ESLint que os encontra. Por isso os projetos usam os dois.</p>
+
+        <h3>O Prettier: pouca escolha, de propósito</h3>
+        <p>O Prettier tem poucas opções, e isso é o que ele tem de melhor: a equipe para de discutir estilo, porque a ferramenta decide. Ele joga fora a formatação que você fez e reescreve o arquivo inteiro do jeito dele. Uma linha longa demais, por exemplo, vira várias:</p>
+        <tf-code src="25-prettier-e-eslint/antes.js" caption="Antes"></tf-code>
+        <tf-code src="25-prettier-e-eslint/depois.js" caption="Depois do Prettier"></tf-code>
+
+        <h3>O ESLint: regras com nome</h3>
+        <p>Cada aviso do ESLint vem com a linha, a coluna e o nome da regra. As regras <strong>recomendadas</strong> (<code>js.configs.recommended</code>) são as que quase sempre apontam um bug de verdade:</p>
+        <ul>
+          <li><code>no-undef</code>: um nome que não foi criado, como uma função esquecida ou com o nome errado;</li>
+          <li><code>no-unused-vars</code>: algo criado e nunca usado, que muitas vezes é sinal de um passo esquecido;</li>
+          <li><code>no-dupe-keys</code>, <code>no-unreachable</code>, <code>no-const-assign</code>: chave repetida num objeto, código depois de um <code>return</code>, mudar uma <code>const</code>.</li>
+        </ul>
+        <p>O Trilheiro acrescenta três regras: <code>eqeqeq</code> (sempre <code>===</code>, menos no <code>== null</code>, que pega <code>null</code> e <code>undefined</code> juntos), <code>prefer-const</code> (o <code>let</code> que nunca muda vira <code>const</code>) e <code>no-console</code> como aviso (o <code>console.error</code> dos erros é permitido; um <code>console.log</code> de teste esquecido, não).</p>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e se o ESLint e o Prettier brigarem?</summary>
+          <p>O ESLint já teve regras de estilo (espaços, aspas), que podiam discordar do Prettier: um arrumava, o outro reclamava. Nas versões atuais, as regras recomendadas não tratam de estilo, e a divisão fica limpa: o Prettier cuida da aparência, o ESLint dos defeitos. Se um projeto usar um conjunto de regras com estilo, o pacote <code>eslint-config-prettier</code> desliga as que conflitam.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="Instalar">
+            <p>As quatro ferramentas entram como dependências de desenvolvimento, com a versão exata (<code>-E</code>), para todos que clonarem o projeto terem as mesmas regras:</p>
+            <tf-code src="25-prettier-e-eslint/instalar.txt" caption="Terminal"></tf-code>
+            <p>O <code>@eslint/js</code> traz as regras recomendadas, e o <code>globals</code>, a lista dos nomes que o navegador já oferece (<code>document</code>, <code>fetch</code>, <code>localStorage</code>).</p>
+          </section>
+          <section data-step="O Prettier">
+            <p>Na raiz do projeto, a configuração: aspas simples no JavaScript (e duplas no Sass, como o Trilheiro já usa), e linhas de até 100 caracteres:</p>
+            <tf-code src="25-prettier-e-eslint/prettierrc.json" caption=".prettierrc.json"></tf-code>
+            <p>E o que ele deve deixar de lado. Os arquivos gerados e os dados, sempre. O Trilheiro também deixa de fora o HTML e o Markdown: o Prettier reescreveria o HTML de todas as páginas (com <code>/&gt;</code> no fim das tags e atributos um por linha), e o projeto prefere manter o HTML como foi escrito nos capítulos anteriores. É uma escolha, e você pode fazer a outra no seu projeto.</p>
+            <tf-code src="25-prettier-e-eslint/prettierignore.txt" caption=".prettierignore"></tf-code>
+          </section>
+          <section data-step="O ESLint">
+            <p>A configuração do ESLint é um arquivo JavaScript. O <code>.mjs</code> diz ao Node que ele usa <code>import</code>. Repare nos dois nomes globais que vêm dos <code>&lt;script&gt;</code> comuns, e não de um <code>import</code>: o <code>$</code> do jQuery e o <code>bootstrap</code>.</p>
+            <tf-code src="25-prettier-e-eslint/eslint.config.mjs" caption="eslint.config.mjs"></tf-code>
+          </section>
+          <section data-step="Os scripts">
+            <p>No <code>package.json</code>, três scripts novos:</p>
+            <tf-code src="25-prettier-e-eslint/scripts.txt" caption="package.json (trecho)"></tf-code>
+            <p>Rode os dois. O Prettier lista cada arquivo e marca com <code>(unchanged)</code> os que já estavam no formato; o ESLint, quando não acha nada, não diz nada:</p>
+            <tf-code src="25-prettier-e-eslint/format-saida.txt" caption="Terminal"></tf-code>
+            <p>No Trilheiro, o ESLint passou limpo de primeira, e isso é um bom sinal: os defeitos que ele procura já tinham aparecido no console durante os capítulos, e foram corrigidos. Em projetos maiores, é comum a primeira execução mostrar dezenas de avisos.</p>
+          </section>
+          <section data-step="No VS Code">
+            <p>Instale as extensões <strong>Prettier</strong> e <strong>ESLint</strong>. Com elas, o VS Code formata ao salvar e sublinha os problemas enquanto você digita, sem precisar rodar nada no terminal. Duas configurações do projeto ligam isso para quem abrir a pasta:</p>
+            <tf-code src="25-prettier-e-eslint/vscode-settings.json" caption=".vscode/settings.json"></tf-code>
+            <tf-code src="25-prettier-e-eslint/vscode-extensions.json" caption=".vscode/extensions.json"></tf-code>
+            <p>O <code>extensions.json</code> faz o VS Code sugerir as três extensões a quem abrir o projeto pela primeira vez.</p>
+          </section>
+          <section data-step="Veja o ESLint trabalhar">
+            <p>Crie um arquivo de teste com alguns defeitos de propósito:</p>
+            <tf-code src="25-prettier-e-eslint/defeitos.js" caption="js/defeitos.js"></tf-code>
+            <tf-code src="25-prettier-e-eslint/eslint-saida.txt" caption="Terminal"></tf-code>
+            <p>Cinco problemas, cada um com a linha. O <code>render</code> que não existe só daria erro quando a página rodasse aquela linha; o ESLint avisa antes. Apague o arquivo depois.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>Tire a linha do <code>$</code> dos <code>globals</code> no <code>eslint.config.mjs</code> e rode <code>npm run lint</code>. O ESLint não sabe que o jQuery vem do CDN, e reclama do <code>$</code> das máscaras:</p>
+            <tf-code src="25-prettier-e-eslint/sem-jquery.txt" caption="Terminal"></tf-code>
+            <p>Desfaça. Todo nome que chega por um <code>&lt;script&gt;</code> comum precisa ser declarado assim.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="O ESLint reclama de um nome que existe" message="error  '$' is not defined  no-undef">
+          <p>O nome vem de um <code>&lt;script&gt;</code> comum (o jQuery, o Bootstrap) e não de um <code>import</code>, então o ESLint não tem como saber dele. Declare-o em <code>languageOptions.globals</code>, como <code>'readonly'</code>.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O Prettier formatou o que não devia">
+          <p>Arquivos gerados (o <code>css/main.css</code> do Sass), dados (o <code>db.json</code>, que o json-server reescreve) e o <code>package-lock.json</code> não são para editar à mão. Liste-os no <code>.prettierignore</code>. A pasta <code>node_modules</code> já fica de fora sozinha.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Salvei e nada foi formatado">
+          <p>Falta a extensão do Prettier, ou o VS Code está usando outro formatador. Confira o <code>"editor.defaultFormatter"</code> no <code>.vscode/settings.json</code>, e se o arquivo não está no <code>.prettierignore</code>. A barra de status, embaixo, mostra o Prettier com um ✓ quando ele está ativo.</p>
+        </tf-pitfall>
+        <tf-pitfall title="Desliguei a regra para o aviso sumir">
+          <p>Um <code>// eslint-disable-next-line</code> resolve o aviso, mas não o problema. Antes de desligar uma regra, leia a explicação dela (o nome da regra é um link na extensão do VS Code). Quase sempre, o aviso tinha razão.</p>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="25-prettier-e-eslint" award>
+          <fieldset data-correct="b">
+            <legend>O código tem <code>if (count == 0)</code>. Quem aponta isso?</legend>
+            <label><input type="radio" name="q1" value="a"> O Prettier, que troca por <code>===</code></label>
+            <label><input type="radio" name="q1" value="b"> O ESLint, com a regra <code>eqeqeq</code></label>
+            <label><input type="radio" name="q1" value="c"> Nenhum dos dois</label>
+            <p data-explain="a" hidden>O Prettier nunca muda o sentido do código, e trocar <code>==</code> por <code>===</code> mudaria.</p>
+            <p data-explain="c" hidden>A regra <code>eqeqeq</code>, ligada no Trilheiro, aponta o <code>==</code>.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>O que o Prettier faz com um arquivo?</legend>
+            <label><input type="radio" name="q2" value="a"> Procura bugs e os corrige</label>
+            <label><input type="radio" name="q2" value="b"> Só avisa onde a formatação está diferente</label>
+            <label><input type="radio" name="q2" value="c"> Reescreve a aparência (espaços, aspas, quebras de linha) sem mudar o que o código faz</label>
+            <p data-explain="a" hidden>Procurar defeitos é com o ESLint. O Prettier só cuida da aparência.</p>
+            <p data-explain="b" hidden>Isso é o <code>--check</code>. O <code>--write</code>, do <code>npm run format</code>, reescreve o arquivo.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>Por que o <code>bootstrap</code> está nos <code>globals</code> do ESLint?</legend>
+            <label><input type="radio" name="q3" value="a"> Porque ele vem do <code>&lt;script&gt;</code> do bundle, e não de um <code>import</code>; sem isso, o ESLint diria que ele não existe</label>
+            <label><input type="radio" name="q3" value="b"> Para o ESLint formatar o CSS do Bootstrap</label>
+            <label><input type="radio" name="q3" value="c"> Para o Bootstrap carregar mais rápido</label>
+            <p data-explain="b" hidden>O ESLint não formata nada, e só lê os arquivos <code>.js</code> configurados.</p>
+            <p data-explain="c" hidden>A configuração do ESLint não muda nada na página: só o que ele considera erro.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>Por que as versões foram instaladas com <code>-E</code> (exatas)?</legend>
+            <label><input type="radio" name="q4" value="a"> Porque é obrigatório para ferramentas de desenvolvimento</label>
+            <label><input type="radio" name="q4" value="b"> Para quem clonar o projeto ter exatamente as mesmas regras e o mesmo formato</label>
+            <label><input type="radio" name="q4" value="c"> Para o site ficar mais leve</label>
+            <p data-explain="a" hidden>Não é obrigatório, mas uma versão nova pode formatar diferente ou trazer regras novas, e o projeto muda sozinho.</p>
+            <p data-explain="c" hidden>As ferramentas de desenvolvimento nem vão para o site: rodam só no seu computador.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, instale e configure o Prettier e o ESLint, com os scripts <code>format</code> e <code>lint</code>, o <code>.prettierignore</code> e as configurações do VS Code. Rode os dois e corrija tudo o que o ESLint apontar. Decida, e explique, se o Prettier vai ou não formatar o seu HTML.</p>
+        <ul>
+          <li><strong>O conceito:</strong> qual a diferença entre um formatador e um linter?</li>
+          <li><strong>A motivação:</strong> o que o ESLint achou no seu código, e que bug cada aviso poderia causar?</li>
+          <li><strong>A anatomia:</strong> explique o seu <code>eslint.config.mjs</code>, linha por linha.</li>
+          <li><strong>"E se eu tirar?":</strong> tire um nome dos <code>globals</code> e mostre o <code>no-undef</code>.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://prettier.io/docs/">Prettier: a documentação (em inglês)</a></li>
+          <li><a href="https://prettier.io/docs/options">Prettier: as opções (em inglês)</a></li>
+          <li><a href="https://eslint.org/docs/latest/use/configure/configuration-files">ESLint: o arquivo de configuração (em inglês)</a></li>
+          <li><a href="https://eslint.org/docs/latest/rules/">ESLint: a lista das regras, com exemplos (em inglês)</a></li>
+          <li><a href="https://prettier.io/docs/integrating-with-linters">Prettier: como conviver com os linters (em inglês)</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 25-prettier-e-eslint -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>

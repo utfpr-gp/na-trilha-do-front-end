@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Ilustração de uma trilha de terra entre araucárias">
+  <rect width="640" height="400" fill="#dce6da"/>
+  <path d="M0 300 L640 260 L640 400 L0 400 Z" fill="#3f7a4c"/>
+  <path d="M250 400 L300 270 L340 270 L390 400 Z" fill="#8b5a2b"/>
+  <g fill="#2f5d3a">
+    <rect x="96" y="150" width="8" height="140"/><ellipse cx="100" cy="150" rx="60" ry="18"/><ellipse cx="100" cy="125" rx="45" ry="14"/>
+    <rect x="496" y="130" width="8" height="150"/><ellipse cx="500" cy="130" rx="65" ry="20"/><ellipse cx="500" cy="104" rx="48" ry="15"/>
+    <rect x="196" y="190" width="6" height="90"/><ellipse cx="199" cy="190" rx="40" ry="12"/>
+    <rect x="426" y="180" width="6" height="95"/><ellipse cx="429" cy="180" rx="42" ry="13"/>
+  </g>
+</svg>

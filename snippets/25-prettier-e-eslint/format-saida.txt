@@ -1,0 +1,24 @@
+$ npm run format
+
+> trilheiro@1.0.0 format
+> prettier --write .
+
+js/address.js 23ms
+js/api.js 4ms (unchanged)
+js/favorites.js 2ms (unchanged)
+js/feedback.js 1ms (unchanged)
+js/format.js 3ms (unchanged)
+js/home.js 3ms
+js/storage.js 2ms (unchanged)
+js/trail-card.js 3ms (unchanged)
+js/trail-detail.js 10ms
+js/trail-form.js 8ms
+js/trail.js 2ms (unchanged)
+…
+
+$ npm run lint
+
+> trilheiro@1.0.0 lint
+> eslint .
+
+$
