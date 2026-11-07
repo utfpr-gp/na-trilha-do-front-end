@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 25 publicados; merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-05 (capítulos 1 a 26 publicados (todos os capítulos da trilha principal); merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -45,11 +45,12 @@
 - **Capítulo 23 publicado:** API REST com json-server 1.0.0-beta.15 (rotas, `_embed`, 404, 201, defeito do `?trilhaId=1`, `$schema` acrescentado na 1ª gravação), fetch + async/await + response.ok, `api.js` (só modo local; o modo publicado entra no 26), then/AJAX do jQuery/XHR em Aprofundando; etapa com `db.json` completo, `api.js`, `feedback.js`, `trail-detail.js` (detalhe dinâmico por `?id=`, carrossel das fotos, guia, relatos ordenados, favorito no detalhe, modal de relato com `.was-validated` + POST), cadastro com POST e redirecionamento, `.vscode/settings.json` ignorando o db.json no Live Server; tudo testado no Chrome contra o json-server (inclusive servidor parado e id inexistente); erros reais (Failed to fetch, sem await, await fora de async); simulador `<tf-fetch-lab>`; termos API REST, fetch, async/await. `show()` do tf-array-lab passou a escrever arrays internos numa linha.
 - **Capítulo 24 publicado (07/11):** escolher API (catálogos Public APIs, API Ninjas, RapidAPI, Postman; 5 perguntas: docs, chave, CORS, HTTPS, limites/termos), testar antes no navegador/Postman/Thunder Client, os 4 jeitos de dar errado (rede, status, 200 com erro no corpo, demora → `AbortSignal.timeout`), chaves de API em Aprofundando; etapa com `weather.js` (previsão no detalhe, sem await, aviso só na caixa), `address.js` (ViaCEP com `erro`, geocodificação pelo estado via mapa UF→nome), CEP preenche cidade/UF/bairro, coordenadas gravadas ao salvar; testado no Chrome contra as APIs reais e com os domínios bloqueados; erros reais (CORS, TimeoutError, `undefined` no campo); simulador `<tf-cep-lab>` consulta o ViaCEP de verdade; termos API pública e CORS.
 - **Capítulo 25 publicado (07/11):** formatador × linter, Prettier 3.9.10 (singleQuote, printWidth 100, Sass com aspas duplas; HTML e MD fora, por escolha explicada), ESLint 10.13.0 flat config `.mjs` (recommended + eqeqeq smart, prefer-const, no-console warn; globais `$` e `bootstrap`), scripts format/format:check/lint, `.vscode` com formatOnSave e extensions.json; versões com mais de 2 semanas; etapa formatada e lint limpo, conferida no Chrome; saídas reais do ESLint/Prettier; simulador `<tf-lint-lab>`; termos formatador e linter.
+- **Capítulo 26 publicado (07/11):** site estático, o que vai para o GitHub (sem node_modules, com css/main.css), `api.js` com modo publicado (lê `db.json`, `_embed` no JS, `canWrite`, mensagem do architecture), avisos no cadastro e no detalhe, Bootstrap JS 5.3.8 e Icons 1.13.2 pelo CDN, favicon SVG, caminhos relativos, Pages por "Deploy from a branch", gh-pages/Actions em Aprofundando; testado no Chrome em endereço não local (modo publicado sem servidor), em subcaminho (como site de projeto) e no modo local com POST; teste do modo publicado no livro = trocar `LOCAL` por `false` (o Live Server só escuta em 127.0.0.1); simulador `<tf-path-lab>`; termo site estático.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. Capítulo 26 (publicar no GitHub Pages: modo publicado do `api.js` lendo o `db.json`, Bootstrap pelo CDN no lugar da `node_modules`, `gh-pages` ou Pages pela branch; Lighthouse rápido) e depois os 5 de Para ir além e o app final em `trilheiro/`, na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
+1. Os 5 de Para ir além (Materialize, Tailwind, Lighthouse, acessibilidade, Vite) e depois o app final em `trilheiro/` (a partir da etapa 26), na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
 3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
 
 ## Em aberto

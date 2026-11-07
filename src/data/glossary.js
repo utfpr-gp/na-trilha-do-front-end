@@ -41,5 +41,6 @@ export const GLOSSARY = [
   { id: 'cors', term: 'CORS', definition: 'A regra do navegador que decide se uma página de um endereço pode ler a resposta de outro. O servidor libera com o cabeçalho Access-Control-Allow-Origin; sem ele, o fetch falha com "blocked by CORS policy".', chapter: 24 },
   { id: 'formatador', term: 'formatador', definition: 'Uma ferramenta que reescreve o código num estilo fixo (espaços, aspas, quebras de linha), sem mudar o que ele faz. O Prettier é o mais usado no front-end.', chapter: 25 },
   { id: 'linter', term: 'linter', definition: 'Uma ferramenta que lê o código sem rodá-lo e aponta prováveis defeitos: variável sem uso, nome que não existe, == no lugar de ===. O ESLint é o linter do JavaScript.', chapter: 25 },
+  { id: 'site-estatico', term: 'site estático', definition: 'Um site feito só de arquivos (HTML, CSS, JavaScript, imagens) que o servidor serve como estão, sem programa nenhum rodando do lado dele. O GitHub Pages publica sites estáticos; gravar dados exige outro servidor.', chapter: 26 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

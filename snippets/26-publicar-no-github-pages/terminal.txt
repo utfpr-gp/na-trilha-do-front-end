@@ -1,0 +1,5 @@
+$ npm run sass
+$ npm run format:check && npm run lint
+$ git add .
+$ git commit -m "feat: modo publicado, Bootstrap pelo CDN e ícone da aba"
+$ git push

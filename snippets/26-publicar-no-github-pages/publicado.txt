@@ -1,0 +1,7 @@
+trilheiro/                  o que vai para o GitHub
+├── index.html  trilhas.html  trilha.html  cadastrar.html
+├── css/main.css            o Sass compilado (o navegador não lê .scss)
+├── js/  img/  db.json
+├── scss/                   o código-fonte do CSS
+├── package.json  package-lock.json
+└── node_modules/           NÃO vai: está no .gitignore
