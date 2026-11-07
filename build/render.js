@@ -37,7 +37,8 @@ export function renderChapterHeader(slug, base) {
 </header>`;
 }
 
-export function renderPager(slug, base, list = undefined) {
+// Sem lista, a ordem de leitura do livro inteiro: os 26 capítulos e, depois, os de Para ir além.
+export function renderPager(slug, base, list = PARTS.flatMap((p) => p.chapters)) {
   const { prev, next } = neighbors(slug, list);
   const link = (c, rel, label) =>
     c ? `<a class="tf-pager-${rel}" rel="${rel}" href="${chapterUrl(c, base)}"><span>${label}</span> ${escapeHtml(c.question)}</a>` : '';
@@ -61,8 +62,10 @@ export function renderTrailMap(parts) {
 export function renderGlossary(entries, base, chapters) {
   const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term, 'pt-BR'));
   const items = sorted.map((e) => {
-    const chapter = chapters.find((c) => c.number === e.chapter && c.published);
-    const link = chapter ? ` <a href="${chapterUrl(chapter, base)}">Capítulo ${chapter.number}</a>` : '';
+    // Um termo de capítulo liga pelo número; um de Para ir além, que não tem número, pelo slug.
+    const chapter = chapters.find((c) => (e.slug ? c.slug === e.slug : c.number === e.chapter) && c.published);
+    const label = chapter?.number ? `Capítulo ${chapter.number}` : 'Para ir além';
+    const link = chapter ? ` <a href="${chapterUrl(chapter, base)}">${label}</a>` : '';
     return `<dt id="${e.id}">${escapeHtml(e.term)}</dt><dd>${escapeHtml(e.definition)}${link}</dd>`;
   });
   return `<dl class="tf-glossary">${items.join('')}</dl>`;

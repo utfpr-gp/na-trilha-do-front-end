@@ -1,0 +1,30 @@
+{
+  "name": "trilheiro",
+  "version": "1.0.0",
+  "description": "Trilheiro: guia de trilhas da região de Guarapuava",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "api": "json-server public/db.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.2",
+    "jquery": "4.0.0",
+    "jquery-mask-plugin": "1.14.16"
+  },
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "json-server": "1.0.0-beta.15",
+    "prettier": "3.9.10",
+    "sass": "^1.107.1",
+    "vite": "8.3.5"
+  }
+}

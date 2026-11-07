@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Trilha sem foto">
+  <rect width="480" height="360" fill="#faf7f0"/>
+  <path d="M60 280 L180 130 L250 210 L300 160 L420 280 Z" fill="#dce6da"/>
+  <path d="M180 130 L210 168 L150 168 Z" fill="#ffffff"/>
+  <circle cx="360" cy="100" r="28" fill="#f2c230"/>
+  <text x="240" y="325" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" fill="#55625a">Sem foto</text>
+</svg>
