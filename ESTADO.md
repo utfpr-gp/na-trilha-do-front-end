@@ -1,7 +1,7 @@
 # Estado do livro
 
 > Onde a construção do livro parou e o que vem a seguir. **Leia antes de começar; atualize a cada etapa.**
-> Última atualização: 2026-11-05 (capítulos 1 a 26 publicados (todos os capítulos da trilha principal); merge autônomo até o livro ficar pronto).
+> Última atualização: 2026-11-07 (livro completo: 26 capítulos, 5 de Para ir além e o app final; merge autônomo até o livro ficar pronto).
 
 ## Feito
 
@@ -51,11 +51,12 @@
 - **Para ir além: acessibilidade publicado (07/11):** axe-core 4.14 + teclado + árvore de acessibilidade (CDP) na etapa 26: 8 problemas apesar do 100 do Lighthouse (skip link, hero fora de landmark, Favoritar/Ver trilha sem contexto, nome+aria-pressed trocando juntos, asterisco lido, previsão ambígua, reflow 320 px por `row g-5`); etapa `etapas/extra-acessibilidade/` corrigida e conferida; termo leitor de tela. **Para o app final:** levar estas correções e as do Lighthouse; atualizar o design-system.md (o favorito passa a ter nome fixo "Favoritar <trilha>" com aria-pressed, em vez de trocar o texto).
 - **Para ir além: Materialize e outros publicado (07/11):** etapa `etapas/extra-materialize/` com a vitrine do Início em Materialize 2.4.0 e Bulma 1.0.4 (conferidas no Chrome com capturas de tela e axe); tabela comparativa com tamanhos reais; achados do Materialize 2.4 (doc `btn filled` × CSS `btn-filled`, `colorFunc` não compilado nos links, `.nav-wrapper` × `.primary`, modal = `<dialog>` nativo, `M.Modal` é um esqueleto).
 - **Para ir além: Tailwind publicado (07/11):** etapa `etapas/extra-tailwind/` (Tailwind 4.3.3 pela CLI, `@theme` com o design system, CSS gerado de 10,7 KB), conferida no Chrome e no axe; verificado que classe montada por template string não é gerada. **Os 5 de Para ir além estão publicados.**
+- **App final em `trilheiro/` (07/11):** etapa 26 + correções dos extras de Lighthouse e acessibilidade (merge de três vias, conflitos resolvidos à mão) + filtro animado com jQuery respeitando `prefers-reduced-motion` (ID 20) + fontes com `display=optional` (CLS da tela Trilhas 0,28 → 0); conferido no Chrome nos modos local (json-server: filtro, relato, cadastro com CEP/coordenadas) e publicado, axe sem problemas nas 4 páginas, Lighthouse 86–90 de desempenho, 100 de acessibilidade e SEO; `architecture.md` e `design-system.md` atualizados ao que foi construído (com a exceção dos nomes Sass/CSS em português registrada); `checklist.md` com os 24 IDs marcados e links de linha (gerado por script); o build do livro copia o app para `dist/trilheiro/` (publicado em /trilheiro/, modo publicado), com teste.
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. O app final em `trilheiro/`: a partir da etapa 26, com as correções dos extras de Lighthouse e acessibilidade (e o design-system.md atualizado para o favorito com nome fixo).
+1. Depois do deploy, pôr o link do Trilheiro no ar no capítulo 26 (o verificador de links só aceita o endereço depois que ele existe).
 2. Avisar o professor que o livro está pronto para a avaliação de uma vez.
 
 O verificador de links externos já existe: o `publicar-capitulo.sh` confere os links de cada capítulo antes do PR.

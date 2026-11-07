@@ -51,7 +51,7 @@ As duas fontes vêm do Google Fonts.
   - `.btn-outline-secondary` (terra) é a ação de apoio: "Cancelar", "Voltar para a lista".
 - **Cartão da trilha:** sempre na mesma ordem: foto (proporção 4:3, cortada sem distorcer), selo de dificuldade, nome, cidade, distância e duração, botão de favorito. Cartões da mesma linha têm a mesma altura.
 - **Selos (`.badge`):** um selo por informação. Dificuldade com a cor dela; "Destaque" em amarelo com texto em tinta.
-- **Favorito:** botão com ícone de coração e `aria-pressed`. A cor muda de contorno (não favoritada) para amarelo preenchido (favoritada), e o texto escondido para leitores de tela diz "Favoritar" ou "Remover das favoritas".
+- **Favorito:** botão com ícone de coração e `aria-pressed`. A cor muda de contorno (não favoritada) para amarelo preenchido (favoritada). O nome para leitores de tela é fixo e diz a trilha ("Favoritar Trilha do Salto"); quem diz se está ligado é o `aria-pressed`.
 - **Formulários:** um rótulo visível por campo (nunca só o placeholder). A mensagem de erro aparece abaixo do campo, em vermelho de "Difícil", só depois que o campo foi tocado.
 - **Mensagens:**
   - carregando: um spinner com o texto "Carregando…";
@@ -89,20 +89,20 @@ As variáveis do Bootstrap são definidas em `scss/_theme.scss`, **antes** de im
 | Papel | `#FAF7F0` | `$body-bg` (Bootstrap) |
 | Tinta | `#1F2A24` | `$body-color` (Bootstrap) |
 | Tinta suave | `#55625A` | `$body-secondary-color` (Bootstrap) |
-| Amarelo de marcação | `#F2C230` | `$trail-mark` (própria), no selo de destaque e no favorito |
-| Fácil, Moderada, Difícil | `#2E7D32`, `#A35F00`, `#B3261E` | O mapa `$difficulty-colors: (facil: …, moderada: …, dificil: …)`, que um `@each` transforma nas classes `.badge-facil`, `.badge-moderada` e `.badge-dificil` |
+| Amarelo de marcação | `#F2C230` | `$marcacao` (própria, em `_tokens.scss`), no favorito marcado |
+| Fácil, Moderada, Difícil | `#2E7D32`, `#A35F00`, `#B3261E` | O mapa `$dificuldades: (facil: …, moderada: …, dificil: …)`, em `_tokens.scss`, que um `@each` transforma nas classes `.badge-facil`, `.badge-moderada` e `.badge-dificil`; o vermelho de "Difícil" também vira `$danger`, a cor dos erros dos formulários |
 | Fonte do texto | Source Sans 3 | `$font-family-sans-serif` (Bootstrap) |
 | Fonte dos títulos | Bitter, 700 | `$headings-font-family` e `$headings-font-weight` (Bootstrap) |
 | Títulos fluidos | de 1,75rem a 2,75rem (`h1`) | A função própria `fluid($min, $max)`, em `_functions.scss`, que devolve um `clamp()` |
 | Cantos | 0,5rem | `$border-radius` (Bootstrap), que vale também para botões e cartões |
-| Foto do cartão em 4:3 | `aspect-ratio: 4 / 3` e `object-fit: cover` | O mixin próprio `cover-image($ratio)`, em `_mixins.scss` |
+| Foto do cartão em 4:3 | `aspect-ratio: 4 / 3` e `object-fit: cover` | O mixin próprio `cover-image($largura, $altura)`, em `_mixins.scss` |
 
 ```scss
-// scss/main.scss — a ordem importa
-@import "theme";                         // 1. as nossas variáveis (antes)
-@import "bootstrap/scss/bootstrap";      // 2. o Bootstrap, que respeita os !default
-@import "functions", "mixins";           // 3. ferramentas próprias
-@import "trail-card", "footer";          // 4. regras próprias (depois, para vencer na cascata)
+// scss/main.scss: a ordem importa
+@import "theme";                       // 1. as nossas variáveis (antes), alimentadas pelos tokens
+@import "bootstrap/scss/bootstrap";    // 2. o Bootstrap, que respeita os !default
+@import "layout", "acessibilidade", "navbar", "hero", "cards", "trilha", "form", "footer";
+                                       // 3. regras próprias (depois, para vencer na cascata)
 ```
 
 O Bootstrap 5.3 ainda é escrito com `@import`, então o tema também usa `@import`. O compilador Sass atual mostra centenas de avisos de obsolescência vindos do próprio Bootstrap. Eles são esperados, e a opção `--quiet-deps` esconde os que vêm da `node_modules`, deixando à vista só os do seu código:
