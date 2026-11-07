@@ -38,23 +38,33 @@ flowchart LR
 trilheiro/
 ├── index.html  trilhas.html  trilha.html  cadastrar.html
 ├── db.json
-├── package.json            scripts "sass" e "api"
+├── package.json            scripts "sass", "api", "format" e "lint"
+├── eslint.config.mjs  .prettierrc.json  .prettierignore
+├── .vscode/                o Live Server ignora o db.json; formatar ao salvar
 ├── scss/
 │   ├── main.scss           tema → Bootstrap → parciais próprios
+│   ├── _tokens.scss        os tokens do design system, como variáveis Sass
 │   ├── _theme.scss         variáveis do Bootstrap (antes dele)
-│   └── _trail-card.scss  _footer.scss  _mixins.scss  _functions.scss
-├── css/main.css            compilado pelo Sass (vai para o repositório)
+│   ├── _functions.scss  _mixins.scss
+│   └── _layout.scss  _acessibilidade.scss  _navbar.scss  _hero.scss  _cards.scss  _trilha.scss  _form.scss  _footer.scss
+├── css/main.css            compilado pelo Sass, comprimido (vai para o repositório)
 ├── js/
 │   ├── api.js              json-server e modo publicado (seção 6)
 │   ├── weather.js          Open-Meteo
 │   ├── address.js          ViaCEP e coordenadas da cidade
-│   ├── storage.js          favoritas e filtro
+│   ├── storage.js          favoritas e filtro (seção 9)
+│   ├── favorites.js        a lista de favoritas
+│   ├── trail.js            a classe Trail (os dados e a formatação)
+│   ├── format.js           duração, distância e datas
 │   ├── trail-card.js       monta o cartão de uma trilha
+│   ├── feedback.js         avisos de "carregando" e de erro
 │   └── home.js  trails.js  trail-detail.js  trail-form.js
-└── img/trilhas/            fotos em WebP, em duas larguras
+└── img/                    fotos em WebP e JPEG, em duas larguras; ícone da aba; foto padrão
 ```
 
 Os nomes no código (arquivos, funções, classes CSS próprias) são em inglês. Os dados e as rotas são em português, porque são o vocabulário do domínio: `trilhas`, `relatos`, `dificuldade`.
+
+**Exceção:** as classes CSS e as variáveis Sass próprias nasceram em português nos capítulos de Sass do livro (`.secao-titulo`, `.hero__texto`, `$verde-mata`, `$dificuldades`) e continuam assim, para o app final ser igual ao que o livro constrói. Os arquivos, as funções e as classes JavaScript seguem em inglês.
 
 ## 3. Modelo de dados (diagrama ER)
 
@@ -235,10 +245,11 @@ Leitura dentro de `try/catch`: valor ausente, JSON inválido ou navegador que bl
 | Biblioteca | Versão | Endereço |
 |---|---|---|
 | Bootstrap (JS, com Popper) | 5.3.8 | `https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js` |
+| Bootstrap Icons (CSS) | 1.13.2 | `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css` |
 | jQuery | 4.0.0 | `https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js` |
 | jQuery Mask Plugin | 1.14.16 | `https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js` |
 
-O plugin de máscara foi conferido com o jQuery 4.0.0 (`mask('00000-000')` e `mask('(00) 00000-0000')`). O CSS do Bootstrap não vem do CDN: ele é compilado junto com o tema, pelo Sass.
+O jQuery entra no `trilhas.html` (a animação do filtro) e no `cadastrar.html` (as máscaras). As fontes vêm do Google Fonts com `display=optional`: se não chegarem a tempo do primeiro desenho, a página fica com a fonte do sistema, e o texto não pula de lugar quando elas chegam. O plugin de máscara foi conferido com o jQuery 4.0.0 (`mask('00000-000')` e `mask('(00) 00000-0000')`). O CSS do Bootstrap não vem do CDN: ele é compilado junto com o tema, pelo Sass.
 
 ## 11. Estrutura do `db.json`
 

@@ -6,7 +6,9 @@ Cada capítulo responde a uma pergunta, traz uma analogia do cotidiano, prática
 
 O livro ensina construindo um único app de exemplo, o **[Trilheiro](trilheiro/)**: um guia de trilhas da região de Guarapuava.
 
-📖 **Site:** <https://utfpr-gp.github.io/na-trilha-do-front-end/> (🚧 em construção)
+📖 **Site:** <https://utfpr-gp.github.io/na-trilha-do-front-end/>: 26 capítulos e 5 de "Para ir além".
+
+🥾 **O Trilheiro no ar:** <https://utfpr-gp.github.io/na-trilha-do-front-end/trilheiro/>
 
 Material do Prof. Roni Fabio Banaszewski · Tecnologia em Sistemas para Internet · UTFPR Guarapuava.
 

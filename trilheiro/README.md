@@ -6,6 +6,8 @@ Site responsivo para descobrir e compartilhar trilhas da região de Guarapuava (
 
 É o app construído passo a passo no livro [*Na Trilha do Front-End*](https://utfpr-gp.github.io/na-trilha-do-front-end/).
 
+🌐 **No ar:** [utfpr-gp.github.io/na-trilha-do-front-end/trilheiro](https://utfpr-gp.github.io/na-trilha-do-front-end/trilheiro/) (no modo publicado: mostra as trilhas, sem cadastrar).
+
 > As trilhas são exemplos inspirados em lugares reais. O Trilheiro não é um guia de segurança.
 
 ## 📚 Documentação
@@ -37,10 +39,16 @@ npm run api      # json-server em http://localhost:3000 (deixe rodando)
 Em outro terminal, se for mexer no estilo:
 
 ```bash
-npm run sass     # recompila scss/ em css/main.css a cada mudança
+npm run sass:watch   # recompila scss/ em css/main.css a cada mudança
 ```
 
-Depois, abra o `index.html` com o **Live Server**.
+Depois, abra o `index.html` com o **Live Server**. Antes de cada commit:
+
+```bash
+npm run sass         # o CSS compilado vai para o repositório
+npm run format       # Prettier
+npm run lint         # ESLint
+```
 
 ## 📱 Telas
 
