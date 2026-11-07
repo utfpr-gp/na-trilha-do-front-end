@@ -1,0 +1,7 @@
+$ npm run lint
+
+js/trail-form.js
+  14:1  error  '$' is not defined  no-undef
+  15:1  error  '$' is not defined  no-undef
+
+✖ 2 problems (2 errors, 0 warnings)

@@ -39,5 +39,7 @@ export const GLOSSARY = [
   { id: 'async-await', term: 'async/await', definition: 'O jeito de esperar algo que demora (como uma resposta do servidor) sem travar a página. Dentro de uma função async, o await pausa só aquela função até a Promise terminar.', chapter: 23 },
   { id: 'api-publica', term: 'API pública', definition: 'Um serviço na internet que qualquer site pode consultar, como a Open-Meteo (previsão do tempo) e o ViaCEP (endereço pelo CEP). Antes de usar, confira a documentação, os limites, se pede chave e se aceita chamadas do navegador (CORS).', chapter: 24 },
   { id: 'cors', term: 'CORS', definition: 'A regra do navegador que decide se uma página de um endereço pode ler a resposta de outro. O servidor libera com o cabeçalho Access-Control-Allow-Origin; sem ele, o fetch falha com "blocked by CORS policy".', chapter: 24 },
+  { id: 'formatador', term: 'formatador', definition: 'Uma ferramenta que reescreve o código num estilo fixo (espaços, aspas, quebras de linha), sem mudar o que ele faz. O Prettier é o mais usado no front-end.', chapter: 25 },
+  { id: 'linter', term: 'linter', definition: 'Uma ferramenta que lê o código sem rodá-lo e aponta prováveis defeitos: variável sem uso, nome que não existe, == no lugar de ===. O ESLint é o linter do JavaScript.', chapter: 25 },
   { id: 'componente', term: 'componente', definition: 'Uma peça de interface pronta e reutilizável, como um card, uma navbar ou um modal, montada com HTML e classes do framework.', chapter: 9 },
 ];

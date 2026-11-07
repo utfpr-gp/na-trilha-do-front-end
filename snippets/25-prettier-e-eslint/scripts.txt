@@ -1,0 +1,7 @@
+"scripts": {
+  "sass": "sass … scss/main.scss css/main.css",
+  "api": "json-server db.json",
+  "format": "prettier --write .",
+  "format:check": "prettier --check .",
+  "lint": "eslint ."
+},
