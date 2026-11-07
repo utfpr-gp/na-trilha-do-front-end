@@ -1,0 +1,19 @@
+/* O Tailwind inteiro: o reset, as variáveis e as classes utilitárias. Só as classes usadas no HTML vão para o CSS final. */
+@import "tailwindcss";
+
+/* O design system do Trilheiro vira tema do Tailwind. Cada variável gera classes:
+   --color-verde-mata cria bg-verde-mata, text-verde-mata, border-verde-mata… */
+@theme {
+  --color-verde-mata: #2f5d3a;
+  --color-terra: #8b5a2b;
+  --color-marcacao: #f2c230;
+  --color-papel: #faf7f0;
+  --color-tinta: #1f2a24;
+  --color-tinta-suave: #55625a;
+  --color-facil: #2e7d32;
+  --color-moderada: #a35f00;
+  --color-dificil: #b3261e;
+
+  --font-titulos: "Bitter", Georgia, serif;
+  --font-texto: "Source Sans 3", system-ui, sans-serif;
+}

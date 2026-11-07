@@ -1,0 +1,7 @@
+<!-- O Tailwind lê o HTML como texto e procura nomes de classe inteiros. -->
+<span class="bg-facil">…</span>        <!-- gera .bg-facil -->
+
+<script>
+  // Montado pelo JavaScript, o nome inteiro nunca aparece no arquivo: a classe não é gerada.
+  badge.className = `bg-${trail.dificuldade}`;
+</script>

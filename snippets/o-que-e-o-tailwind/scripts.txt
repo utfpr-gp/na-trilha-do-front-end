@@ -1,0 +1,4 @@
+"scripts": {
+  "css": "tailwindcss -i css/input.css -o css/tailwind.css --minify",
+  "css:watch": "tailwindcss -i css/input.css -o css/tailwind.css --watch"
+}

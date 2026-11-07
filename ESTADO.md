@@ -50,12 +50,15 @@
 - **Para ir além: Lighthouse publicado (07/11):** Lighthouse 13.5.0 rodado de verdade na etapa 26 (modo publicado, 127.0.0.2): CLS do rodapé, carrossel achatado no celular (height attr), LCP lazy, meta description, CSS sem compressão; etapa `etapas/extra-lighthouse/` com as correções e tabela antes/depois (Início 69→86, Trilha 69→88, SEO 100, CLS ~0); o aviso de só leitura passou a vir no HTML. **Observação:** os bugs do carrossel achatado e do LCP lazy existem nas etapas 16–26 e devem ir corrigidos para o app final em `trilheiro/`.
 - **Para ir além: acessibilidade publicado (07/11):** axe-core 4.14 + teclado + árvore de acessibilidade (CDP) na etapa 26: 8 problemas apesar do 100 do Lighthouse (skip link, hero fora de landmark, Favoritar/Ver trilha sem contexto, nome+aria-pressed trocando juntos, asterisco lido, previsão ambígua, reflow 320 px por `row g-5`); etapa `etapas/extra-acessibilidade/` corrigida e conferida; termo leitor de tela. **Para o app final:** levar estas correções e as do Lighthouse; atualizar o design-system.md (o favorito passa a ter nome fixo "Favoritar <trilha>" com aria-pressed, em vez de trocar o texto).
 - **Para ir além: Materialize e outros publicado (07/11):** etapa `etapas/extra-materialize/` com a vitrine do Início em Materialize 2.4.0 e Bulma 1.0.4 (conferidas no Chrome com capturas de tela e axe); tabela comparativa com tamanhos reais; achados do Materialize 2.4 (doc `btn filled` × CSS `btn-filled`, `colorFunc` não compilado nos links, `.nav-wrapper` × `.primary`, modal = `<dialog>` nativo, `M.Modal` é um esqueleto).
+- **Para ir além: Tailwind publicado (07/11):** etapa `etapas/extra-tailwind/` (Tailwind 4.3.3 pela CLI, `@theme` com o design system, CSS gerado de 10,7 KB), conferida no Chrome e no axe; verificado que classe montada por template string não é gerada. **Os 5 de Para ir além estão publicados.**
 - **Modo de trabalho a partir de 05/11 (professor):** escrever todos os capítulos e fazer o merge sem esperar revisão; ele avalia tudo no fim. Script: `scripts/publicar-capitulo.sh <slug> "<título>" <corpo-do-pr>` (marca publicado, testa, compila, verifica, abre o PR, espera a CI e faz o merge).
 
 ## Próximos passos
 
-1. O último de Para ir além (Tailwind) e depois o app final em `trilheiro/` (a partir da etapa 26), na ordem, até o 26; depois os de Para ir além e o app final em `trilheiro/`.
-3. Verificador de links externos (o capítulo 1 publicou um link do MDN que tinha saído do ar).
+1. O app final em `trilheiro/`: a partir da etapa 26, com as correções dos extras de Lighthouse e acessibilidade (e o design-system.md atualizado para o favorito com nome fixo).
+2. Avisar o professor que o livro está pronto para a avaliação de uma vez.
+
+O verificador de links externos já existe: o `publicar-capitulo.sh` confere os links de cada capítulo antes do PR.
 
 ## Em aberto
 

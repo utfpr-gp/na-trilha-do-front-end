@@ -1,0 +1,5 @@
+$ npm install -D -E tailwindcss@4.3.3 @tailwindcss/cli@4.3.3
+$ npm run css
+
+≈ tailwindcss v4.3.3
+Done in 22ms

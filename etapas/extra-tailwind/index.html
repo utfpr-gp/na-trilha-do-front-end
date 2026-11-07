@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilheiro em Tailwind</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/tailwind.css">
+</head>
+<body class="flex min-h-screen flex-col bg-papel font-texto text-tinta">
+  <header class="bg-verde-mata text-white">
+    <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between px-4 py-3" aria-label="Principal">
+      <a href="#" class="font-titulos text-xl">Trilheiro</a>
+      <button type="button" id="abrir-menu" class="rounded border border-white/60 px-3 py-1 md:hidden" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu" class="hidden w-full flex-col gap-2 pt-3 md:flex md:w-auto md:flex-row md:gap-6 md:pt-0">
+        <li><a href="#" class="font-semibold underline underline-offset-4" aria-current="page">Início</a></li>
+        <li><a href="#" class="hover:underline">Trilhas</a></li>
+        <li><a href="#" class="hover:underline">Cadastrar trilha</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="grow">
+    <section class="bg-marcacao py-12">
+      <div class="mx-auto max-w-6xl px-4">
+        <h1 class="font-titulos text-3xl md:text-4xl">Escolha a trilha do seu fim de semana</h1>
+        <p class="mt-2 text-lg">Trilhas da região de Guarapuava, com a dificuldade, a distância e a duração de cada uma.</p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-4 py-10" aria-labelledby="destaques">
+      <h2 id="destaques" class="mb-4 font-titulos text-2xl">Trilhas em destaque</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
+          <img src="img/trilhas/salto-480.jpg" width="480" height="360" class="aspect-4/3 w-full object-cover" alt="Queda-d'água entre morros">
+          <div class="flex grow flex-col p-5">
+            <span class="self-start rounded bg-moderada px-2 py-0.5 text-sm text-white">Moderada</span>
+            <h3 class="mt-2 font-titulos text-xl text-verde-mata">Trilha do Salto</h3>
+            <p class="mt-1 text-sm text-tinta-suave">Prudentópolis, PR · 4,5 km · 2h30</p>
+            <a href="#" class="mt-4 self-start rounded bg-verde-mata px-4 py-2 text-white hover:bg-tinta focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-marcacao">Ver trilha</a>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
+          <img src="img/trilhas/araucarias-480.jpg" width="480" height="360" class="aspect-4/3 w-full object-cover" alt="Trilha de terra entre araucárias">
+          <div class="flex grow flex-col p-5">
+            <span class="self-start rounded bg-facil px-2 py-0.5 text-sm text-white">Fácil</span>
+            <h3 class="mt-2 font-titulos text-xl text-verde-mata">Caminho das Araucárias</h3>
+            <p class="mt-1 text-sm text-tinta-suave">Guarapuava, PR · 2,0 km · 45 min</p>
+            <a href="#" class="mt-4 self-start rounded bg-verde-mata px-4 py-2 text-white hover:bg-tinta focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-marcacao">Ver trilha</a>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
+          <img src="img/trilhas/mirante-480.jpg" width="480" height="360" class="aspect-4/3 w-full object-cover" alt="Vale visto do alto de um mirante">
+          <div class="flex grow flex-col p-5">
+            <span class="self-start rounded bg-dificil px-2 py-0.5 text-sm text-white">Difícil</span>
+            <h3 class="mt-2 font-titulos text-xl text-verde-mata">Mirante da Serra</h3>
+            <p class="mt-1 text-sm text-tinta-suave">Guarapuava, PR · 8,0 km · 4h</p>
+            <a href="#" class="mt-4 self-start rounded bg-verde-mata px-4 py-2 text-white hover:bg-tinta focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-marcacao">Ver trilha</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-tinta px-4 py-6 text-center text-sm text-white">Trilheiro · Trilhas da região de Guarapuava</footer>
+
+  <script>
+    // O Tailwind não tem JavaScript: o botão do menu do celular é seu.
+    const button = document.querySelector('#abrir-menu');
+    const menu = document.querySelector('#menu');
+    button.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      menu.classList.toggle('flex', open);
+      button.setAttribute('aria-expanded', String(open));
+    });
+  </script>
+</body>
+</html>
