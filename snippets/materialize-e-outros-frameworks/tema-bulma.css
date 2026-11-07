@@ -1,0 +1,6 @@
+:root {
+  --bulma-primary-h: 134deg;
+  --bulma-primary-s: 33%;
+  --bulma-primary-l: 27%;
+  --bulma-primary-invert-l: 100%; /* o texto sobre a cor primária: branco */
+}

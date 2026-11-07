@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilheiro em Bulma</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <style>
+    /* O tema: o Bulma 1 também usa variáveis CSS; a cor primária vem em matiz, saturação e luminosidade. */
+    :root {
+      --bulma-primary-h: 134deg;
+      --bulma-primary-s: 33%;
+      --bulma-primary-l: 27%;
+      --bulma-primary-invert-l: 100%; /* o texto sobre a cor primária: branco */
+    }
+    .hero.is-trilheiro { background-color: #f2c230; color: #1f2a24; }
+    .card-image img { aspect-ratio: 4 / 3; object-fit: cover; }
+    .tag.facil { background-color: #2e7d32; color: #fff; }
+    .tag.moderada { background-color: #a35f00; color: #fff; }
+    .tag.dificil { background-color: #b3261e; color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar is-primary" aria-label="Principal">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item has-text-weight-bold" href="#">Trilheiro</a>
+          <button type="button" class="navbar-burger" aria-label="Abrir o menu" aria-expanded="false" data-target="menu">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="navbar-menu" id="menu">
+          <div class="navbar-end">
+            <a class="navbar-item is-active" href="#">Início</a>
+            <a class="navbar-item" href="#">Trilhas</a>
+            <a class="navbar-item" href="#">Cadastrar trilha</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero is-trilheiro">
+      <div class="hero-body container">
+        <h1 class="title">Escolha a trilha do seu fim de semana</h1>
+        <p class="subtitle has-text-dark">Trilhas da região de Guarapuava, com a dificuldade, a distância e a duração de cada uma.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="title is-4">Trilhas em destaque</h2>
+        <div class="columns is-multiline">
+          <div class="column is-12-mobile is-6-tablet is-4-desktop">
+            <article class="card">
+              <div class="card-image">
+                <img src="img/trilhas/salto-480.jpg" width="480" height="360" alt="Queda-d'água entre morros">
+              </div>
+              <div class="card-content">
+                <span class="tag moderada">Moderada</span>
+                <h3 class="title is-5 mt-2">Trilha do Salto</h3>
+                <p>Prudentópolis, PR · 4,5 km · 2h30</p>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Ver trilha</a>
+              </footer>
+            </article>
+          </div>
+          <div class="column is-12-mobile is-6-tablet is-4-desktop">
+            <article class="card">
+              <div class="card-image">
+                <img src="img/trilhas/araucarias-480.jpg" width="480" height="360" alt="Trilha de terra entre araucárias">
+              </div>
+              <div class="card-content">
+                <span class="tag facil">Fácil</span>
+                <h3 class="title is-5 mt-2">Caminho das Araucárias</h3>
+                <p>Guarapuava, PR · 2,0 km · 45 min</p>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Ver trilha</a>
+              </footer>
+            </article>
+          </div>
+          <div class="column is-12-mobile is-6-tablet is-4-desktop">
+            <article class="card">
+              <div class="card-image">
+                <img src="img/trilhas/mirante-480.jpg" width="480" height="360" alt="Vale visto do alto de um mirante">
+              </div>
+              <div class="card-content">
+                <span class="tag dificil">Difícil</span>
+                <h3 class="title is-5 mt-2">Mirante da Serra</h3>
+                <p>Guarapuava, PR · 8,0 km · 4h</p>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Ver trilha</a>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">Trilheiro · Trilhas da região de Guarapuava</div>
+  </footer>
+
+  <script>
+    // O Bulma é só CSS: nem o menu do celular abre sozinho. Este é o JavaScript que a documentação sugere.
+    document.querySelectorAll('.navbar-burger').forEach((burger) => {
+      burger.addEventListener('click', () => {
+        const menu = document.getElementById(burger.dataset.target);
+        const open = burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active', open);
+        burger.setAttribute('aria-expanded', String(open));
+      });
+    });
+  </script>
+</body>
+</html>
