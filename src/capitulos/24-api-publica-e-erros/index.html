@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <!-- @include head -->
+  <meta name="tf-chapter" content="24-api-publica-e-erros">
+</head>
+<body>
+  <!-- @include header -->
+  <main id="conteudo" class="container" data-pagefind-body>
+    <article class="tf-reading">
+      <!-- @render chapter-header 24-api-publica-e-erros -->
+
+      <tf-view kind="missao" title="A missão">
+        <p>O json-server do capítulo 23 é seu: você sabe o que ele responde. Hoje o Trilheiro passa a conversar com serviços <strong>dos outros</strong>, abertos para qualquer site. A página da trilha ganha a <strong>previsão do tempo</strong> dos próximos 3 dias, com a máxima, a mínima e a chance de chuva, vinda da Open-Meteo. E o cadastro passa a preencher a <strong>cidade, a UF e o bairro</strong> sozinho, pelo ViaCEP, assim que o CEP fica completo; ao salvar, ele ainda busca as coordenadas da cidade, para a trilha nova também ter previsão.</p>
+        <p>Serviço dos outros falha, demora e responde de jeitos inesperados. Por isso, o centro deste capítulo é a regra RN07 do PRD: uma falha num serviço externo <strong>nunca</strong> impede o resto da página de funcionar. O resultado está em <a href="https://github.com/utfpr-gp/na-trilha-do-front-end/tree/main/etapas/24-api-publica-e-erros">etapas/24-api-publica-e-erros</a>.</p>
+      </tf-view>
+
+      <tf-view kind="ideia" title="A ideia">
+        <tf-analogy emoji="🌦️" title="O boletim da rádio da cidade">
+          <p>Antes de sair para a trilha, o guia escuta o boletim do tempo na rádio da cidade. É um serviço de graça, aberto a todos, que ele não controla: às vezes o sinal falha, às vezes o boletim atrasa. Um bom guia não cancela o passeio por isso. Ele avisa "sem previsão hoje", olha o céu e segue com o resto do planejamento.</p>
+          <p>Uma <a class="tf-term" href="{{base}}glossario/#api-publica">API pública</a> é a rádio: você consulta, mas não manda nela. O seu código precisa ouvir com atenção (ler o corpo da resposta, e não só o status) e ter sempre um plano para o silêncio: um aviso só naquela parte da página, e o resto funcionando.</p>
+        </tf-analogy>
+      </tf-view>
+
+      <tf-view kind="por-dentro" title="Por dentro">
+        <h3>Escolher uma API</h3>
+        <p>Há catálogos com milhares de APIs abertas: a lista <a href="https://github.com/public-apis/public-apis">Public APIs</a>, a <a href="https://api-ninjas.com/api">API Ninjas</a>, o <a href="https://rapidapi.com/hub">RapidAPI Hub</a> e a <a href="https://www.postman.com/explore">rede de APIs do Postman</a>. Antes de escolher uma para um site feito só de HTML, CSS e JavaScript, confira cinco coisas:</p>
+        <ul>
+          <li><strong>Documentação:</strong> os endereços, os parâmetros e um exemplo de resposta;</li>
+          <li><strong>Chave:</strong> sem chave é o ideal. Uma chave no código do navegador fica à vista de todo mundo (veja as armadilhas);</li>
+          <li><strong><a class="tf-term" href="{{base}}glossario/#cors">CORS</a>:</strong> a API precisa aceitar chamadas vindas do navegador, com o cabeçalho <code>Access-Control-Allow-Origin</code>;</li>
+          <li><strong>HTTPS:</strong> o site publicado é <code>https://</code>, e o navegador bloqueia pedidos para <code>http://</code> a partir dele;</li>
+          <li><strong>Limites e termos:</strong> quantos pedidos por dia, e se é preciso citar a fonte.</li>
+        </ul>
+        <p>A Open-Meteo e o ViaCEP passam nos cinco: gratuitos, sem chave, com CORS e HTTPS. A Open-Meteo pede que a fonte seja citada, e o Trilheiro mostra "Dados: Open-Meteo" junto da previsão.</p>
+
+        <h3>Testar antes de programar</h3>
+        <p>Antes de escrever uma linha de JavaScript, faça o pedido à mão e veja a resposta. Um GET dá para testar na própria barra de endereços do navegador; para ver os status e os cabeçalhos, e para pedidos POST, use o <a href="https://www.postman.com/downloads/">Postman</a> ou a extensão <a href="https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client">Thunder Client</a>, do VS Code. Estas foram as respostas do ViaCEP, conferidas assim:</p>
+        <tf-code src="24-api-publica-e-erros/viacep.txt" caption="ViaCEP: três pedidos e três respostas"></tf-code>
+        <p>Repare no segundo: o CEP não existe, e mesmo assim o status é <strong>200</strong>. O aviso vem no corpo, <code>{ "erro": "true" }</code>. Quem olha só o <code>response.ok</code> acha que deu certo. Consulte você mesmo (este pedido vai de verdade ao ViaCEP):</p>
+        <tf-cep-lab></tf-cep-lab>
+        <p>A Open-Meteo devolve os dias em <strong>listas paralelas</strong>: o dia <code>i</code> é o <code>time[i]</code>, com a máxima <code>temperature_2m_max[i]</code>, e assim por diante:</p>
+        <tf-code src="24-api-publica-e-erros/open-meteo.txt" caption="Open-Meteo: a previsão de 3 dias"></tf-code>
+
+        <h3>Os jeitos de dar errado</h3>
+        <p>Um pedido a um serviço externo pode terminar de quatro jeitos ruins, e cada um pede um cuidado:</p>
+        <ul>
+          <li><strong>A rede falha</strong> (sem internet, serviço fora do ar, CORS): o <code>fetch</code> lança <code>TypeError: Failed to fetch</code>, e o <code>catch</code> pega;</li>
+          <li><strong>O status não é 2xx</strong> (400, 404, 500): o <code>fetch</code> não lança nada, e o código confere o <code>response.ok</code> ou o <code>response.status</code>;</li>
+          <li><strong>O status é 200, mas o corpo diz que não deu</strong>, como o <code>erro</code> do ViaCEP ou a geocodificação sem o campo <code>results</code>: o código lê o corpo;</li>
+          <li><strong>A resposta não chega</strong>: o pedido fica pendurado. Um tempo-limite resolve.</li>
+        </ul>
+        <tf-code src="24-api-publica-e-erros/timeout.js" caption="Um tempo-limite para o fetch"></tf-code>
+
+        <details class="tf-deep-dive">
+          <summary>Aprofundando: e as APIs que pedem chave?</summary>
+          <p>Muitas APIs boas (mapas, filmes, clima mais detalhado) exigem uma chave, que identifica quem paga ou quem responde pelo uso. Num site só de front-end, não existe lugar seguro para ela: tudo o que o navegador recebe, a pessoa pode ler. Algumas chaves são feitas para ficar à vista, limitadas ao endereço do seu site (o painel da API diz). Para as outras, o caminho é um <strong>back-end</strong> seu, que guarda a chave e faz o pedido no lugar do navegador. Esse é um dos motivos para os projetos crescerem para além do front-end.</p>
+        </details>
+      </tf-view>
+
+      <tf-view kind="mao-no-codigo" title="Mão no código">
+        <tf-steps>
+          <section data-step="A previsão do tempo">
+            <p>Crie <code>js/weather.js</code>. O <code>URLSearchParams</code> monta a parte do endereço depois do <code>?</code>, com os nomes que a documentação pede. No fim, as listas paralelas viram uma lista de dias:</p>
+            <tf-code src="24-api-publica-e-erros/weather.js" caption="js/weather.js"></tf-code>
+          </section>
+          <section data-step="A previsão no detalhe">
+            <p>No <code>trilha.html</code>, abaixo do cartão "Dados da trilha", a caixa da previsão, com a fonte:</p>
+            <tf-code src="24-api-publica-e-erros/previsao.html" caption="trilha.html"></tf-code>
+            <p>No <code>js/trail-detail.js</code>, a função que preenche a caixa. Ela cuida dos três casos fora do normal: a trilha sem coordenadas, o "carregando" e a falha, sempre só dentro da caixa:</p>
+            <tf-code src="24-api-publica-e-erros/previsao.js" caption="js/trail-detail.js"></tf-code>
+            <p>E ela é chamada <strong>sem</strong> <code>await</code>, logo depois de a trilha aparecer: <code>loadWeather(trail);</code>. Assim, a página não espera a previsão para se mostrar.</p>
+          </section>
+          <section data-step="O endereço pelo CEP">
+            <p>Crie <code>js/address.js</code>, com o ViaCEP e a geocodificação da Open-Meteo. Repare na conferência do <code>data.erro</code>, e no <code>find</code> que escolhe a cidade do estado certo (há Santa Cruz em vários estados):</p>
+            <tf-code src="24-api-publica-e-erros/address.js" caption="js/address.js"></tf-code>
+            <p>No <code>cadastrar.html</code>, logo abaixo do erro do CEP, um lugar para o aviso: <code>&lt;div class="form-text" id="cep-status" aria-live="polite"&gt;&lt;/div&gt;</code>. No <code>js/trail-form.js</code>, a consulta acontece quando a máscara do capítulo 22 completa o CEP:</p>
+            <tf-code src="24-api-publica-e-erros/cep.js" caption="js/trail-form.js"></tf-code>
+          </section>
+          <section data-step="As coordenadas ao salvar">
+            <p>Por fim, no envio, antes do <code>createTrail</code>, as coordenadas do centro da cidade. O <code>.catch(() =&gt; null)</code> transforma qualquer falha em "sem coordenadas", e a trilha é gravada mesmo assim:</p>
+            <tf-code src="24-api-publica-e-erros/salvar.js" caption="js/trail-form.js (no submit)"></tf-code>
+          </section>
+          <section data-step="Confira, e quebre de propósito">
+            <p>Abra <code>trilha.html?id=1</code>: a previsão aparece ("Hoje", "Amanhã" e o dia seguinte). No cadastro, digite <code>85010260</code>: Guarapuava, PR e Centro aparecem. Digite <code>99999999</code>: "CEP não encontrado". Cadastre uma trilha e confira no <code>db.json</code> a <code>latitude</code> e a <code>longitude</code>.</p>
+            <p>Agora simule a falha: no DevTools, aba <strong>Network</strong>, clique com o botão direito no pedido à <code>api.open-meteo.com</code> e escolha <strong>Block request domain</strong>. Recarregue o detalhe: só a caixa da previsão mostra "Não foi possível carregar a previsão agora", e todo o resto da trilha aparece. Isso é a RN07. Desbloqueie depois.</p>
+          </section>
+          <section data-step="E se eu tirar?">
+            <p>No <code>address.js</code>, tire a linha do <code>if (data.erro)</code> e digite <code>99999999</code> no cadastro: os campos da cidade e da UF passam a mostrar a palavra <code>undefined</code>, porque a resposta não tem <code>localidade</code>. Desfaça.</p>
+          </section>
+        </tf-steps>
+      </tf-view>
+
+      <tf-view kind="armadilhas" title="Armadilhas">
+        <tf-pitfall title="Status 200 e mesmo assim deu errado">
+          <p>O ViaCEP responde 200 para um CEP que não existe, com <code>{ "erro": "true" }</code> no corpo, e a geocodificação responde 200 sem o campo <code>results</code> quando não acha a cidade. Leia o corpo, e não confie só no <code>response.ok</code>. Sem isso, a página escreve <code>undefined</code> nos campos.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A API não aceita o navegador" message="Access to fetch at 'https://www.google.com/' from origin 'http://localhost:4326' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.">
+          <p>O servidor não liberou o CORS: ele responde, mas o navegador esconde a resposta da sua página, e o <code>fetch</code> lança <code>TypeError: Failed to fetch</code>. Não há o que fazer no front-end. Escolha outra API, ou faça o pedido por um back-end seu.</p>
+        </tf-pitfall>
+        <tf-pitfall title="O pedido demorou demais" message="TimeoutError: signal timed out">
+          <p>Essa é a mensagem do <code>AbortSignal.timeout</code>, quando o tempo-limite estoura. Sem o tempo-limite, um serviço lento deixa o "Carregando…" na tela para sempre. Com ele, o erro cai no <code>catch</code> e a página avisa.</p>
+        </tf-pitfall>
+        <tf-pitfall title="A falha da previsão derrubou a página">
+          <p>Se o <code>loadWeather</code> fosse chamado com <code>await</code> antes de a trilha aparecer, ou sem o próprio <code>try/catch</code>, uma Open-Meteo fora do ar deixaria a trilha inteira sem mostrar. Cada serviço externo tem a sua caixa, o seu <code>try/catch</code> e o seu aviso (RN07).</p>
+        </tf-pitfall>
+        <tf-pitfall title="Pus a chave da API no JavaScript">
+          <p>Tudo o que o navegador baixa, a pessoa lê: a chave aparece na aba <strong>Sources</strong> e em cada pedido da aba <strong>Network</strong>. Alguém pode usá-la e gastar a sua cota (ou o seu dinheiro). Prefira APIs sem chave, ou com chave limitada ao endereço do seu site.</p>
+          <tf-code src="24-api-publica-e-erros/chave.js" caption="Exemplo do que não fazer"></tf-code>
+        </tf-pitfall>
+      </tf-view>
+
+      <tf-view kind="desafio" title="Desafio">
+        <tf-challenge slug="24-api-publica-e-erros" award>
+          <fieldset data-correct="c">
+            <legend>O ViaCEP respondeu 200 a um CEP. O que isso garante?</legend>
+            <label><input type="radio" name="q1" value="a"> Que o CEP existe</label>
+            <label><input type="radio" name="q1" value="b"> Que o corpo tem a cidade</label>
+            <label><input type="radio" name="q1" value="c"> Só que o pedido foi entendido: é preciso olhar se o corpo traz <code>erro</code></label>
+            <p data-explain="a" hidden>Para um CEP inexistente, o ViaCEP também responde 200, com <code>{ "erro": "true" }</code>.</p>
+            <p data-explain="b" hidden>Quando o CEP não existe, o corpo não tem a cidade: só o <code>erro</code>.</p>
+          </fieldset>
+          <fieldset data-correct="a">
+            <legend>A Open-Meteo saiu do ar. O que a página da trilha deve fazer?</legend>
+            <label><input type="radio" name="q2" value="a"> Mostrar a trilha normalmente, com um aviso só na caixa da previsão</label>
+            <label><input type="radio" name="q2" value="b"> Mostrar uma página de erro no lugar da trilha</label>
+            <label><input type="radio" name="q2" value="c"> Ficar em "Carregando…" até o serviço voltar</label>
+            <p data-explain="b" hidden>A previsão é um extra. A RN07 diz que a falha de um serviço externo nunca impede o resto.</p>
+            <p data-explain="c" hidden>Sem resposta, a pessoa fica esperando à toa. O tempo-limite e o <code>catch</code> trocam a espera por um aviso.</p>
+          </fieldset>
+          <fieldset data-correct="b">
+            <legend>A previsão vem em <code>daily.time</code>, <code>daily.temperature_2m_max</code> e <code>daily.temperature_2m_min</code>. Onde está a máxima de amanhã?</legend>
+            <label><input type="radio" name="q3" value="a"> <code>daily.temperature_2m_max[0]</code></label>
+            <label><input type="radio" name="q3" value="b"> <code>daily.temperature_2m_max[1]</code></label>
+            <label><input type="radio" name="q3" value="c"> <code>daily.time[1].max</code></label>
+            <p data-explain="a" hidden>O índice 0 é hoje, o primeiro dia da lista.</p>
+            <p data-explain="c" hidden>O <code>time</code> só tem as datas. As listas são paralelas: o mesmo índice nas outras.</p>
+          </fieldset>
+          <fieldset data-correct="c">
+            <legend>Uma API ótima pede uma chave secreta. O que fazer num site só de front-end?</legend>
+            <label><input type="radio" name="q4" value="a"> Esconder a chave num arquivo .js separado</label>
+            <label><input type="radio" name="q4" value="b"> Escrever a chave de trás para a frente</label>
+            <label><input type="radio" name="q4" value="c"> Não usar a chave no navegador: escolher outra API, ou fazer o pedido por um back-end</label>
+            <p data-explain="a" hidden>Todo arquivo que o navegador baixa pode ser lido no DevTools.</p>
+            <p data-explain="b" hidden>Qualquer truque no JavaScript pode ser desfeito por quem lê o código. A chave aparece também no pedido, na aba Network.</p>
+          </fieldset>
+          <button type="button" class="btn btn-primary" data-check hidden>Conferir</button>
+          <p class="tf-challenge-status" data-status aria-live="polite"></p>
+        </tf-challenge>
+      </tf-view>
+
+      <tf-view kind="na-sua-trilha" title="Na sua trilha">
+        <p>No <strong>seu projeto</strong>, escolha uma API pública que combine com o seu tema, usando os catálogos e as cinco perguntas do "Por dentro". Teste no navegador ou no Thunder Client antes de programar. Depois, use-a numa página, num módulo próprio, com o "carregando", a falha de rede, a resposta sem dados e a fonte citada, se a API pedir. A falha da API não pode derrubar o resto da página.</p>
+        <ul>
+          <li><strong>O conceito:</strong> o que é uma API pública, e o que é o CORS?</li>
+          <li><strong>A motivação:</strong> por que você escolheu esta API, e como ela passou nas cinco perguntas?</li>
+          <li><strong>A anatomia:</strong> mostre um pedido e a resposta, e explique como o seu código lê os campos.</li>
+          <li><strong>"E se eu tirar?":</strong> bloqueie a API na aba Network e mostre a página continuando a funcionar.</li>
+        </ul>
+      </tf-view>
+
+      <tf-view kind="para-ir-alem" title="Para ir além">
+        <ul>
+          <li><a href="https://open-meteo.com/en/docs">Open-Meteo: a documentação da previsão (em inglês)</a></li>
+          <li><a href="https://open-meteo.com/en/docs/geocoding-api">Open-Meteo: a geocodificação (em inglês)</a></li>
+          <li><a href="https://viacep.com.br/">ViaCEP: a documentação</a></li>
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Guides/CORS">MDN: CORS</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static">MDN: AbortSignal.timeout (em inglês)</a></li>
+          <li><a href="https://github.com/public-apis/public-apis">Public APIs: um catálogo de APIs gratuitas</a></li>
+        </ul>
+      </tf-view>
+
+      <!-- @render pager 24-api-publica-e-erros -->
+    </article>
+  </main>
+  <!-- @include footer -->
+</body>
+</html>
